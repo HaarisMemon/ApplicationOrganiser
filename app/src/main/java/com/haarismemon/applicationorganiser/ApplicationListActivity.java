@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.haarismemon.applicationorganiser.database.DataSource;
+import com.haarismemon.applicationorganiser.model.Internship;
 
 public class ApplicationListActivity extends AppCompatActivity {
 
@@ -21,6 +22,12 @@ public class ApplicationListActivity extends AppCompatActivity {
 
         mDataSource = new DataSource(this);
         mDataSource.open();
+
+        Internship ibm = new Internship("IBM", "Software Engineer Placement", "1 Year", "London");
+        Internship cognito = new Internship("Cognito iQ", "Software Developer Placement", "1 Year", "Newbury");
+
+        mDataSource.createInternship(ibm);
+        mDataSource.createInternship(cognito);
     }
 
     @Override
