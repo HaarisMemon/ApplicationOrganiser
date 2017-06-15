@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.haarismemon.applicationorganiser.database.DataSource;
-import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class ApplicationListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application_list);
 
-        setTitle("Applications");
+        setTitle("All Applications");
 
         ListView listView = (ListView) findViewById(R.id.listView);
 

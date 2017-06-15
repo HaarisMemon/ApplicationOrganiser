@@ -79,7 +79,7 @@ public class DataSource {
         List<Internship> internships = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, null, null, null);
+                null, null, null, null, InternshipTable.COLUMN_COMPANY_NAME);
 
         while(cursor.moveToNext()) {
             Internship internship = new Internship();
@@ -93,6 +93,8 @@ public class DataSource {
 
             internships.add(internship);
         }
+
+        cursor.close();
 
         return internships;
     }
