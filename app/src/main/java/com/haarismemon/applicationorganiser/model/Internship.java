@@ -12,12 +12,12 @@ import java.util.List;
  */
 public class Internship {
 
-    public long internshipId;
-    public String company_name;
-    public String role;
-    public String length;
-    public String location;
-    public String description;
+    private long internshipId;
+    private String company_name;
+    private String role;
+    private String length;
+    private String location;
+    private String description;
 
     public Internship(String company_name, String role, String length, String location) {
         this.company_name = company_name;
@@ -49,5 +49,53 @@ public class Internship {
         values.put(InternshipTable.COLUMN_DESCRIPTION, description);
 
         return values;
+    }
+
+    public long getInternshipId() {
+        return internshipId;
+    }
+
+    public void setInternshipId(long internshipId) {
+        this.internshipId = internshipId;
+    }
+
+    public String getCompany_name() {
+        return company_name;
+    }
+
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
