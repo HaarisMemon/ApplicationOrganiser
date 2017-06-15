@@ -38,4 +38,16 @@ public class Internship {
         String internshipString = company_name+","+role+","+length+","+location;
         return internshipString;
     }
+
+    public ContentValues toValues() {
+        ContentValues values = new ContentValues();
+
+        values.put(InternshipTable.COLUMN_COMPANY_NAME, company_name);
+        values.put(InternshipTable.COLUMN_ROLE, role);
+        values.put(InternshipTable.COLUMN_LENGTH, length);
+        values.put(InternshipTable.COLUMN_LOCATION, location);
+        values.put(InternshipTable.COLUMN_DESCRIPTION, description);
+
+        return values;
+    }
 }
