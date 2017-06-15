@@ -19,6 +19,11 @@ public class InternshipTable {
     public static final String COLUMN_CREATED_ON = "created_on";
     public static final String COLUMN_MODIFIED_ON = "modified_on";
 
+    public static final String[] ALL_COLUMNS = {
+            COLUMN_ID, COLUMN_COMPANY_NAME, COLUMN_ROLE,
+            COLUMN_LENGTH, COLUMN_LOCATION, COLUMN_DESCRIPTION,
+            COLUMN_CREATED_ON, COLUMN_MODIFIED_ON,
+    };
 
     public static final String SQL_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_INTERNSHIP + " (" +

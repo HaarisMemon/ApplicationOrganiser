@@ -19,6 +19,9 @@ public class Internship {
     private String location;
     private String description;
 
+    public Internship() {
+    }
+
     public Internship(String company_name, String role, String length, String location) {
         this.company_name = company_name;
         this.role = role;
@@ -35,7 +38,8 @@ public class Internship {
 
     @Override
     public String toString() {
-        String internshipString = company_name+","+role+","+length+","+location;
+//        String internshipString = company_name+","+role+","+length+","+location;
+        String internshipString = company_name + " - " + role;
         return internshipString;
     }
 

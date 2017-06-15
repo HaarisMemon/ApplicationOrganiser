@@ -2,11 +2,15 @@ package com.haarismemon.applicationorganiser.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Haaris on 15/06/2017.
@@ -35,7 +39,7 @@ public class DataSource {
     public Internship createInternship(Internship internship) {
         ContentValues values = internship.toValues();
         long internshipID = mDatabase.insert(InternshipTable.TABLE_INTERNSHIP, null, values);
-        internship.internshipId = internshipID;
+        internship.setInternshipId(internshipID);
         return internship;
     }
 
@@ -58,9 +62,9 @@ public class DataSource {
 
             if(numApplicationStageCount == 0) {
 
-                ApplicationStage onlineApplication = new ApplicationStage("Online Application", true, false, true, "28/01/2017", "28/01/2017", "20/02/2017", ibm.internshipId);
-                ApplicationStage test = new ApplicationStage("Test", true, false, true, null, null, "20/02/2017", ibm.internshipId);
-                ApplicationStage assessmentCentre = new ApplicationStage("Assessment Centre", true, false, true, "07/03/2017", "07/03/2017", "16/03/2017", ibm.internshipId);
+                ApplicationStage onlineApplication = new ApplicationStage("Online Application", true, false, true, "28/01/2017", "28/01/2017", "20/02/2017", ibm.getInternshipId());
+                ApplicationStage test = new ApplicationStage("Test", true, false, true, null, null, "20/02/2017", ibm.getInternshipId());
+                ApplicationStage assessmentCentre = new ApplicationStage("Assessment Centre", true, false, true, "07/03/2017", "07/03/2017", "16/03/2017", ibm.getInternshipId());
 
                 createApplicationStage(onlineApplication);
                 createApplicationStage(test);
@@ -69,6 +73,28 @@ public class DataSource {
             }
         }
 
+    }
+
+    public List<Internship> getAllItems() {
+        List<Internship> internships = new ArrayList<>();
+
+        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
+                null, null, null, null, null);
+
+        while(cursor.moveToNext()) {
+            Internship internship = new Internship();
+
+            internship.setInternshipId(cursor.getLong(cursor.getColumnIndex(InternshipTable.COLUMN_ID)));
+            internship.setCompany_name(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_COMPANY_NAME)));
+            internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
+            internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
+            internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
+            internship.setDescription(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_DESCRIPTION)));
+
+            internships.add(internship);
+        }
+
+        return internships;
     }
 
 }
