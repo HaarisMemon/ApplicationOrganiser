@@ -23,4 +23,12 @@ public class DataSource {
         mDatabase = mDbHelper.getWritableDatabase();
     }
 
+    public void open() {
+        mDatabase = mDbHelper.getWritableDatabase();
+    }
+
+    public void close() {
+        mDbHelper.close();
+    }
+
 }
