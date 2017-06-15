@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.haarismemon.applicationorganiser.database.DataSource;
+import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 public class ApplicationListActivity extends AppCompatActivity {
@@ -28,6 +29,14 @@ public class ApplicationListActivity extends AppCompatActivity {
 
         mDataSource.createInternship(ibm);
         mDataSource.createInternship(cognito);
+
+        ApplicationStage onlineApplication = new ApplicationStage("Online Application", true, false, true,"28/01/2017","28/01/2017","20/02/2017",ibm.internshipId);
+        ApplicationStage test = new ApplicationStage("Test",true,false,true,null,null,"20/02/2017", ibm.internshipId);
+        ApplicationStage assessmentCentre = new ApplicationStage("Assessment Centre",true,false,true,"07/03/2017","07/03/2017","16/03/2017", ibm.internshipId);
+
+        mDataSource.createApplicationStage(onlineApplication);
+        mDataSource.createApplicationStage(test);
+        mDataSource.createApplicationStage(assessmentCentre);
     }
 
     @Override
