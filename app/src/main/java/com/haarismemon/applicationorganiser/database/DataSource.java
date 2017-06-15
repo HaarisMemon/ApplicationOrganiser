@@ -38,4 +38,10 @@ public class DataSource {
         return internship;
     }
 
+    public ApplicationStage createApplicationStage(ApplicationStage applicationStage) {
+        ContentValues values = applicationStage.toValues();
+        mDatabase.insert(ApplicationStageTable.TABLE_APPLICATION_STAGE, null, values);
+        return applicationStage;
+    }
+
 }
