@@ -31,4 +31,11 @@ public class DataSource {
         mDbHelper.close();
     }
 
+    public Internship createInternship(Internship internship) {
+        ContentValues values = internship.toValues();
+        long internshipID = mDatabase.insert(InternshipTable.TABLE_INTERNSHIP, null, values);
+        internship.internshipId = internshipID;
+        return internship;
+    }
+
 }
