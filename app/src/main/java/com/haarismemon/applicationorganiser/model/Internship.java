@@ -4,16 +4,13 @@ import android.content.ContentValues;
 
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This class represents the Internship that a user has applied to.
  */
 public class Internship {
 
     private long internshipId;
-    private String company_name;
+    private String companyName;
     private String role;
     private String length;
     private String location;
@@ -22,8 +19,8 @@ public class Internship {
     public Internship() {
     }
 
-    public Internship(String company_name, String role, String length, String location) {
-        this.company_name = company_name;
+    public Internship(String companyName, String role, String length, String location) {
+        this.companyName = companyName;
         this.role = role;
         this.length = length;
         this.location = location;
@@ -31,22 +28,22 @@ public class Internship {
 
     @Override
     public boolean equals(Object obj) {
-        boolean isSameCompanyName = company_name.equals(((Internship) obj).company_name);
+        boolean isSameCompanyName = companyName.equals(((Internship) obj).companyName);
         boolean isSameRole = role.equals(((Internship) obj).role);
         return isSameCompanyName && isSameRole;
     }
 
     @Override
     public String toString() {
-//        String internshipString = company_name+","+role+","+length+","+location;
-        String internshipString = company_name + " - " + role;
+//        String internshipString = companyName+","+role+","+length+","+location;
+        String internshipString = companyName + " - " + role;
         return internshipString;
     }
 
     public ContentValues toValues() {
         ContentValues values = new ContentValues();
 
-        values.put(InternshipTable.COLUMN_COMPANY_NAME, company_name);
+        values.put(InternshipTable.COLUMN_COMPANY_NAME, companyName);
         values.put(InternshipTable.COLUMN_ROLE, role);
         values.put(InternshipTable.COLUMN_LENGTH, length);
         values.put(InternshipTable.COLUMN_LOCATION, location);
@@ -63,12 +60,12 @@ public class Internship {
         this.internshipId = internshipId;
     }
 
-    public String getCompany_name() {
-        return company_name;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompany_name(String company_name) {
-        this.company_name = company_name;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getRole() {

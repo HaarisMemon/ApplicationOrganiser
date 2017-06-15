@@ -85,7 +85,7 @@ public class DataSource {
             Internship internship = new Internship();
 
             internship.setInternshipId(cursor.getLong(cursor.getColumnIndex(InternshipTable.COLUMN_ID)));
-            internship.setCompany_name(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_COMPANY_NAME)));
+            internship.setCompanyName(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_COMPANY_NAME)));
             internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
@@ -107,7 +107,7 @@ public class DataSource {
         while(cursor.moveToNext()) {
 
             internship.setInternshipId(cursor.getLong(cursor.getColumnIndex(InternshipTable.COLUMN_ID)));
-            internship.setCompany_name(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_COMPANY_NAME)));
+            internship.setCompanyName(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_COMPANY_NAME)));
             internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
