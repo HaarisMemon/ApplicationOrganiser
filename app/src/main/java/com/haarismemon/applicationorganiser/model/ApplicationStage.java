@@ -137,4 +137,20 @@ public class ApplicationStage {
     public boolean equals(Object obj) {
         return stageName.equals(((ApplicationStage) obj).getStageName());
     }
+
+    public ContentValues toValues() {
+        ContentValues values = new ContentValues();
+
+        values.put(ApplicationStageTable.COLUMN_STAGE_NAME, stageName);
+        values.put(ApplicationStageTable.COLUMN_IS_COMPLETED, isCompleted);
+        values.put(ApplicationStageTable.COLUMN_IS_WAITING, isWaitingForResponse);
+        values.put(ApplicationStageTable.COLUMN_IS_SUCCESSFUL, isSuccessful);
+        values.put(ApplicationStageTable.COLUMN_START_DATE, dateOfStart);
+        values.put(ApplicationStageTable.COLUMN_COMPLETE_DATE, dateOfCompletion);
+        values.put(ApplicationStageTable.COLUMN_REPLY_DATE, dateOfReply);
+        values.put(ApplicationStageTable.COLUMN_DESCRIPTION, description);
+        values.put(ApplicationStageTable.COLUMN_INTERNSHIP_ID, internshipID);
+
+        return values;
+    }
 }
