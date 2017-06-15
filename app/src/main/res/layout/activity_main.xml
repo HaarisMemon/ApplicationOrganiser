@@ -18,40 +18,54 @@
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_columnWeight="1"
+            android:layout_margin="10dp"
             android:layout_row="0"
             android:layout_rowWeight="1"
-            android:text="All \nApplications"/>
+            android:onClick="goToAllApplications"
+            android:text="All \nApplications"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button1"
             android:text="Current \nApplications"
+            android:textAllCaps="false"
+            android:textSize="20sp"
             android:layout_row="0"
             android:layout_column="1"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button2"
             android:text="Apply to"
+            android:textAllCaps="false"
+            android:textSize="20sp"
             android:layout_row="1"
             android:layout_column="0"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button3"
             android:text="Unsuccessful"
+            android:textAllCaps="false"
+            android:textSize="20sp"
             android:layout_row="1"
             android:layout_column="1"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"/>
 
     </GridLayout>
+
 
 </RelativeLayout>
