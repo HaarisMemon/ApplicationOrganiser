@@ -75,7 +75,7 @@ public class DataSource {
 
     }
 
-    public List<Internship> getAllItems() {
+    public List<Internship> getAllInternship() {
         List<Internship> internships = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
@@ -97,6 +97,28 @@ public class DataSource {
         cursor.close();
 
         return internships;
+    }
+
+    public Internship getInternship(long internshipID) {
+        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
+                InternshipTable.COLUMN_ID + "=?", new String[] {Long.toString(internshipID)}, null, null, null);
+
+        Internship internship = new Internship();
+        while(cursor.moveToNext()) {
+
+            internship.setInternshipId(cursor.getLong(cursor.getColumnIndex(InternshipTable.COLUMN_ID)));
+            internship.setCompany_name(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_COMPANY_NAME)));
+            internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
+            internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
+            internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
+            internship.setDescription(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_DESCRIPTION)));
+
+            break;
+        }
+
+        cursor.close();
+
+        return internship;
     }
 
 }
