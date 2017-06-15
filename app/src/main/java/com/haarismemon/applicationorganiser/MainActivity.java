@@ -12,5 +12,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button allApplicationsButton = (Button) findViewById(R.id.allApplicationsButton);
+    }
+
+    public void goToAllApplications(View view) {
+
+        Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
+        startActivity(intent);
+
     }
 }
