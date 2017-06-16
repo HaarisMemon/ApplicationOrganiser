@@ -81,7 +81,7 @@ public class DataSource {
         List<Internship> internships = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, null, null, InternshipTable.COLUMN_MODIFIED_ON + " DESC");
+                null, null, null, null, InternshipTable.COLUMN_MODIFIED_ON);
 
         while(cursor.moveToNext()) {
             Internship internship = new Internship();

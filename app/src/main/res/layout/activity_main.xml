@@ -17,7 +17,8 @@
             android:hint="Search for an application"
             android:layout_alignParentTop="true"
             android:id="@+id/searchBar"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:maxLines="1"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -26,15 +27,14 @@
             android:text="Search"
             android:layout_toRightOf="@id/searchBar"/>
 
-
     </LinearLayout>
-
 
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp">
 
         <Button
             android:id="@+id/allApplicationsButton"
@@ -48,7 +48,8 @@
             android:onClick="goToAllApplications"
             android:text="All \nApplications"
             android:textAllCaps="false"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:background="@color/homeButtonsBackgroundColor"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -61,7 +62,8 @@
             android:layout_column="1"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:background="@color/homeButtonsBackgroundColor"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -74,7 +76,8 @@
             android:layout_column="0"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:background="@color/homeButtonsBackgroundColor"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -87,7 +90,8 @@
             android:layout_column="1"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:background="@color/homeButtonsBackgroundColor"/>
 
     </GridLayout>
 
