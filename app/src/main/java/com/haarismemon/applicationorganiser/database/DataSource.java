@@ -187,4 +187,11 @@ public class DataSource {
                 ApplicationStageTable.COLUMN_INTERNSHIP_ID + " = ?",
                 new String[] {Long.toString(internshipID)});
     }
+
+    public void deleteApplicationStage(long stageID) {
+        //delete the application stage row which has an id of stageID
+        mDatabase.delete(ApplicationStageTable.TABLE_APPLICATION_STAGE,
+                ApplicationStageTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(stageID)});
+    }
 }

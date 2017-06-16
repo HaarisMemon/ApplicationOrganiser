@@ -25,11 +25,14 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
     DataSource mDataSource;
     Internship internship = null;
+    static ArrayAdapter<ApplicationStage> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_internship_information);
+
+        setTitle("Internship");
 
         mDataSource = new DataSource(this);
         mDataSource.open();
@@ -55,7 +58,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         final List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipId());
 
-        ArrayAdapter<ApplicationStage> arrayAdapter = new ArrayAdapter<ApplicationStage>(
+        arrayAdapter = new ArrayAdapter<ApplicationStage>(
                 getApplicationContext(), android.R.layout.simple_expandable_list_item_1, stages);
 
         applicationStageListView.setAdapter(arrayAdapter);
@@ -69,6 +72,13 @@ public class InternshipInformationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        arrayAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -92,7 +102,9 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
                                 ApplicationListActivity.arrayAdapter.notifyDataSetChanged();
                                 //go back to the application list activity
-                                onBackPressed();
+                                Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                             }
                         })
                         .setNegativeButton("No", null)
