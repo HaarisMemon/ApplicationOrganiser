@@ -60,4 +60,11 @@ public class ApplicationListActivity extends AppCompatActivity {
         super.onResume();
         mDataSource.open();
     }
+
+    public void createInternship(View view) {
+        Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
+        intent.putExtra("add_internship", true);
+        startActivity(intent);
+    }
+
 }

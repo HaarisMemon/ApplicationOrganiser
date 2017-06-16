@@ -115,4 +115,10 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void editInternship(View view) {
+        Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
+        intent.putExtra("add_internship", false);
+        startActivity(intent);
+    }
 }
