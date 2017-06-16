@@ -14,6 +14,7 @@ import java.util.Date;
  */
 public class ApplicationStage {
 
+    private long stageID;
     private String stageName;
     private boolean isCompleted;
     private boolean isWaitingForResponse;
@@ -23,6 +24,9 @@ public class ApplicationStage {
     private String dateOfReply;
     private String description;
     private long internshipID;
+
+    public ApplicationStage() {
+    }
 
     public ApplicationStage(String stageName, boolean isCompleted, boolean isWaitingForResponse, boolean isSuccessful, String dateOfStart, String dateOfCompletion, String dateOfReply, long internshipID) {
 
@@ -36,42 +40,20 @@ public class ApplicationStage {
         this.internshipID = internshipID;
     }
 
-    public String getCurrentStatus() {
-        if(isCompleted) {
-            if(isWaitingForResponse) {
-                return "Waiting";
-            } else {
-                if(isSuccessful() != null) {
-                    if(isSuccessful) {
-                        return "Successful!";
-                    } else {
-                        return "Failed";
-                    }
-                } else return "Don't Know";
-            }
-        } else {
-            return "Not Completed";
-        }
+    public long getStageID() {
+        return stageID;
+    }
+
+    public void setStageID(long stageID) {
+        this.stageID = stageID;
     }
 
     public String getStageName() {
         return stageName;
     }
 
-    public String getDateOfStart() {
-        return dateOfStart;
-    }
-
-    public String getDateOfCompletion() {
-        return dateOfCompletion;
-    }
-
-    public String getDateOfReply() {
-        return dateOfReply;
-    }
-
-    public void setStartDate(String dateOfStart) {
-        this.dateOfStart = dateOfStart;
+    public void setStageName(String stageName) {
+        this.stageName = stageName;
     }
 
     public boolean isCompleted() {
@@ -82,11 +64,6 @@ public class ApplicationStage {
         isCompleted = completed;
     }
 
-    public void setCompleted(boolean completed, String date) {
-        setCompleted(completed);
-        this.dateOfCompletion = date;
-    }
-
     public boolean isWaitingForResponse() {
         return isWaitingForResponse;
     }
@@ -95,42 +72,73 @@ public class ApplicationStage {
         isWaitingForResponse = waitingForResponse;
     }
 
-    public Boolean isSuccessful() {
+    public boolean isSuccessful() {
         return isSuccessful;
     }
 
-    public void setSuccessful(Boolean successful) {
+    public void setSuccessful(boolean successful) {
         isSuccessful = successful;
-        //if the user specifies if stage is successful or not, then they are no longer waiting for a response
-        isWaitingForResponse = false;
     }
 
-    public void setSuccessful(Boolean successful, String date) {
-        setSuccessful(successful);
-        this.dateOfReply = date;
+    public String getDateOfStart() {
+        return dateOfStart;
+    }
+
+    public void setDateOfStart(String dateOfStart) {
+        this.dateOfStart = dateOfStart;
+    }
+
+    public String getDateOfCompletion() {
+        return dateOfCompletion;
+    }
+
+    public void setDateOfCompletion(String dateOfCompletion) {
+        this.dateOfCompletion = dateOfCompletion;
+    }
+
+    public String getDateOfReply() {
+        return dateOfReply;
+    }
+
+    public void setDateOfReply(String dateOfReply) {
+        this.dateOfReply = dateOfReply;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public long getInternshipID() {
+        return internshipID;
+    }
+
+    public void setInternshipID(long internshipID) {
+        this.internshipID = internshipID;
+    }
+
+    public String getCurrentStatus() {
+        if(isCompleted) {
+            if(isWaitingForResponse) {
+                return "Waiting";
+            } else {
+                if(isSuccessful) {
+                    return "Successful!";
+                } else {
+                    return "Failed";
+                }
+            }
+        } else {
+            return "Not Completed";
+        }
     }
 
     @Override
     public String toString() {
-        String s = stageName;
-
-        if(isCompleted) {
-            if(isWaitingForResponse) {
-                s += " - Waiting";
-            } else {
-                if(isSuccessful() != null) {
-                    if(isSuccessful) {
-                        s+= " - Successful!";
-                    } else {
-                        s+= " - Failed";
-                    }
-                } else s += " - Don't Know";
-            }
-        } else {
-            s += " - Not Completed";
-        }
-
-        return s;
+        return stageName + " - " + getCurrentStatus();
     }
 
     @Override

@@ -121,4 +121,32 @@ public class DataSource {
         return internship;
     }
 
+    public List<ApplicationStage> getAllApplicationStages(long internshipID) {
+        List<ApplicationStage> applicationStages = new ArrayList<>();
+
+        Cursor cursor = mDatabase.query(ApplicationStageTable.TABLE_APPLICATION_STAGE, ApplicationStageTable.ALL_COLUMNS,
+                ApplicationStageTable.COLUMN_INTERNSHIP_ID + "=?", new String[] {Long.toString(internshipID)}, null, null, InternshipTable.COLUMN_CREATED_ON);
+
+        while(cursor.moveToNext()) {
+            ApplicationStage stage = new ApplicationStage();
+
+            stage.setStageID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_ID)));
+            stage.setStageName(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_STAGE_NAME)));
+            stage.setCompleted(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_COMPLETED)) == 1);
+            stage.setWaitingForResponse(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_WAITING)) == 1);
+            stage.setSuccessful(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_SUCCESSFUL)) == 1);
+            stage.setDateOfStart(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_START_DATE)));
+            stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_COMPLETE_DATE)));
+            stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
+            stage.setDescription(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_DESCRIPTION)));
+            stage.setInternshipID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_INTERNSHIP_ID)));
+
+            applicationStages.add(stage);
+        }
+
+        cursor.close();
+
+        return applicationStages;
+    }
+
 }

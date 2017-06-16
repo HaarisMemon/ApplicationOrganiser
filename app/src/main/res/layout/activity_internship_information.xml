@@ -87,6 +87,12 @@
             android:layout_marginBottom="10dp"
             android:id="@+id/descriptionText"/>
 
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/applicationStageListView"
+            android:layout_marginTop="15dp"></ListView>
+
     </LinearLayout>
 
 </RelativeLayout>

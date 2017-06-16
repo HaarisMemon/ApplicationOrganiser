@@ -20,6 +20,12 @@ public class ApplicationStageTable {
     public static final String COLUMN_MODIFIED_ON = "modified_on";
     public static final String COLUMN_INTERNSHIP_ID = "internship_id";
 
+    public static final String[] ALL_COLUMNS = {
+            COLUMN_ID, COLUMN_STAGE_NAME, COLUMN_IS_COMPLETED,
+            COLUMN_IS_WAITING, COLUMN_IS_SUCCESSFUL, COLUMN_START_DATE, COLUMN_COMPLETE_DATE,
+            COLUMN_REPLY_DATE, COLUMN_DESCRIPTION, COLUMN_CREATED_ON, COLUMN_MODIFIED_ON,
+            COLUMN_INTERNSHIP_ID
+    };
 
     public static final String SQL_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_APPLICATION_STAGE +

@@ -3,12 +3,18 @@ package com.haarismemon.applicationorganiser;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InternshipInformationActivity extends AppCompatActivity {
 
@@ -42,6 +48,16 @@ public class InternshipInformationActivity extends AppCompatActivity {
         } else {
             descriptionText.setText("No Description");
         }
+
+
+        ListView applicationStageListView = (ListView) findViewById(R.id.applicationStageListView);
+
+        List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipId());
+
+        ArrayAdapter<ApplicationStage> arrayAdapter = new ArrayAdapter<ApplicationStage>(
+                getApplicationContext(), android.R.layout.simple_expandable_list_item_1, stages);
+
+        applicationStageListView.setAdapter(arrayAdapter);
 
     }
 }
