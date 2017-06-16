@@ -4,6 +4,9 @@ import android.content.ContentValues;
 
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class represents the Internship that a user has applied to.
  */
@@ -16,7 +19,10 @@ public class Internship {
     private String location;
     private String description;
 
+    private List<ApplicationStage> applicationStages;
+
     public Internship() {
+        applicationStages = new ArrayList<>();
     }
 
     public Internship(String companyName, String role, String length, String location) {
@@ -98,5 +104,17 @@ public class Internship {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<ApplicationStage> getApplicationStages() {
+        return applicationStages;
+    }
+
+    public void setApplicationStages(List<ApplicationStage> applicationStages) {
+        this.applicationStages = applicationStages;
+    }
+
+    public void addStage(ApplicationStage stage) {
+        applicationStages.add(stage);
     }
 }

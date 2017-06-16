@@ -54,22 +54,24 @@ public class DataSource {
         long numApplicationStageCount = DatabaseUtils.queryNumEntries(mDatabase, ApplicationStageTable.TABLE_APPLICATION_STAGE);
 
         if(numInternships == 0) {
-            Internship ibm = new Internship("IBM", "Software Engineer Placement", "1 Year", "London");
-            Internship cognito = new Internship("Cognito iQ", "Software Developer Placement", "1 Year", "Newbury");
 
-            createInternship(ibm);
-            createInternship(cognito);
+            List<Internship> internships = SeedApplications.parse();
 
             if(numApplicationStageCount == 0) {
 
-                ApplicationStage onlineApplication = new ApplicationStage("Online Application", true, false, true, "28/01/2017", "28/01/2017", "20/02/2017", ibm.getInternshipId());
-                ApplicationStage test = new ApplicationStage("Test", true, false, true, null, null, "20/02/2017", ibm.getInternshipId());
-                ApplicationStage assessmentCentre = new ApplicationStage("Assessment Centre", true, false, true, "07/03/2017", "07/03/2017", "16/03/2017", ibm.getInternshipId());
+                for (Internship internship : internships) {
 
-                createApplicationStage(onlineApplication);
-                createApplicationStage(test);
-                createApplicationStage(assessmentCentre);
+                    createInternship(internship);
 
+                    for (ApplicationStage stage : internship.getApplicationStages()) {
+
+                        stage.setInternshipID(internship.getInternshipId());
+
+                        createApplicationStage(stage);
+
+                    }
+
+                }
             }
         }
 
@@ -79,7 +81,7 @@ public class DataSource {
         List<Internship> internships = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, null, null, InternshipTable.COLUMN_COMPANY_NAME);
+                null, null, null, null, InternshipTable.COLUMN_MODIFIED_ON + " DESC");
 
         while(cursor.moveToNext()) {
             Internship internship = new Internship();
