@@ -17,6 +17,7 @@ import java.util.List;
 public class ApplicationListActivity extends AppCompatActivity {
 
     DataSource mDataSource;
+    static ArrayAdapter<Internship> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class ApplicationListActivity extends AppCompatActivity {
 
         final List<Internship> internships = mDataSource.getAllInternship();
 
-        ArrayAdapter<Internship> arrayAdapter = new ArrayAdapter<Internship>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, internships);
+        arrayAdapter = new ArrayAdapter<Internship>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, internships);
 
         listView.setAdapter(arrayAdapter);
 

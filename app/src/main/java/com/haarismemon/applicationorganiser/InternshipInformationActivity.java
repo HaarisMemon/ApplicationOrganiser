@@ -1,14 +1,17 @@
 package com.haarismemon.applicationorganiser;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.database.DataSource;
@@ -16,12 +19,12 @@ import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InternshipInformationActivity extends AppCompatActivity {
 
     DataSource mDataSource;
+    Internship internship = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Internship internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
+        internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
 
         TextView companyNameText = (TextView) findViewById(R.id.companyNameText);
         TextView roleText = (TextView) findViewById(R.id.roleText);
@@ -66,5 +69,38 @@ public class InternshipInformationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.internship_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+
+            case R.id.action_delete_internship:
+                new AlertDialog.Builder(this)
+                        .setTitle("Are you sure?")
+                        .setMessage("This will be permanently deleted.")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mDataSource.deleteInternship(internship.getInternshipId());
+
+                                ApplicationListActivity.arrayAdapter.notifyDataSetChanged();
+                                //go back to the application list activity
+                                onBackPressed();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
