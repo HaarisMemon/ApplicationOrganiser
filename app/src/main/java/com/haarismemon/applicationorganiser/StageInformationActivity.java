@@ -19,6 +19,9 @@ public class StageInformationActivity extends AppCompatActivity {
 
     DataSource mDataSource;
     ApplicationStage stage;
+    private Intent intent;
+
+    public static final String FROM_STAGE_EDIT = "FROM_STAGE_EDIT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class StageInformationActivity extends AppCompatActivity {
         TextView dateOfReplyText = (TextView) findViewById(R.id.dateOfReplyText);
         TextView stageDescriptionText = (TextView) findViewById(R.id.stageDescriptionText);
 
-        Intent intent = getIntent();
+        intent = getIntent();
 
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
 
@@ -88,6 +91,7 @@ public class StageInformationActivity extends AppCompatActivity {
                         .setNegativeButton("No", null)
                         .show();
                 return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -102,9 +106,14 @@ public class StageInformationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-        intent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        Intent backIntent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
+
+        if(intent.getBooleanExtra(FROM_STAGE_EDIT, false)) {
+            backIntent.putExtra(InternshipTable.COLUMN_ID, intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
+        } else {
+            backIntent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
+        }
+        backIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(backIntent);
     }
 }

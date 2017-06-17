@@ -45,9 +45,11 @@ public class DataSource {
         return internship;
     }
 
-    public ApplicationStage createApplicationStage(ApplicationStage applicationStage) {
+    public ApplicationStage createApplicationStage(ApplicationStage applicationStage, long internshipID) {
+        applicationStage.setInternshipID(internshipID);
         ContentValues values = applicationStage.toValues();
-        mDatabase.insert(ApplicationStageTable.TABLE_APPLICATION_STAGE, null, values);
+        long stageID = mDatabase.insert(ApplicationStageTable.TABLE_APPLICATION_STAGE, null, values);
+        applicationStage.setStageID(stageID);
         return applicationStage;
     }
 
@@ -67,9 +69,7 @@ public class DataSource {
 
                     for (ApplicationStage stage : internship.getApplicationStages()) {
 
-                        stage.setInternshipID(internship.getInternshipID());
-
-                        createApplicationStage(stage);
+                        createApplicationStage(stage, internship.getInternshipID());
 
                     }
                 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.database.DataSource;
+import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
@@ -29,6 +30,7 @@ public class StageEditActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private boolean isEditMode;
     private ApplicationStage stage;
+    private long parentInternshipID;
 
     private DatePickerDialog.OnDateSetListener mDataSetListener;
     private Button dateButton;
@@ -54,6 +56,7 @@ public class StageEditActivity extends AppCompatActivity {
         isEditMode = intent.getBooleanExtra(STAGE_EDIT_MODE, false);
         mDataSource = new DataSource(this);
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1L));
+        parentInternshipID = intent.getLongExtra(InternshipTable.COLUMN_ID, -1L);
 
         dateButton = (Button) findViewById(R.id.startDateButton);
         stageNameEditText = (TextInputEditText) findViewById(R.id.stageNameEditText);
@@ -70,13 +73,13 @@ public class StageEditActivity extends AppCompatActivity {
         completeDateButton = (Button) findViewById(R.id.completionDateButton);
         replyDateButton = (Button) findViewById(R.id.replyDateButton);
 
-        if(stage.getDateOfStart() != null && stage.getDateOfStart().contains("/")) {
+        if(stage.getDateOfStart() != null && startDateButton.getText().toString().contains("/")) {
             startDateButton.setTag(DATE_SELECTED);
         }
-        if(stage.getDateOfCompletion() != null && stage.getDateOfCompletion().contains("/")) {
+        if(stage.getDateOfCompletion() != null && completeDateButton.getText().toString().contains("/")) {
             completeDateButton.setTag(DATE_SELECTED);
         }
-        if(stage.getDateOfReply() != null && stage.getDateOfReply().contains("/")) {
+        if(stage.getDateOfReply() != null && replyDateButton.getText().toString().contains("/")) {
             replyDateButton.setTag(DATE_SELECTED);
         }
 
@@ -197,11 +200,13 @@ public class StageEditActivity extends AppCompatActivity {
         if(isEditMode) {
             mDataSource.updateApplicationStage(newStage);
         } else {
-            mDataSource.createApplicationStage(newStage);
+            mDataSource.createApplicationStage(newStage, parentInternshipID);
         }
 
         Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
         intent.putExtra(ApplicationStageTable.COLUMN_ID, newStage.getStageID());
+        intent.putExtra(InternshipTable.COLUMN_ID, parentInternshipID);
+        intent.putExtra(StageInformationActivity.FROM_STAGE_EDIT, true);
         startActivity(intent);
 
     }

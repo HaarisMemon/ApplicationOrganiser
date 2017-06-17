@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     public void createInternship(View view) {
         Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
         intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, false);
-        intent.putExtra(InternshipTable.COLUMN_ID, -1);
         startActivity(intent);
     }
 }

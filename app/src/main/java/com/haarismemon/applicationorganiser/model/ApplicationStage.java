@@ -182,7 +182,7 @@ public class ApplicationStage {
         values.put(ApplicationStageTable.COLUMN_INTERNSHIP_ID, internshipID);
 
         if(modifiedDate != null) {
-            values.put(InternshipTable.COLUMN_MODIFIED_ON, modifiedDate);
+            values.put(ApplicationStageTable.COLUMN_MODIFIED_ON, modifiedDate);
         }
 
         return values;

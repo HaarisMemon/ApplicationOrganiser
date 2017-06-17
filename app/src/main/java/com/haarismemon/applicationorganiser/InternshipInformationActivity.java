@@ -60,7 +60,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + internship.getModifiedDate());
 
-        companyNameText.setText(internship.getCompanyName());
+        companyNameText.setText(internship.getCompanyName() + " - ID: " + internship.getInternshipID() + " / " + intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
         roleText.setText(internship.getRole());
         lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
         locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
@@ -128,9 +128,20 @@ public class InternshipInformationActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
 
+            case R.id.action_create_stage:
+                createStage();
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createStage() {
+        Intent intent = new Intent(getApplicationContext(), StageEditActivity.class);
+        intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, false);
+        intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
+        startActivity(intent);
     }
 
     public void editInternship(View view) {
