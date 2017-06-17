@@ -106,6 +106,7 @@ public class Internship {
     }
 
     public String getDescription() {
+        if(description != null && description.equals("")) return null;
         return description;
     }
 

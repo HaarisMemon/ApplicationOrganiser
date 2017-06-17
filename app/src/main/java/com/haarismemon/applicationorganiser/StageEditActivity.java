@@ -197,16 +197,15 @@ public class StageEditActivity extends AppCompatActivity {
 
         newStage.setDescription(descriptionEditText.getText().toString());
 
+        Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
+
         if(isEditMode) {
             mDataSource.updateApplicationStage(newStage);
         } else {
             mDataSource.createApplicationStage(newStage, parentInternshipID);
         }
 
-        Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
         intent.putExtra(ApplicationStageTable.COLUMN_ID, newStage.getStageID());
-        intent.putExtra(InternshipTable.COLUMN_ID, parentInternshipID);
-        intent.putExtra(StageInformationActivity.FROM_STAGE_EDIT, true);
         startActivity(intent);
 
     }
