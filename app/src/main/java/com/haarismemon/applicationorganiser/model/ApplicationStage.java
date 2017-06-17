@@ -24,6 +24,7 @@ public class ApplicationStage {
     private String dateOfReply;
     private String description;
     private long internshipID;
+    private String modifiedDate;
 
     public ApplicationStage() {
     }
@@ -120,6 +121,23 @@ public class ApplicationStage {
         this.internshipID = internshipID;
     }
 
+    public String getModifiedDate() {
+        SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat toString = new SimpleDateFormat("MMM dd HH:mm");
+
+        try {
+            return toString.format(toDate.parse(modifiedDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
     public String getCurrentStatus() {
         if(isCompleted) {
             if(isWaitingForResponse) {
@@ -158,6 +176,10 @@ public class ApplicationStage {
         values.put(ApplicationStageTable.COLUMN_REPLY_DATE, dateOfReply);
         values.put(ApplicationStageTable.COLUMN_DESCRIPTION, description);
         values.put(ApplicationStageTable.COLUMN_INTERNSHIP_ID, internshipID);
+
+        if(modifiedDate != null) {
+            values.put(InternshipTable.COLUMN_MODIFIED_ON, modifiedDate);
+        }
 
         return values;
     }

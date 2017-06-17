@@ -4,6 +4,8 @@ import android.content.ContentValues;
 
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class Internship {
     private String length;
     private String location;
     private String description;
+    private String modifiedDate;
 
     private List<ApplicationStage> applicationStages;
 
@@ -54,6 +57,10 @@ public class Internship {
         values.put(InternshipTable.COLUMN_LENGTH, length);
         values.put(InternshipTable.COLUMN_LOCATION, location);
         values.put(InternshipTable.COLUMN_DESCRIPTION, description);
+
+        if(modifiedDate != null) {
+            values.put(InternshipTable.COLUMN_MODIFIED_ON, modifiedDate);
+        }
 
         return values;
     }
@@ -104,6 +111,23 @@ public class Internship {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getModifiedDate() {
+        SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat toString = new SimpleDateFormat("dd MMM HH:mm");
+
+        try {
+            return toString.format(toDate.parse(modifiedDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     public List<ApplicationStage> getApplicationStages() {

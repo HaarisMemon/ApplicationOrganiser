@@ -11,9 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:text="Edited: "
         android:id="@+id/editedDateStageText"
-        android:textSize="@dimen/editedModifiedDateTextSize"
+        style="@style/editedModifiedText"
         android:layout_margin="@dimen/editedModifiedDateMargin"/>
 
     <LinearLayout

@@ -22,6 +22,12 @@ import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.util.List;
 
+import static com.haarismemon.applicationorganiser.R.id.companyNameText;
+import static com.haarismemon.applicationorganiser.R.id.descriptionText;
+import static com.haarismemon.applicationorganiser.R.id.lengthText;
+import static com.haarismemon.applicationorganiser.R.id.locationText;
+import static com.haarismemon.applicationorganiser.R.id.roleText;
+
 public class InternshipInformationActivity extends AppCompatActivity {
 
     DataSource mDataSource;
@@ -35,6 +41,13 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         setTitle("Internship");
 
+        TextView editedText = (TextView) findViewById(R.id.editedDateInternshipText);
+        TextView companyNameText = (TextView) findViewById(R.id.companyNameText);
+        TextView roleText = (TextView) findViewById(R.id.roleText);
+        TextView lengthText = (TextView) findViewById(R.id.lengthText);
+        TextView locationText = (TextView) findViewById(R.id.locationText);
+        TextView descriptionText = (TextView) findViewById(R.id.descriptionText);
+
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
@@ -45,11 +58,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
 
-        TextView companyNameText = (TextView) findViewById(R.id.companyNameText);
-        TextView roleText = (TextView) findViewById(R.id.roleText);
-        TextView lengthText = (TextView) findViewById(R.id.lengthText);
-        TextView locationText = (TextView) findViewById(R.id.locationText);
-        TextView descriptionText = (TextView) findViewById(R.id.descriptionText);
+        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + internship.getModifiedDate());
 
         companyNameText.setText(internship.getCompanyName());
         roleText.setText(internship.getRole());

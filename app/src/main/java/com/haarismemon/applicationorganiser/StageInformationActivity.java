@@ -28,6 +28,7 @@ public class StageInformationActivity extends AppCompatActivity {
 
         mDataSource = new DataSource(this);
 
+        TextView editedText = (TextView) findViewById(R.id.editedDateStageText);
         TextView stageNameText = (TextView) findViewById(R.id.stageNameText);
         TextView isCompletedText = (TextView) findViewById(R.id.isCompletedText);
         TextView isWaitingForResponseText = (TextView) findViewById(R.id.isWaitingForResponseText);
@@ -41,6 +42,8 @@ public class StageInformationActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
+
+        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + stage.getModifiedDate());
 
         stageNameText.setText(stage.getStageName());
         isCompletedText.setText(stage.isCompleted() ? "Yes" : "No");

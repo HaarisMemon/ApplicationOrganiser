@@ -9,8 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,11 +72,9 @@ public class DataSource {
                         createApplicationStage(stage);
 
                     }
-
                 }
             }
         }
-
     }
 
     public List<Internship> getAllInternship() {
@@ -93,6 +92,7 @@ public class DataSource {
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
             internship.setDescription(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_DESCRIPTION)));
+            internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
 
             internships.add(internship);
         }
@@ -115,6 +115,7 @@ public class DataSource {
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
             internship.setDescription(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_DESCRIPTION)));
+            internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
 
             break;
         }
@@ -143,6 +144,7 @@ public class DataSource {
             stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
             stage.setDescription(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_DESCRIPTION)));
             stage.setInternshipID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_INTERNSHIP_ID)));
+            stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_MODIFIED_ON)));
 
             applicationStages.add(stage);
         }
@@ -169,6 +171,7 @@ public class DataSource {
             stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
             stage.setDescription(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_DESCRIPTION)));
             stage.setInternshipID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_INTERNSHIP_ID)));
+            stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_MODIFIED_ON)));
 
         }
 
@@ -197,15 +200,17 @@ public class DataSource {
     }
 
     public void updateInternship(Internship internship) {
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
         ContentValues values = internship.toValues();
-        values.put(InternshipTable.COLUMN_MODIFIED_ON, DateFormat.getDateTimeInstance().toString());
+        values.put(InternshipTable.COLUMN_MODIFIED_ON, currentDate);;
         mDatabase.update(InternshipTable.TABLE_INTERNSHIP, values,
                 InternshipTable.COLUMN_ID + " = ?",
                 new String[] {Long.toString(internship.getInternshipID())});
     }
 
     public void updateApplicationStage(ApplicationStage applicationStage) {
-        String currentDate = DateFormat.getDateTimeInstance().toString();
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
         ContentValues values = applicationStage.toValues();
         values.put(ApplicationStageTable.COLUMN_MODIFIED_ON, currentDate);
