@@ -25,7 +25,8 @@
             android:name=".InternshipInformationActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".StageInformationActivity" />
-        <activity android:name=".InternshipEditActivity"></activity>
+        <activity android:name=".InternshipEditActivity" />
+        <activity android:name=".StageEditActivity"></activity>
     </application>
 
 </manifest>
