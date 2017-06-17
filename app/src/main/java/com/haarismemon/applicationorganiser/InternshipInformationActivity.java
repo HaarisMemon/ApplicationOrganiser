@@ -2,6 +2,7 @@ package com.haarismemon.applicationorganiser;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,9 @@ public class InternshipInformationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_internship_information);
 
         setTitle("Internship");
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         mDataSource = new DataSource(this);
         mDataSource.open();
@@ -110,6 +114,10 @@ public class InternshipInformationActivity extends AppCompatActivity {
                         .setNegativeButton("No", null)
                         .show();
                 return true;
+            
+            case android.R.id.home:
+                onBackPressed();
+                return true;
 
         }
 
@@ -118,7 +126,8 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
     public void editInternship(View view) {
         Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
-        intent.putExtra("add_internship", false);
+        intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, true);
+        intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipId());
         startActivity(intent);
     }
 }

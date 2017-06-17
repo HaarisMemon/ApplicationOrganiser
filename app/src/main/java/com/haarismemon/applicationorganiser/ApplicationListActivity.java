@@ -1,8 +1,10 @@
 package com.haarismemon.applicationorganiser;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,6 +27,9 @@ public class ApplicationListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_application_list);
 
         setTitle("All Applications");
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         ListView listView = (ListView) findViewById(R.id.listView);
 
@@ -61,9 +66,21 @@ public class ApplicationListActivity extends AppCompatActivity {
         mDataSource.open();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public void createInternship(View view) {
         Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
-        intent.putExtra("add_internship", true);
+        intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, false);
+        intent.putExtra(InternshipTable.COLUMN_ID, -1);
         startActivity(intent);
     }
 
