@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="homeButtonsBackgroundColor">#d0e420</color>
+    <color name="homeButtonsBackgroundColor">#00ade7</color>
+    <color name="homeButtonsTextColor">#ffffff</color>
 </resources>
