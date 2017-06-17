@@ -81,7 +81,7 @@ public class DataSource {
         List<Internship> internships = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, null, null, InternshipTable.COLUMN_MODIFIED_ON);
+                null, null, null, null, InternshipTable.COLUMN_MODIFIED_ON + " DESC");
 
         while(cursor.moveToNext()) {
             Internship internship = new Internship();
@@ -194,4 +194,19 @@ public class DataSource {
                 ApplicationStageTable.COLUMN_ID + " = ?",
                 new String[] {Long.toString(stageID)});
     }
+
+    public void updateInternship(Internship internship) {
+        ContentValues values = internship.toValues();
+        mDatabase.update(InternshipTable.TABLE_INTERNSHIP, values,
+                InternshipTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(internship.getInternshipId())});
+    }
+
+    public void updateApplicationStage(ApplicationStage applicationStage) {
+        ContentValues values = applicationStage.toValues();
+        mDatabase.update(ApplicationStageTable.TABLE_APPLICATION_STAGE, values,
+                ApplicationStageTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(applicationStage.getStageID())});
+    }
+
 }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.haarismemon.applicationorganiser.database.InternshipTable;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void createInternship(View view) {
         Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
-        intent.putExtra("add_internship", true);
+        intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, false);
+        intent.putExtra(InternshipTable.COLUMN_ID, -1);
         startActivity(intent);
     }
 }

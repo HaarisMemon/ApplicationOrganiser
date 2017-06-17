@@ -114,7 +114,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
                         .setNegativeButton("No", null)
                         .show();
                 return true;
-            
+
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -128,6 +128,13 @@ public class InternshipInformationActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
         intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, true);
         intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }
