@@ -6,6 +6,195 @@
     android:layout_height="match_parent"
     tools:context="com.haarismemon.applicationorganiser.StageEditActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Stage Name"
+                android:id="@+id/stageNameEditText"
+                android:singleLine="true"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:id="@+id/stageEditGridLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed?"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:id="@+id/completedRadio">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:checked="true"/>
+
+            </RadioGroup>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waiting?"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:id="@+id/waitingRadio">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:checked="true"/>
+
+            </RadioGroup>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Successful?"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:id="@+id/successfulRadio">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:checked="true"/>
+
+            </RadioGroup>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick Start Date"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:onClick="pickDate"
+                android:id="@+id/startDateButton"
+                android:textAllCaps="false"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completion Date"
+                android:layout_row="4"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick Completion Date"
+                android:layout_row="4"
+                android:layout_column="1"
+                android:onClick="pickDate"
+                android:id="@+id/completionDateButton"
+                android:textAllCaps="false"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reply Date"
+                android:layout_row="5"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick Reply Date"
+                android:layout_row="5"
+                android:layout_column="1"
+                android:onClick="pickDate"
+                android:id="@+id/replyDateButton"
+                android:textAllCaps="false"/>
+
+        </GridLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:id="@+id/descriptionStageEditText"
+                android:height="200dp"
+                android:gravity="top"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/stageSaveFAB"
         android:layout_width="wrap_content"
