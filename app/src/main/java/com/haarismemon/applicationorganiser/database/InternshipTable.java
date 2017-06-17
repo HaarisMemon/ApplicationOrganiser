@@ -37,6 +37,13 @@ public class InternshipTable {
                 COLUMN_MODIFIED_ON + " DATETIME DEFAULT CURRENT_TIMESTAMP" +
             ")";
 
+    public static final String SQL_MODIFIED_TRIGGER =
+            "CREATE TRIGGER IF NOT EXISTS internship_modified AFTER INSERT ON " +
+                    InternshipTable.TABLE_INTERNSHIP + " BEGIN UPDATE " +
+                    InternshipTable.TABLE_INTERNSHIP + " SET " +
+                    InternshipTable.COLUMN_MODIFIED_ON + " = CURRENT_TIMESTAMP WHERE " +
+                    InternshipTable.COLUMN_ID + " = NEW." + InternshipTable.COLUMN_ID + "; end";
+
     public static final String SQL_DELETE =
             "DROP TABLE " + TABLE_INTERNSHIP;
 

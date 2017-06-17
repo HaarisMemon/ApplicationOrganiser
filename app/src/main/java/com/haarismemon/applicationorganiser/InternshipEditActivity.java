@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
@@ -105,7 +104,7 @@ public class InternshipEditActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-        intent.putExtra(InternshipTable.COLUMN_ID, newInternship.getInternshipId());
+        intent.putExtra(InternshipTable.COLUMN_ID, newInternship.getInternshipID());
         startActivity(intent);
 
     }

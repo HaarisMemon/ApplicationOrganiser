@@ -46,6 +46,13 @@ public class ApplicationStageTable {
                     "FOREIGN KEY(" + COLUMN_INTERNSHIP_ID + ") REFERENCES " + InternshipTable.TABLE_INTERNSHIP + "(" + InternshipTable.COLUMN_ID + ") " +
                     ")";
 
+    public static final String SQL_MODIFIED_TRIGGER =
+            "CREATE TRIGGER IF NOT EXISTS stage_modified AFTER INSERT ON " +
+                    ApplicationStageTable.TABLE_APPLICATION_STAGE + " BEGIN UPDATE " +
+                    ApplicationStageTable.TABLE_APPLICATION_STAGE + " SET " +
+                    ApplicationStageTable.COLUMN_MODIFIED_ON + " = CURRENT_TIMESTAMP WHERE " +
+                    ApplicationStageTable.COLUMN_ID + " = NEW." + ApplicationStageTable.COLUMN_ID + "; end";
+
     public static final String SQL_DELETE =
             "DROP TABLE " + TABLE_APPLICATION_STAGE;
 

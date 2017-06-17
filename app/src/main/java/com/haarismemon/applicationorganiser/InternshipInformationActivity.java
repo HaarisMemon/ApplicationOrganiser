@@ -60,7 +60,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         ListView applicationStageListView = (ListView) findViewById(R.id.applicationStageListView);
 
-        final List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipId());
+        final List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipID());
 
         arrayAdapter = new ArrayAdapter<ApplicationStage>(
                 getApplicationContext(), android.R.layout.simple_expandable_list_item_1, stages);
@@ -102,7 +102,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mDataSource.deleteInternship(internship.getInternshipId());
+                                mDataSource.deleteInternship(internship.getInternshipID());
 
                                 ApplicationListActivity.arrayAdapter.notifyDataSetChanged();
                                 //go back to the application list activity
@@ -127,7 +127,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
     public void editInternship(View view) {
         Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
         intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, true);
-        intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipId());
+        intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
         startActivity(intent);
     }
 

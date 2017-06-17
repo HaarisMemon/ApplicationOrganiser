@@ -47,7 +47,7 @@ public class ApplicationListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-                intent.putExtra(InternshipTable.COLUMN_ID, internships.get(i).getInternshipId());
+                intent.putExtra(InternshipTable.COLUMN_ID, internships.get(i).getInternshipID());
                 startActivity(intent);
             }
         });

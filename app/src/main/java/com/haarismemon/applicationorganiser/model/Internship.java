@@ -58,7 +58,7 @@ public class Internship {
         return values;
     }
 
-    public long getInternshipId() {
+    public long getInternshipID() {
         return internshipId;
     }
 

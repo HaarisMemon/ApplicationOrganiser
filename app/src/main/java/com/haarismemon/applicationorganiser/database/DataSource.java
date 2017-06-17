@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class DataSource {
 
                     for (ApplicationStage stage : internship.getApplicationStages()) {
 
-                        stage.setInternshipID(internship.getInternshipId());
+                        stage.setInternshipID(internship.getInternshipID());
 
                         createApplicationStage(stage);
 
@@ -197,16 +198,27 @@ public class DataSource {
 
     public void updateInternship(Internship internship) {
         ContentValues values = internship.toValues();
+        values.put(InternshipTable.COLUMN_MODIFIED_ON, DateFormat.getDateTimeInstance().toString());
         mDatabase.update(InternshipTable.TABLE_INTERNSHIP, values,
                 InternshipTable.COLUMN_ID + " = ?",
-                new String[] {Long.toString(internship.getInternshipId())});
+                new String[] {Long.toString(internship.getInternshipID())});
     }
 
     public void updateApplicationStage(ApplicationStage applicationStage) {
+        String currentDate = DateFormat.getDateTimeInstance().toString();
+
         ContentValues values = applicationStage.toValues();
+        values.put(ApplicationStageTable.COLUMN_MODIFIED_ON, currentDate);
+
         mDatabase.update(ApplicationStageTable.TABLE_APPLICATION_STAGE, values,
                 ApplicationStageTable.COLUMN_ID + " = ?",
                 new String[] {Long.toString(applicationStage.getStageID())});
+
+        ContentValues parentInternshipValues = new ContentValues();
+        parentInternshipValues.put(InternshipTable.COLUMN_MODIFIED_ON, currentDate);
+
+        mDatabase.update(InternshipTable.TABLE_INTERNSHIP, parentInternshipValues, InternshipTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(applicationStage.getInternshipID())});
     }
 
 }
