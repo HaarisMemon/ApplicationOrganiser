@@ -39,7 +39,6 @@ public class StageInformationActivity extends AppCompatActivity {
         TextView dateOfReplyText = (TextView) findViewById(R.id.dateOfReplyText);
         TextView stageDescriptionText = (TextView) findViewById(R.id.stageDescriptionText);
 
-
         Intent intent = getIntent();
 
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
@@ -98,6 +97,14 @@ public class StageInformationActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), StageEditActivity.class);
         intent.putExtra(StageEditActivity.STAGE_EDIT_MODE, true);
         intent.putExtra(ApplicationStageTable.COLUMN_ID, stage.getStageID());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
+        intent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }

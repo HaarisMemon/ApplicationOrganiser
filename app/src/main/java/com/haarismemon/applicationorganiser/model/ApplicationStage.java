@@ -82,6 +82,7 @@ public class ApplicationStage {
     }
 
     public String getDateOfStart() {
+        if(dateOfStart != null && dateOfStart.equals("null")) return null;
         return dateOfStart;
     }
 
@@ -90,6 +91,7 @@ public class ApplicationStage {
     }
 
     public String getDateOfCompletion() {
+        if(dateOfCompletion != null && dateOfCompletion.equals("null")) return null;
         return dateOfCompletion;
     }
 
@@ -98,6 +100,7 @@ public class ApplicationStage {
     }
 
     public String getDateOfReply() {
+        if(dateOfReply != null && dateOfReply.equals("null")) return null;
         return dateOfReply;
     }
 
@@ -106,6 +109,7 @@ public class ApplicationStage {
     }
 
     public String getDescription() {
+        if(description != null && description.equals("")) return null;
         return description;
     }
 

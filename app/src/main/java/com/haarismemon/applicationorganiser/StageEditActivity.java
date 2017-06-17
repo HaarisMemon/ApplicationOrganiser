@@ -1,44 +1,84 @@
 package com.haarismemon.applicationorganiser;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.database.DataSource;
+import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
-
-import static com.haarismemon.applicationorganiser.R.id.descriptionEditText;
-import static com.haarismemon.applicationorganiser.R.id.lengthEditText;
-import static com.haarismemon.applicationorganiser.R.id.locationEditText;
 
 public class StageEditActivity extends AppCompatActivity {
 
     public static final String STAGE_EDIT_MODE = "STAGE_EDIT_MODE";
+    public static final String DATE_SELECTED = "DATE_SELECTED";
 
     private DataSource mDataSource;
     private boolean isEditMode;
+    private ApplicationStage stage;
 
-    DatePickerDialog.OnDateSetListener mDataSetListener;
-
-    Button dateButton;
+    private DatePickerDialog.OnDateSetListener mDataSetListener;
+    private Button dateButton;
+    private TextInputEditText stageNameEditText;
+    private TextInputEditText descriptionEditText;
+    private RadioButton yesComplete;
+    private RadioButton noComplete;
+    private RadioButton yesWaiting;
+    private RadioButton noWaiting;
+    private RadioButton yesSuccessful;
+    private RadioButton noSuccessful;
+    private Button startDateButton;
+    private Button completeDateButton;
+    private Button replyDateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_edit);
 
+        Intent intent = getIntent();
+
+        isEditMode = intent.getBooleanExtra(STAGE_EDIT_MODE, false);
         mDataSource = new DataSource(this);
+        stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1L));
+
         dateButton = (Button) findViewById(R.id.startDateButton);
+        stageNameEditText = (TextInputEditText) findViewById(R.id.stageNameEditText);
+        descriptionEditText = (TextInputEditText) findViewById(R.id.descriptionStageEditText);
+
+        yesComplete = (RadioButton) findViewById(R.id.yesCompletedRadio);
+        noComplete = (RadioButton) findViewById(R.id.noCompletedRadio);
+        yesWaiting = (RadioButton) findViewById(R.id.yesWaitingRadio);
+        noWaiting = (RadioButton) findViewById(R.id.noWaitingRadio);
+        yesSuccessful = (RadioButton) findViewById(R.id.yesSuccessfulRadio);
+        noSuccessful = (RadioButton) findViewById(R.id.noSuccessfulRadio);
+
+        startDateButton = (Button) findViewById(R.id.startDateButton);
+        completeDateButton = (Button) findViewById(R.id.completionDateButton);
+        replyDateButton = (Button) findViewById(R.id.replyDateButton);
+
+        if(stage.getDateOfStart() != null && stage.getDateOfStart().contains("/")) {
+            startDateButton.setTag(DATE_SELECTED);
+        }
+        if(stage.getDateOfCompletion() != null && stage.getDateOfCompletion().contains("/")) {
+            completeDateButton.setTag(DATE_SELECTED);
+        }
+        if(stage.getDateOfReply() != null && stage.getDateOfReply().contains("/")) {
+            replyDateButton.setTag(DATE_SELECTED);
+        }
 
         mDataSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -53,14 +93,54 @@ public class StageEditActivity extends AppCompatActivity {
 
                 String date = dayOfMonth + "/" + monthOfYear + "/" + year;
                 dateButton.setText(date);
+                dateButton.setTag(DATE_SELECTED);
             }
         };
 
         if(isEditMode) {
             setTitle("Edit Stage");
 
+            stageNameEditText.setText(stage.getStageName());
+
+            if(stage.isCompleted()) {
+                yesComplete.setChecked(true);
+            }
+            else {
+                noComplete.setChecked(true);
+            }
+
+            if(stage.isWaitingForResponse()) {
+                yesWaiting.setChecked(true);
+            }
+            else {
+                noWaiting.setChecked(true);
+            }
+
+            if(stage.isSuccessful()) {
+                yesSuccessful.setChecked(true);
+            }
+            else {
+                noSuccessful.setChecked(true);
+            }
+
+            if(stage.getDateOfStart() != null) {
+                startDateButton.setText(stage.getDateOfStart());
+            }
+            if(stage.getDateOfCompletion() != null) {
+                completeDateButton.setText(stage.getDateOfCompletion());
+            }
+            if(stage.getDateOfReply() != null) {
+                replyDateButton.setText(stage.getDateOfReply());
+            }
+
+            descriptionEditText.setText(stage.getDescription());
+
         } else {
             setTitle("New Stage");
+
+            noComplete.setChecked(true);
+            noWaiting.setChecked(true);
+            noSuccessful.setChecked(true);
         }
     }
 
@@ -89,14 +169,44 @@ public class StageEditActivity extends AppCompatActivity {
     }
 
     private void saveStage() {
+        ApplicationStage newStage = null;
+
+        if(isEditMode) {
+            newStage = stage;
+        } else {
+            newStage = new ApplicationStage();
+        }
+
+        newStage.setStageName(stageNameEditText.getText().toString());
+
+        if(yesComplete.isChecked()) newStage.setCompleted(true);
+        else newStage.setCompleted(false);
+
+        if(yesWaiting.isChecked()) newStage.setWaitingForResponse(true);
+        else newStage.setWaitingForResponse(false);
+
+        if(yesSuccessful.isChecked()) newStage.setSuccessful(true);
+        else newStage.setSuccessful(false);
+
+        newStage.setDateOfStart(startDateButton.getText().toString());
+        newStage.setDateOfCompletion(completeDateButton.getText().toString());
+        newStage.setDateOfReply(replyDateButton.getText().toString());
+
+        newStage.setDescription(descriptionEditText.getText().toString());
+
+        if(isEditMode) {
+            mDataSource.updateApplicationStage(newStage);
+        } else {
+            mDataSource.createApplicationStage(newStage);
+        }
+
+        Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
+        intent.putExtra(ApplicationStageTable.COLUMN_ID, newStage.getStageID());
+        startActivity(intent);
 
     }
 
     public void pickDate(View view) {
-        Log.i("buttonID", ""+view.getId());
-        Log.i("startDateButton", ""+R.id.startDateButton);
-        Log.i("completionDateButton", ""+R.id.completionDateButton);
-        Log.i("replyDateButton", ""+R.id.replyDateButton);
 
         if(view.getId() == R.id.startDateButton) {
             dateButton = (Button) findViewById(R.id.startDateButton);
@@ -108,23 +218,31 @@ public class StageEditActivity extends AppCompatActivity {
             dateButton = null;
         }
 
-        switch (view.getId()) {
-            case R.id.startDateButton:
-                dateButton = (Button) findViewById(R.id.startDateButton);
-            case R.id.completionDateButton:
-                dateButton = (Button) findViewById(R.id.completionDateButton);
-            case R.id.replyDateButton:
-                dateButton = (Button) findViewById(R.id.replyDateButton);
-            default:
-                dateButton = null;
-        }
-
         if(dateButton != null) {
-            Calendar cal = Calendar.getInstance();
+            int day;
+            int month;
+            int year;
 
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-            int month = cal.get(Calendar.MONTH);
-            int year = cal.get(Calendar.YEAR);
+            if(dateButton.getTag() != null && ((String) dateButton.getTag()).equals(DATE_SELECTED)) {
+                String dates[] = dateButton.getText().toString().split("/");
+
+                day = Integer.parseInt(dates[0]);
+                month = Integer.parseInt(dates[1]) - 1;
+                year = Integer.parseInt(dates[2]);
+
+                if(month == -1) {
+                    month = 11;
+                    --year;
+                }
+
+
+            } else {
+                Calendar cal  = Calendar.getInstance();
+
+                day = cal.get(Calendar.DAY_OF_MONTH);
+                month = cal.get(Calendar.MONTH);
+                year = cal.get(Calendar.YEAR);
+            }
 
             DatePickerDialog dialog = new DatePickerDialog(StageEditActivity.this,
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -135,5 +253,7 @@ public class StageEditActivity extends AppCompatActivity {
             Toast.makeText(this, "Button not found", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 }
