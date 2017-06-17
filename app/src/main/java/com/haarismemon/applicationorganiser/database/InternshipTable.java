@@ -33,8 +33,8 @@ public class InternshipTable {
                 COLUMN_LENGTH + " VARCHAR, " +
                 COLUMN_LOCATION + " VARCHAR," +
                 COLUMN_DESCRIPTION + " VARCHAR, " +
-                COLUMN_CREATED_ON + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
-                COLUMN_MODIFIED_ON + " DATETIME DEFAULT CURRENT_TIMESTAMP" +
+                COLUMN_CREATED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')), " +
+                COLUMN_MODIFIED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))" +
             ")";
 
 //    public static final String SQL_MODIFIED_TRIGGER =

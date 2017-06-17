@@ -50,6 +50,16 @@ public class DataSource {
         ContentValues values = applicationStage.toValues();
         long stageID = mDatabase.insert(ApplicationStageTable.TABLE_APPLICATION_STAGE, null, values);
         applicationStage.setStageID(stageID);
+
+        //update internship modified date when new stage is created
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+        ContentValues parentInternshipValues = new ContentValues();
+        parentInternshipValues.put(InternshipTable.COLUMN_MODIFIED_ON, currentDate);
+
+        mDatabase.update(InternshipTable.TABLE_INTERNSHIP, parentInternshipValues, InternshipTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(internshipID)});
+
         return applicationStage;
     }
 

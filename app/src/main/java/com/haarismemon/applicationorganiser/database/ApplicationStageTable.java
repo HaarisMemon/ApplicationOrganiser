@@ -40,8 +40,8 @@ public class ApplicationStageTable {
                     COLUMN_COMPLETE_DATE + " DATETIME, " +
                     COLUMN_REPLY_DATE + " DATETIME, " +
                     COLUMN_DESCRIPTION + " DATETIME, " +
-                    COLUMN_CREATED_ON + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
-                    COLUMN_MODIFIED_ON + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
+                    COLUMN_CREATED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')), " +
+                    COLUMN_MODIFIED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))," +
                     COLUMN_INTERNSHIP_ID + " INTEGER, " +
                     "FOREIGN KEY(" + COLUMN_INTERNSHIP_ID + ") REFERENCES " + InternshipTable.TABLE_INTERNSHIP + "(" + InternshipTable.COLUMN_ID + ") " +
                     ")";
