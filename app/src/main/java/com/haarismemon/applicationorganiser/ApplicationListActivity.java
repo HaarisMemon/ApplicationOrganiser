@@ -26,10 +26,10 @@ public class ApplicationListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application_list);
 
-        setTitle("All Applications");
-
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
+        setTitle("All Applications");
 
         ListView listView = (ListView) findViewById(R.id.listView);
 

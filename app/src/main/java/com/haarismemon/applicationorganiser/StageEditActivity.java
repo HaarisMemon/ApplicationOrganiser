@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -50,6 +51,9 @@ public class StageEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_edit);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
 
@@ -160,6 +164,10 @@ public class StageEditActivity extends AppCompatActivity {
 
             case R.id.action_save_stage:
                 saveStage();
+                return true;
+
+            case android.R.id.home:
+                onBackPressed();
                 return true;
 
         }
