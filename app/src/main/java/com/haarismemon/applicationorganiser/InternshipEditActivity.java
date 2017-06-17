@@ -54,7 +54,7 @@ public class InternshipEditActivity extends AppCompatActivity {
             descriptionEditText.setText(internship.getDescription());
 
         } else {
-            setTitle("Add Internship");
+            setTitle("New Internship");
         }
 
     }
