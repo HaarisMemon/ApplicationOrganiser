@@ -60,7 +60,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + internship.getModifiedDate());
 
-        companyNameText.setText(internship.getCompanyName() + " - ID: " + internship.getInternshipID() + " / " + intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
+        companyNameText.setText(internship.getCompanyName());
         roleText.setText(internship.getRole());
         lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
         locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
