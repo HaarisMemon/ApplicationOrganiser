@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Application Organiser</string>
+    <string name="editedModified">Edited:</string>
 </resources>
