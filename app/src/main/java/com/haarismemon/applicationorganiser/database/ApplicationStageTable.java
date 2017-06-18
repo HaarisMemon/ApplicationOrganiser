@@ -1,11 +1,13 @@
 package com.haarismemon.applicationorganiser.database;
 
 /**
- * Created by Haaris on 15/06/2017.
+ * This class contains all the static string constants for Application Stage to help
+ * create the Application Stage Table in the database
+ * @author Haaris Memon
  */
-
 public class ApplicationStageTable {
 
+    //static String constants for all the columns in the Application Stage Table
     public static final String TABLE_APPLICATION_STAGE = "application_stage";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_STAGE_NAME = "stage_name";
@@ -20,6 +22,9 @@ public class ApplicationStageTable {
     public static final String COLUMN_MODIFIED_ON = "modified_on";
     public static final String COLUMN_INTERNSHIP_ID = "internship_id";
 
+    /**
+     * List of all columns in the Application Stage Table as String constants
+     */
     public static final String[] ALL_COLUMNS = {
             COLUMN_ID, COLUMN_STAGE_NAME, COLUMN_IS_COMPLETED,
             COLUMN_IS_WAITING, COLUMN_IS_SUCCESSFUL, COLUMN_START_DATE, COLUMN_COMPLETE_DATE,
@@ -27,6 +32,9 @@ public class ApplicationStageTable {
             COLUMN_INTERNSHIP_ID
     };
 
+    /**
+     * SQL Create statement to create the Application Stage table will all the columns, if not exists already
+     */
     public static final String SQL_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_APPLICATION_STAGE +
                     " (" +
@@ -46,13 +54,9 @@ public class ApplicationStageTable {
                     "FOREIGN KEY(" + COLUMN_INTERNSHIP_ID + ") REFERENCES " + InternshipTable.TABLE_INTERNSHIP + "(" + InternshipTable.COLUMN_ID + ") " +
                     ")";
 
-    public static final String SQL_MODIFIED_TRIGGER =
-            "CREATE TRIGGER IF NOT EXISTS stage_modified AFTER INSERT ON " +
-                    ApplicationStageTable.TABLE_APPLICATION_STAGE + " BEGIN UPDATE " +
-                    ApplicationStageTable.TABLE_APPLICATION_STAGE + " SET " +
-                    ApplicationStageTable.COLUMN_MODIFIED_ON + " = CURRENT_TIMESTAMP WHERE " +
-                    ApplicationStageTable.COLUMN_ID + " = NEW." + ApplicationStageTable.COLUMN_ID + "; end";
-
+    /**
+     * SQL Create statement to drop the Application Stage Table
+     */
     public static final String SQL_DELETE =
             "DROP TABLE " + TABLE_APPLICATION_STAGE;
 

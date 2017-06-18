@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class SeedApplications {
 
+    //hardcoded data to be put in database as dummy data
     private static String file = "Accenture,Technology Industrial Placement,12 Months,London\\Online Application,true,false,true,16/11/2016,16/11/2016,22/11/2016\\Online Test,true,false,true,null,16/11/2016,22/11/2016\\Online Interview,true,false,true,22/11/2016,23/11/2016,12/12/2016\\Assessment Centre,true,false,false,12/01/2017,12/01/2017,02/02/2017\n" +
             "JP Morgan,Technology Placement,12 months,London\\Online Application,true,false,false,22/11/2016,22/11/2016,27/03/2017\n" +
             "Morgan Stanley,Technology Placement Application Developer,12 months,London\\Online Application,true,false,false,25/11/2016,25/11/2016,16/12/2016\n" +
@@ -58,12 +59,18 @@ public class SeedApplications {
             "Thomson Reuters,Technology Placement,1 Year,Canary Wharf\\Online Application,true,false,true,01/05/2017,01/05/2017,11/05/2017\\Situational Strength Test,true,false,true,11/05/2017,12/05/2017,25/05/2017\\Technical Assessment,true,false,true,25/05/2017,29/05/2017,15/06/2017\\Assessment Centre,false,false,null,21/06/2017,null,null\n";
 
 
+    /**
+     * Parses the hardcoded data into Internship objects and adds the Application Stage objects to the Internship
+     * @return List of Internships that contain a list of Application Stages
+     */
     public static List<Internship> parse() {
         List<Internship> applications = new ArrayList<>();
 
+        //stores each line of the data into an array
         String[] internships = file.split("\\n");
 
         for(String internshipString : internships) {
+            //convert the string line into Internship and Application Stages
             Internship internship = parseInternship(internshipString);
             applications.add(internship);
         }
@@ -72,9 +79,16 @@ public class SeedApplications {
     }
 
 
-    public static Internship parseInternship(String internshipLine) {
+    /**
+     * Returns Internship object containing Application Stage objects from the hardcoded string line
+     * @param internshipLine hardcoded line with Internship and Application Stages
+     * @return Internship object containing Application Stage objects
+     */
+    private static Internship parseInternship(String internshipLine) {
+        //split the Internship and application stages
         String[] internshipStages = internshipLine.split("\\\\");
 
+        //first part is just the internship details (remaining parts are the application stages)
         String[] internshipDetails = internshipStages[0].split(",");
 
         String companyName = internshipDetails[0];
@@ -82,30 +96,38 @@ public class SeedApplications {
         String length = internshipDetails[2];
         String location = internshipDetails[3];
 
+        //create a new internship object and store all the fields into it
         Internship internship = new Internship();
         internship.setCompanyName(companyName);
         internship.setRole(role);
         if(!length.equals("null")) internship.setLength(length);
         if(!location.equals("null")) internship.setLocation(location);
 
+        //if there are any application stages in the hard coded data, parse each one
         if(internshipStages.length > 1) {
             for(int i = 1; i < internshipStages.length; ++i) {
+                //splits the fields of the application stage
                 String[] internshipStage = internshipStages[i].split(",");
 
+                //parse the fields into a stage object
                 ApplicationStage stage = parseStage(internshipStage);
 
-
+                //if stage returned is not null, then add it to the internship it belongs to
                 if(stage != null) {
                     internship.addStage(stage);
                 }
-
             }
         }
 
         return internship;
     }
 
-    public static ApplicationStage parseStage(String[] stageArray) {
+    /**
+     * Returns Application stage object from the hardcoded string array of fields
+     * @param stageArray array of fields for the application stage
+     * @return ApplicationStage object created from the passed in fields
+     */
+    private static ApplicationStage parseStage(String[] stageArray) {
         String stage_name = stageArray[0];
         String is_completed = stageArray[1];
         String is_waiting_for_response = stageArray[2];
@@ -118,35 +140,18 @@ public class SeedApplications {
 
         stage.setStageName(stage_name);
 
-        if(is_completed.equals("true")) {
-            if(!date_of_completed.equals("null"))  {
-                stage.setCompleted(true);
-                stage.setDateOfCompletion(date_of_completed);
-            }
-            else stage.setCompleted(true);
-        }
-        else if(is_completed.equals("false")) stage.setCompleted(false);
+        if(is_completed.equals("true")) stage.setCompleted(true);
+        else stage.setCompleted(false);
 
+        if(is_waiting_for_response.equals("true")) stage.setWaitingForResponse(true);
+        else stage.setWaitingForResponse(false);
 
-        if(is_waiting_for_response.equals("true")) {
-            stage.setWaitingForResponse(true);
-        }
-        else if(is_waiting_for_response.equals("false")) stage.setWaitingForResponse(false);
-
-
-        if(is_successful.equals("true")) {
-            if(!date_of_reply.equals("null")) {
-                stage.setSuccessful(true);
-                stage.setDateOfReply(date_of_reply);
-            }
-            else stage.setSuccessful(true);
-        }
-        else if(is_successful.equals("false")) {
-            stage.setSuccessful(false);
-            stage.setDateOfReply(date_of_reply);
-        }
+        if(is_successful.equals("true")) stage.setSuccessful(true);
+        else stage.setSuccessful(false);
 
         if(!date_of_start.equals("null")) stage.setDateOfStart(date_of_start);
+        if(!date_of_completed.equals("null")) stage.setDateOfCompletion(date_of_completed);
+        if(!date_of_reply.equals("null")) stage.setDateOfReply(date_of_reply);
 
         return stage;
     }
