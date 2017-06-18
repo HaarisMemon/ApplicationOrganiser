@@ -4,4 +4,6 @@
 
     <string name="saveDialogTitle">Do you want to save?</string>
     <string name="saveDialogMessage">Leaving will result in losing any changes you have made.</string>
+
+    <string name="pleaseFillForm">Please fill in the form before saving</string>
 </resources>

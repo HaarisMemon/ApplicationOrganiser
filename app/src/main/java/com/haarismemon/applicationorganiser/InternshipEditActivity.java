@@ -132,9 +132,10 @@ public class InternshipEditActivity extends AppCompatActivity {
     }
 
     /**
-     * Saves the current internship
+     * Saves the current internship, and returns true if the validation and save was successful
+     * @return true if the validation and save was successful
      */
-    private void saveInternship() {
+    private boolean saveInternship() {
         if(validate()) {
             Internship newInternship = null;
 
@@ -164,8 +165,11 @@ public class InternshipEditActivity extends AppCompatActivity {
             intent.putExtra(InternshipTable.COLUMN_ID, newInternship.getInternshipID());
             startActivity(intent);
 
+            return true;
+
         } else {
-            Toast.makeText(this, "Please fill in form before saving", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.pleaseFillForm), Toast.LENGTH_LONG).show();
+            return false;
         }
 
     }
@@ -179,9 +183,10 @@ public class InternshipEditActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //save internship then go back
-                        saveInternship();
-                        InternshipEditActivity.super.onBackPressed();
+                        //if saving internship is successful/valid then go back
+                        if(saveInternship()) {
+                            InternshipEditActivity.super.onBackPressed();
+                        }
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

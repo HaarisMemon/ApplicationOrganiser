@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,9 +27,6 @@ import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
-
-import static com.haarismemon.applicationorganiser.R.id.companyNameEditText;
-import static com.haarismemon.applicationorganiser.R.id.roleEditText;
 
 /**
  * This class represents the activity to edit an Application Stage
@@ -236,9 +234,10 @@ public class StageEditActivity extends AppCompatActivity {
     }
 
     /**
-     * Saves the current application stage
+     * Saves the current application stage, and returns true if the validation and save was successful
+     * @return true if the validation and save was successful
      */
-    private void saveStage() {
+    private boolean saveStage() {
         if(validate()) {
             ApplicationStage newStage = null;
 
@@ -286,8 +285,10 @@ public class StageEditActivity extends AppCompatActivity {
             intent.putExtra(ApplicationStageTable.COLUMN_ID, newStage.getStageID());
             startActivity(intent);
 
+            return true;
         } else {
-            Toast.makeText(this, "Please fill in form before saving", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.pleaseFillForm), Toast.LENGTH_SHORT).show();
+            return false;
         }
 
     }
@@ -340,7 +341,7 @@ public class StageEditActivity extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
         } else {
-            Toast.makeText(this, "Button not found", Toast.LENGTH_SHORT).show();
+            Log.i("StageEditError", "Button not found");
         }
     }
 
@@ -353,8 +354,10 @@ public class StageEditActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        saveStage();
-                        StageEditActivity.super.onBackPressed();
+                        //if saving application stage is successful/valid then go back
+                        if(saveStage()) {
+                            StageEditActivity.super.onBackPressed();
+                        }
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
