@@ -136,6 +136,7 @@ public class InternshipEditActivity extends AppCompatActivity {
      * @return true if the validation and save was successful
      */
     private boolean saveInternship() {
+        //if the form is validated then save the internship, otherwise do not
         if(validate()) {
             Internship newInternship = null;
 

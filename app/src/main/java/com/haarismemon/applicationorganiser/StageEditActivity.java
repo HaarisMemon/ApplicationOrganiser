@@ -238,6 +238,7 @@ public class StageEditActivity extends AppCompatActivity {
      * @return true if the validation and save was successful
      */
     private boolean saveStage() {
+        //if the form is validated then save the application stage, otherwise do not
         if(validate()) {
             ApplicationStage newStage = null;
 
