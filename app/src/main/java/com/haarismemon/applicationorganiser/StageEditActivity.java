@@ -25,10 +25,22 @@ import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
 
+/**
+ * This class represents the activity to edit an Application Stage
+ * @author HaarisMemon
+ */
 public class StageEditActivity extends AppCompatActivity {
 
+    /**
+     * string constant used as a key when passing the isEditMode for an application stage boolean in the intent
+     */
     public static final String STAGE_EDIT_MODE = "STAGE_EDIT_MODE";
-    public static final String DATE_SELECTED = "DATE_SELECTED";
+    /**
+     * String constant used as a key for the date button, to check whether the date has already been picked.
+     * If picked then when button clicked again, the date shown in the date picker dialog is the date they earlier picked.
+     * Otherwise, the date in the date picker dialog is today's date.
+     */
+    public static final String DATE_PICKED = "DATE_PICKED";
 
     private DataSource mDataSource;
     private boolean isEditMode;
@@ -54,14 +66,19 @@ public class StageEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_edit);
 
+        //adds a back button to the action bar
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
 
-        isEditMode = intent.getBooleanExtra(STAGE_EDIT_MODE, false);
         mDataSource = new DataSource(this);
+        //checks intent to see if it is edit or creation mode
+        isEditMode = intent.getBooleanExtra(STAGE_EDIT_MODE, false);
+
+        //application stage that has the same id that was sent in the intent
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1L));
+        //store the internship id that the stage belongs to
         parentInternshipID = intent.getLongExtra(InternshipTable.COLUMN_ID, -1L);
 
         dateButton = (Button) findViewById(R.id.startDateButton);
@@ -79,33 +96,40 @@ public class StageEditActivity extends AppCompatActivity {
         completeDateButton = (Button) findViewById(R.id.completionDateButton);
         replyDateButton = (Button) findViewById(R.id.replyDateButton);
 
+        //if the date is not null and the date is picked, then set the DATE_PICKED tag
         if(stage.getDateOfStart() != null && startDateButton.getText().toString().contains("/")) {
-            startDateButton.setTag(DATE_SELECTED);
+            startDateButton.setTag(DATE_PICKED);
         }
         if(stage.getDateOfCompletion() != null && completeDateButton.getText().toString().contains("/")) {
-            completeDateButton.setTag(DATE_SELECTED);
+            completeDateButton.setTag(DATE_PICKED);
         }
         if(stage.getDateOfReply() != null && replyDateButton.getText().toString().contains("/")) {
-            replyDateButton.setTag(DATE_SELECTED);
+            replyDateButton.setTag(DATE_PICKED);
         }
 
+        //used by date picker dialog to store the date picked in right format
         mDataSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                //add 1 to the month, as month start with 0
                 month = month + 1;
 
+                //if month is one digit, add 0 to the front
                 String monthOfYear = Integer.toString(month);
                 monthOfYear = (monthOfYear.length() == 1) ? monthOfYear = "0" + monthOfYear : monthOfYear;
 
+                //if day is one digit, add 0 to the front
                 String dayOfMonth = Integer.toString(day);
                 dayOfMonth = (dayOfMonth.length() == 1) ? dayOfMonth = "0" + dayOfMonth : dayOfMonth;
 
                 String date = dayOfMonth + "/" + monthOfYear + "/" + year;
                 dateButton.setText(date);
-                dateButton.setTag(DATE_SELECTED);
+                //set the date button to being picked
+                dateButton.setTag(DATE_PICKED);
             }
         };
 
+        //if editing application stage then display all existing application stage information
         if(isEditMode) {
             setTitle("Edit Stage");
 
@@ -163,11 +187,12 @@ public class StageEditActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-
+            //when save button pressed
             case R.id.action_save_stage:
                 saveStage();
                 return true;
 
+            //when back button pressed in action bar
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -177,13 +202,21 @@ public class StageEditActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * On click method to save an Application Stage
+     * @param view save button that was clicked
+     */
     public void saveButton(View view) {
         saveStage();
     }
 
+    /**
+     * Saves the current application stage
+     */
     private void saveStage() {
         ApplicationStage newStage = null;
 
+        //if editing application stage then use existing stage with existing ID, otherwise create new one
         if(isEditMode) {
             newStage = stage;
         } else {
@@ -207,21 +240,26 @@ public class StageEditActivity extends AppCompatActivity {
 
         newStage.setDescription(descriptionEditText.getText().toString());
 
-        Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
-
+        //if editing internship then update it, else create a new one in database
         if(isEditMode) {
             mDataSource.updateApplicationStage(newStage);
         } else {
             mDataSource.createApplicationStage(newStage, parentInternshipID);
         }
 
+        Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
+        //send the stage ID, in the intent
         intent.putExtra(ApplicationStageTable.COLUMN_ID, newStage.getStageID());
         startActivity(intent);
 
     }
 
+    /**
+     * On click method to pick a date by calling the date picker dialog
+     * @param view date button that was clicked
+     */
     public void pickDate(View view) {
-
+        //set the date button to which button that was clicked
         if(view.getId() == R.id.startDateButton) {
             dateButton = (Button) findViewById(R.id.startDateButton);
         } else if(view.getId() == R.id.completionDateButton) {
@@ -232,25 +270,24 @@ public class StageEditActivity extends AppCompatActivity {
             dateButton = null;
         }
 
+        //if date button was found
         if(dateButton != null) {
             int day;
             int month;
             int year;
 
-            if(dateButton.getTag() != null && ((String) dateButton.getTag()).equals(DATE_SELECTED)) {
+            /*  if the date button has tag of DATE_PICKED then set the date on dialog to date picked earlier,
+                otherwise display todays date on the dialog  */
+            if(dateButton.getTag() != null && ((String) dateButton.getTag()).equals(DATE_PICKED)) {
                 String dates[] = dateButton.getText().toString().split("/");
 
                 day = Integer.parseInt(dates[0]);
+                //minus 1 to get the month index
                 month = Integer.parseInt(dates[1]) - 1;
                 year = Integer.parseInt(dates[2]);
 
-                if(month == -1) {
-                    month = 11;
-                    --year;
-                }
-
-
             } else {
+                //get todays date
                 Calendar cal  = Calendar.getInstance();
 
                 day = cal.get(Calendar.DAY_OF_MONTH);
@@ -258,6 +295,7 @@ public class StageEditActivity extends AppCompatActivity {
                 year = cal.get(Calendar.YEAR);
             }
 
+            //set the dialog with the date and show it
             DatePickerDialog dialog = new DatePickerDialog(StageEditActivity.this,
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     mDataSetListener, year, month, day);
@@ -270,7 +308,8 @@ public class StageEditActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
+        //show alert dialog to confirm save
+        AlertDialog.Builder saveDialog = new AlertDialog.Builder(this)
                 .setTitle("Do you want to save?")
                 .setMessage("Leaving without saving will result in losing any changes you have made.")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -285,7 +324,7 @@ public class StageEditActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         StageEditActivity.super.onBackPressed();
                     }
-                })
-                .show();
+                });
+        saveDialog.show();
     }
 }

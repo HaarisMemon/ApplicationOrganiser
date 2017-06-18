@@ -16,10 +16,14 @@ import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
+/**
+ * This class represents the activity which displays the information of an Application Stage
+ * @author HaarisMemon
+ */
 public class StageInformationActivity extends AppCompatActivity {
 
-    DataSource mDataSource;
-    ApplicationStage stage;
+    private DataSource mDataSource;
+    private ApplicationStage stage;
     private Intent intent;
 
     @Override
@@ -27,12 +31,16 @@ public class StageInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_information);
 
+        //adds a back button to the action bar
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
         setTitle("Application Stage");
 
         mDataSource = new DataSource(this);
+        intent = getIntent();
+        //application stage that has the same id that was sent in the intent
+        stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
 
         TextView editedText = (TextView) findViewById(R.id.editedDateStageText);
         TextView stageNameText = (TextView) findViewById(R.id.stageNameText);
@@ -44,19 +52,15 @@ public class StageInformationActivity extends AppCompatActivity {
         TextView dateOfReplyText = (TextView) findViewById(R.id.dateOfReplyText);
         TextView stageDescriptionText = (TextView) findViewById(R.id.stageDescriptionText);
 
-        intent = getIntent();
-
-        stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
-
         editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + stage.getModifiedDate());
 
-        stageNameText.setText(stage.getStageName());
+        stageNameText.setText(stage.getStageName() != null ? stage.getStageName() : "No Company Name");
         isCompletedText.setText(stage.isCompleted() ? "Yes" : "No");
         isWaitingForResponseText.setText(stage.isWaitingForResponse() ? "Yes" : "No");
         isSuccessfulText.setText(stage.isSuccessful() ? "Yes" : "No");
-        dateOfStartText.setText(stage.getDateOfStart() != null ? stage.getDateOfStart() : "None");
-        dateOfCompletionText.setText(stage.getDateOfCompletion() != null ? stage.getDateOfCompletion() : "None");
-        dateOfReplyText.setText(stage.getDateOfReply() != null ? stage.getDateOfReply() : "None");
+        dateOfStartText.setText(stage.getDateOfStart() != null ? stage.getDateOfStart() : "No Start Date");
+        dateOfCompletionText.setText(stage.getDateOfCompletion() != null ? stage.getDateOfCompletion() : "No Complete Date");
+        dateOfReplyText.setText(stage.getDateOfReply() != null ? stage.getDateOfReply() : "No Reply Date");
         stageDescriptionText.setText(stage.getDescription() != null ? stage.getDescription() : "No Description");
 
     }
@@ -70,9 +74,10 @@ public class StageInformationActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        //when the delete button is pressed in the action bar
         switch(item.getItemId()) {
             case R.id.action_delete_stage:
+                //show alert dialog to confirm deletion
                 new AlertDialog.Builder(this)
                         .setTitle("Are you sure?")
                         .setMessage("This will be permanently deleted.")
@@ -80,12 +85,12 @@ public class StageInformationActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteApplicationStage(stage.getStageID());
-
                                 InternshipInformationActivity.arrayAdapter.notifyDataSetChanged();
-                                //go back to the application list activity
 
+                                //go back to the internship information activity
                                 Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                //send the ID of the internship this stage belongs to, in the intent
                                 intent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
                                 startActivity(intent);
                             }
@@ -94,6 +99,7 @@ public class StageInformationActivity extends AppCompatActivity {
                         .show();
                 return true;
 
+            //when back button pressed in action bar
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -103,9 +109,15 @@ public class StageInformationActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * On click method to edit an existing Application Stage
+     * @param view edit button that was clicked
+     */
     public void editStage(View view) {
         Intent intent = new Intent(getApplicationContext(), StageEditActivity.class);
+        //send a boolean that an application stage is being edited, in the intent
         intent.putExtra(StageEditActivity.STAGE_EDIT_MODE, true);
+        //send the id of the application stage to be edited, in the intent
         intent.putExtra(ApplicationStageTable.COLUMN_ID, stage.getStageID());
         startActivity(intent);
     }
@@ -113,7 +125,6 @@ public class StageInformationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent backIntent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-
         backIntent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
         backIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(backIntent);

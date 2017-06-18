@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * This class is used to seed hardcoded data into the database for testing.
+ * @author HaarisMemon
  */
 public class SeedApplications {
 

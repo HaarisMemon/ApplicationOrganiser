@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 
 /**
  * This class represents a stage in the internship application process
- * @author Haaris Memon
+ * @author HaarisMemon
  */
 public class ApplicationStage {
 

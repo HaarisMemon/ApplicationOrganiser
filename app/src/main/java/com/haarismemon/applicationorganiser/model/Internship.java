@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * This class represents the Internship that a user has or will apply to
- * @author Haaris Memon
+ * @author HaarisMemon
  */
 public class Internship {
 

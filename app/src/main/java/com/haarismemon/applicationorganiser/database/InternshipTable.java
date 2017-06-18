@@ -3,7 +3,7 @@ package com.haarismemon.applicationorganiser.database;
 /**
  * This class contains all the static string constants for Internship to help
  * create the Internship Table in the database
- * @author Haaris Memon
+ * @author HaarisMemon
  */
 public class InternshipTable {
 

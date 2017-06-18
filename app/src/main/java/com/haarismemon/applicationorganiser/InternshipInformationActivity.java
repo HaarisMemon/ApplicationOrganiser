@@ -22,18 +22,34 @@ import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.util.List;
 
+/**
+ * This class represents the activity which displays the information of an Internship with list of its stages
+ * @author HaarisMemon
+ */
 public class InternshipInformationActivity extends AppCompatActivity {
 
-    DataSource mDataSource;
-    Internship internship = null;
-    static ArrayAdapter<ApplicationStage> arrayAdapter;
+    private DataSource mDataSource;
+    private Internship internship = null;
+
+    /**
+     * ArrayAdapter of Listview for stages in the activity
+     */
+    public static ArrayAdapter<ApplicationStage> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_internship_information);
 
+        //adds a back button to the action bar
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+
         setTitle("Internship");
+
+        mDataSource = new DataSource(this);
+        mDataSource.open();
+        Intent intent = getIntent();
 
         TextView editedText = (TextView) findViewById(R.id.editedDateInternshipText);
         TextView companyNameText = (TextView) findViewById(R.id.companyNameText);
@@ -42,27 +58,21 @@ public class InternshipInformationActivity extends AppCompatActivity {
         TextView locationText = (TextView) findViewById(R.id.locationText);
         TextView descriptionText = (TextView) findViewById(R.id.descriptionText);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-
-        mDataSource = new DataSource(this);
-        mDataSource.open();
-
-        Intent intent = getIntent();
-
+        //internship that has the same id that was sent in the intent
         internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
 
+        //display the last time internship or its application stages was modified
         editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + internship.getModifiedDate());
 
-        companyNameText.setText(internship.getCompanyName());
-        roleText.setText(internship.getRole());
+        companyNameText.setText(internship.getCompanyName() != null ? internship.getCompanyName() : "None");
+        roleText.setText(internship.getRole() != null ? internship.getRole() : "None");
         lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
         locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
         descriptionText.setText(internship.getDescription() != null ? internship.getDescription() : "No Description");
 
-
         ListView applicationStageListView = (ListView) findViewById(R.id.applicationStageListView);
 
+        //arraylist of all application stages linked to the internship in the database
         final List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipID());
 
         arrayAdapter = new ArrayAdapter<ApplicationStage>(
@@ -70,6 +80,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         applicationStageListView.setAdapter(arrayAdapter);
 
+        //go to Application Stage Information when item in Stages List is clicked
         applicationStageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -97,8 +108,9 @@ public class InternshipInformationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-
+            //when the delete button is pressed in the action bar
             case R.id.action_delete_internship:
+                //show alert dialog to confirm deletion
                 new AlertDialog.Builder(this)
                         .setTitle("Are you sure?")
                         .setMessage("This will be permanently deleted.")
@@ -106,8 +118,8 @@ public class InternshipInformationActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteInternship(internship.getInternshipID());
-
                                 ApplicationListActivity.arrayAdapter.notifyDataSetChanged();
+
                                 //go back to the application list activity
                                 Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -118,10 +130,12 @@ public class InternshipInformationActivity extends AppCompatActivity {
                         .show();
                 return true;
 
+            //when back button pressed in action bar
             case android.R.id.home:
                 onBackPressed();
                 return true;
 
+            //when the create stage button is pressed
             case R.id.action_create_stage:
                 createStage();
                 return true;
@@ -131,16 +145,27 @@ public class InternshipInformationActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Change activity to create new stage
+     */
     private void createStage() {
         Intent intent = new Intent(getApplicationContext(), StageEditActivity.class);
+        //send a boolean in the intent, of whether the internship is being edited (or created)
         intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, false);
+        //send the id of the internship that stage will belong to, in the intent
         intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
         startActivity(intent);
     }
 
+    /**
+     * On click method to edit an existing Internship
+     * @param view edit button that was clicked
+     */
     public void editInternship(View view) {
         Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
+        //send a boolean that an internship is being edited, in the intent
         intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, true);
+        //send the id of the internship to be edited, in the intent
         intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
         startActivity(intent);
     }

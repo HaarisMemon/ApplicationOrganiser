@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * This class is a helper class for the app database to easily create and upgrade all the tables
+ * @author HaarisMemon
  */
 
 public class DBHelper extends SQLiteOpenHelper {

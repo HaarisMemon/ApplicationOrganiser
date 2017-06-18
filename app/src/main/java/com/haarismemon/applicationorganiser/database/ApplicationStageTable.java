@@ -3,7 +3,7 @@ package com.haarismemon.applicationorganiser.database;
 /**
  * This class contains all the static string constants for Application Stage to help
  * create the Application Stage Table in the database
- * @author Haaris Memon
+ * @author HaarisMemon
  */
 public class ApplicationStageTable {
 
