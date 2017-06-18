@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Application Organiser</string>
     <string name="editedModified">Edited:</string>
+
+    <string name="saveDialogTitle">Do you want to save?</string>
+    <string name="saveDialogMessage">Leaving will result in losing any changes you have made.</string>
 </resources>

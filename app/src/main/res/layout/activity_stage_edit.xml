@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:hint="Stage Name"
             android:id="@+id/stageNameEditText"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:inputType="textCapSentences"/>
 
         <GridLayout
             android:layout_width="match_parent"
@@ -31,7 +32,8 @@
                 android:text="Completed?"
                 android:layout_row="0"
                 android:layout_column="0"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:inputType="textCapSentences"/>
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -140,7 +142,8 @@
                 android:layout_marginLeft="@dimen/stageEditInputLeftMargin"
                 android:layout_row="3"
                 android:layout_column="1"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:inputType="textCapSentences"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -160,7 +163,8 @@
                 android:layout_marginLeft="@dimen/stageEditInputLeftMargin"
                 android:layout_row="4"
                 android:layout_column="1"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:inputType="textCapSentences"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -180,7 +184,8 @@
                 android:layout_marginLeft="@dimen/stageEditInputLeftMargin"
                 android:layout_row="5"
                 android:layout_column="1"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:inputType="textCapSentences"/>
 
         </GridLayout>
 

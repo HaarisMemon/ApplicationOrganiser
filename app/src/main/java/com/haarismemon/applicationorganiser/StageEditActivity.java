@@ -321,8 +321,8 @@ public class StageEditActivity extends AppCompatActivity {
     public void onBackPressed() {
         //show alert dialog to confirm save
         AlertDialog.Builder saveDialog = new AlertDialog.Builder(this)
-                .setTitle("Do you want to save?")
-                .setMessage("Leaving without saving will result in losing any changes you have made.")
+                .setTitle(getResources().getString(R.string.saveDialogTitle))
+                .setMessage(getResources().getString(R.string.saveDialogMessage))
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
