@@ -2,15 +2,19 @@ package com.haarismemon.applicationorganiser;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -72,9 +76,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
         lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
         locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
         descriptionText.setText(internship.getDescription() != null ? internship.getDescription() : "No Description");
-
-//        ListView applicationStageListView = (ListView) findViewById(R.id.applicationStageListView);
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        LinearLayout stagesListLinearLayout = (LinearLayout) findViewById(R.id.stagesListLinearLayout);
 
         //arraylist of all application stages linked to the internship in the database
         final List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipID());
@@ -82,21 +84,33 @@ public class InternshipInformationActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<ApplicationStage>(
                 getApplicationContext(), android.R.layout.simple_expandable_list_item_1, stages);
 
-//        applicationStageListView.setAdapter(arrayAdapter);
-
-        //go to Application Stage Information when item in Stages List is clicked
-//        applicationStageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
-//                intent.putExtra(ApplicationStageTable.COLUMN_ID, stages.get(i).getStageID());
-//                startActivity(intent);
-//            }
-//        });
-
+        //loop through each stage in the adapter
         for (int position = 0; position < arrayAdapter.getCount(); position++) {
-            View itemView = arrayAdapter.getView(position, null, linearLayout);
-            linearLayout.addView(itemView);
+            //get the item view of the application stage
+            View itemView = arrayAdapter.getView(position, null, stagesListLinearLayout);
+            //add the item view to the stages list linearLayout
+            stagesListLinearLayout.addView(itemView);
+
+            final int i = position;
+
+//            View dividerLayout = LayoutInflater.from(getApplicationContext()).inflate(
+//                    R.layout.divider, null);
+
+//            View dividerView = dividerLayout.findViewById(R.id.dividerView);
+//            dividerView.getParent().child
+//            stagesListLinearLayout.add(dividerView);
+
+            //set the on click listener for each application stage itemView
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //go to new activity to see the stage information of application stage clicked
+                    Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
+                    //send the stage id of the stage clicked, in the intent
+                    intent.putExtra(ApplicationStageTable.COLUMN_ID, stages.get(i).getStageID());
+                    startActivity(intent);
+                }
+            });
         }
 
     }
@@ -104,7 +118,6 @@ public class InternshipInformationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         arrayAdapter.notifyDataSetChanged();
     }
 
