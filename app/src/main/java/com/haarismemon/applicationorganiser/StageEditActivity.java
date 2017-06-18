@@ -27,6 +27,9 @@ import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
 
+import static com.haarismemon.applicationorganiser.R.id.companyNameEditText;
+import static com.haarismemon.applicationorganiser.R.id.roleEditText;
+
 /**
  * This class represents the activity to edit an Application Stage
  * @author HaarisMemon
@@ -209,6 +212,22 @@ public class StageEditActivity extends AppCompatActivity {
     }
 
     /**
+     * Validates whether the stage name is not left empty
+     * @return true if it is valid, where the stage name is not empty
+     */
+    private boolean validate() {
+        boolean isValid = true;
+
+        String stageNameText = stageNameEditText.getText().toString().replaceFirst("^ *", "");
+        if(stageNameText.length() < 1) {
+            stageNameEditText.setError("Please enter the stage name");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    /**
      * On click method to save an Application Stage
      * @param view save button that was clicked
      */
@@ -220,48 +239,56 @@ public class StageEditActivity extends AppCompatActivity {
      * Saves the current application stage
      */
     private void saveStage() {
-        ApplicationStage newStage = null;
+        if(validate()) {
+            ApplicationStage newStage = null;
 
-        //if editing application stage then use existing stage with existing ID, otherwise create new one
-        if(isEditMode) {
-            newStage = stage;
+            //if editing application stage then use existing stage with existing ID, otherwise create new one
+            if (isEditMode) {
+                newStage = stage;
+            } else {
+                newStage = new ApplicationStage();
+            }
+
+            newStage.setStageName(stageNameEditText.getText().toString().replaceFirst("^ *", ""));
+
+            if (yesComplete.isChecked()) newStage.setCompleted(true);
+            else newStage.setCompleted(false);
+
+            if (yesWaiting.isChecked()) newStage.setWaitingForResponse(true);
+            else newStage.setWaitingForResponse(false);
+
+            if (yesSuccessful.isChecked()) newStage.setSuccessful(true);
+            else newStage.setSuccessful(false);
+
+            if (startDateButton.getText().toString().contains("/"))
+                newStage.setDateOfStart(startDateButton.getText().toString());
+            else newStage.setDateOfStart(null);
+
+            if (completeDateButton.getText().toString().contains("/"))
+                newStage.setDateOfCompletion(completeDateButton.getText().toString());
+            else newStage.setDateOfCompletion(null);
+
+            if (replyDateButton.getText().toString().contains("/"))
+                newStage.setDateOfReply(replyDateButton.getText().toString());
+            else newStage.setDateOfReply(null);
+
+            newStage.setDescription(descriptionEditText.getText().toString().replaceFirst("^ *", ""));
+
+            //if editing internship then update it, else create a new one in database
+            if (isEditMode) {
+                mDataSource.updateApplicationStage(newStage);
+            } else {
+                mDataSource.createApplicationStage(newStage, parentInternshipID);
+            }
+
+            Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
+            //send the stage ID, in the intent
+            intent.putExtra(ApplicationStageTable.COLUMN_ID, newStage.getStageID());
+            startActivity(intent);
+
         } else {
-            newStage = new ApplicationStage();
+            Toast.makeText(this, "Please fill in form before saving", Toast.LENGTH_SHORT).show();
         }
-
-        newStage.setStageName(stageNameEditText.getText().toString());
-
-        if(yesComplete.isChecked()) newStage.setCompleted(true);
-        else newStage.setCompleted(false);
-
-        if(yesWaiting.isChecked()) newStage.setWaitingForResponse(true);
-        else newStage.setWaitingForResponse(false);
-
-        if(yesSuccessful.isChecked()) newStage.setSuccessful(true);
-        else newStage.setSuccessful(false);
-
-        if(startDateButton.getText().toString().contains("/")) newStage.setDateOfStart(startDateButton.getText().toString());
-        else newStage.setDateOfStart(null);
-
-        if(completeDateButton.getText().toString().contains("/")) newStage.setDateOfCompletion(completeDateButton.getText().toString());
-        else newStage.setDateOfCompletion(null);
-
-        if(replyDateButton.getText().toString().contains("/")) newStage.setDateOfReply(replyDateButton.getText().toString());
-        else newStage.setDateOfReply(null);
-
-        newStage.setDescription(descriptionEditText.getText().toString());
-
-        //if editing internship then update it, else create a new one in database
-        if(isEditMode) {
-            mDataSource.updateApplicationStage(newStage);
-        } else {
-            mDataSource.createApplicationStage(newStage, parentInternshipID);
-        }
-
-        Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
-        //send the stage ID, in the intent
-        intent.putExtra(ApplicationStageTable.COLUMN_ID, newStage.getStageID());
-        startActivity(intent);
 
     }
 

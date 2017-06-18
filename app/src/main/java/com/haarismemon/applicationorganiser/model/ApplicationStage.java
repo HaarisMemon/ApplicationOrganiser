@@ -25,9 +25,6 @@ public class ApplicationStage {
     private long internshipID;
     private String modifiedDate;
 
-    /**
-     * List of predefined application stage names to suggest as user types in the stage name
-     */
     public static final String[] defaultApplicationStageNames = {
             "Online Application Form", "Online Situation Judgement Test", "Online Numerical Test",
             "Online Verbal Reasoning Test", "Online Abstract Test", "Telephone Interview",
@@ -55,6 +52,7 @@ public class ApplicationStage {
      * @return name of application stage
      */
     public String getStageName() {
+        if(stageName != null && stageName.equals("")) stageName = null;
         return stageName;
     }
 
@@ -171,7 +169,7 @@ public class ApplicationStage {
      * @return description the user has provided
      */
     public String getDescription() {
-        if(description != null && description.equals("")) return null;
+        if(description != null && description.equals("")) description = null;
         return description;
     }
 
