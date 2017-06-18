@@ -177,27 +177,16 @@ public class InternshipEditActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //show alert dialog to confirm save
-        AlertDialog.Builder saveDialog = new AlertDialog.Builder(this)
-                .setTitle(getResources().getString(R.string.saveDialogTitle))
-                .setMessage(getResources().getString(R.string.saveDialogMessage))
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        //show alert dialog to discard changes
+        AlertDialog.Builder discardDialog = new AlertDialog.Builder(this)
+                .setMessage(getResources().getString(R.string.discardDialogMessage))
+                .setPositiveButton("Keep Editing", null)
+                .setNegativeButton("Discard", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //if saving internship is successful/valid then go back
-                        if(saveInternship()) {
-                            InternshipEditActivity.super.onBackPressed();
-                        }
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //do no save, and go back
-                        InternshipEditActivity.super.onBackPressed();
+                    InternshipEditActivity.super.onBackPressed();
                     }
                 });
-        saveDialog.show();
-
+        discardDialog.show();
     }
 }

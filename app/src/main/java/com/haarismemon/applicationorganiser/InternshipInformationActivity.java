@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.util.List;
+
+//import static com.haarismemon.applicationorganiser.R.id.applicationStageListView;
 
 /**
  * This class represents the activity which displays the information of an Internship with list of its stages
@@ -70,7 +73,8 @@ public class InternshipInformationActivity extends AppCompatActivity {
         locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
         descriptionText.setText(internship.getDescription() != null ? internship.getDescription() : "No Description");
 
-        ListView applicationStageListView = (ListView) findViewById(R.id.applicationStageListView);
+//        ListView applicationStageListView = (ListView) findViewById(R.id.applicationStageListView);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
 
         //arraylist of all application stages linked to the internship in the database
         final List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipID());
@@ -78,17 +82,22 @@ public class InternshipInformationActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<ApplicationStage>(
                 getApplicationContext(), android.R.layout.simple_expandable_list_item_1, stages);
 
-        applicationStageListView.setAdapter(arrayAdapter);
+//        applicationStageListView.setAdapter(arrayAdapter);
 
         //go to Application Stage Information when item in Stages List is clicked
-        applicationStageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
-                intent.putExtra(ApplicationStageTable.COLUMN_ID, stages.get(i).getStageID());
-                startActivity(intent);
-            }
-        });
+//        applicationStageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
+//                intent.putExtra(ApplicationStageTable.COLUMN_ID, stages.get(i).getStageID());
+//                startActivity(intent);
+//            }
+//        });
+
+        for (int position = 0; position < arrayAdapter.getCount(); position++) {
+            View itemView = arrayAdapter.getView(position, null, linearLayout);
+            linearLayout.addView(itemView);
+        }
 
     }
 
