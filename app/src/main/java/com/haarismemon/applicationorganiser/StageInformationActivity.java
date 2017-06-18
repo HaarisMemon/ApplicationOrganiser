@@ -44,6 +44,7 @@ public class StageInformationActivity extends AppCompatActivity {
 
         TextView editedText = (TextView) findViewById(R.id.editedDateStageText);
         TextView stageNameText = (TextView) findViewById(R.id.stageNameText);
+        TextView currentStatusText = (TextView) findViewById(R.id.currentStatusText);
         TextView isCompletedText = (TextView) findViewById(R.id.isCompletedText);
         TextView isWaitingForResponseText = (TextView) findViewById(R.id.isWaitingForResponseText);
         TextView isSuccessfulText = (TextView) findViewById(R.id.isSuccessfulText);
@@ -55,6 +56,7 @@ public class StageInformationActivity extends AppCompatActivity {
         editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + stage.getModifiedDate());
 
         stageNameText.setText(stage.getStageName() != null ? stage.getStageName() : "No Company Name");
+        currentStatusText.setText(stage.getCurrentStatus() != null ? stage.getCurrentStatus() : "No Status");
         isCompletedText.setText(stage.isCompleted() ? "Yes" : "No");
         isWaitingForResponseText.setText(stage.isWaitingForResponse() ? "Yes" : "No");
         isSuccessfulText.setText(stage.isSuccessful() ? "Yes" : "No");

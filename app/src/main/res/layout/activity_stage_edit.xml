@@ -12,7 +12,6 @@
         android:orientation="vertical"
         android:layout_margin="10dp">
 
-
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,6 +39,7 @@
                 android:orientation="horizontal"
                 android:layout_row="0"
                 android:layout_column="1"
+                android:layout_marginLeft="@dimen/stageEditInputLeftMargin"
                 android:id="@+id/completedRadioGroup">
 
                 <RadioButton
@@ -71,6 +71,7 @@
                 android:orientation="horizontal"
                 android:layout_row="1"
                 android:layout_column="1"
+                android:layout_marginLeft="@dimen/stageEditInputLeftMargin"
                 android:id="@+id/waitingRadioGroup">
 
                 <RadioButton
@@ -102,6 +103,8 @@
                 android:orientation="horizontal"
                 android:layout_row="2"
                 android:layout_column="1"
+
+                android:layout_marginLeft="@dimen/stageEditInputLeftMargin"
                 android:id="@+id/successfulRadioGroup">
 
                 <RadioButton
@@ -127,15 +130,17 @@
                 android:layout_column="0"
                 android:layout_gravity="center_vertical"/>
 
-            <Button
-                android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Pick Start Date"
+                android:hint="Pick Start Date"
+                android:id="@+id/startDateEditText"
+                android:onClick="pickDate"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/stageEditInputLeftMargin"
                 android:layout_row="3"
                 android:layout_column="1"
-                android:onClick="pickDate"
-                android:id="@+id/startDateButton"
-                android:textAllCaps="false"/>
+                android:focusable="false"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -145,15 +150,17 @@
                 android:layout_column="0"
                 android:layout_gravity="center_vertical"/>
 
-            <Button
-                android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Pick Completion Date"
+                android:hint="Pick Completion Date"
+                android:id="@+id/completionDateEditText"
+                android:onClick="pickDate"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/stageEditInputLeftMargin"
                 android:layout_row="4"
                 android:layout_column="1"
-                android:onClick="pickDate"
-                android:id="@+id/completionDateButton"
-                android:textAllCaps="false"/>
+                android:focusable="false"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -163,15 +170,17 @@
                 android:layout_column="0"
                 android:layout_gravity="center_vertical"/>
 
-            <Button
-                android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Pick Reply Date"
+                android:hint="Pick Reply Date"
+                android:id="@+id/replyDateEditText"
+                android:onClick="pickDate"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/stageEditInputLeftMargin"
                 android:layout_row="5"
                 android:layout_column="1"
-                android:onClick="pickDate"
-                android:id="@+id/replyDateButton"
-                android:textAllCaps="false"/>
+                android:focusable="false"/>
 
         </GridLayout>
 

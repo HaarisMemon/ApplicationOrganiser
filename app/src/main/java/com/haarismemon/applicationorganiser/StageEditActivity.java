@@ -15,8 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -50,7 +50,7 @@ public class StageEditActivity extends AppCompatActivity {
     private long parentInternshipID;
 
     private DatePickerDialog.OnDateSetListener mDataSetListener;
-    private Button dateButton;
+    private EditText clickedDateEditText = null;
     private AutoCompleteTextView stageNameEditText;
     private TextInputEditText descriptionEditText;
     private RadioButton yesComplete;
@@ -59,9 +59,9 @@ public class StageEditActivity extends AppCompatActivity {
     private RadioButton noWaiting;
     private RadioButton yesSuccessful;
     private RadioButton noSuccessful;
-    private Button startDateButton;
-    private Button completeDateButton;
-    private Button replyDateButton;
+    private EditText startDateButton;
+    private EditText completeDateButton;
+    private EditText replyDateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,6 @@ public class StageEditActivity extends AppCompatActivity {
         //store the internship id that the stage belongs to
         parentInternshipID = intent.getLongExtra(InternshipTable.COLUMN_ID, -1L);
 
-        dateButton = (Button) findViewById(R.id.startDateButton);
         stageNameEditText = (AutoCompleteTextView) findViewById(R.id.stageNameEditText);
         descriptionEditText = (TextInputEditText) findViewById(R.id.descriptionStageEditText);
 
@@ -94,9 +93,9 @@ public class StageEditActivity extends AppCompatActivity {
         yesSuccessful = (RadioButton) findViewById(R.id.yesSuccessfulRadio);
         noSuccessful = (RadioButton) findViewById(R.id.noSuccessfulRadio);
 
-        startDateButton = (Button) findViewById(R.id.startDateButton);
-        completeDateButton = (Button) findViewById(R.id.completionDateButton);
-        replyDateButton = (Button) findViewById(R.id.replyDateButton);
+        startDateButton = (EditText) findViewById(R.id.startDateEditText);
+        completeDateButton = (EditText) findViewById(R.id.completionDateEditText);
+        replyDateButton = (EditText) findViewById(R.id.replyDateEditText);
 
         ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, ApplicationStage.defaultApplicationStageNames);
 
@@ -130,9 +129,9 @@ public class StageEditActivity extends AppCompatActivity {
                 dayOfMonth = (dayOfMonth.length() == 1) ? dayOfMonth = "0" + dayOfMonth : dayOfMonth;
 
                 String date = dayOfMonth + "/" + monthOfYear + "/" + year;
-                dateButton.setText(date);
+                clickedDateEditText.setText(date);
                 //set the date button to being picked
-                dateButton.setTag(DATE_PICKED);
+                clickedDateEditText.setTag(DATE_PICKED);
             }
         };
 
@@ -272,26 +271,26 @@ public class StageEditActivity extends AppCompatActivity {
      */
     public void pickDate(View view) {
         //set the date button to which button that was clicked
-        if(view.getId() == R.id.startDateButton) {
-            dateButton = (Button) findViewById(R.id.startDateButton);
-        } else if(view.getId() == R.id.completionDateButton) {
-            dateButton = (Button) findViewById(R.id.completionDateButton);
-        } else if(view.getId() == R.id.replyDateButton) {
-            dateButton = (Button) findViewById(R.id.replyDateButton);
+        if(view.getId() == R.id.startDateEditText) {
+            clickedDateEditText = (EditText) findViewById(R.id.startDateEditText);
+        } else if(view.getId() == R.id.completionDateEditText) {
+            clickedDateEditText = (EditText) findViewById(R.id.completionDateEditText);
+        } else if(view.getId() == R.id.replyDateEditText) {
+            clickedDateEditText = (EditText) findViewById(R.id.replyDateEditText);
         } else {
-            dateButton = null;
+            clickedDateEditText = null;
         }
 
         //if date button was found
-        if(dateButton != null) {
+        if(clickedDateEditText != null) {
             int day;
             int month;
             int year;
 
             /*  if the date button has tag of DATE_PICKED then set the date on dialog to date picked earlier,
                 otherwise display todays date on the dialog  */
-            if(dateButton.getTag() != null && ((String) dateButton.getTag()).equals(DATE_PICKED)) {
-                String dates[] = dateButton.getText().toString().split("/");
+            if(clickedDateEditText.getTag() != null && ((String) clickedDateEditText.getTag()).equals(DATE_PICKED)) {
+                String dates[] = clickedDateEditText.getText().toString().split("/");
 
                 day = Integer.parseInt(dates[0]);
                 //minus 1 to get the month index
