@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
@@ -49,7 +51,7 @@ public class StageEditActivity extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener mDataSetListener;
     private Button dateButton;
-    private TextInputEditText stageNameEditText;
+    private AutoCompleteTextView stageNameEditText;
     private TextInputEditText descriptionEditText;
     private RadioButton yesComplete;
     private RadioButton noComplete;
@@ -82,7 +84,7 @@ public class StageEditActivity extends AppCompatActivity {
         parentInternshipID = intent.getLongExtra(InternshipTable.COLUMN_ID, -1L);
 
         dateButton = (Button) findViewById(R.id.startDateButton);
-        stageNameEditText = (TextInputEditText) findViewById(R.id.stageNameEditText);
+        stageNameEditText = (AutoCompleteTextView) findViewById(R.id.stageNameEditText);
         descriptionEditText = (TextInputEditText) findViewById(R.id.descriptionStageEditText);
 
         yesComplete = (RadioButton) findViewById(R.id.yesCompletedRadio);
@@ -95,6 +97,11 @@ public class StageEditActivity extends AppCompatActivity {
         startDateButton = (Button) findViewById(R.id.startDateButton);
         completeDateButton = (Button) findViewById(R.id.completionDateButton);
         replyDateButton = (Button) findViewById(R.id.replyDateButton);
+
+        ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, ApplicationStage.defaultApplicationStageNames);
+
+        stageNameEditText.setAdapter(stageNameAdapter);
+        stageNameEditText.setThreshold(1);
 
         //if the date is not null and the date is picked, then set the DATE_PICKED tag
         if(stage.getDateOfStart() != null && startDateButton.getText().toString().contains("/")) {

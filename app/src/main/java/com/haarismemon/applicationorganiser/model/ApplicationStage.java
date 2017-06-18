@@ -26,6 +26,15 @@ public class ApplicationStage {
     private String modifiedDate;
 
     /**
+     * List of predefined application stage names to suggest as user types in the stage name
+     */
+    public static final String[] defaultApplicationStageNames = {
+            "Online Application Form", "Online Situation Judgement Test", "Online Numerical Test",
+            "Online Verbal Reasoning Test", "Online Abstract Test", "Telephone Interview",
+            "Online Video Interview", "Business Interview", "Assessment Centre"
+    };
+
+    /**
      * Returns the ID of the application stage from the database
      * @return the ID of the application stage in the database table
      */
