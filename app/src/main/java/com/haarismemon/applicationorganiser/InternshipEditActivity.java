@@ -10,10 +10,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.Internship;
+
+import static com.haarismemon.applicationorganiser.R.id.companyNameText;
 
 /**
  * This class represents the activity to edit an Internship
@@ -107,36 +110,63 @@ public class InternshipEditActivity extends AppCompatActivity {
     }
 
     /**
+     * Validates whether the company name and role editText are not left empty
+     * @return true if it is valid, where the company name and role are not empty
+     */
+    private boolean validate() {
+        boolean isValid = true;
+
+        String companyNameText = companyNameEditText.getText().toString().replaceFirst("^ *", "");
+        if(companyNameText.length() < 1) {
+            companyNameEditText.setError("Please enter the company name");
+            isValid = false;
+        }
+
+        String roleText = roleEditText.getText().toString().replaceFirst("^ *", "");
+        if(roleText.length() < 1) {
+            roleEditText.setError("Please enter the role");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    /**
      * Saves the current internship
      */
     private void saveInternship() {
-        Internship newInternship = null;
+        if(validate()) {
+            Internship newInternship = null;
 
-        //if editing internship then use existing internship with existing ID, otherwise create new one
-        if(isEditMode) {
-            newInternship = internship;
+            //if editing internship then use existing internship with existing ID, otherwise create new one
+            if (isEditMode) {
+                newInternship = internship;
+            } else {
+                newInternship = new Internship();
+            }
+
+            newInternship.setCompanyName(companyNameEditText.getText().toString().toString().replaceFirst("^ *", ""));
+            newInternship.setRole(roleEditText.getText().toString().replaceFirst("^ *", ""));
+            newInternship.setLength(lengthEditText.getText().toString().replaceFirst("^ *", ""));
+            newInternship.setLocation(locationEditText.getText().toString().replaceFirst("^ *", ""));
+            newInternship.setDescription(descriptionEditText.getText().toString().replaceFirst("^ *", ""));
+
+            //if editing internship then update it, else create a new one in database
+            if (isEditMode) {
+                mDataSource.updateInternship(newInternship);
+            } else {
+                mDataSource.createInternship(newInternship);
+            }
+
+            //go to the Internship Information of the exisiting or new Internship made
+            Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
+            //send the internship ID in the intent
+            intent.putExtra(InternshipTable.COLUMN_ID, newInternship.getInternshipID());
+            startActivity(intent);
+
         } else {
-            newInternship = new Internship();
+            Toast.makeText(this, "Please fill in form before saving", Toast.LENGTH_SHORT).show();
         }
-
-        newInternship.setCompanyName(companyNameEditText.getText().toString().toString());
-        newInternship.setRole(roleEditText.getText().toString());
-        newInternship.setLength(lengthEditText.getText().toString());
-        newInternship.setLocation(locationEditText.getText().toString());
-        newInternship.setDescription(descriptionEditText.getText().toString());
-
-        //if editing internship then update it, else create a new one in database
-        if(isEditMode) {
-            mDataSource.updateInternship(newInternship);
-        } else {
-            mDataSource.createInternship(newInternship);
-        }
-
-        //go to the Internship Information of the exisiting or new Internship made
-        Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-        //send the internship ID in the intent
-        intent.putExtra(InternshipTable.COLUMN_ID, newInternship.getInternshipID());
-        startActivity(intent);
 
     }
 

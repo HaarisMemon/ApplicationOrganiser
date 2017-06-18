@@ -94,6 +94,7 @@ public class Internship {
      * @return company name of company offering the Internship
      */
     public String getCompanyName() {
+        if(companyName != null && companyName.equals("")) companyName = null;
         return companyName;
     }
 
@@ -110,6 +111,7 @@ public class Internship {
      * @return internship role
      */
     public String getRole() {
+        if(role != null && role.equals("")) role = null;
         return role;
     }
 
@@ -126,6 +128,7 @@ public class Internship {
      * @return length of employment in the Internship
      */
     public String getLength() {
+        if(length != null && length.equals("")) length = null;
         return length;
     }
 
@@ -142,6 +145,7 @@ public class Internship {
      * @return location of company where Internship is located
      */
     public String getLocation() {
+        if(location != null && location.equals("")) location = null;
         return location;
     }
 
@@ -158,7 +162,7 @@ public class Internship {
      * @return description the user has provided
      */
     public String getDescription() {
-        if(description != null && description.equals("")) return null;
+        if(description != null && description.equals("")) description = null;
         return description;
     }
 

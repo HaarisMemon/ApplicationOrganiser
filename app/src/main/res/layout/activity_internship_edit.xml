@@ -20,7 +20,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Company Name"
+                android:hint="Company Name *"
                 android:id="@+id/companyNameEditText"
                 android:singleLine="true"
                 android:inputType="textCapSentences"/>
@@ -35,7 +35,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Role"
+                android:hint="Role *"
                 android:id="@+id/roleEditText"
                 android:singleLine="true"
                 android:inputType="textCapSentences"/>
@@ -84,7 +84,7 @@
                 android:id="@+id/descriptionEditText"
                 android:height="200dp"
                 android:gravity="top"
-                android:inputType="textCapSentences"/>
+                android:capitalize="sentences"/>
 
         </android.support.design.widget.TextInputLayout>
 
