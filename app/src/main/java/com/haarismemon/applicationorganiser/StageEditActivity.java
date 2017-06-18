@@ -234,9 +234,14 @@ public class StageEditActivity extends AppCompatActivity {
         if(yesSuccessful.isChecked()) newStage.setSuccessful(true);
         else newStage.setSuccessful(false);
 
-        newStage.setDateOfStart(startDateButton.getText().toString());
-        newStage.setDateOfCompletion(completeDateButton.getText().toString());
-        newStage.setDateOfReply(replyDateButton.getText().toString());
+        if(startDateButton.getText().toString().contains("/")) newStage.setDateOfStart(startDateButton.getText().toString());
+        else newStage.setDateOfStart(null);
+
+        if(completeDateButton.getText().toString().contains("/")) newStage.setDateOfCompletion(completeDateButton.getText().toString());
+        else newStage.setDateOfCompletion(null);
+
+        if(replyDateButton.getText().toString().contains("/")) newStage.setDateOfReply(replyDateButton.getText().toString());
+        else newStage.setDateOfReply(null);
 
         newStage.setDescription(descriptionEditText.getText().toString());
 
