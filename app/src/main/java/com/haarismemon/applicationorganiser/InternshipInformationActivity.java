@@ -22,12 +22,6 @@ import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.util.List;
 
-import static com.haarismemon.applicationorganiser.R.id.companyNameText;
-import static com.haarismemon.applicationorganiser.R.id.descriptionText;
-import static com.haarismemon.applicationorganiser.R.id.lengthText;
-import static com.haarismemon.applicationorganiser.R.id.locationText;
-import static com.haarismemon.applicationorganiser.R.id.roleText;
-
 public class InternshipInformationActivity extends AppCompatActivity {
 
     DataSource mDataSource;
