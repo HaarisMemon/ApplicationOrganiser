@@ -87,23 +87,18 @@ public class InternshipInformationActivity extends AppCompatActivity {
         //loop through each stage in the adapter
         for (int position = 0; position < arrayAdapter.getCount(); position++) {
             //get the item view of the application stage
-            View itemView = arrayAdapter.getView(position, null, stagesListLinearLayout);
+            final View itemView = arrayAdapter.getView(position, null, stagesListLinearLayout);
             //add the item view to the stages list linearLayout
             stagesListLinearLayout.addView(itemView);
 
             final int i = position;
 
-//            View dividerLayout = LayoutInflater.from(getApplicationContext()).inflate(
-//                    R.layout.divider, null);
-
-//            View dividerView = dividerLayout.findViewById(R.id.dividerView);
-//            dividerView.getParent().child
-//            stagesListLinearLayout.add(dividerView);
-
             //set the on click listener for each application stage itemView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    itemView.setBackgroundColor(Color.parseColor("#DFDFDF"));
+
                     //go to new activity to see the stage information of application stage clicked
                     Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
                     //send the stage id of the stage clicked, in the intent

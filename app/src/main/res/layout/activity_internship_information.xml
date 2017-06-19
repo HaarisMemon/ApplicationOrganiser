@@ -114,18 +114,20 @@
                     android:layout_marginBottom="10dp"
                     android:id="@+id/descriptionText"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#dddddd"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="15dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/stagesListLinearLayout"
                     android:orientation="vertical"
-                    android:layout_marginBottom="20dp">
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="1dp"
-                        android:background="#c0c0c0"/>
-
+                    android:divider="@drawable/divider_drawable"
+                    android:showDividers="middle">
                 </LinearLayout>
 
             </LinearLayout>
