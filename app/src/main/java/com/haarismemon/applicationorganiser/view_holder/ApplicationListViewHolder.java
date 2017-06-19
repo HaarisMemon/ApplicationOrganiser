@@ -14,12 +14,14 @@ public class ApplicationListViewHolder extends RecyclerView.ViewHolder {
 
     public TextView companyName;
     public TextView role;
+    public TextView updatedDate;
 
     public ApplicationListViewHolder(View itemView) {
         super(itemView);
 
         companyName = (TextView) itemView.findViewById(R.id.companyNameCardView);
         role = (TextView) itemView.findViewById(R.id.roleCardView);
+        updatedDate = (TextView) itemView.findViewById(R.id.updatedDateCardView);
     }
 
 }

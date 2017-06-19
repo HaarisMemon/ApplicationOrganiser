@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.haarismemon.applicationorganiser.ApplicationListActivity;
 import com.haarismemon.applicationorganiser.InternshipInformationActivity;
 import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
@@ -42,6 +41,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
 
         holder.companyName.setText(internshipsList.get(position).getCompanyName());
         holder.role.setText(internshipsList.get(position).getRole());
+        holder.updatedDate.setText(internshipsList.get(position).getModifiedShortDate());
 
         //go to Internship Information when item in Applications List is clicked
         holder.itemView.setOnClickListener(new View.OnClickListener() {
