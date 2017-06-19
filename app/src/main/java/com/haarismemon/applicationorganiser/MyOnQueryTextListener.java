@@ -30,24 +30,29 @@ public class MyOnQueryTextListener implements SearchView.OnQueryTextListener {
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        newText = newText.toLowerCase().trim().replaceAll(" +", " ");
         List<Internship> filteredInternships = new ArrayList<>();
 
-        for (Internship internship : internships) {
+        if(newText.equals("")) {
+            filteredInternships = internships;
+        } else {
+            for (Internship internship : internships) {
 
-            boolean isAlreadyAdded = false;
+                boolean isAlreadyAdded = false;
 
-            if (internship.getCompanyName().toLowerCase().contains(newText)) {
-                filteredInternships.add(internship);
-                isAlreadyAdded = true;
-            }
-
-            for (ApplicationStage stage : internship.getApplicationStages()) {
-                if (!isAlreadyAdded && stage.getStageName().toLowerCase().contains(newText)) {
+                if (internship.getCompanyName().toLowerCase().contains(newText)) {
                     filteredInternships.add(internship);
                     isAlreadyAdded = true;
                 }
-            }
 
+                for (ApplicationStage stage : internship.getApplicationStages()) {
+                    if (!isAlreadyAdded && stage.getStageName().toLowerCase().contains(newText)) {
+                        filteredInternships.add(internship);
+                        isAlreadyAdded = true;
+                    }
+                }
+
+            }
         }
 
         myAdapter.searchFilter(filteredInternships);
