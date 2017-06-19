@@ -227,6 +227,14 @@ public class Internship {
     }
 
     /**
+     * Sets a list of all the stages of the Internship application
+     * @param applicationStages all stages of the Internship application
+     */
+    public void setApplicationStages(List<ApplicationStage> applicationStages) {
+        this.applicationStages = applicationStages;
+    }
+
+    /**
      * Adds an application stage to the Internship
      * @param stage to be added to Internship
      */

@@ -139,13 +139,17 @@ public class DataSource {
         while (cursor.moveToNext()) {
             Internship internship = new Internship();
 
-            internship.setInternshipID(cursor.getLong(cursor.getColumnIndex(InternshipTable.COLUMN_ID)));
+            long internshipID = cursor.getLong(cursor.getColumnIndex(InternshipTable.COLUMN_ID));
+
+            internship.setInternshipID(internshipID);
             internship.setCompanyName(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_COMPANY_NAME)));
             internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
             internship.setDescription(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_DESCRIPTION)));
             internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
+
+            internship.setApplicationStages(getAllApplicationStages(internshipID));
 
             internships.add(internship);
         }
