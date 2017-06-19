@@ -7,9 +7,8 @@ import android.widget.TextView;
 import com.haarismemon.applicationorganiser.R;
 
 /**
- * Created by Haaris on 19/06/2017.
+ * This class represents the View Holder which is used to hold a CardView's data to display
  */
-
 public class ApplicationListViewHolder extends RecyclerView.ViewHolder {
 
     public TextView companyName;

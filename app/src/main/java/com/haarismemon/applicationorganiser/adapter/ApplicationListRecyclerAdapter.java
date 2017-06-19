@@ -13,13 +13,12 @@ import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.Internship;
 import com.haarismemon.applicationorganiser.view_holder.ApplicationListViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Haaris on 19/06/2017.
+ * This class represents the Recycler Adapter for the Application List.
+ * It constructs the list and puts the internship's information onto each card view in the list.
  */
-
 public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<ApplicationListViewHolder> {
 
     public List<Internship> internshipsList;
@@ -32,6 +31,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
 
     @Override
     public ApplicationListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //inflates the card view layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.application_list_row_layout, parent, false);
 
         return new ApplicationListViewHolder(view);
@@ -39,7 +39,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
 
     @Override
     public void onBindViewHolder(ApplicationListViewHolder holder, final int position) {
-
+        //adds the company name, role and last updated date to the cardView holder
         holder.companyName.setText(internshipsList.get(position).getCompanyName());
         holder.role.setText(internshipsList.get(position).getRole());
         holder.updatedDate.setText(internshipsList.get(position).getModifiedShortDate());
@@ -62,8 +62,12 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         return internshipsList.size();
     }
 
-    public void searchFilter(List<Internship> newInternships) {
-        internshipsList = newInternships;
+    /**
+     * Takes the filtered list of internships and updates the current one, and updates the recycler adapter
+     * @param filteredInternships new list of internships filtered according to the search query
+     */
+    public void searchFilter(List<Internship> filteredInternships) {
+        internshipsList = filteredInternships;
         notifyDataSetChanged();
     }
 }

@@ -149,6 +149,7 @@ public class DataSource {
             internship.setDescription(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_DESCRIPTION)));
             internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
 
+            //add all the internship's stages to the list stored in the internship object
             internship.setApplicationStages(getAllApplicationStages(internshipID));
 
             internships.add(internship);
@@ -180,6 +181,9 @@ public class DataSource {
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
             internship.setDescription(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_DESCRIPTION)));
             internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
+
+            //add all the internship's stages to the list stored in the internship object
+            internship.setApplicationStages(getAllApplicationStages(internshipID));
 
             break;
         }

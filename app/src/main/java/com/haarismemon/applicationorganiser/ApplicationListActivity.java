@@ -69,7 +69,9 @@ public class ApplicationListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        //give the recycler adapter the list of all internships
         recyclerAdapter = new ApplicationListRecyclerAdapter(getApplicationContext(), internships);
+        //set the adapter to the recycler view
         recyclerView.setAdapter(recyclerAdapter);
 
     }
@@ -92,12 +94,15 @@ public class ApplicationListActivity extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.action_search_application_list);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
+        //set the on query text listener of the search view, and give it the adapter so that it can access the list
         searchView.setOnQueryTextListener(new MyOnQueryTextListener(recyclerAdapter));
 
+        //get the search manager to set the searchable.xml to the search view
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.onActionViewExpanded();
 
+        //change the color of the caret in the search view from the default accent color to white
         AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         try {
             Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
@@ -107,6 +112,7 @@ public class ApplicationListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //if the search button was pressed in the main activity, then open the search view (searchbar) when this activity opens
         if(intent.getBooleanExtra(SEARCH_FROM_MAIN, false)) {
             searchItem.expandActionView();
         }
@@ -120,10 +126,6 @@ public class ApplicationListActivity extends AppCompatActivity {
             //when back button in action bar is clicked
             case android.R.id.home:
                 onBackPressed();
-                return true;
-
-            //when search button pressed
-            case R.id.action_search_application_list:
                 return true;
         }
 
