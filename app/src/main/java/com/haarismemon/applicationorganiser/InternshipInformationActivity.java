@@ -140,14 +140,19 @@ public class InternshipInformationActivity extends AppCompatActivity {
                         .show();
                 return true;
 
-            //when back button pressed in action bar
+            //when back action button pressed in action bar
             case android.R.id.home:
                 onBackPressed();
                 return true;
 
-            //when the create stage button is pressed
+            //when the create stage action button is pressed
             case R.id.action_create_stage:
                 createStage();
+                return true;
+
+            //when the edit internship action button is pressed
+            case R.id.action_edit_internship:
+                editInternship(null);
                 return true;
 
         }

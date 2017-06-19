@@ -106,6 +106,11 @@ public class StageInformationActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
 
+            //when the edit application stage action button is pressed
+            case R.id.action_edit_stage:
+                editStage(null);
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);

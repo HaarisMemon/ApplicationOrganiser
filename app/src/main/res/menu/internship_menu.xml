@@ -3,15 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Delete Internship"
-        android:icon="@drawable/ic_delete_white_24dp"
-        android:id="@+id/action_delete_internship"
-        app:showAsAction="always"/>
-
-    <item
         android:title="Create new Application Stage"
         android:icon="@drawable/ic_add_white_24dp"
         android:id="@+id/action_create_stage"
         app:showAsAction="always"/>
+
+    <item
+        android:title="Delete Internship"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:id="@+id/action_delete_internship"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:title="Edit Internship"
+        android:icon="@drawable/ic_mode_edit_white_24dp"
+        android:id="@+id/action_edit_internship"
+        app:showAsAction="ifRoom"/>
 
 </menu>

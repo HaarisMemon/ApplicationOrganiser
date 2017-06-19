@@ -8,4 +8,10 @@
         android:id="@+id/action_delete_stage"
         app:showAsAction="always"/>
 
+    <item
+        android:title="Edit Application Stage"
+        android:icon="@drawable/ic_mode_edit_white_24dp"
+        android:id="@+id/action_edit_stage"
+        app:showAsAction="ifRoom"/>
+
 </menu>
