@@ -22,8 +22,6 @@ import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.util.List;
 
-//import static com.haarismemon.applicationorganiser.R.id.applicationStageListView;
-
 /**
  * This class represents the activity which displays the information of an Internship with list of its stages
  * @author HaarisMemon

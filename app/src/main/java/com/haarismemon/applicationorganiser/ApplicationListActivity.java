@@ -33,12 +33,17 @@ public class ApplicationListActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private List<Internship> internships;
+    private Intent intent;
 
     /**
      * RecyclerAdapter of RecyclerView for internships in the activity
      */
     public static ApplicationListRecyclerAdapter recyclerAdapter;
-    private List<Internship> internships;
+    /**
+     * a key used when passing boolean to the intent to this activity to check if search needs to be performed
+     */
+    public static final String SEARCH_FROM_MAIN = "SEARCH_FROM_MAIN";
 
 
     @Override
@@ -55,6 +60,7 @@ public class ApplicationListActivity extends AppCompatActivity {
         mDataSource = new DataSource(this);
         mDataSource.open();
         mDataSource.seedDatbase();
+        intent = getIntent();
 
         //ArrayList of all internships in the database
         internships = mDataSource.getAllInternship();
@@ -99,6 +105,10 @@ public class ApplicationListActivity extends AppCompatActivity {
             mCursorDrawableRes.set(searchTextView, R.drawable.cursor); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if(intent.getBooleanExtra(SEARCH_FROM_MAIN, false)) {
+            searchItem.expandActionView();
         }
 
         return super.onCreateOptionsMenu(menu);
