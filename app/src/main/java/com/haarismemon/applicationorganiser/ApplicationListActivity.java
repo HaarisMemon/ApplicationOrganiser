@@ -13,11 +13,14 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.model.Internship;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 
@@ -88,6 +91,15 @@ public class ApplicationListActivity extends AppCompatActivity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.onActionViewExpanded();
+
+        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        try {
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.set(searchTextView, R.drawable.cursor); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
