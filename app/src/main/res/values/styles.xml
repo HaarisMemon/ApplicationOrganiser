@@ -22,4 +22,12 @@
         <item name="android:textStyle">italic|bold</item>
         <item name="android:alpha">0.8</item>
     </style>
+    
+    <style name="scrollBarStyle">
+        <item name="android:scrollbarSize">3dp</item>
+        <item name="android:scrollbarStyle">insideOverlay</item>
+        <item name="android:scrollbarThumbVertical">@color/colorAccent</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:fadeScrollbars">false</item>
+    </style>
 </resources>
