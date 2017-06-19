@@ -13,6 +13,7 @@ import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.Internship;
 import com.haarismemon.applicationorganiser.view_holder.ApplicationListViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<ApplicationListViewHolder> {
 
-    List<Internship> internshipsList;
+    public List<Internship> internshipsList;
     private Context context;
 
     public ApplicationListRecyclerAdapter(Context context, List<Internship> internshipsList) {
@@ -59,5 +60,10 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
     @Override
     public int getItemCount() {
         return internshipsList.size();
+    }
+
+    public void searchFilter(ArrayList<Internship> newInternships) {
+        internshipsList = newInternships;
+        notifyDataSetChanged();
     }
 }

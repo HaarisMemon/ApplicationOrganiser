@@ -1,11 +1,14 @@
 package com.haarismemon.applicationorganiser;
 
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -75,11 +78,25 @@ public class ApplicationListActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.application_list_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search_application_list);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new MyOnQueryTextListener(recyclerAdapter));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             //when back button in action bar is clicked
             case android.R.id.home:
                 onBackPressed();
+                return true;
+
+            //when search button pressed
+            case R.id.action_search_application_list:
                 return true;
         }
 
