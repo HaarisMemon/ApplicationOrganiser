@@ -7,16 +7,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
@@ -69,7 +64,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
         internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
 
         //display the last time internship or its application stages was modified
-        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + internship.getModifiedDate());
+        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + internship.getModifiedShortDateTime());
 
         companyNameText.setText(internship.getCompanyName() != null ? internship.getCompanyName() : "None");
         roleText.setText(internship.getRole() != null ? internship.getRole() : "None");

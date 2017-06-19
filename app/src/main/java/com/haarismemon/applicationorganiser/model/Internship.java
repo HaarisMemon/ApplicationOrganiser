@@ -177,11 +177,29 @@ public class Internship {
     /**
      * Returns the date that the Internship was last updated in the database
      * Date returned in friendly format (MMM dd HH:mm) to be displayed in app
-     * @return string date of when Internship last updated
+     * @return string date of when Internship last updated in format (MMM dd HH:mm)
      */
-    public String getModifiedDate() {
+    public String getModifiedShortDateTime() {
         SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat toString = new SimpleDateFormat("dd MMM HH:mm");
+
+        try {
+            return toString.format(toDate.parse(modifiedDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the date that the Internship was last updated in the database
+     * Date returned in friendly format (MMM dd) to be displayed in app
+     * @return string date of when Internship last updated in format (MMM dd)
+     */
+    public String getModifiedShortDate() {
+        SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat toString = new SimpleDateFormat("dd MMM");
 
         try {
             return toString.format(toDate.parse(modifiedDate));
