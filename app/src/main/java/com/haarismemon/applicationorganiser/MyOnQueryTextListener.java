@@ -3,6 +3,7 @@ package com.haarismemon.applicationorganiser;
 import android.support.v7.widget.SearchView;
 
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
+import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.util.ArrayList;
@@ -29,14 +30,22 @@ public class MyOnQueryTextListener implements SearchView.OnQueryTextListener {
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        List<Internship> filteredInternships = new ArrayList<>();
 
-        newText.toLowerCase();
-        ArrayList<Internship> filteredInternships = new ArrayList<>();
+        for (Internship internship : internships) {
 
-        for(Internship internship : internships) {
+            boolean isAlreadyAdded = false;
 
-            if(internship.getCompanyName().toLowerCase().contains(newText)) {
+            if (internship.getCompanyName().toLowerCase().contains(newText)) {
                 filteredInternships.add(internship);
+                isAlreadyAdded = true;
+            }
+
+            for (ApplicationStage stage : internship.getApplicationStages()) {
+                if (!isAlreadyAdded && stage.getStageName().toLowerCase().contains(newText)) {
+                    filteredInternships.add(internship);
+                    isAlreadyAdded = true;
+                }
             }
 
         }
