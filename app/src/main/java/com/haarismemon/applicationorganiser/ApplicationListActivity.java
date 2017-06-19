@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
+import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.Internship;
@@ -24,11 +25,15 @@ import java.util.List;
 public class ApplicationListActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
 
     /**
-     * ArrayAdapter of Listview for internships in the activity
+     * RecyclerAdapter of RecyclerView for internships in the activity
      */
-    public static ArrayAdapter<Internship> arrayAdapter;
+    public static ApplicationListRecyclerAdapter recyclerAdapter;
+    private List<Internship> internships;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,25 +50,15 @@ public class ApplicationListActivity extends AppCompatActivity {
         mDataSource.open();
         mDataSource.seedDatbase();
 
-        ListView listView = (ListView) findViewById(R.id.listView);
+        //ArrayList of all internships in the database
+        internships = mDataSource.getAllInternship();
 
-        //arraylist of all internships in the database
-        final List<Internship> internships = mDataSource.getAllInternship();
-
-        arrayAdapter = new ArrayAdapter<Internship>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, internships);
-
-        listView.setAdapter(arrayAdapter);
-
-        //go to Internship Information when item in Applications List is clicked
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-                //send the ID of the Internship you want to see information of
-                intent.putExtra(InternshipTable.COLUMN_ID, internships.get(i).getInternshipID());
-                startActivity(intent);
-            }
-        });
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerAdapter = new ApplicationListRecyclerAdapter(getApplicationContext(), internships);
+        recyclerView.setAdapter(recyclerAdapter);
 
     }
 

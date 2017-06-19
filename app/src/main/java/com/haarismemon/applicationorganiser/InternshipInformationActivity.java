@@ -84,7 +84,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<ApplicationStage>(
                 getApplicationContext(), android.R.layout.simple_expandable_list_item_1, stages);
 
-        //loop through each stage in the adapter
+        //loop through each stage in the recyclerAdapter
         for (int position = 0; position < arrayAdapter.getCount(); position++) {
             //get the item view of the application stage
             final View itemView = arrayAdapter.getView(position, null, stagesListLinearLayout);
@@ -135,7 +135,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteInternship(internship.getInternshipID());
-                                ApplicationListActivity.arrayAdapter.notifyDataSetChanged();
+                                ApplicationListActivity.recyclerAdapter.notifyDataSetChanged();
 
                                 //go back to the application list activity
                                 Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
