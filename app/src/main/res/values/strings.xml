@@ -5,4 +5,6 @@
     <string name="discardDialogMessage">Are you sure you want to discard changes to this event?</string>
 
     <string name="pleaseFillForm">Please fill in the form before saving</string>
+
+    <string name="search_hint">Search for an Internship</string>
 </resources>

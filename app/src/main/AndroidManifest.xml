@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -18,12 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ApplicationListActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".InternshipInformationActivity"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+
+        <activity android:name=".InternshipInformationActivity"/>
         <activity android:name=".StageInformationActivity" />
         <activity android:name=".InternshipEditActivity" />
         <activity android:name=".StageEditActivity"></activity>

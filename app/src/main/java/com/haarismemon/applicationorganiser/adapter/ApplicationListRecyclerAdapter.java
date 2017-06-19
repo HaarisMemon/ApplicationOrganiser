@@ -62,7 +62,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         return internshipsList.size();
     }
 
-    public void searchFilter(ArrayList<Internship> newInternships) {
+    public void searchFilter(List<Internship> newInternships) {
         internshipsList = newInternships;
         notifyDataSetChanged();
     }
