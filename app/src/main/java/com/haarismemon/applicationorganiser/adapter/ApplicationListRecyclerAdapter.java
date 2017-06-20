@@ -39,10 +39,11 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
 
     @Override
     public void onBindViewHolder(ApplicationListViewHolder holder, final int position) {
+        final Internship internship = internshipsList.get(position);
         //adds the company name, role and last updated date to the cardView holder
-        holder.companyName.setText(internshipsList.get(position).getCompanyName());
-        holder.role.setText(internshipsList.get(position).getRole());
-        holder.updatedDate.setText(internshipsList.get(position).getModifiedShortDate());
+        holder.companyName.setText(internship.getCompanyName());
+        holder.role.setText(internship.getRole());
+        holder.updatedDate.setText(internship.getModifiedShortDate());
 
         //go to Internship Information when item in Applications List is clicked
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +51,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
             public void onClick(View view) {
                 Intent intent = new Intent(context, InternshipInformationActivity.class);
                 //send the ID of the Internship you want to see information of
-                intent.putExtra(InternshipTable.COLUMN_ID, internshipsList.get(position).getInternshipID());
+                intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
                 context.startActivity(intent);
             }
         });

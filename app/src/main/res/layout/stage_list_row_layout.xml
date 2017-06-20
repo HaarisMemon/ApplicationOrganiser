@@ -32,17 +32,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Company Name"
+                    android:text="Stage Name"
                     android:textSize="18dp"
-                    android:id="@+id/companyNameCardView"
+                    android:id="@+id/stageNameCardView"
                     android:layout_marginBottom="3dp"
                     android:maxLines="1"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Software Engineering Role"
-                    android:id="@+id/roleCardView"
+                    android:text="Current Status"
+                    android:id="@+id/statusCardView"
                     android:textSize="14dp"
                     android:maxLines="1"/>
 

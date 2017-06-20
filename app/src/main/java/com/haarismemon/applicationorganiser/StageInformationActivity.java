@@ -53,7 +53,7 @@ public class StageInformationActivity extends AppCompatActivity {
         TextView dateOfReplyText = (TextView) findViewById(R.id.dateOfReplyText);
         TextView stageDescriptionText = (TextView) findViewById(R.id.stageNotesText);
 
-        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + stage.getModifiedDate());
+        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + stage.getModifiedShortDateTime());
 
         stageNameText.setText(stage.getStageName() != null ? stage.getStageName() : "No Company Name");
         currentStatusText.setText(stage.getCurrentStatus() != null ? stage.getCurrentStatus() : "No Status");
@@ -99,7 +99,7 @@ public class StageInformationActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteApplicationStage(stage.getStageID());
-                                InternshipInformationActivity.arrayAdapter.notifyDataSetChanged();
+                                InternshipInformationActivity.adapter.notifyDataSetChanged();
 
                                 //go back to the internship information activity
                                 Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);

@@ -68,7 +68,8 @@ public class ApplicationListActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
+        recyclerView.setFocusable(false);
         //give the recycler adapter the list of all internships
         recyclerAdapter = new ApplicationListRecyclerAdapter(getApplicationContext(), internships);
         //set the adapter to the recycler view

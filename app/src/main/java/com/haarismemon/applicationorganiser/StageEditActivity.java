@@ -226,7 +226,7 @@ public class StageEditActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteApplicationStage(stage.getStageID());
-                                InternshipInformationActivity.arrayAdapter.notifyDataSetChanged();
+                                InternshipInformationActivity.adapter.notifyDataSetChanged();
 
                                 //go back to the internship information activity
                                 Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);

@@ -2,19 +2,19 @@ package com.haarismemon.applicationorganiser;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
+import com.haarismemon.applicationorganiser.adapter.StageListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
@@ -30,11 +30,12 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
     private Internship internship = null;
+    private RecyclerView stageRecyclerView;
 
     /**
-     * ArrayAdapter of Listview for stages in the activity
+     * StageList adapter of RecylerView for stages in the activity
      */
-    public static ArrayAdapter<ApplicationStage> arrayAdapter;
+    public static StageListRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,55 +52,37 @@ public class InternshipInformationActivity extends AppCompatActivity {
         mDataSource.open();
         Intent intent = getIntent();
 
-        TextView editedText = (TextView) findViewById(R.id.editedDateInternshipText);
-        TextView companyNameText = (TextView) findViewById(R.id.companyNameText);
-        TextView roleText = (TextView) findViewById(R.id.roleText);
-        TextView lengthText = (TextView) findViewById(R.id.lengthText);
-        TextView locationText = (TextView) findViewById(R.id.locationText);
-        TextView notesText = (TextView) findViewById(R.id.notesText);
-
         //internship that has the same id that was sent in the intent
         internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
 
-        //display the last time internship or its application stages was modified
-        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + internship.getModifiedShortDateTime());
-
-        companyNameText.setText(internship.getCompanyName() != null ? internship.getCompanyName() : "None");
-        roleText.setText(internship.getRole() != null ? internship.getRole() : "None");
-        lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
-        locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
-        notesText.setText(internship.getNotes() != null ? internship.getNotes() : "No Notes");
-        LinearLayout stagesListLinearLayout = (LinearLayout) findViewById(R.id.stagesListLinearLayout);
-
         //arraylist of all application stages linked to the internship in the database
-        final List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipID());
+        List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipID());
 
-        arrayAdapter = new ArrayAdapter<ApplicationStage>(
-                getApplicationContext(), android.R.layout.simple_expandable_list_item_1, stages);
+//        TextView editedText = (TextView) findViewById(R.id.editedDateInternshipText);
+//        TextView companyNameText = (TextView) findViewById(R.id.companyNameText);
+//        TextView roleText = (TextView) findViewById(R.id.roleText);
+//        TextView lengthText = (TextView) findViewById(R.id.lengthText);
+//        TextView locationText = (TextView) findViewById(R.id.locationText);
+//        TextView notesText = (TextView) findViewById(R.id.notesText);
 
-        //loop through each stage in the recyclerAdapter
-        for (int position = 0; position < arrayAdapter.getCount(); position++) {
-            //get the item view of the application stage
-            final View itemView = arrayAdapter.getView(position, null, stagesListLinearLayout);
-            //add the item view to the stages list linearLayout
-            stagesListLinearLayout.addView(itemView);
+        //display the last time internship or its application stages was modified
+//        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + internship.getModifiedShortDateTime());
 
-            final int i = position;
+//        companyNameText.setText(internship.getCompanyName() != null ? internship.getCompanyName() : "None");
+//        roleText.setText(internship.getRole() != null ? internship.getRole() : "None");
+//        lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
+//        locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
+//        notesText.setText(internship.getNotes() != null ? internship.getNotes() : "No Notes");
 
-            //set the on click listener for each application stage itemView
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    itemView.setBackgroundColor(Color.parseColor("#DFDFDF"));
+        stageRecyclerView = (RecyclerView) findViewById(R.id.stageRecyclerView);
+        stageRecyclerView.setNestedScrollingEnabled(true);
 
-                    //go to new activity to see the stage information of application stage clicked
-                    Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
-                    //send the stage id of the stage clicked, in the intent
-                    intent.putExtra(ApplicationStageTable.COLUMN_ID, stages.get(i).getStageID());
-                    startActivity(intent);
-                }
-            });
-        }
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        stageRecyclerView.setLayoutManager(layoutManager);
+        stageRecyclerView.setHasFixedSize(true);
+
+        adapter = new StageListRecyclerAdapter(getApplicationContext(), internship, stages);
+        stageRecyclerView.setAdapter(adapter);
 
     }
 
@@ -113,7 +96,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mDataSource.open();
-        arrayAdapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
