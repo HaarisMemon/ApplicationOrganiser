@@ -204,6 +204,29 @@ public class StageEditActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
 
+            //when the delete button is pressed in the action bar
+            case R.id.action_delete_stage_edit:
+                //show alert dialog to confirm deletion
+                new AlertDialog.Builder(this)
+                        .setTitle(getResources().getString(R.string.deleteDialogTitle))
+                        .setMessage(getResources().getString(R.string.deleteDialogMessage))
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mDataSource.deleteApplicationStage(stage.getStageID());
+                                InternshipInformationActivity.arrayAdapter.notifyDataSetChanged();
+
+                                //go back to the internship information activity
+                                Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
+                                //send the ID of the internship this stage belongs to, in the intent
+                                intent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);

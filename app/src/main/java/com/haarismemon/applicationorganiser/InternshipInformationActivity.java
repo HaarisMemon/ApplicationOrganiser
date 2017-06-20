@@ -122,8 +122,8 @@ public class InternshipInformationActivity extends AppCompatActivity {
             case R.id.action_delete_internship:
                 //show alert dialog to confirm deletion
                 new AlertDialog.Builder(this)
-                        .setTitle("Are you sure?")
-                        .setMessage("This will be permanently deleted.")
+                        .setTitle(getResources().getString(R.string.deleteDialogTitle))
+                        .setMessage(getResources().getString(R.string.deleteDialogMessage))
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -132,7 +132,6 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
                                 //go back to the application list activity
                                 Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
                         })

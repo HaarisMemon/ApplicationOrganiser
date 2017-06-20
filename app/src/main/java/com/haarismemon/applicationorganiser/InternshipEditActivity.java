@@ -94,6 +94,27 @@ public class InternshipEditActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
 
+            //when the delete button is pressed in the action bar
+            case R.id.action_delete_internship_edit:
+                //show alert dialog to confirm deletion
+                new AlertDialog.Builder(this)
+                        .setTitle(getResources().getString(R.string.deleteDialogTitle))
+                        .setMessage(getResources().getString(R.string.deleteDialogMessage))
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mDataSource.deleteInternship(internship.getInternshipID());
+                                ApplicationListActivity.recyclerAdapter.notifyDataSetChanged();
+
+                                //go back to the application list activity
+                                Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);

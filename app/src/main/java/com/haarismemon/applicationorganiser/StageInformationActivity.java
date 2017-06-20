@@ -81,8 +81,8 @@ public class StageInformationActivity extends AppCompatActivity {
             case R.id.action_delete_stage:
                 //show alert dialog to confirm deletion
                 new AlertDialog.Builder(this)
-                        .setTitle("Are you sure?")
-                        .setMessage("This will be permanently deleted.")
+                        .setTitle(getResources().getString(R.string.deleteDialogTitle))
+                        .setMessage(getResources().getString(R.string.deleteDialogMessage))
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -91,7 +91,6 @@ public class StageInformationActivity extends AppCompatActivity {
 
                                 //go back to the internship information activity
                                 Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 //send the ID of the internship this stage belongs to, in the intent
                                 intent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
                                 startActivity(intent);
