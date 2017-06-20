@@ -56,7 +56,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
         TextView roleText = (TextView) findViewById(R.id.roleText);
         TextView lengthText = (TextView) findViewById(R.id.lengthText);
         TextView locationText = (TextView) findViewById(R.id.locationText);
-        TextView descriptionText = (TextView) findViewById(R.id.descriptionText);
+        TextView notesText = (TextView) findViewById(R.id.notesText);
 
         //internship that has the same id that was sent in the intent
         internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
@@ -68,7 +68,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
         roleText.setText(internship.getRole() != null ? internship.getRole() : "None");
         lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
         locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
-        descriptionText.setText(internship.getDescription() != null ? internship.getDescription() : "No Description");
+        notesText.setText(internship.getNotes() != null ? internship.getNotes() : "No Notes");
         LinearLayout stagesListLinearLayout = (LinearLayout) findViewById(R.id.stagesListLinearLayout);
 
         //arraylist of all application stages linked to the internship in the database

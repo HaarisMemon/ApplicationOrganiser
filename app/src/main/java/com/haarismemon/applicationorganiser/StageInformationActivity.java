@@ -51,7 +51,7 @@ public class StageInformationActivity extends AppCompatActivity {
         TextView dateOfStartText = (TextView) findViewById(R.id.dateOfStartText);
         TextView dateOfCompletionText = (TextView) findViewById(R.id.dateOfCompletionText);
         TextView dateOfReplyText = (TextView) findViewById(R.id.dateOfReplyText);
-        TextView stageDescriptionText = (TextView) findViewById(R.id.stageDescriptionText);
+        TextView stageDescriptionText = (TextView) findViewById(R.id.stageNotesText);
 
         editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + stage.getModifiedDate());
 
@@ -63,7 +63,7 @@ public class StageInformationActivity extends AppCompatActivity {
         dateOfStartText.setText(stage.getDateOfStart() != null ? stage.getDateOfStart() : "No Start Date");
         dateOfCompletionText.setText(stage.getDateOfCompletion() != null ? stage.getDateOfCompletion() : "No Complete Date");
         dateOfReplyText.setText(stage.getDateOfReply() != null ? stage.getDateOfReply() : "No Reply Date");
-        stageDescriptionText.setText(stage.getDescription() != null ? stage.getDescription() : "No Description");
+        stageDescriptionText.setText(stage.getNotes() != null ? stage.getNotes() : "No Notes");
 
     }
 

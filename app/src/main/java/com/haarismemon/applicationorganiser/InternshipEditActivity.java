@@ -16,8 +16,6 @@ import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.Internship;
 
-import static com.haarismemon.applicationorganiser.R.id.companyNameText;
-
 /**
  * This class represents the activity to edit an Internship
  * @author HaarisMemon
@@ -36,7 +34,7 @@ public class InternshipEditActivity extends AppCompatActivity {
     private TextInputEditText roleEditText;
     private TextInputEditText lengthEditText;
     private TextInputEditText locationEditText;
-    private TextInputEditText descriptionEditText;
+    private TextInputEditText notesEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +58,7 @@ public class InternshipEditActivity extends AppCompatActivity {
         roleEditText = (TextInputEditText) findViewById(R.id.roleEditText);
         lengthEditText = (TextInputEditText) findViewById(R.id.lengthEditText);
         locationEditText = (TextInputEditText) findViewById(R.id.locationEditText);
-        descriptionEditText = (TextInputEditText) findViewById(R.id.descriptionEditText);
+        notesEditText = (TextInputEditText) findViewById(R.id.notesEditText);
 
         //if editing internship then display all existing internship information
         if(isEditMode) {
@@ -70,7 +68,7 @@ public class InternshipEditActivity extends AppCompatActivity {
             roleEditText.setText(internship.getRole());
             lengthEditText.setText(internship.getLength());
             locationEditText.setText(internship.getLocation());
-            descriptionEditText.setText(internship.getDescription());
+            notesEditText.setText(internship.getNotes());
 
         } else {
             setTitle("New Internship");
@@ -151,7 +149,7 @@ public class InternshipEditActivity extends AppCompatActivity {
             newInternship.setRole(roleEditText.getText().toString().replaceFirst("^ *", ""));
             newInternship.setLength(lengthEditText.getText().toString().replaceFirst("^ *", ""));
             newInternship.setLocation(locationEditText.getText().toString().replaceFirst("^ *", ""));
-            newInternship.setDescription(descriptionEditText.getText().toString().replaceFirst("^ *", ""));
+            newInternship.setNotes(notesEditText.getText().toString().replaceFirst("^ *", ""));
 
             //if editing internship then update it, else create a new one in database
             if (isEditMode) {

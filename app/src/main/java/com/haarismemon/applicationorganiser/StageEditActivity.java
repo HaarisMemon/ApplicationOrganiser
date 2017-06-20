@@ -53,7 +53,7 @@ public class StageEditActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDataSetListener;
     private EditText clickedDateEditText = null;
     private AutoCompleteTextView stageNameEditText;
-    private TextInputEditText descriptionEditText;
+    private TextInputEditText notesEditText;
     private RadioButton yesComplete;
     private RadioButton noComplete;
     private RadioButton yesWaiting;
@@ -85,7 +85,7 @@ public class StageEditActivity extends AppCompatActivity {
         parentInternshipID = intent.getLongExtra(InternshipTable.COLUMN_ID, -1L);
 
         stageNameEditText = (AutoCompleteTextView) findViewById(R.id.stageNameEditText);
-        descriptionEditText = (TextInputEditText) findViewById(R.id.descriptionStageEditText);
+        notesEditText = (TextInputEditText) findViewById(R.id.notesStageEditText);
 
         yesComplete = (RadioButton) findViewById(R.id.yesCompletedRadio);
         noComplete = (RadioButton) findViewById(R.id.noCompletedRadio);
@@ -173,7 +173,7 @@ public class StageEditActivity extends AppCompatActivity {
                 replyDateButton.setText(stage.getDateOfReply());
             }
 
-            descriptionEditText.setText(stage.getDescription());
+            notesEditText.setText(stage.getNotes());
 
         } else {
             setTitle("New Stage");
@@ -272,7 +272,7 @@ public class StageEditActivity extends AppCompatActivity {
                 newStage.setDateOfReply(replyDateButton.getText().toString());
             else newStage.setDateOfReply(null);
 
-            newStage.setDescription(descriptionEditText.getText().toString().replaceFirst("^ *", ""));
+            newStage.setNotes(notesEditText.getText().toString().replaceFirst("^ *", ""));
 
             //if editing internship then update it, else create a new one in database
             if (isEditMode) {

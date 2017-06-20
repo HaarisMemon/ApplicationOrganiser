@@ -21,7 +21,7 @@ public class ApplicationStage {
     private String dateOfStart;
     private String dateOfCompletion;
     private String dateOfReply;
-    private String description;
+    private String notes;
     private long internshipID;
     private String modifiedDate;
 
@@ -165,20 +165,20 @@ public class ApplicationStage {
     }
 
     /**
-     * Returns the description/information the user has provided
-     * @return description the user has provided
+     * Returns the notes/information the user has provided
+     * @return notes the user has provided
      */
-    public String getDescription() {
-        if(description != null && description.equals("")) description = null;
-        return description;
+    public String getNotes() {
+        if(notes != null && notes.equals("")) notes = null;
+        return notes;
     }
 
     /**
-     * Sets the description/information the user has provided
-     * @param description the user has provided
+     * Sets the notes/information the user has provided
+     * @param notes the user has provided
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     /**
@@ -273,7 +273,7 @@ public class ApplicationStage {
         values.put(ApplicationStageTable.COLUMN_START_DATE, dateOfStart);
         values.put(ApplicationStageTable.COLUMN_COMPLETE_DATE, dateOfCompletion);
         values.put(ApplicationStageTable.COLUMN_REPLY_DATE, dateOfReply);
-        values.put(ApplicationStageTable.COLUMN_DESCRIPTION, description);
+        values.put(ApplicationStageTable.COLUMN_NOTES, notes);
         values.put(ApplicationStageTable.COLUMN_INTERNSHIP_ID, internshipID);
 
         //if no modified date, then Application Stage not stored in database yet (newly created)

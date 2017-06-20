@@ -14,7 +14,7 @@ public class InternshipTable {
     public static final String COLUMN_ROLE = "role";
     public static final String COLUMN_LENGTH = "length";
     public static final String COLUMN_LOCATION = "location";
-    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_NOTES = "notes";
     public static final String COLUMN_CREATED_ON = "created_on";
     public static final String COLUMN_MODIFIED_ON = "modified_on";
 
@@ -23,7 +23,7 @@ public class InternshipTable {
      */
     public static final String[] ALL_COLUMNS = {
             COLUMN_ID, COLUMN_COMPANY_NAME, COLUMN_ROLE,
-            COLUMN_LENGTH, COLUMN_LOCATION, COLUMN_DESCRIPTION,
+            COLUMN_LENGTH, COLUMN_LOCATION, COLUMN_NOTES,
             COLUMN_CREATED_ON, COLUMN_MODIFIED_ON,
     };
 
@@ -37,7 +37,7 @@ public class InternshipTable {
                 COLUMN_ROLE + " VARCHAR, " +
                 COLUMN_LENGTH + " VARCHAR, " +
                 COLUMN_LOCATION + " VARCHAR," +
-                COLUMN_DESCRIPTION + " VARCHAR, " +
+                    COLUMN_NOTES + " VARCHAR, " +
                 COLUMN_CREATED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')), " +
                 COLUMN_MODIFIED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))" +
             ")";

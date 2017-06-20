@@ -146,7 +146,7 @@ public class DataSource {
             internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
-            internship.setDescription(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_DESCRIPTION)));
+            internship.setNotes(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_NOTES)));
             internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
 
             //add all the internship's stages to the list stored in the internship object
@@ -179,7 +179,7 @@ public class DataSource {
             internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
-            internship.setDescription(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_DESCRIPTION)));
+            internship.setNotes(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_NOTES)));
             internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
 
             //add all the internship's stages to the list stored in the internship object
@@ -215,7 +215,7 @@ public class DataSource {
             stage.setDateOfStart(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_START_DATE)));
             stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_COMPLETE_DATE)));
             stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
-            stage.setDescription(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_DESCRIPTION)));
+            stage.setNotes(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_NOTES)));
             stage.setInternshipID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_INTERNSHIP_ID)));
             stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_MODIFIED_ON)));
 
@@ -249,7 +249,7 @@ public class DataSource {
             stage.setDateOfStart(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_START_DATE)));
             stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_COMPLETE_DATE)));
             stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
-            stage.setDescription(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_DESCRIPTION)));
+            stage.setNotes(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_NOTES)));
             stage.setInternshipID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_INTERNSHIP_ID)));
             stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_MODIFIED_ON)));
 

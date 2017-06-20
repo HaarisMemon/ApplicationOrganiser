@@ -20,7 +20,7 @@ public class Internship {
     private String role;
     private String length;
     private String location;
-    private String description;
+    private String notes;
     private String modifiedDate;
 
     //An internship application will contain a number of stages the user has reached in their application
@@ -63,7 +63,7 @@ public class Internship {
         values.put(InternshipTable.COLUMN_ROLE, role);
         values.put(InternshipTable.COLUMN_LENGTH, length);
         values.put(InternshipTable.COLUMN_LOCATION, location);
-        values.put(InternshipTable.COLUMN_DESCRIPTION, description);
+        values.put(InternshipTable.COLUMN_NOTES, notes);
 
         //if no modified date, then Internship not stored in database yet (newly created)
         if(modifiedDate != null) {
@@ -158,20 +158,20 @@ public class Internship {
     }
 
     /**
-     * Returns the description/information the user has provided
-     * @return description the user has provided
+     * Returns the notes/information the user has provided
+     * @return notes the user has provided
      */
-    public String getDescription() {
-        if(description != null && description.equals("")) description = null;
-        return description;
+    public String getNotes() {
+        if(notes != null && notes.equals("")) notes = null;
+        return notes;
     }
 
     /**
-     * Sets the description/information the user has provided
-     * @param description the user has provided
+     * Sets the notes/information the user has provided
+     * @param notes the user has provided
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     /**

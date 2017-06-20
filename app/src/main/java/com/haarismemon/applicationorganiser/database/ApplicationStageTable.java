@@ -17,7 +17,7 @@ public class ApplicationStageTable {
     public static final String COLUMN_START_DATE = "start_date";
     public static final String COLUMN_COMPLETE_DATE = "complete_date";
     public static final String COLUMN_REPLY_DATE = "reply_date";
-    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_NOTES = "notes";
     public static final String COLUMN_CREATED_ON = "created_on";
     public static final String COLUMN_MODIFIED_ON = "modified_on";
     public static final String COLUMN_INTERNSHIP_ID = "internship_id";
@@ -28,7 +28,7 @@ public class ApplicationStageTable {
     public static final String[] ALL_COLUMNS = {
             COLUMN_ID, COLUMN_STAGE_NAME, COLUMN_IS_COMPLETED,
             COLUMN_IS_WAITING, COLUMN_IS_SUCCESSFUL, COLUMN_START_DATE, COLUMN_COMPLETE_DATE,
-            COLUMN_REPLY_DATE, COLUMN_DESCRIPTION, COLUMN_CREATED_ON, COLUMN_MODIFIED_ON,
+            COLUMN_REPLY_DATE, COLUMN_NOTES, COLUMN_CREATED_ON, COLUMN_MODIFIED_ON,
             COLUMN_INTERNSHIP_ID
     };
 
@@ -47,7 +47,7 @@ public class ApplicationStageTable {
                     COLUMN_START_DATE + " VARCHAR, " +
                     COLUMN_COMPLETE_DATE + " DATETIME, " +
                     COLUMN_REPLY_DATE + " DATETIME, " +
-                    COLUMN_DESCRIPTION + " DATETIME, " +
+                    COLUMN_NOTES + " DATETIME, " +
                     COLUMN_CREATED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')), " +
                     COLUMN_MODIFIED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))," +
                     COLUMN_INTERNSHIP_ID + " INTEGER, " +
