@@ -20,6 +20,7 @@ import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,23 +57,10 @@ public class InternshipInformationActivity extends AppCompatActivity {
         internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
 
         //arraylist of all application stages linked to the internship in the database
-        List<ApplicationStage> stages = mDataSource.getAllApplicationStages(internship.getInternshipID());
-
-//        TextView editedText = (TextView) findViewById(R.id.editedDateInternshipText);
-//        TextView companyNameText = (TextView) findViewById(R.id.companyNameText);
-//        TextView roleText = (TextView) findViewById(R.id.roleText);
-//        TextView lengthText = (TextView) findViewById(R.id.lengthText);
-//        TextView locationText = (TextView) findViewById(R.id.locationText);
-//        TextView notesText = (TextView) findViewById(R.id.notesText);
-
-        //display the last time internship or its application stages was modified
-//        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + internship.getModifiedShortDateTime());
-
-//        companyNameText.setText(internship.getCompanyName() != null ? internship.getCompanyName() : "None");
-//        roleText.setText(internship.getRole() != null ? internship.getRole() : "None");
-//        lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
-//        locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
-//        notesText.setText(internship.getNotes() != null ? internship.getNotes() : "No Notes");
+        List<ApplicationStage> stages = new ArrayList<>();
+        //add dummy application stage object to be replaced by the internship header card view
+        stages.add(new ApplicationStage());
+        stages.addAll(mDataSource.getAllApplicationStages(internship.getInternshipID()));
 
         stageRecyclerView = (RecyclerView) findViewById(R.id.stageRecyclerView);
         stageRecyclerView.setNestedScrollingEnabled(true);
@@ -177,7 +165,6 @@ public class InternshipInformationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }

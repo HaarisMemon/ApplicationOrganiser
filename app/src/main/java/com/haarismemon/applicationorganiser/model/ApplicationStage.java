@@ -203,14 +203,16 @@ public class ApplicationStage {
      * @return string date of when Application Stage last updated in format (MMM dd HH:mm)
      */
     public String getModifiedShortDateTime() {
-        SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat toString = new SimpleDateFormat("MMM dd HH:mm");
+        if(modifiedDate != null) {
+            SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat toString = new SimpleDateFormat("MMM dd HH:mm");
 
-        try {
-            //covert date to friendly format to display in app
-            return toString.format(toDate.parse(modifiedDate));
-        } catch (ParseException e) {
-            e.printStackTrace();
+            try {
+                //covert date to friendly format to display in app
+                return toString.format(toDate.parse(modifiedDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         return null;
@@ -222,13 +224,15 @@ public class ApplicationStage {
      * @return string date of when Internship last updated in format (MMM dd)
      */
     public String getModifiedShortDate() {
-        SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat toString = new SimpleDateFormat("dd MMM");
+        if(modifiedDate != null) {
+            SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat toString = new SimpleDateFormat("dd MMM");
 
-        try {
-            return toString.format(toDate.parse(modifiedDate));
-        } catch (ParseException e) {
-            e.printStackTrace();
+            try {
+                return toString.format(toDate.parse(modifiedDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         return null;
