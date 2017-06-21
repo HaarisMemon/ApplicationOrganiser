@@ -22,6 +22,7 @@ public class Internship {
     private String location;
     private String notes;
     private String modifiedDate;
+    private boolean isSelected;
 
     //An internship application will contain a number of stages the user has reached in their application
     private List<ApplicationStage> applicationStages;
@@ -242,4 +243,19 @@ public class Internship {
         applicationStages.add(stage);
     }
 
+    /**
+     * Returns whether the internship has been selected in the RecyclerView
+     * @return true if it has been selected in the RecyclerView
+     */
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    /**
+     * Set whether the internship has been selected in the RecyclerView
+     * @param selected - true if it has been selected in the RecyclerView
+     */
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }
