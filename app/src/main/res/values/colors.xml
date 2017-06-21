@@ -7,4 +7,9 @@
     <!--<color name="homeButtonsBackgroundColor">#00ade7</color>-->
     <color name="homeButtonsBackgroundColor">@android:color/holo_blue_dark</color>
     <color name="homeButtonsTextColor">#ffffff</color>
+
+    <color name="internshipCardBackgroundDefault">#FFFFFF</color>
+
+    <color name="internshipCardBackgroundSelected">#89cdec</color>
+
 </resources>

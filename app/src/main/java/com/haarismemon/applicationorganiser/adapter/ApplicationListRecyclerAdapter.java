@@ -1,12 +1,13 @@
 package com.haarismemon.applicationorganiser.adapter;
 
-import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.haarismemon.applicationorganiser.ApplicationListActivity;
 import com.haarismemon.applicationorganiser.InternshipInformationActivity;
 import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
@@ -22,9 +23,9 @@ import java.util.List;
 public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<ApplicationListViewHolder> {
 
     public List<Internship> internshipsList;
-    private Context context;
+    private ApplicationListActivity context;
 
-    public ApplicationListRecyclerAdapter(Context context, List<Internship> internshipsList) {
+    public ApplicationListRecyclerAdapter(ApplicationListActivity context, List<Internship> internshipsList) {
         this.internshipsList = internshipsList;
         this.context = context;
     }
@@ -38,7 +39,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
     }
 
     @Override
-    public void onBindViewHolder(ApplicationListViewHolder holder, final int position) {
+    public void onBindViewHolder(final ApplicationListViewHolder holder, final int position) {
         final Internship internship = internshipsList.get(position);
         //adds the company name, role and last updated date to the cardView holder
         holder.companyName.setText(internship.getCompanyName());
@@ -49,12 +50,60 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, InternshipInformationActivity.class);
-                //send the ID of the Internship you want to see information of
-                intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
-                context.startActivity(intent);
+                //store view as card view so to access card view methods
+                CardView cardView = (CardView) view;
+
+                //if when single clicked the selection mode is already on
+                if(context.isSelectionMode) {
+                    //if internship was already selected
+                    if(internship.isSelected()) {
+                        //deselect the internship
+                        context.prepareSelection(cardView, internship, false);
+                    } else {
+                        //if wasn't already selected, then select the internship
+                        context.prepareSelection(cardView, internship, true);
+                    }
+
+                } else {
+                    //else a single click will take you to the internship information page
+                    Intent intent = new Intent(context, InternshipInformationActivity.class);
+                    //send the ID of the Internship you want to see information of
+                    intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
+                    context.startActivity(intent);
+
+                }
             }
         });
+
+        //set long click on card view to enable selection mode
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                CardView cardView = (CardView) holder.itemView;
+
+                //if the selection mode is off
+                if(!context.isSelectionMode) {
+                    //switch the selection mode on
+                    context.switchActionMode(true);
+                    //select the internship that was long clicked
+                    context.prepareSelection(cardView, internship, true);
+                } else {
+                    //else deselect internship if the selection mode was on
+                    context.prepareSelection(cardView, internship, false);
+                }
+
+                return true;
+            }
+        });
+
+        CardView cardView = (CardView) holder.itemView;
+
+        //on adapter refresh update the card backgrounds to back to default colors
+        if(internship.isSelected()) {
+            context.updateCardBackground(cardView, true);
+        } else {
+            context.updateCardBackground(cardView, false);
+        }
 
     }
 
