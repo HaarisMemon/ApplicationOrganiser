@@ -7,10 +7,13 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -21,8 +24,9 @@ import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 /**
  * This class represents the activity which displays the list of all Internships
@@ -33,18 +37,23 @@ public class ApplicationListActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private List<Internship> internships;
     private Intent intent;
+    private ActionMode actionMode;
+    private ActionMode.Callback actionModeCallback;
+    private List<Internship> internships;
 
     /**
      * RecyclerAdapter of RecyclerView for internships in the activity
      */
     public static ApplicationListRecyclerAdapter recyclerAdapter;
+
     /**
      * a key used when passing boolean to the intent to this activity to check if search needs to be performed
      */
     public static final String SEARCH_FROM_MAIN = "SEARCH_FROM_MAIN";
 
+    //used to check if currently in selection mode (whether any internships has been selected)
+    public boolean isSelectionMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +77,48 @@ public class ApplicationListActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setFocusable(false);
         //give the recycler adapter the list of all internships
-        recyclerAdapter = new ApplicationListRecyclerAdapter(getApplicationContext(), internships);
+        recyclerAdapter = new ApplicationListRecyclerAdapter(this, internships);
         //set the adapter to the recycler view
         recyclerView.setAdapter(recyclerAdapter);
+
+        //sets what is displayed in actionbar in action mode
+        actionModeCallback = new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+                actionMode.setTitle("0 internships selected");
+
+                MenuInflater inflater = actionMode.getMenuInflater();
+                inflater.inflate(R.menu.action_mode_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    //when the delete action button is pressed in action mode
+                    case R.id.action_mode_delete:
+                        return true;
+
+                }
+
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode actionMode) {
+                isSelectionMode = false;
+                //update the recycler view
+                recyclerAdapter.notifyDataSetChanged();
+            }
+        };
 
     }
 
@@ -91,6 +136,7 @@ public class ApplicationListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //add search action button to action bar
         getMenuInflater().inflate(R.menu.application_list_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search_application_list);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
