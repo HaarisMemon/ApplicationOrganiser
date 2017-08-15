@@ -17,12 +17,6 @@ import com.haarismemon.applicationorganiser.view_holder.StageListViewHolder;
 
 import java.util.List;
 
-import static com.haarismemon.applicationorganiser.R.id.companyNameText;
-import static com.haarismemon.applicationorganiser.R.id.lengthText;
-import static com.haarismemon.applicationorganiser.R.id.locationText;
-import static com.haarismemon.applicationorganiser.R.id.notesText;
-import static com.haarismemon.applicationorganiser.R.id.roleText;
-
 /**
  * This class represents the Recycler Adapter for the Stage List.
  * It constructs the list and puts the stage's information onto each card view in the list.
@@ -82,7 +76,7 @@ public class StageListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
             //adds the company name, role and last updated date to the cardView holder
             stageHolder.stageName.setText(stage.getStageName());
-            stageHolder.status.setText(stage.getCurrentStatus());
+            stageHolder.status.setText(stage.getCurrentStatus().toString());
             stageHolder.updatedDate.setText(stage.getModifiedShortDate());
 
             //go to Internship Information when item in Applications List is clicked

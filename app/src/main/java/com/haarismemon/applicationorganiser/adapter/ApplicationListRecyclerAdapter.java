@@ -11,6 +11,7 @@ import com.haarismemon.applicationorganiser.ApplicationListActivity;
 import com.haarismemon.applicationorganiser.InternshipInformationActivity;
 import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 import com.haarismemon.applicationorganiser.view_holder.ApplicationListViewHolder;
 
@@ -45,6 +46,27 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         holder.companyName.setText(internship.getCompanyName());
         holder.role.setText(internship.getRole());
         holder.updatedDate.setText(internship.getModifiedShortDate());
+
+        //update the status icon for the cardView holder
+        ApplicationStage stage = internship.getCurrentStage();
+
+        if(stage != null) {
+
+            ApplicationStage.Status currentStatus = stage.getCurrentStatus();
+
+            if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
+                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_success);
+            } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
+                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_waiting);
+            } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
+                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_unsuccess);
+            } else {
+                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_uncomplete);
+            }
+
+        } else {
+            holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_uncomplete);
+        }
 
         //go to Internship Information when item in Applications List is clicked
         holder.itemView.setOnClickListener(new View.OnClickListener() {

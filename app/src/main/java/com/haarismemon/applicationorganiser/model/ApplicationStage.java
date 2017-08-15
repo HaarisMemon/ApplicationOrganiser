@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat;
 public class ApplicationStage {
 
     public enum Status {
-        SUCCESSFUL("Successful"), WAITING("Waiting"),
-        UNSUCCESSFUL("Unsuccessful"), UNCOMPLETED("Uncomplete");
+        SUCCESSFUL("Successful"), WAITING("In Progress"),
+        UNSUCCESSFUL("Unsuccessful"), INCOMPLETE("Incomplete");
 
         private String text;
 
@@ -264,7 +264,7 @@ public class ApplicationStage {
 
     /**
      * Returns the current status of this application stage as an enum.
-     * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, UNCOMPLETED
+     * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, INCOMPLETE
      * @return status enum of application stage
      */
     public Status getCurrentStatus() {
@@ -279,7 +279,7 @@ public class ApplicationStage {
                 }
             }
         } else {
-            return Status.UNCOMPLETED;
+            return Status.INCOMPLETE;
         }
     }
 

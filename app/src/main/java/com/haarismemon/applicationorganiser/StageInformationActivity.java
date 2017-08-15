@@ -56,7 +56,7 @@ public class StageInformationActivity extends AppCompatActivity {
         editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + stage.getModifiedShortDateTime());
 
         stageNameText.setText(stage.getStageName() != null ? stage.getStageName() : "No Company Name");
-        currentStatusText.setText(stage.getCurrentStatus() != null ? stage.getCurrentStatus() : "No Status");
+        currentStatusText.setText(stage.getCurrentStatus().toString());
         isCompletedText.setText(stage.isCompleted() ? "Yes" : "No");
         isWaitingForResponseText.setText(stage.isWaitingForResponse() ? "Yes" : "No");
         isSuccessfulText.setText(stage.isSuccessful() ? "Yes" : "No");
