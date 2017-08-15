@@ -11,8 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.adapter.StageListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
@@ -106,10 +104,10 @@ public class InternshipInformationActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteInternship(internship.getInternshipID());
-                                ApplicationListActivity.recyclerAdapter.notifyDataSetChanged();
+                                MainActivity.recyclerAdapter.notifyDataSetChanged();
 
                                 //go back to the application list activity
-                                Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
                             }
                         })
@@ -164,7 +162,8 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), ApplicationListActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }

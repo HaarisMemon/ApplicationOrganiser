@@ -144,6 +144,7 @@ public class StageInformationActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent backIntent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
         backIntent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
+        backIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(backIntent);
     }
 }

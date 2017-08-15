@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.haarismemon.applicationorganiser.ApplicationListActivity;
+import com.haarismemon.applicationorganiser.MainActivity;
 import com.haarismemon.applicationorganiser.InternshipInformationActivity;
 import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
@@ -24,9 +24,9 @@ import java.util.List;
 public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<ApplicationListViewHolder> {
 
     public List<Internship> internshipsList;
-    private ApplicationListActivity context;
+    private MainActivity context;
 
-    public ApplicationListRecyclerAdapter(ApplicationListActivity context, List<Internship> internshipsList) {
+    public ApplicationListRecyclerAdapter(MainActivity context, List<Internship> internshipsList) {
         this.internshipsList = internshipsList;
         this.context = context;
     }
