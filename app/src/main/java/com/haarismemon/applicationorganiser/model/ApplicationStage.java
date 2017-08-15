@@ -13,6 +13,22 @@ import java.text.SimpleDateFormat;
  */
 public class ApplicationStage {
 
+    public enum Status {
+        SUCCESSFUL("Successful"), WAITING("Waiting"),
+        UNSUCCESSFUL("Unsuccessful"), UNCOMPLETED("Uncomplete");
+
+        private String text;
+
+        Status(String text) {
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
+
     private long stageID;
     private String stageName;
     private boolean isCompleted;
@@ -246,19 +262,24 @@ public class ApplicationStage {
         this.modifiedDate = modifiedDate;
     }
 
-    public String getCurrentStatus() {
+    /**
+     * Returns the current status of this application stage as an enum.
+     * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, UNCOMPLETED
+     * @return status enum of application stage
+     */
+    public Status getCurrentStatus() {
         if(isCompleted) {
             if(isWaitingForResponse) {
-                return "Waiting";
+                return Status.WAITING;
             } else {
                 if(isSuccessful) {
-                    return "Successful!";
+                    return Status.SUCCESSFUL;
                 } else {
-                    return "Failed";
+                    return Status.UNSUCCESSFUL;
                 }
             }
         } else {
-            return "Not Completed";
+            return Status.UNCOMPLETED;
         }
     }
 

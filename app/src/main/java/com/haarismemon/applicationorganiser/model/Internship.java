@@ -32,6 +32,15 @@ public class Internship {
     }
 
     /**
+     * Returns the most recent and current application stage of an internship
+     * @return The most recent application stage
+     */
+    public ApplicationStage getCurrentStage() {
+        if(!applicationStages.isEmpty()) return applicationStages.get(applicationStages.size() - 1);
+        return null;
+    }
+
+    /**
      * Check if two Internship objects are equal
      * @param obj The second Internship object to compare it to
      * @return true if the two Intnernship objects have same company name and role
