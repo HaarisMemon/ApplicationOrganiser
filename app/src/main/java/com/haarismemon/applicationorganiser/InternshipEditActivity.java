@@ -195,6 +195,7 @@ public class InternshipEditActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
             //send the internship ID in the intent
             intent.putExtra(InternshipTable.COLUMN_ID, newInternship.getInternshipID());
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 
             return true;
@@ -215,7 +216,7 @@ public class InternshipEditActivity extends AppCompatActivity {
                 .setNegativeButton("Discard", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                    InternshipEditActivity.super.onBackPressed();
+                        InternshipEditActivity.super.onBackPressed();
                     }
                 });
         discardDialog.show();

@@ -162,8 +162,16 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+
+        String mainActivityContext = getIntent().getStringExtra("SOURCE");
+
+        //if last activity was the main activity then do normal back press to keep the previous activity state
+        if(mainActivityContext != null && mainActivityContext.equals(getApplicationContext().getPackageName())) {
+            super.onBackPressed();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 }

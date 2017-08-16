@@ -91,6 +91,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
                     Intent intent = new Intent(context, InternshipInformationActivity.class);
                     //send the ID of the Internship you want to see information of
                     intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
+                    intent.putExtra("SOURCE", context.getPackageName());
                     context.startActivity(intent);
 
                 }
