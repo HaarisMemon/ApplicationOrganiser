@@ -193,6 +193,7 @@ public class Internship {
      * @return url website string for internship
      */
     public String getUrl() {
+        if(url != null && url.equals("")) url = null;
         return url;
     }
 

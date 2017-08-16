@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:elevation="5dp"
+    android:layout_height="70dp"
+    app:cardElevation="3dp"
     app:cardCornerRadius="4dp"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
@@ -14,42 +14,41 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp">
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="13dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerVertical="true">
+            android:text="Stage Name"
+            android:textSize="18dp"
+            android:id="@+id/stageNameCardView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="50dp"
+            android:maxLines="1"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Stage Name"
-                android:textSize="18dp"
-                android:id="@+id/stageNameCardView"
-                android:layout_marginBottom="3dp"
-                android:maxLines="1"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Current Status"
-                android:id="@+id/statusCardView"
-                android:textSize="14dp"
-                android:maxLines="1"/>
-
-        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="45dp"
+            android:text="Current Status"
+            android:id="@+id/statusCardView"
+            android:textSize="14dp"
+            android:maxLines="1"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:id="@+id/updatedDateCardView"
             android:text="19 Jun"
-            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>

@@ -9,7 +9,6 @@
     <color name="homeButtonsTextColor">#ffffff</color>
 
     <color name="internshipCardBackgroundDefault">#FFFFFF</color>
-
     <color name="internshipCardBackgroundSelected">#89cdec</color>
 
 </resources>

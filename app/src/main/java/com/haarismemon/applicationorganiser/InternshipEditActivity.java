@@ -73,7 +73,9 @@ public class InternshipEditActivity extends AppCompatActivity {
             lengthEditText.setText(internship.getLength());
             locationEditText.setText(internship.getLocation());
             urlEditText.setText(internship.getUrl());
-            salaryEditText.setText(String.valueOf(internship.getSalary()));
+            if(internship.getSalary() != 0) {
+                salaryEditText.setText(String.valueOf(internship.getSalary()));
+            }
             notesEditText.setText(internship.getNotes());
 
         } else {
@@ -166,7 +168,7 @@ public class InternshipEditActivity extends AppCompatActivity {
         }
 
         String salaryText = salaryEditText.getText().toString().replaceFirst("^ *", "");
-        if(roleText.length() > 1) {
+        if(salaryText.length() > 1) {
             try {
                 Integer.parseInt(salaryText);
             } catch(NumberFormatException e) {
@@ -199,7 +201,15 @@ public class InternshipEditActivity extends AppCompatActivity {
             newInternship.setLength(lengthEditText.getText().toString().replaceFirst("^ *", ""));
             newInternship.setLocation(locationEditText.getText().toString().replaceFirst("^ *", ""));
             newInternship.setUrl(urlEditText.getText().toString().replaceFirst("^ *", ""));
-            newInternship.setSalary(Integer.parseInt(salaryEditText.getText().toString().replaceFirst("^ *", "")));
+
+            try {
+                String salary = salaryEditText.getText().toString().replaceFirst("^ *", "");
+                if(!salary.equals(""))
+                    newInternship.setSalary(Integer.parseInt(salary));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
             newInternship.setNotes(notesEditText.getText().toString().replaceFirst("^ *", ""));
 
             //if editing internship then update it, else create a new one in database
