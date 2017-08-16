@@ -10,4 +10,6 @@
     <string name="pleaseFillForm">Please fill in the form before saving</string>
 
     <string name="search_hint">Search for an Internship</string>
+
+    <string name="addFirstInternship">Click on the + below to add your first Internship</string>
 </resources>

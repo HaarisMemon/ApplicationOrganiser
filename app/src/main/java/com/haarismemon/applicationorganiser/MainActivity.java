@@ -3,10 +3,8 @@ package com.haarismemon.applicationorganiser;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -19,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
@@ -72,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         //ArrayList of all internships in the database
         internships = mDataSource.getAllInternship();
+
+        displayMessageIfNoInternships();
 
         //map to track which internships have been selected, and which card they are linked to
         selectedInternshipCardMap = new HashMap<>();
@@ -280,6 +281,24 @@ public class MainActivity extends AppCompatActivity {
 
         //empty the map holding the selected internships
         selectedInternshipCardMap.clear();
+
+        displayMessageIfNoInternships();
+    }
+
+    //displays message to inform user to add their first internship if internship list is empty
+    private void displayMessageIfNoInternships() {
+        if(internships.isEmpty()) {
+            RelativeLayout mainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
+
+            TextView messageWhenEmpty = new TextView(this);
+            messageWhenEmpty.setText(getResources().getString(R.string.addFirstInternship));
+
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+            messageWhenEmpty.setLayoutParams(layoutParams);
+
+            mainRelativeLayout.addView(messageWhenEmpty);
+        }
     }
 
 }
