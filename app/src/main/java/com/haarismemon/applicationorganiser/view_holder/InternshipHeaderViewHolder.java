@@ -16,6 +16,8 @@ public class InternshipHeaderViewHolder extends RecyclerView.ViewHolder {
     public TextView roleText;
     public TextView lengthText;
     public TextView locationText;
+    public TextView urlText;
+    public TextView salaryText;
     public TextView notesText;
 
     public InternshipHeaderViewHolder(View itemView) {
@@ -26,6 +28,8 @@ public class InternshipHeaderViewHolder extends RecyclerView.ViewHolder {
         roleText = (TextView) itemView.findViewById(R.id.roleText);
         lengthText = (TextView) itemView.findViewById(R.id.lengthText);
         locationText = (TextView) itemView.findViewById(R.id.locationText);
+        urlText = (TextView) itemView.findViewById(R.id.urlText);
+        salaryText = (TextView) itemView.findViewById(R.id.salaryText);
         notesText = (TextView) itemView.findViewById(R.id.notesText);
     }
 

@@ -20,6 +20,9 @@ public class Internship {
     private String role;
     private String length;
     private String location;
+    private boolean priority;
+    private String url;
+    private int salary;
     private String notes;
     private String modifiedDate;
     private boolean isSelected;
@@ -73,6 +76,8 @@ public class Internship {
         values.put(InternshipTable.COLUMN_ROLE, role);
         values.put(InternshipTable.COLUMN_LENGTH, length);
         values.put(InternshipTable.COLUMN_LOCATION, location);
+        values.put(InternshipTable.COLUMN_URL, url);
+        values.put(InternshipTable.COLUMN_SALARY, salary);
         values.put(InternshipTable.COLUMN_NOTES, notes);
 
         //if no modified date, then Internship not stored in database yet (newly created)
@@ -165,6 +170,54 @@ public class Internship {
      */
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    /**
+     * Returns if the internship is high priority
+     * @return true if the internship is high priority
+     */
+    public boolean isPriority() {
+        return priority;
+    }
+
+    /**
+     * Sets the priority of the internship
+     * @param priority set to true if internship is high priority
+     */
+    public void setPriority(boolean priority) {
+        this.priority = priority;
+    }
+
+    /**
+     * Returns the url of the website for internship
+     * @return url website string for internship
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Sets the url website of the internship
+     * @param url website of the internship
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
+     * Returns the salary of the internship
+     * @return salary of the internship
+     */
+    public int getSalary() {
+        return salary;
+    }
+
+    /**
+     * Sets the salary of the internship
+     * @param salary salary of the internship
+     */
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 
     /**

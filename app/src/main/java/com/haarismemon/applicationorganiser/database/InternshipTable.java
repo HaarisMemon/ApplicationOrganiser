@@ -14,6 +14,9 @@ public class InternshipTable {
     public static final String COLUMN_ROLE = "role";
     public static final String COLUMN_LENGTH = "length";
     public static final String COLUMN_LOCATION = "location";
+    public static final String COLUMN_PRIORITY = "priority";
+    public static final String COLUMN_URL = "url";
+    public static final String COLUMN_SALARY = "salary";
     public static final String COLUMN_NOTES = "notes";
     public static final String COLUMN_CREATED_ON = "created_on";
     public static final String COLUMN_MODIFIED_ON = "modified_on";
@@ -22,9 +25,8 @@ public class InternshipTable {
      * List of all columns in the Internship Table as String constants
      */
     public static final String[] ALL_COLUMNS = {
-            COLUMN_ID, COLUMN_COMPANY_NAME, COLUMN_ROLE,
-            COLUMN_LENGTH, COLUMN_LOCATION, COLUMN_NOTES,
-            COLUMN_CREATED_ON, COLUMN_MODIFIED_ON,
+            COLUMN_ID, COLUMN_COMPANY_NAME, COLUMN_ROLE, COLUMN_LENGTH, COLUMN_LOCATION,
+            COLUMN_PRIORITY, COLUMN_URL, COLUMN_SALARY, COLUMN_NOTES, COLUMN_CREATED_ON, COLUMN_MODIFIED_ON,
     };
 
     /**
@@ -36,8 +38,11 @@ public class InternshipTable {
                 COLUMN_COMPANY_NAME + " VARCHAR, " +
                 COLUMN_ROLE + " VARCHAR, " +
                 COLUMN_LENGTH + " VARCHAR, " +
-                COLUMN_LOCATION + " VARCHAR," +
-                    COLUMN_NOTES + " VARCHAR, " +
+                COLUMN_LOCATION + " VARCHAR, " +
+                COLUMN_PRIORITY + " INTEGER DEFAULT 0, " +
+                COLUMN_URL + " VARCHAR, " +
+                COLUMN_SALARY + " INTEGER, " +
+                COLUMN_NOTES + " VARCHAR, " +
                 COLUMN_CREATED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')), " +
                 COLUMN_MODIFIED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))" +
             ")";

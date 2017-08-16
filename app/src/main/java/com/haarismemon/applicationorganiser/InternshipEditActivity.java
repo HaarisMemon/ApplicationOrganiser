@@ -34,6 +34,8 @@ public class InternshipEditActivity extends AppCompatActivity {
     private TextInputEditText roleEditText;
     private TextInputEditText lengthEditText;
     private TextInputEditText locationEditText;
+    private TextInputEditText urlEditText;
+    private TextInputEditText salaryEditText;
     private TextInputEditText notesEditText;
 
     @Override
@@ -58,6 +60,8 @@ public class InternshipEditActivity extends AppCompatActivity {
         roleEditText = (TextInputEditText) findViewById(R.id.roleEditText);
         lengthEditText = (TextInputEditText) findViewById(R.id.lengthEditText);
         locationEditText = (TextInputEditText) findViewById(R.id.locationEditText);
+        urlEditText = (TextInputEditText) findViewById(R.id.urlEditText);
+        salaryEditText = (TextInputEditText) findViewById(R.id.salaryEditText);
         notesEditText = (TextInputEditText) findViewById(R.id.notesEditText);
 
         //if editing internship then display all existing internship information
@@ -68,6 +72,8 @@ public class InternshipEditActivity extends AppCompatActivity {
             roleEditText.setText(internship.getRole());
             lengthEditText.setText(internship.getLength());
             locationEditText.setText(internship.getLocation());
+            urlEditText.setText(internship.getUrl());
+            salaryEditText.setText(String.valueOf(internship.getSalary()));
             notesEditText.setText(internship.getNotes());
 
         } else {
@@ -159,6 +165,16 @@ public class InternshipEditActivity extends AppCompatActivity {
             isValid = false;
         }
 
+        String salaryText = salaryEditText.getText().toString().replaceFirst("^ *", "");
+        if(roleText.length() > 1) {
+            try {
+                Integer.parseInt(salaryText);
+            } catch(NumberFormatException e) {
+                salaryEditText.setError("Please enter a valid salary with only number digits");
+                isValid = false;
+            }
+        }
+
         return isValid;
     }
 
@@ -182,6 +198,8 @@ public class InternshipEditActivity extends AppCompatActivity {
             newInternship.setRole(roleEditText.getText().toString().replaceFirst("^ *", ""));
             newInternship.setLength(lengthEditText.getText().toString().replaceFirst("^ *", ""));
             newInternship.setLocation(locationEditText.getText().toString().replaceFirst("^ *", ""));
+            newInternship.setUrl(urlEditText.getText().toString().replaceFirst("^ *", ""));
+            newInternship.setSalary(Integer.parseInt(salaryEditText.getText().toString().replaceFirst("^ *", "")));
             newInternship.setNotes(notesEditText.getText().toString().replaceFirst("^ *", ""));
 
             //if editing internship then update it, else create a new one in database
@@ -191,7 +209,7 @@ public class InternshipEditActivity extends AppCompatActivity {
                 mDataSource.createInternship(newInternship);
             }
 
-            //go to the Internship Information of the exisiting or new Internship made
+            //go to the Internship Information of the existing or new Internship made
             Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
             //send the internship ID in the intent
             intent.putExtra(InternshipTable.COLUMN_ID, newInternship.getInternshipID());

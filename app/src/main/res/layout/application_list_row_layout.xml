@@ -42,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text="Software Engineering Role"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                android:layout_marginRight="20dp"/>
 
         </LinearLayout>
 

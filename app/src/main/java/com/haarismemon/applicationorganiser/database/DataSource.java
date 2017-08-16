@@ -179,6 +179,8 @@ public class DataSource {
             internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
+            internship.setUrl(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_URL)));
+            internship.setSalary(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_SALARY)));
             internship.setNotes(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_NOTES)));
             internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
 
@@ -298,7 +300,7 @@ public class DataSource {
 
         ContentValues values = internship.toValues();
         //update the modified on date by the current date
-        values.put(InternshipTable.COLUMN_MODIFIED_ON, currentDate);;
+        values.put(InternshipTable.COLUMN_MODIFIED_ON, currentDate);
 
         //update internship that has matching id
         mDatabase.update(InternshipTable.TABLE_INTERNSHIP, values,

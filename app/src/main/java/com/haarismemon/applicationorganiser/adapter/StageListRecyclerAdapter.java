@@ -67,6 +67,8 @@ public class StageListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             internshipHolder.roleText.setText(internship.getRole() != null ? internship.getRole() : "None");
             internshipHolder.lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
             internshipHolder.locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
+            internshipHolder.urlText.setText(internship.getUrl() != null ? internship.getUrl() : "None");
+            internshipHolder.salaryText.setText(internship.getSalary() != 0 ? "£" + internship.getSalary() : "None");
             internshipHolder.notesText.setText(internship.getNotes() != null ? internship.getNotes() : "No Notes");
 
         } else if(holder instanceof StageListViewHolder) {

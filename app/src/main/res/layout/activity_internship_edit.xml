@@ -6,89 +6,125 @@
     android:layout_height="match_parent"
     tools:context="com.haarismemon.applicationorganiser.InternshipEditActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="10dp">
+        style="@style/scrollBarStyle">
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
 
-            <android.support.design.widget.TextInputEditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Company Name *"
-                android:id="@+id/companyNameEditText"
-                android:singleLine="true"
-                android:inputType="textCapSentences"/>
+                android:layout_margin="5dp">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Company Name *"
+                    android:id="@+id/companyNameEditText"
+                    android:singleLine="true"
+                    android:inputType="textCapSentences"/>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Role *"
-                android:id="@+id/roleEditText"
-                android:singleLine="true"
-                android:inputType="textCapSentences"/>
+                android:layout_margin="5dp">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Role *"
+                    android:id="@+id/roleEditText"
+                    android:singleLine="true"
+                    android:inputType="textCapSentences"/>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Length"
-                android:id="@+id/lengthEditText"
-                android:singleLine="true"
-                android:inputType="textCapSentences"/>
+                android:layout_margin="5dp">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Length"
+                    android:id="@+id/lengthEditText"
+                    android:singleLine="true"
+                    android:inputType="textCapSentences"/>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Location"
-                android:id="@+id/locationEditText"
-                android:singleLine="true"
-                android:inputType="textCapSentences"/>
+                android:layout_margin="5dp">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Location"
+                    android:id="@+id/locationEditText"
+                    android:singleLine="true"
+                    android:inputType="textCapSentences"/>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Notes"
-                android:id="@+id/notesEditText"
-                android:height="200dp"
-                android:gravity="top"
-                android:capitalize="sentences"/>
+                android:layout_margin="5dp">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Website"
+                    android:id="@+id/urlEditText"
+                    android:singleLine="true"
+                    android:inputType="textCapSentences"/>
 
-    </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Salary (£)"
+                    android:id="@+id/salaryEditText"
+                    android:singleLine="true"
+                    android:inputType="number"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Notes"
+                    android:id="@+id/notesEditText"
+                    android:height="200dp"
+                    android:gravity="top"
+                    android:capitalize="sentences"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/internshipSaveFAB"
