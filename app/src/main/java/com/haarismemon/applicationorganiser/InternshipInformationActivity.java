@@ -61,7 +61,6 @@ public class InternshipInformationActivity extends AppCompatActivity {
         stages.addAll(mDataSource.getAllApplicationStages(internship.getInternshipID()));
 
         stageRecyclerView = (RecyclerView) findViewById(R.id.stageRecyclerView);
-        stageRecyclerView.setNestedScrollingEnabled(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageRecyclerView.setLayoutManager(layoutManager);

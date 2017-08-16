@@ -6,27 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.haarismemon.applicationorganiser.InternshipInformationActivity">
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/scrollBarStyle">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/stageRecyclerView"
-                android:layout_marginBottom="6dp"></android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:id="@+id/stageRecyclerView"
+        style="@style/scrollBarStyle"
+        android:layout_marginBottom="6dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/internshipInfoEditFAB"

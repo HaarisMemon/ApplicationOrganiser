@@ -6,15 +6,27 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.haarismemon.applicationorganiser.adapter.StageInformationRecyclerAdapter;
+import com.haarismemon.applicationorganiser.adapter.StageListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.haarismemon.applicationorganiser.InternshipInformationActivity.adapter;
+import static com.haarismemon.applicationorganiser.R.id.stageRecyclerView;
 
 /**
  * This class represents the activity which displays the information of an Application Stage
@@ -25,6 +37,7 @@ public class StageInformationActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private ApplicationStage stage;
     private Intent intent;
+    private RecyclerView stageInformationRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,28 +55,12 @@ public class StageInformationActivity extends AppCompatActivity {
         //application stage that has the same id that was sent in the intent
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
 
-        TextView editedText = (TextView) findViewById(R.id.editedDateStageText);
-        TextView stageNameText = (TextView) findViewById(R.id.stageNameText);
-        TextView currentStatusText = (TextView) findViewById(R.id.currentStatusText);
-        TextView isCompletedText = (TextView) findViewById(R.id.isCompletedText);
-        TextView isWaitingForResponseText = (TextView) findViewById(R.id.isWaitingForResponseText);
-        TextView isSuccessfulText = (TextView) findViewById(R.id.isSuccessfulText);
-        TextView dateOfStartText = (TextView) findViewById(R.id.dateOfStartText);
-        TextView dateOfCompletionText = (TextView) findViewById(R.id.dateOfCompletionText);
-        TextView dateOfReplyText = (TextView) findViewById(R.id.dateOfReplyText);
-        TextView stageDescriptionText = (TextView) findViewById(R.id.stageNotesText);
-
-        editedText.setText(getApplicationContext().getString(R.string.editedModified) + " " + stage.getModifiedShortDateTime());
-
-        stageNameText.setText(stage.getStageName() != null ? stage.getStageName() : "No Company Name");
-        currentStatusText.setText(stage.getCurrentStatus().toString());
-        isCompletedText.setText(stage.isCompleted() ? "Yes" : "No");
-        isWaitingForResponseText.setText(stage.isWaitingForResponse() ? "Yes" : "No");
-        isSuccessfulText.setText(stage.isSuccessful() ? "Yes" : "No");
-        dateOfStartText.setText(stage.getDateOfStart() != null ? stage.getDateOfStart() : "No Start Date");
-        dateOfCompletionText.setText(stage.getDateOfCompletion() != null ? stage.getDateOfCompletion() : "No Complete Date");
-        dateOfReplyText.setText(stage.getDateOfReply() != null ? stage.getDateOfReply() : "No Reply Date");
-        stageDescriptionText.setText(stage.getNotes() != null ? stage.getNotes() : "No Notes");
+        stageInformationRecyclerView = (RecyclerView) findViewById(R.id.stageInformationRecyclerView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        stageInformationRecyclerView.setLayoutManager(layoutManager);
+        stageInformationRecyclerView.setHasFixedSize(true);
+        StageInformationRecyclerAdapter adapter = new StageInformationRecyclerAdapter(getApplicationContext(), stage);
+        stageInformationRecyclerView.setAdapter(adapter);
 
     }
 
@@ -99,7 +96,7 @@ public class StageInformationActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteApplicationStage(stage.getStageID());
-                                InternshipInformationActivity.adapter.notifyDataSetChanged();
+                                adapter.notifyDataSetChanged();
 
                                 //go back to the internship information activity
                                 Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
