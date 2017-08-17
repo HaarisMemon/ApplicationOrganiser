@@ -1,6 +1,5 @@
 package com.haarismemon.applicationorganiser;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -12,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.adapter.StageListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
@@ -32,6 +32,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
     private Internship internship = null;
     private RecyclerView stageRecyclerView;
     private boolean isSourceMainActivity;
+    private List<ApplicationStage> stages;
 
     /**
      * StageList adapter of RecylerView for stages in the activity
@@ -59,7 +60,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
         internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
 
         //arraylist of all application stages linked to the internship in the database
-        List<ApplicationStage> stages = new ArrayList<>();
+        stages = new ArrayList<>();
         //add dummy application stage object to be replaced by the internship header card view
         stages.add(new ApplicationStage());
         stages.addAll(mDataSource.getAllApplicationStages(internship.getInternshipID()));
@@ -72,6 +73,8 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         adapter = new StageListRecyclerAdapter(getApplicationContext(), internship, stages, isSourceMainActivity);
         stageRecyclerView.setAdapter(adapter);
+
+        displayMessageIfNoStages();
 
     }
 
@@ -176,4 +179,15 @@ public class InternshipInformationActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    //displays message to inform user to add their first stage if stage list is empty
+    private void displayMessageIfNoStages() {
+        TextView messageWhenEmpty = (TextView) findViewById(R.id.addStageMessage);
+        if(stages.size() <= 1) {
+            messageWhenEmpty.setVisibility(View.VISIBLE);
+        } else {
+            messageWhenEmpty.setVisibility(View.INVISIBLE);
+        }
+    }
+
 }

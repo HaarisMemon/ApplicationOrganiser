@@ -8,10 +8,30 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/stageRecyclerView"
         style="@style/scrollBarStyle"
-        android:layout_marginBottom="6dp"/>
+        android:overScrollMode="never"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:clipToPadding="false"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/stageRecyclerView"
+        android:id="@+id/addStageRelativeLayout">
+
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:text="@string/addFirstStage"
+            android:id="@+id/addStageMessage"
+            android:textAlignment="center"/>
+
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/internshipInfoEditFAB"

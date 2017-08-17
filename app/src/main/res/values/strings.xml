@@ -11,5 +11,6 @@
 
     <string name="search_hint">Search for an Internship</string>
 
-    <string name="addFirstInternship">Click on the + below to add your first Internship</string>
+    <string name="addFirstInternship">Click the + button below to add your first Internship</string>
+    <string name="addFirstStage">Click the + button above to add your first Application Stage</string>
 </resources>
