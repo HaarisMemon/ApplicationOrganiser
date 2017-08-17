@@ -85,6 +85,18 @@ public class StageListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             stageHolder.status.setText(stage.getCurrentStatus().toString());
             stageHolder.updatedDate.setText(stage.getModifiedShortDate());
 
+            ApplicationStage.Status currentStatus = stage.getCurrentStatus();
+
+            if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
+                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_success);
+            } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
+                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_waiting);
+            } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
+                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_unsuccess);
+            } else {
+                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_uncomplete);
+            }
+
             //go to Internship Information when item in Applications List is clicked
             stageHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

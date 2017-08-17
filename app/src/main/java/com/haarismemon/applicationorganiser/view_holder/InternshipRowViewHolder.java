@@ -10,14 +10,14 @@ import com.haarismemon.applicationorganiser.R;
 /**
  * This class represents the View Holder which is used to hold a CardView's data to display
  */
-public class ApplicationListViewHolder extends RecyclerView.ViewHolder {
+public class InternshipRowViewHolder extends RecyclerView.ViewHolder {
 
     public TextView companyName;
     public TextView role;
     public TextView updatedDate;
     public ImageView internshipStatusIcon;
 
-    public ApplicationListViewHolder(View itemView) {
+    public InternshipRowViewHolder(View itemView) {
         super(itemView);
 
         companyName = (TextView) itemView.findViewById(R.id.companyNameCardView);

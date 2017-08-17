@@ -13,7 +13,7 @@ import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
-import com.haarismemon.applicationorganiser.view_holder.ApplicationListViewHolder;
+import com.haarismemon.applicationorganiser.view_holder.InternshipRowViewHolder;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * This class represents the Recycler Adapter for the Application List.
  * It constructs the list and puts the internship's information onto each card view in the list.
  */
-public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<ApplicationListViewHolder> {
+public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<InternshipRowViewHolder> {
 
     public List<Internship> internshipsList;
     private MainActivity context;
@@ -32,15 +32,15 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
     }
 
     @Override
-    public ApplicationListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public InternshipRowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflates the card view layout
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.application_list_row_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.internship_row_layout, parent, false);
 
-        return new ApplicationListViewHolder(view);
+        return new InternshipRowViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ApplicationListViewHolder holder, final int position) {
+    public void onBindViewHolder(final InternshipRowViewHolder holder, final int position) {
         final Internship internship = internshipsList.get(position);
         //adds the company name, role and last updated date to the cardView holder
         holder.companyName.setText(internship.getCompanyName());

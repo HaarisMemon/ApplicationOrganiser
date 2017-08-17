@@ -2,6 +2,7 @@ package com.haarismemon.applicationorganiser.view_holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.R;
@@ -14,6 +15,7 @@ public class StageListViewHolder extends RecyclerView.ViewHolder {
     public TextView stageName;
     public TextView status;
     public TextView updatedDate;
+    public ImageView stageStatusIcon;
 
     public StageListViewHolder(View itemView) {
         super(itemView);
@@ -21,6 +23,7 @@ public class StageListViewHolder extends RecyclerView.ViewHolder {
         stageName = (TextView) itemView.findViewById(R.id.stageNameCardView);
         status = (TextView) itemView.findViewById(R.id.statusCardView);
         updatedDate = (TextView) itemView.findViewById(R.id.updatedDateCardView);
+        stageStatusIcon = (ImageView) itemView.findViewById(R.id.stageStatusIcon);
     }
 
 }
