@@ -10,6 +10,6 @@
     <color name="homeButtonsTextColor">#ffffff</color>
 
     <color name="internshipCardBackgroundDefault">#FFFFFF</color>
-    <color name="internshipCardBackgroundSelected">#89cdec</color>
+    <color name="internshipCardBackgroundSelected">#b1e2f9</color>
 
 </resources>

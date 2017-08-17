@@ -16,6 +16,7 @@ public class InternshipRowViewHolder extends RecyclerView.ViewHolder {
     public TextView role;
     public TextView updatedDate;
     public ImageView internshipStatusIcon;
+    public ImageView priorityImage;
 
     public InternshipRowViewHolder(View itemView) {
         super(itemView);
@@ -24,6 +25,7 @@ public class InternshipRowViewHolder extends RecyclerView.ViewHolder {
         role = (TextView) itemView.findViewById(R.id.roleCardView);
         updatedDate = (TextView) itemView.findViewById(R.id.updatedDateCardView);
         internshipStatusIcon = (ImageView) itemView.findViewById(R.id.internshipStatusIcon);
+        priorityImage = (ImageView) itemView.findViewById(R.id.priorityImage);
     }
 
 }

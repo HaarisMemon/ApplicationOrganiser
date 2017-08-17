@@ -12,6 +12,14 @@
     android:layout_marginRight="10dp"
     app:cardBackgroundColor="@color/internshipCardBackgroundDefault">
 
+    <ImageView
+        android:layout_width="13dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="7dp"
+        android:background="#ce0c0c"
+        android:visibility="visible"
+        android:id="@+id/priorityImage"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

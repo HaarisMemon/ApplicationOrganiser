@@ -1,6 +1,7 @@
 package com.haarismemon.applicationorganiser.adapter;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,6 +47,12 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
         holder.companyName.setText(internship.getCompanyName());
         holder.role.setText(internship.getRole());
         holder.updatedDate.setText(internship.getModifiedShortDate());
+
+        if(internship.isPriority()) {
+            holder.priorityImage.setVisibility(View.VISIBLE);
+        } else {
+            holder.priorityImage.setVisibility(View.INVISIBLE);
+        }
 
         //update the status icon for the cardView holder
         ApplicationStage stage = internship.getCurrentStage();

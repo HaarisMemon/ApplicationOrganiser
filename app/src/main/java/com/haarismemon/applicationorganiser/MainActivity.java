@@ -116,6 +116,22 @@ public class MainActivity extends AppCompatActivity {
                         switchActionMode(false);
                         return true;
 
+                    //when the priority action button is pressed in action mode
+                    case R.id.action_mode_prioritise:
+                        //prioritise all selected internships
+                        prioritiseSelectedInternships();
+                        //exit action mode
+                        switchActionMode(false);
+                        return true;
+
+                    //when the priority action button is pressed in action mode
+                    case R.id.action_mode_unprioritise:
+                        //prioritise all selected internships
+                        unprioritiseSelectedInternships();
+                        //exit action mode
+                        switchActionMode(false);
+                        return true;
+
                 }
 
                 return false;
@@ -148,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //add search action button to action bar
-        getMenuInflater().inflate(R.menu.application_list_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search_application_list);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
@@ -285,6 +301,32 @@ public class MainActivity extends AppCompatActivity {
         selectedInternshipCardMap.clear();
 
         displayMessageIfNoInternships();
+    }
+
+    //prioritises all selected internships
+    private void prioritiseSelectedInternships() {
+        //for all selected internships
+        for(Internship internship : selectedInternshipCardMap.keySet()) {
+            internship.setSelected(false);
+            internship.setPriority(true);
+
+            mDataSource.updateInternshipPriority(internship);
+        }
+        //empty the map holding the selected internships
+        selectedInternshipCardMap.clear();
+    }
+
+    //unprioritises all selected internships
+    private void unprioritiseSelectedInternships() {
+        //for all selected internships
+        for(Internship internship : selectedInternshipCardMap.keySet()) {
+            internship.setSelected(false);
+            internship.setPriority(false);
+
+            mDataSource.updateInternshipPriority(internship);
+        }
+        //empty the map holding the selected internships
+        selectedInternshipCardMap.clear();
     }
 
     //displays message to inform user to add their first internship if internship list is empty

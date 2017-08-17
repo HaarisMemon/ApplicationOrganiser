@@ -146,6 +146,7 @@ public class DataSource {
             internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
+            internship.setPriority(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_PRIORITY)) == 1);
             internship.setNotes(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_NOTES)));
             internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
 
@@ -301,6 +302,22 @@ public class DataSource {
         ContentValues values = internship.toValues();
         //update the modified on date by the current date
         values.put(InternshipTable.COLUMN_MODIFIED_ON, currentDate);
+
+        //update internship that has matching id
+        mDatabase.update(InternshipTable.TABLE_INTERNSHIP, values,
+                InternshipTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(internship.getInternshipID())});
+    }
+
+    /**
+     * Update internship priority without updating the modified date
+     * @param internship object for which to update the priority of
+     */
+    public void updateInternshipPriority(Internship internship) {
+
+        ContentValues values = new ContentValues();
+        //update the modified on date by the current date
+        values.put(InternshipTable.COLUMN_PRIORITY, internship.isPriority());
 
         //update internship that has matching id
         mDatabase.update(InternshipTable.TABLE_INTERNSHIP, values,

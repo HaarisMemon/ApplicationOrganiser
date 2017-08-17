@@ -76,6 +76,7 @@ public class Internship {
         values.put(InternshipTable.COLUMN_ROLE, role);
         values.put(InternshipTable.COLUMN_LENGTH, length);
         values.put(InternshipTable.COLUMN_LOCATION, location);
+        values.put(InternshipTable.COLUMN_PRIORITY, priority);
         values.put(InternshipTable.COLUMN_URL, url);
         values.put(InternshipTable.COLUMN_SALARY, salary);
         values.put(InternshipTable.COLUMN_NOTES, notes);
