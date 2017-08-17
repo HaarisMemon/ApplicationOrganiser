@@ -1,5 +1,6 @@
 package com.haarismemon.applicationorganiser.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.haarismemon.applicationorganiser.MainActivity;
 import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.StageInformationActivity;
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
@@ -26,14 +28,16 @@ public class StageListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     private Context context;
     private Internship internship;
     private List<ApplicationStage> stagesList;
+    private boolean isSourceMainActivity;
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_STAGE = 1;
 
-    public StageListRecyclerAdapter(Context context, Internship internship, List<ApplicationStage> stagesList) {
+    public StageListRecyclerAdapter(Context context, Internship internship, List<ApplicationStage> stagesList, boolean isSourceMainActivity) {
         this.context = context;
         this.internship = internship;
         this.stagesList = stagesList;
+        this.isSourceMainActivity = isSourceMainActivity;
     }
 
     @Override
@@ -89,6 +93,11 @@ public class StageListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
                     Intent intent = new Intent(context, StageInformationActivity.class);
                     //send the stage id of the stage clicked, in the intent
                     intent.putExtra(ApplicationStageTable.COLUMN_ID, stage.getStageID());
+
+                    if(isSourceMainActivity) {
+                        intent.putExtra(MainActivity.SOURCE, true);
+                    }
+
                     context.startActivity(intent);
                 }
             });

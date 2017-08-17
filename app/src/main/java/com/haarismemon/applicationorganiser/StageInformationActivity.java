@@ -1,5 +1,6 @@
 package com.haarismemon.applicationorganiser;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -139,9 +140,16 @@ public class StageInformationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         Intent backIntent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
         backIntent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
         backIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        boolean isSourceMainActivity = getIntent().getBooleanExtra(MainActivity.SOURCE, false);
+        if(isSourceMainActivity) {
+            backIntent.putExtra(MainActivity.SOURCE, true);
+        }
+
         startActivity(backIntent);
     }
 }

@@ -1,5 +1,6 @@
 package com.haarismemon.applicationorganiser;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -30,6 +31,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private Internship internship = null;
     private RecyclerView stageRecyclerView;
+    private boolean isSourceMainActivity;
 
     /**
      * StageList adapter of RecylerView for stages in the activity
@@ -51,6 +53,8 @@ public class InternshipInformationActivity extends AppCompatActivity {
         mDataSource.open();
         Intent intent = getIntent();
 
+        isSourceMainActivity = intent.getBooleanExtra(MainActivity.SOURCE, false);
+
         //internship that has the same id that was sent in the intent
         internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
 
@@ -66,7 +70,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
         stageRecyclerView.setLayoutManager(layoutManager);
         stageRecyclerView.setHasFixedSize(true);
 
-        adapter = new StageListRecyclerAdapter(getApplicationContext(), internship, stages);
+        adapter = new StageListRecyclerAdapter(getApplicationContext(), internship, stages, isSourceMainActivity);
         stageRecyclerView.setAdapter(adapter);
 
     }
@@ -161,11 +165,10 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-        String mainActivityContext = getIntent().getStringExtra("SOURCE");
+        boolean isSourceMainActivity = getIntent().getBooleanExtra(MainActivity.SOURCE, false);
 
         //if last activity was the main activity then do normal back press to keep the previous activity state
-        if(mainActivityContext != null && mainActivityContext.equals(getApplicationContext().getPackageName())) {
+        if(isSourceMainActivity) {
             super.onBackPressed();
         } else {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

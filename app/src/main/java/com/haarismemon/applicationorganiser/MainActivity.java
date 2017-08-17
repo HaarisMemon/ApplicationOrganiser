@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public static final String SEARCH_FROM_MAIN = "SEARCH_FROM_MAIN";
 
+    public static final String SOURCE = "SOURCE";
+
     //used to check if currently in selection mode (whether any internships has been selected)
     public boolean isSelectionMode = false;
 
