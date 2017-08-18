@@ -6,5 +6,6 @@
     <dimen name="editedModifiedDateTextSize">16sp</dimen>
     <dimen name="editedModifiedDateMargin">10dp</dimen>
 
-    <dimen name="stageEditInputLeftMargin">50dp</dimen>
+    <dimen name="stageEditInputLeftMargin">35dp</dimen>
+    <dimen name="stageDateWidth">170dp</dimen>
 </resources>

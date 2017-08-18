@@ -19,6 +19,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
@@ -63,6 +65,18 @@ public class StageEditActivity extends AppCompatActivity {
     private EditText startDateButton;
     private EditText completeDateButton;
     private EditText replyDateButton;
+    private RadioGroup completedRadioGroup;
+    private RadioGroup waitingRadioGroup;
+    private RadioGroup successfulRadioGroup;
+    private TextView completedText;
+    private TextView waitingText;
+    private TextView successfulText;
+    private TextView startDateText;
+    private TextView completionDateText;
+    private TextView replyDateText;
+    private EditText startDateEditText;
+    private EditText completionDateEditText;
+    private EditText replyDateEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +101,24 @@ public class StageEditActivity extends AppCompatActivity {
         stageNameEditText = (AutoCompleteTextView) findViewById(R.id.stageNameEditText);
         notesEditText = (TextInputEditText) findViewById(R.id.notesStageEditText);
 
+        completedText = (TextView) findViewById(R.id.completedText);
+        waitingText = (TextView) findViewById(R.id.waitingText);
+        successfulText = (TextView) findViewById(R.id.successfulText);
+
+        startDateText = (TextView) findViewById(R.id.startDateText);
+        completionDateText = (TextView) findViewById(R.id.completionDateText);
+        replyDateText = (TextView) findViewById(R.id.replyDateText);
+        startDateEditText = (EditText) findViewById(R.id.startDateEditText);
+        completionDateEditText = (EditText) findViewById(R.id.completionDateEditText);
+        replyDateEditText = (EditText) findViewById(R.id.replyDateEditText);
+
+        completedRadioGroup = (RadioGroup) findViewById(R.id.completedRadioGroup);
         yesComplete = (RadioButton) findViewById(R.id.yesCompletedRadio);
         noComplete = (RadioButton) findViewById(R.id.noCompletedRadio);
+        waitingRadioGroup = (RadioGroup) findViewById(R.id.waitingRadioGroup);
         yesWaiting = (RadioButton) findViewById(R.id.yesWaitingRadio);
         noWaiting = (RadioButton) findViewById(R.id.noWaitingRadio);
+        successfulRadioGroup = (RadioGroup) findViewById(R.id.successfulRadioGroup);
         yesSuccessful = (RadioButton) findViewById(R.id.yesSuccessfulRadio);
         noSuccessful = (RadioButton) findViewById(R.id.noSuccessfulRadio);
 
@@ -101,16 +129,17 @@ public class StageEditActivity extends AppCompatActivity {
         ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, ApplicationStage.defaultApplicationStageNames);
 
         stageNameEditText.setAdapter(stageNameAdapter);
-        stageNameEditText.setThreshold(1);
+        stageNameEditText.setThreshold(0);
+        stageNameEditText.clearFocus();
 
         //if the date is not null and the date is picked, then set the DATE_PICKED tag
-        if(stage.getDateOfStart() != null && startDateButton.getText().toString().contains("/")) {
+        if(stage.getDateOfStart() != null) {
             startDateButton.setTag(DATE_PICKED);
         }
-        if(stage.getDateOfCompletion() != null && completeDateButton.getText().toString().contains("/")) {
+        if(stage.getDateOfCompletion() != null) {
             completeDateButton.setTag(DATE_PICKED);
         }
-        if(stage.getDateOfReply() != null && replyDateButton.getText().toString().contains("/")) {
+        if(stage.getDateOfReply() != null) {
             replyDateButton.setTag(DATE_PICKED);
         }
 
@@ -136,6 +165,88 @@ public class StageEditActivity extends AppCompatActivity {
             }
         };
 
+        editModeSetup();
+
+        radioButtonsLogic();
+
+    }
+
+    private void radioButtonsLogic() {
+        yesComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                yesCompleteRadioClick();
+            }
+        });
+
+        noComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                noCompleteRadioClick();
+            }
+        });
+
+        yesWaiting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                yesWaitingRadioClick();
+            }
+        });
+
+        noWaiting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                noWaitingRadioClick();
+            }
+        });
+    }
+
+    private void yesCompleteRadioClick() {
+        waitingText.setVisibility(View.VISIBLE);
+        waitingRadioGroup.setVisibility(View.VISIBLE);
+
+        completionDateText.setVisibility(View.VISIBLE);
+        completionDateEditText.setVisibility(View.VISIBLE);
+    }
+
+    private void noCompleteRadioClick() {
+        waitingText.setVisibility(View.GONE);
+        waitingRadioGroup.setVisibility(View.GONE);
+        successfulText.setVisibility(View.GONE);
+        successfulRadioGroup.setVisibility(View.GONE);
+
+        completionDateText.setVisibility(View.GONE);
+        completionDateEditText.setVisibility(View.GONE);
+        replyDateText.setVisibility(View.GONE);
+        replyDateEditText.setVisibility(View.GONE);
+
+        yesWaiting.setChecked(true);
+        noSuccessful.setChecked(true);
+
+        completionDateEditText.getText().clear();
+        replyDateEditText.getText().clear();
+    }
+
+    private void yesWaitingRadioClick() {
+        successfulText.setVisibility(View.GONE);
+        successfulRadioGroup.setVisibility(View.GONE);
+
+        replyDateText.setVisibility(View.GONE);
+        replyDateEditText.setVisibility(View.GONE);
+
+        noSuccessful.setChecked(true);
+        replyDateEditText.getText().clear();
+    }
+
+    private void noWaitingRadioClick() {
+        successfulText.setVisibility(View.VISIBLE);
+        successfulRadioGroup.setVisibility(View.VISIBLE);
+
+        replyDateText.setVisibility(View.VISIBLE);
+        replyDateEditText.setVisibility(View.VISIBLE);
+    }
+
+    private void editModeSetup() {
         //if editing application stage then display all existing application stage information
         if(isEditMode) {
             setTitle("Edit Stage");
@@ -144,16 +255,20 @@ public class StageEditActivity extends AppCompatActivity {
 
             if(stage.isCompleted()) {
                 yesComplete.setChecked(true);
+                yesCompleteRadioClick();
             }
             else {
                 noComplete.setChecked(true);
+                noCompleteRadioClick();
             }
 
             if(stage.isWaitingForResponse()) {
                 yesWaiting.setChecked(true);
+                yesWaitingRadioClick();
             }
             else {
                 noWaiting.setChecked(true);
+                noWaitingRadioClick();
             }
 
             if(stage.isSuccessful()) {
@@ -179,7 +294,7 @@ public class StageEditActivity extends AppCompatActivity {
             setTitle("New Stage");
 
             noComplete.setChecked(true);
-            noWaiting.setChecked(true);
+            yesWaiting.setChecked(true);
             noSuccessful.setChecked(true);
         }
     }
@@ -353,7 +468,9 @@ public class StageEditActivity extends AppCompatActivity {
 
             /*  if the date button has tag of DATE_PICKED then set the date on dialog to date picked earlier,
                 otherwise display todays date on the dialog  */
-            if(clickedDateEditText.getTag() != null && ((String) clickedDateEditText.getTag()).equals(DATE_PICKED)) {
+            if(!clickedDateEditText.getText().toString().equals("")
+                    && clickedDateEditText.getTag() != null
+                    && ((String) clickedDateEditText.getTag()).equals(DATE_PICKED)) {
                 String dates[] = clickedDateEditText.getText().toString().split("/");
 
                 day = Integer.parseInt(dates[0]);
