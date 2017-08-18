@@ -2,30 +2,15 @@ package com.haarismemon.applicationorganiser.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.haarismemon.applicationorganiser.R;
-import com.haarismemon.applicationorganiser.StageInformationActivity;
-import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
-import com.haarismemon.applicationorganiser.model.Internship;
-import com.haarismemon.applicationorganiser.view_holder.InternshipHeaderViewHolder;
 import com.haarismemon.applicationorganiser.view_holder.StageHeaderViewHolder;
-import com.haarismemon.applicationorganiser.view_holder.StageListViewHolder;
-
-import java.util.List;
-
-import static com.haarismemon.applicationorganiser.R.id.currentStatusText;
-import static com.haarismemon.applicationorganiser.R.id.dateOfCompletionText;
-import static com.haarismemon.applicationorganiser.R.id.dateOfReplyText;
-import static com.haarismemon.applicationorganiser.R.id.dateOfStartText;
-import static com.haarismemon.applicationorganiser.R.id.isCompletedText;
-import static com.haarismemon.applicationorganiser.R.id.isSuccessfulText;
-import static com.haarismemon.applicationorganiser.R.id.isWaitingForResponseText;
-import static com.haarismemon.applicationorganiser.R.id.stageNameText;
 
 /**
  * This class represents the Recycler Adapter for the Stage Information.
@@ -51,17 +36,36 @@ public class StageInformationRecyclerAdapter extends RecyclerView.Adapter<Recycl
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         StageHeaderViewHolder stageHolder = (StageHeaderViewHolder) holder;
 
+        CardView cardView = (CardView) stageHolder.itemView;
+
         //adds the application stage information to the cardView holder
         stageHolder.editedText.setText(context.getString(R.string.editedModified) + " " + stage.getModifiedShortDateTime());
-        stageHolder.stageNameText.setText(stage.getStageName() != null ? stage.getStageName() : "No Company Name");
+        stageHolder.stageNameText.setText(stage.getStageName());
         stageHolder.currentStatusText.setText(stage.getCurrentStatus().toString());
-        stageHolder.isCompletedText.setText(stage.isCompleted() ? "Yes" : "No");
-        stageHolder.isWaitingForResponseText.setText(stage.isWaitingForResponse() ? "Yes" : "No");
-        stageHolder.isSuccessfulText.setText(stage.isSuccessful() ? "Yes" : "No");
-        stageHolder.dateOfStartText.setText(stage.getDateOfStart() != null ? stage.getDateOfStart() : "No Start Date");
-        stageHolder.dateOfCompletionText.setText(stage.getDateOfCompletion() != null ? stage.getDateOfCompletion() : "No Complete Date");
-        stageHolder.dateOfReplyText.setText(stage.getDateOfReply() != null ? stage.getDateOfReply() : "No Reply Date");
-        stageHolder.stageDescriptionText.setText(stage.getNotes() != null ? stage.getNotes() : "No Notes");
+
+        ApplicationStage.Status currentStatus = stage.getCurrentStatus();
+
+        if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
+            stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_success);
+        } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
+            stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_waiting);
+        } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
+            stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_unsuccess);
+        } else {
+            stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_uncomplete);
+        }
+
+        if(stage.getDateOfStart() != null) stageHolder.dateOfStartText.setText(stage.getDateOfStart());
+        else stageHolder.dateOfStartText.setText("No Start Date");
+
+        if(stage.getDateOfCompletion() != null && stage.isCompleted()) stageHolder.dateOfCompletionText.setText(stage.getDateOfCompletion());
+        else cardView.findViewById(R.id.completedDateGroup).setVisibility(View.GONE);
+
+        if(stage.getDateOfReply() != null && (stage.isCompleted() && !stage.isWaitingForResponse())) stageHolder.dateOfReplyText.setText(stage.getDateOfReply());
+        else cardView.findViewById(R.id.replyDateGroup).setVisibility(View.GONE);
+
+        if(stage.getNotes() != null) stageHolder.stageDescriptionText.setText(stage.getNotes());
+        else cardView.findViewById(R.id.notesGroup).setVisibility(View.GONE);
     }
 
     @Override

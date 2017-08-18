@@ -15,7 +15,7 @@ public class ApplicationStage {
 
     public enum Status {
         SUCCESSFUL("Successful"), WAITING("In Progress"),
-        UNSUCCESSFUL("Unsuccessful"), INCOMPLETE("Incomplete");
+        UNSUCCESSFUL("Unsuccessful"), NOT_STARTED("Not Started");
 
         private String text;
 
@@ -264,7 +264,7 @@ public class ApplicationStage {
 
     /**
      * Returns the current status of this application stage as an enum.
-     * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, INCOMPLETE
+     * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, NOT_STARTED
      * @return status enum of application stage
      */
     public Status getCurrentStatus() {
@@ -279,7 +279,7 @@ public class ApplicationStage {
                 }
             }
         } else {
-            return Status.INCOMPLETE;
+            return Status.NOT_STARTED;
         }
     }
 

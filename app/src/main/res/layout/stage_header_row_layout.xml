@@ -23,140 +23,143 @@
             android:layout_marginBottom="20dp"
             android:id="@+id/internshipDetailsLayout">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stage"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:id="@+id/stageNameGroup">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Stage"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/stageNameText"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stage"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Current Status"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stage"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/stageNameText"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Current Status"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/currentStatusText"/>
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Completed?"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:id="@+id/statusGroup">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Completed?"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/isCompletedText"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current Status"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Waiting For Response?"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current Status"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/currentStatusText"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Waiting For Response?"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/isWaitingForResponseText"/>
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Successful?"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:id="@+id/startDateGroup">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Successful?"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/isSuccessfulText"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Start"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of Start"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Start"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/dateOfStartText"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of Start"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/dateOfStartText"/>
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date of Completion"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:id="@+id/completedDateGroup">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of Completion"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/dateOfCompletionText"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Completion"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of Reply"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Completion"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/dateOfCompletionText"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of Reply"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/dateOfReplyText"/>
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notes"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:id="@+id/replyDateGroup">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Reply"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Reply"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/dateOfReplyText"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/notesGroup"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Notes"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/stageNotesText"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notes"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/stageNotesText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Notes"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -169,6 +172,16 @@
             style="@style/editedModifiedText"
             android:layout_margin="20dp"
             android:text="Edited:"/>
+
+        <ImageView
+            android:id="@+id/stageInfoStatusIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:paddingBottom="10dp"
+            android:layout_marginEnd="11dp"
+            app:srcCompat="@drawable/ic_status_success" />
 
     </RelativeLayout>
 
