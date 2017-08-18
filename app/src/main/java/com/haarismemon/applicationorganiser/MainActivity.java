@@ -28,6 +28,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This class represents the activity which displays the list of all Internships
@@ -41,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private ActionMode actionMode;
     private ActionMode.Callback actionModeCallback;
+    private MenuItem prioritiseItem;
+    private MenuItem deprioritiseItem;
+
     private List<Internship> internships;
     private Map<Internship, CardView> selectedInternshipCardMap;
 
@@ -97,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
 
                 MenuInflater inflater = actionMode.getMenuInflater();
                 inflater.inflate(R.menu.action_mode_menu, menu);
+
+                prioritiseItem = menu.findItem(R.id.action_mode_prioritise);
+                deprioritiseItem = menu.findItem(R.id.action_mode_deprioritise);
+
                 return true;
             }
 
@@ -125,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     //when the priority action button is pressed in action mode
-                    case R.id.action_mode_unprioritise:
+                    case R.id.action_mode_deprioritise:
                         //prioritise all selected internships
-                        unprioritiseSelectedInternships();
+                        deprioritiseSelectedInternships();
                         //exit action mode
                         switchActionMode(false);
                         return true;
@@ -252,6 +260,8 @@ public class MainActivity extends AppCompatActivity {
             updateCardBackground(cardView, false);
         }
 
+        decideToPrioritiseOrDeprioritiseInternships(selectedInternshipCardMap.keySet());
+
         //if user selects no internships then exit action mode
         if(selectedInternshipCardMap.size() == 0) {
             switchActionMode(false);
@@ -316,8 +326,8 @@ public class MainActivity extends AppCompatActivity {
         selectedInternshipCardMap.clear();
     }
 
-    //unprioritises all selected internships
-    private void unprioritiseSelectedInternships() {
+    //deprioritises all selected internships
+    private void deprioritiseSelectedInternships() {
         //for all selected internships
         for(Internship internship : selectedInternshipCardMap.keySet()) {
             internship.setSelected(false);
@@ -343,6 +353,30 @@ public class MainActivity extends AppCompatActivity {
 
             mainRelativeLayout.addView(messageWhenEmpty);
         }
+    }
+
+    //method used each time internship selected in multi selection to decide to show prioritise or deprioritise action
+    private void decideToPrioritiseOrDeprioritiseInternships(Set<Internship> selectedInternships) {
+        boolean isCurrentlyAllPrioritised = false;
+
+        for(Internship internship : selectedInternships) {
+            if(internship.isPriority()) {
+                isCurrentlyAllPrioritised = true;
+            } else {
+                isCurrentlyAllPrioritised = false;
+                break;
+            }
+        }
+
+        //only show deprioritise action if all internships are prioritised
+        if(isCurrentlyAllPrioritised) {
+            prioritiseItem.setVisible(false);
+            deprioritiseItem.setVisible(true);
+        } else {
+            prioritiseItem.setVisible(true);
+            deprioritiseItem.setVisible(false);
+        }
+
     }
 
 }

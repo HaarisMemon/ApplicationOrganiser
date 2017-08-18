@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Unprioritise Internships"
+        android:title="Deprioritise Internships"
         android:icon="@drawable/ic_star_border_white_24dp"
-        android:id="@+id/action_mode_unprioritise"
+        android:id="@+id/action_mode_deprioritise"
         app:showAsAction="always"/>
 
     <item
