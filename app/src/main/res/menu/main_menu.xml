@@ -14,28 +14,28 @@
         app:showAsAction="ifRoom">
 
         <menu>
+
+            <item android:id="@+id/action_sort_reverse"
+                android:title="Reverse Order"/>
+
             <group
                 android:checkableBehavior="single">
+
                 <item android:id="@+id/action_sort_modified_date"
                     android:title="Modified Date"
-                    android:checked="true"
-                    android:icon="@drawable/ic_arrow_downward_black_24dp"/>
+                    android:checked="true"/>
 
                 <item android:id="@+id/action_sort_created_date"
-                    android:title="Created Date"
-                    android:icon="@drawable/ic_arrow_downward_black_24dp"/>
+                    android:title="Created Date" />
 
                 <item android:id="@+id/action_sort_company_name"
-                    android:title="Company Name"
-                    android:icon="@drawable/ic_arrow_upward_black_24dp"/>
+                    android:title="Company Name" />
 
                 <item android:id="@+id/action_sort_role"
-                    android:title="Role"
-                    android:icon="@drawable/ic_arrow_upward_black_24dp"/>
+                    android:title="Role" />
 
                 <item android:id="@+id/action_sort_salary"
-                    android:title="Salary"
-                    android:icon="@drawable/ic_arrow_downward_black_24dp"/>
+                    android:title="Salary" />
             </group>
         </menu>
 

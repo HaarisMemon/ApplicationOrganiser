@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
     private RecyclerView.LayoutManager layoutManager;
-    private Intent intent;
     private ActionMode actionMode;
     private ActionMode.Callback actionModeCallback;
     private MenuItem prioritiseItem;
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         mDataSource = new DataSource(this);
         mDataSource.open();
         mDataSource.seedDatbase();
-        intent = getIntent();
 
         //ArrayList of all internships in the database
         internships = mDataSource.getAllInternship();
@@ -196,34 +194,61 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
+            case(R.id.action_sort_reverse):
+                applicationListRecyclerAdapter.reverseOrder();
+                return true;
+
             case(R.id.action_sort_modified_date):
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_MODIFIED_ON, item);
                 item.setChecked(true);
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_MODIFIED_ON);
                 return true;
 
             case(R.id.action_sort_created_date):
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_CREATED_ON, item);
                 item.setChecked(true);
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_CREATED_ON);
                 return true;
 
             case(R.id.action_sort_company_name):
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_COMPANY_NAME, item);
                 item.setChecked(true);
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_COMPANY_NAME);
                 return true;
 
             case(R.id.action_sort_role):
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_ROLE, item);
                 item.setChecked(true);
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_ROLE);
                 return true;
 
             case(R.id.action_sort_salary):
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_SALARY, item);
                 item.setChecked(true);
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_SALARY);
                 return true;
 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void searchMenuActionSetup(final Menu menu) {
+        final MenuItem searchItem = menu.findItem(R.id.action_search_internships);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        //set the on query text listener of the search view, and give it the adapter so that it can access the list
+        searchView.setOnQueryTextListener(new MyOnQueryTextListener(applicationListRecyclerAdapter));
+
+        //get the search manager to set the searchable.xml to the search view
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.onActionViewExpanded();
+
+        //change the color of the caret in the search view from the default accent color to white
+        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        try {
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.set(searchTextView, R.drawable.cursor); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -401,34 +426,6 @@ public class MainActivity extends AppCompatActivity {
             deprioritiseItem.setVisible(false);
         }
 
-    }
-
-    private void searchMenuActionSetup(Menu menu) {
-        MenuItem searchItem = menu.findItem(R.id.action_search_internships);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        //set the on query text listener of the search view, and give it the adapter so that it can access the list
-        searchView.setOnQueryTextListener(new MyOnQueryTextListener(applicationListRecyclerAdapter));
-
-        //get the search manager to set the searchable.xml to the search view
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.onActionViewExpanded();
-
-        //change the color of the caret in the search view from the default accent color to white
-        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        try {
-            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
-            mCursorDrawableRes.setAccessible(true);
-            mCursorDrawableRes.set(searchTextView, R.drawable.cursor); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //if the search button was pressed in the main activity, then open the search view (searchbar) when this activity opens
-        if(intent.getBooleanExtra(SEARCH_FROM_MAIN, false)) {
-            searchItem.expandActionView();
-        }
     }
 
 }
