@@ -53,12 +53,13 @@
 
         <ImageView
             android:id="@+id/stageStatusIcon"
-            android:layout_width="25dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/updatedDateCardView"
-            app:srcCompat="@drawable/ic_status_success" />
+            app:srcCompat="@drawable/ic_status"
+            android:tint="@android:color/black"/>
 
     </RelativeLayout>
 

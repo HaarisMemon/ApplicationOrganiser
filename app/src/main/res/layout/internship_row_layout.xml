@@ -13,12 +13,14 @@
     app:cardBackgroundColor="@color/internshipCardBackgroundDefault">
 
     <ImageView
-        android:layout_width="13dp"
-        android:layout_height="25dp"
-        android:layout_marginLeft="7dp"
-        android:background="#ce0c0c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_priority"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="-7dp"
+        android:tint="#e00000"
         android:visibility="visible"
-        android:id="@+id/priorityImage"/>
+        android:id="@+id/priorityImage" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,12 +63,13 @@
 
         <ImageView
             android:id="@+id/internshipStatusIcon"
-            android:layout_width="25dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/updatedDateCardView"
-            app:srcCompat="@drawable/ic_status_success" />
+            app:srcCompat="@drawable/ic_status"
+            android:tint="@android:color/black"/>
 
     </RelativeLayout>
 

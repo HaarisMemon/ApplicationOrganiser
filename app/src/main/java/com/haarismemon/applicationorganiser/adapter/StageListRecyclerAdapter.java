@@ -3,6 +3,8 @@ package com.haarismemon.applicationorganiser.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,13 +90,13 @@ public class StageListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             ApplicationStage.Status currentStatus = stage.getCurrentStatus();
 
             if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_success);
+                DrawableCompat.setTint(stageHolder.stageStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusSuccessful));
             } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_waiting);
+                DrawableCompat.setTint(stageHolder.stageStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusInProgress));
             } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_unsuccess);
+                DrawableCompat.setTint(stageHolder.stageStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusUnsuccessful));
             } else {
-                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_uncomplete);
+                DrawableCompat.setTint(stageHolder.stageStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
             }
 
             //go to Internship Information when item in Applications List is clicked

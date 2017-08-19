@@ -2,6 +2,8 @@ package com.haarismemon.applicationorganiser.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,13 +48,13 @@ public class StageInformationRecyclerAdapter extends RecyclerView.Adapter<Recycl
         ApplicationStage.Status currentStatus = stage.getCurrentStatus();
 
         if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-            stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_success);
+            DrawableCompat.setTint(stageHolder.stageInfoStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusSuccessful));
         } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-            stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_waiting);
+            DrawableCompat.setTint(stageHolder.stageInfoStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusInProgress));
         } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-            stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_unsuccess);
+            DrawableCompat.setTint(stageHolder.stageInfoStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusUnsuccessful));
         } else {
-            stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_uncomplete);
+            DrawableCompat.setTint(stageHolder.stageInfoStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
         }
 
         if(stage.getDateOfStart() != null) stageHolder.dateOfStartText.setText(stage.getDateOfStart());

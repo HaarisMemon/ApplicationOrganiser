@@ -2,6 +2,7 @@ package com.haarismemon.applicationorganiser.adapter;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,17 +63,17 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
             ApplicationStage.Status currentStatus = stage.getCurrentStatus();
 
             if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_success);
+                DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusSuccessful));
             } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_waiting);
+                DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusInProgress));
             } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_unsuccess);
+                DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusUnsuccessful));
             } else {
-                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_uncomplete);
+                DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
             }
 
         } else {
-            holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_uncomplete);
+            DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
         }
 
         //go to Internship Information when item in Applications List is clicked

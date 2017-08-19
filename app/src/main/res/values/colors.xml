@@ -12,4 +12,9 @@
     <color name="internshipCardBackgroundDefault">#FFFFFF</color>
     <color name="internshipCardBackgroundSelected">#b1e2f9</color>
 
+    <color name="statusSuccessful">#80D12E</color>
+    <color name="statusIncomplete">#55BDE5</color>
+    <color name="statusUnsuccessful">#F34B44</color>
+    <color name="statusInProgress">#FAC850</color>
+
 </resources>
