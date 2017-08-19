@@ -14,17 +14,20 @@
             android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
 
-        <activity android:name=".InternshipInformationActivity"/>
-        <activity android:name=".StageInformationActivity" />
-        <activity android:name=".InternshipEditActivity" />
-        <activity android:name=".StageEditActivity"></activity>
+        <activity android:name=".InternshipInformationActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".StageInformationActivity"
+            android:parentActivityName=".InternshipInformationActivity"/>
+        <activity android:name=".InternshipEditActivity"
+            android:parentActivityName=".InternshipInformationActivity"/>
+        <activity android:name=".StageEditActivity"
+            android:parentActivityName=".StageInformationActivity"/>
     </application>
 
 </manifest>

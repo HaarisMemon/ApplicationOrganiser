@@ -122,10 +122,10 @@ public class InternshipEditActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteInternship(internship.getInternshipID());
-                                MainActivity.recyclerAdapter.notifyDataSetChanged();
 
                                 //go back to the application list activity
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
                         })

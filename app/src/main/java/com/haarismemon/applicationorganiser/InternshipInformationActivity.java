@@ -35,10 +35,11 @@ public class InternshipInformationActivity extends AppCompatActivity {
     private Internship internship = null;
     private boolean isSourceMainActivity;
     private List<ApplicationStage> stages;
+
     /**
      * StageList adapter of RecylerView for stages in the activity
      */
-    public static StageListRecyclerAdapter adapter;
+    StageListRecyclerAdapter adapter;
 
     @BindView(R.id.stageRecyclerView) RecyclerView stageRecyclerView;
 
@@ -113,10 +114,10 @@ public class InternshipInformationActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteInternship(internship.getInternshipID());
-                                MainActivity.recyclerAdapter.notifyDataSetChanged();
 
                                 //go back to the application list activity
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
                         })

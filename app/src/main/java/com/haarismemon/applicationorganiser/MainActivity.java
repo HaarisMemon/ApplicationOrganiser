@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * RecyclerAdapter of RecyclerView for internships in the activity
      */
-    public static ApplicationListRecyclerAdapter recyclerAdapter;
+    ApplicationListRecyclerAdapter recyclerAdapter;
 
     /**
      * a key used when passing boolean to the intent to this activity to check if search needs to be performed

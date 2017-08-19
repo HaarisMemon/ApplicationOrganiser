@@ -12,25 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.adapter.StageInformationRecyclerAdapter;
-import com.haarismemon.applicationorganiser.adapter.StageListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.haarismemon.applicationorganiser.InternshipInformationActivity.adapter;
-import static com.haarismemon.applicationorganiser.R.id.stageRecyclerView;
 
 /**
  * This class represents the activity which displays the information of an Application Stage
@@ -42,6 +32,7 @@ public class StageInformationActivity extends AppCompatActivity {
     private ApplicationStage stage;
     private Intent intent;
 
+    StageInformationRecyclerAdapter stageInformationRecyclerAdapter;
     @BindView(R.id.stageInformationRecyclerView) RecyclerView stageInformationRecyclerView;
 
     @Override
@@ -65,8 +56,8 @@ public class StageInformationActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageInformationRecyclerView.setLayoutManager(layoutManager);
         stageInformationRecyclerView.setHasFixedSize(true);
-        StageInformationRecyclerAdapter adapter = new StageInformationRecyclerAdapter(getApplicationContext(), stage);
-        stageInformationRecyclerView.setAdapter(adapter);
+        stageInformationRecyclerAdapter = new StageInformationRecyclerAdapter(getApplicationContext(), stage);
+        stageInformationRecyclerView.setAdapter(stageInformationRecyclerAdapter);
 
     }
 
@@ -102,7 +93,6 @@ public class StageInformationActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteApplicationStage(stage.getStageID());
-                                adapter.notifyDataSetChanged();
 
                                 //go back to the internship information activity
                                 Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
