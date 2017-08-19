@@ -30,6 +30,9 @@ import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * This class represents the activity to edit an Application Stage
  * @author HaarisMemon
@@ -52,36 +55,33 @@ public class StageEditActivity extends AppCompatActivity {
     private ApplicationStage stage;
     private long parentInternshipID;
 
-    private DatePickerDialog.OnDateSetListener mDataSetListener;
-    private EditText clickedDateEditText = null;
-    private AutoCompleteTextView stageNameEditText;
-    private TextInputEditText notesEditText;
-    private RadioButton yesComplete;
-    private RadioButton noComplete;
-    private RadioButton yesWaiting;
-    private RadioButton noWaiting;
-    private RadioButton yesSuccessful;
-    private RadioButton noSuccessful;
-    private EditText startDateButton;
-    private EditText completeDateButton;
-    private EditText replyDateButton;
-    private RadioGroup completedRadioGroup;
-    private RadioGroup waitingRadioGroup;
-    private RadioGroup successfulRadioGroup;
-    private TextView completedText;
-    private TextView waitingText;
-    private TextView successfulText;
-    private TextView startDateText;
-    private TextView completionDateText;
-    private TextView replyDateText;
-    private EditText startDateEditText;
-    private EditText completionDateEditText;
-    private EditText replyDateEditText;
+    DatePickerDialog.OnDateSetListener mDataSetListener;
+    EditText clickedDateEditText = null;
+    @BindView(R.id.stageNameEditText) AutoCompleteTextView stageNameEditText;
+    @BindView(R.id.notesStageEditText) TextInputEditText notesStageEditText;
+    @BindView(R.id.yesCompletedRadio) RadioButton yesComplete;
+    @BindView(R.id.noCompletedRadio) RadioButton noComplete;
+    @BindView(R.id.yesWaitingRadio) RadioButton yesWaiting;
+    @BindView(R.id.noWaitingRadio) RadioButton noWaiting;
+    @BindView(R.id.yesSuccessfulRadio) RadioButton yesSuccessful;
+    @BindView(R.id.noSuccessfulRadio) RadioButton noSuccessful;
+    @BindView(R.id.waitingRadioGroup) RadioGroup waitingRadioGroup;
+    @BindView(R.id.successfulRadioGroup) RadioGroup successfulRadioGroup;
+    @BindView(R.id.waitingText) TextView waitingText;
+    @BindView(R.id.successfulText) TextView successfulText;
+    @BindView(R.id.startDateText) TextView startDateText;
+    @BindView(R.id.completionDateText) TextView completionDateText;
+    @BindView(R.id.replyDateText) TextView replyDateText;
+    @BindView(R.id.startDateEditText) EditText startDateEditText;
+    @BindView(R.id.completionDateEditText) EditText completionDateEditText;
+    @BindView(R.id.replyDateEditText) EditText replyDateEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_edit);
+
+        ButterKnife.bind(this);
 
         //adds a back button to the action bar
         ActionBar ab = getSupportActionBar();
@@ -98,34 +98,6 @@ public class StageEditActivity extends AppCompatActivity {
         //store the internship id that the stage belongs to
         parentInternshipID = intent.getLongExtra(InternshipTable.COLUMN_ID, -1L);
 
-        stageNameEditText = (AutoCompleteTextView) findViewById(R.id.stageNameEditText);
-        notesEditText = (TextInputEditText) findViewById(R.id.notesStageEditText);
-
-        completedText = (TextView) findViewById(R.id.completedText);
-        waitingText = (TextView) findViewById(R.id.waitingText);
-        successfulText = (TextView) findViewById(R.id.successfulText);
-
-        startDateText = (TextView) findViewById(R.id.startDateText);
-        completionDateText = (TextView) findViewById(R.id.completionDateText);
-        replyDateText = (TextView) findViewById(R.id.replyDateText);
-        startDateEditText = (EditText) findViewById(R.id.startDateEditText);
-        completionDateEditText = (EditText) findViewById(R.id.completionDateEditText);
-        replyDateEditText = (EditText) findViewById(R.id.replyDateEditText);
-
-        completedRadioGroup = (RadioGroup) findViewById(R.id.completedRadioGroup);
-        yesComplete = (RadioButton) findViewById(R.id.yesCompletedRadio);
-        noComplete = (RadioButton) findViewById(R.id.noCompletedRadio);
-        waitingRadioGroup = (RadioGroup) findViewById(R.id.waitingRadioGroup);
-        yesWaiting = (RadioButton) findViewById(R.id.yesWaitingRadio);
-        noWaiting = (RadioButton) findViewById(R.id.noWaitingRadio);
-        successfulRadioGroup = (RadioGroup) findViewById(R.id.successfulRadioGroup);
-        yesSuccessful = (RadioButton) findViewById(R.id.yesSuccessfulRadio);
-        noSuccessful = (RadioButton) findViewById(R.id.noSuccessfulRadio);
-
-        startDateButton = (EditText) findViewById(R.id.startDateEditText);
-        completeDateButton = (EditText) findViewById(R.id.completionDateEditText);
-        replyDateButton = (EditText) findViewById(R.id.replyDateEditText);
-
         ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, ApplicationStage.defaultApplicationStageNames);
 
         stageNameEditText.setAdapter(stageNameAdapter);
@@ -134,13 +106,13 @@ public class StageEditActivity extends AppCompatActivity {
 
         //if the date is not null and the date is picked, then set the DATE_PICKED tag
         if(stage.getDateOfStart() != null) {
-            startDateButton.setTag(DATE_PICKED);
+            startDateEditText.setTag(DATE_PICKED);
         }
         if(stage.getDateOfCompletion() != null) {
-            completeDateButton.setTag(DATE_PICKED);
+            completionDateEditText.setTag(DATE_PICKED);
         }
         if(stage.getDateOfReply() != null) {
-            replyDateButton.setTag(DATE_PICKED);
+            replyDateEditText.setTag(DATE_PICKED);
         }
 
         //used by date picker dialog to store the date picked in right format
@@ -279,16 +251,16 @@ public class StageEditActivity extends AppCompatActivity {
             }
 
             if(stage.getDateOfStart() != null) {
-                startDateButton.setText(stage.getDateOfStart());
+                startDateEditText.setText(stage.getDateOfStart());
             }
             if(stage.getDateOfCompletion() != null) {
-                completeDateButton.setText(stage.getDateOfCompletion());
+                completionDateEditText.setText(stage.getDateOfCompletion());
             }
             if(stage.getDateOfReply() != null) {
-                replyDateButton.setText(stage.getDateOfReply());
+                replyDateEditText.setText(stage.getDateOfReply());
             }
 
-            notesEditText.setText(stage.getNotes());
+            notesStageEditText.setText(stage.getNotes());
 
         } else {
             setTitle("New Stage");
@@ -410,19 +382,19 @@ public class StageEditActivity extends AppCompatActivity {
             if (yesSuccessful.isChecked()) newStage.setSuccessful(true);
             else newStage.setSuccessful(false);
 
-            if (startDateButton.getText().toString().contains("/"))
-                newStage.setDateOfStart(startDateButton.getText().toString());
+            if (startDateEditText.getText().toString().contains("/"))
+                newStage.setDateOfStart(startDateEditText.getText().toString());
             else newStage.setDateOfStart(null);
 
-            if (completeDateButton.getText().toString().contains("/"))
-                newStage.setDateOfCompletion(completeDateButton.getText().toString());
+            if (completionDateEditText.getText().toString().contains("/"))
+                newStage.setDateOfCompletion(completionDateEditText.getText().toString());
             else newStage.setDateOfCompletion(null);
 
-            if (replyDateButton.getText().toString().contains("/"))
-                newStage.setDateOfReply(replyDateButton.getText().toString());
+            if (replyDateEditText.getText().toString().contains("/"))
+                newStage.setDateOfReply(replyDateEditText.getText().toString());
             else newStage.setDateOfReply(null);
 
-            newStage.setNotes(notesEditText.getText().toString().replaceFirst("^ *", ""));
+            newStage.setNotes(notesStageEditText.getText().toString().replaceFirst("^ *", ""));
 
             //if editing internship then update it, else create a new one in database
             if (isEditMode) {

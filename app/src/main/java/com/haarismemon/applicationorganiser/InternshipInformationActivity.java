@@ -22,6 +22,9 @@ import com.haarismemon.applicationorganiser.model.Internship;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * This class represents the activity which displays the information of an Internship with list of its stages
  * @author HaarisMemon
@@ -30,19 +33,21 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
     private Internship internship = null;
-    private RecyclerView stageRecyclerView;
     private boolean isSourceMainActivity;
     private List<ApplicationStage> stages;
-
     /**
      * StageList adapter of RecylerView for stages in the activity
      */
     public static StageListRecyclerAdapter adapter;
 
+    @BindView(R.id.stageRecyclerView) RecyclerView stageRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_internship_information);
+
+        ButterKnife.bind(this);
 
         //adds a back button to the action bar
         ActionBar ab = getSupportActionBar();
@@ -64,8 +69,6 @@ public class InternshipInformationActivity extends AppCompatActivity {
         //add dummy application stage object to be replaced by the internship header card view
         stages.add(new ApplicationStage());
         stages.addAll(mDataSource.getAllApplicationStages(internship.getInternshipID()));
-
-        stageRecyclerView = (RecyclerView) findViewById(R.id.stageRecyclerView);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageRecyclerView.setLayoutManager(layoutManager);

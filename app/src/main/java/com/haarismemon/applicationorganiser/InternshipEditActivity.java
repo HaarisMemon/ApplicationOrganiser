@@ -16,6 +16,9 @@ import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.Internship;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * This class represents the activity to edit an Internship
  * @author HaarisMemon
@@ -30,18 +33,21 @@ public class InternshipEditActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private boolean isEditMode;
     private Internship internship;
-    private TextInputEditText companyNameEditText;
-    private TextInputEditText roleEditText;
-    private TextInputEditText lengthEditText;
-    private TextInputEditText locationEditText;
-    private TextInputEditText urlEditText;
-    private TextInputEditText salaryEditText;
-    private TextInputEditText notesEditText;
+    
+    @BindView(R.id.companyNameEditText) TextInputEditText companyNameEditText;
+    @BindView(R.id.roleEditText) TextInputEditText roleEditText;
+    @BindView(R.id.lengthEditText) TextInputEditText lengthEditText;
+    @BindView(R.id.locationEditText) TextInputEditText locationEditText;
+    @BindView(R.id.urlEditText) TextInputEditText urlEditText;
+    @BindView(R.id.salaryEditText) TextInputEditText salaryEditText;
+    @BindView(R.id.notesEditText) TextInputEditText notesEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_internship_edit);
+
+        ButterKnife.bind(this);
 
         //adds a back button to the action bar
         ActionBar ab = getSupportActionBar();
@@ -55,14 +61,6 @@ public class InternshipEditActivity extends AppCompatActivity {
 
         //internship that has the same id that was sent in the intent
         internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1L));
-
-        companyNameEditText = (TextInputEditText) findViewById(R.id.companyNameEditText);
-        roleEditText = (TextInputEditText) findViewById(R.id.roleEditText);
-        lengthEditText = (TextInputEditText) findViewById(R.id.lengthEditText);
-        locationEditText = (TextInputEditText) findViewById(R.id.locationEditText);
-        urlEditText = (TextInputEditText) findViewById(R.id.urlEditText);
-        salaryEditText = (TextInputEditText) findViewById(R.id.salaryEditText);
-        notesEditText = (TextInputEditText) findViewById(R.id.notesEditText);
 
         //if editing internship then display all existing internship information
         if(isEditMode) {

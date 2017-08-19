@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * This class represents the activity which displays the list of all Internships
  * @author HaarisMemon
@@ -37,7 +40,6 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
-    private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Intent intent;
     private ActionMode actionMode;
@@ -63,10 +65,14 @@ public class MainActivity extends AppCompatActivity {
     //used to check if currently in selection mode (whether any internships has been selected)
     public boolean isSelectionMode = false;
 
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
 
         setTitle("Application Organiser");
 
@@ -83,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         //map to track which internships have been selected, and which card they are linked to
         selectedInternshipCardMap = new HashMap<>();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);

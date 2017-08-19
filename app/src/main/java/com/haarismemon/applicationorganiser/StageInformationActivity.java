@@ -26,6 +26,9 @@ import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.haarismemon.applicationorganiser.InternshipInformationActivity.adapter;
 import static com.haarismemon.applicationorganiser.R.id.stageRecyclerView;
 
@@ -38,12 +41,15 @@ public class StageInformationActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private ApplicationStage stage;
     private Intent intent;
-    private RecyclerView stageInformationRecyclerView;
+
+    @BindView(R.id.stageInformationRecyclerView) RecyclerView stageInformationRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_information);
+
+        ButterKnife.bind(this);
 
         //adds a back button to the action bar
         ActionBar ab = getSupportActionBar();
@@ -56,7 +62,6 @@ public class StageInformationActivity extends AppCompatActivity {
         //application stage that has the same id that was sent in the intent
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
 
-        stageInformationRecyclerView = (RecyclerView) findViewById(R.id.stageInformationRecyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageInformationRecyclerView.setLayoutManager(layoutManager);
         stageInformationRecyclerView.setHasFixedSize(true);
