@@ -17,6 +17,13 @@ import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 import com.haarismemon.applicationorganiser.view_holder.InternshipRowViewHolder;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -150,5 +157,59 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
     public void searchFilter(List<Internship> filteredInternships) {
         internshipsList = filteredInternships;
         notifyDataSetChanged();
+    }
+
+    public void sortInternships(String sortByField) {
+        final String sortByString = sortByField;
+        List<Internship> sortedInternships = new ArrayList<>(internshipsList);
+
+        Collections.sort(sortedInternships, new Comparator<Internship>() {
+            @Override
+            public int compare(Internship internship1, Internship internship2) {
+
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                switch (sortByString) {
+                    case InternshipTable.COLUMN_CREATED_ON:
+                        try {
+                            Date d1 = df.parse(internship1.getCreatedDate());
+                            Date d2 = df.parse(internship2.getCreatedDate());
+
+                            return d2.compareTo(d1);
+                        } catch (ParseException e) {
+                            return 0;
+                        }
+
+                    case InternshipTable.COLUMN_MODIFIED_ON:
+                        try {
+                            Date d1 = df.parse(internship1.getModifiedDate());
+                            Date d2 = df.parse(internship2.getModifiedDate());
+
+                            return d2.compareTo(d1);
+                        } catch (ParseException e) {
+                            return 0;
+                        }
+
+                    case InternshipTable.COLUMN_COMPANY_NAME:
+                        return internship1.getCompanyName().compareTo(internship2.getCompanyName());
+
+                    case InternshipTable.COLUMN_ROLE:
+                        return internship1.getRole().compareTo(internship2.getRole());
+
+                    case InternshipTable.COLUMN_SALARY:
+                        Integer salary1 = internship1.getSalary();
+                        Integer salary2 = internship2.getSalary();
+                        return salary2.compareTo(salary1);
+                }
+                return 0;
+            }
+        });
+
+        internshipsList = sortedInternships;
+        notifyDataSetChanged();
+    }
+
+    public void reverseListOrder() {
+
     }
 }

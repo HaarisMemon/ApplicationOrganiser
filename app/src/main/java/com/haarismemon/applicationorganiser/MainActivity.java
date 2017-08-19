@@ -22,9 +22,17 @@ import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
+import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * RecyclerAdapter of RecyclerView for internships in the activity
      */
-    ApplicationListRecyclerAdapter recyclerAdapter;
+    ApplicationListRecyclerAdapter applicationListRecyclerAdapter;
 
     /**
      * a key used when passing boolean to the intent to this activity to check if search needs to be performed
@@ -94,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setFocusable(false);
         //give the recycler adapter the list of all internships
-        recyclerAdapter = new ApplicationListRecyclerAdapter(this, internships);
+        applicationListRecyclerAdapter = new ApplicationListRecyclerAdapter(this, internships);
         //set the adapter to the recycler view
-        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setAdapter(applicationListRecyclerAdapter);
 
         //sets what is displayed in actionbar in action mode
         actionModeCallback = new ActionMode.Callback() {
@@ -105,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 actionMode.setTitle("0 internships selected");
 
                 MenuInflater inflater = actionMode.getMenuInflater();
-                inflater.inflate(R.menu.action_mode_menu, menu);
+                inflater.inflate(R.menu.main_action_mode_menu, menu);
 
                 prioritiseItem = menu.findItem(R.id.action_mode_prioritise);
                 deprioritiseItem = menu.findItem(R.id.action_mode_deprioritise);
@@ -156,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 //unselect all selected internships
                 unselectSelectedInternships();
                 //update the recycler view
-                recyclerAdapter.notifyDataSetChanged();
+                applicationListRecyclerAdapter.notifyDataSetChanged();
             }
         };
 
@@ -178,40 +186,51 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //add search action button to action bar
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search_application_list);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
-        //set the on query text listener of the search view, and give it the adapter so that it can access the list
-        searchView.setOnQueryTextListener(new MyOnQueryTextListener(recyclerAdapter));
-
-        //get the search manager to set the searchable.xml to the search view
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.onActionViewExpanded();
-
-        //change the color of the caret in the search view from the default accent color to white
-        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        try {
-            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
-            mCursorDrawableRes.setAccessible(true);
-            mCursorDrawableRes.set(searchTextView, R.drawable.cursor); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //if the search button was pressed in the main activity, then open the search view (searchbar) when this activity opens
-        if(intent.getBooleanExtra(SEARCH_FROM_MAIN, false)) {
-            searchItem.expandActionView();
-        }
+        searchMenuActionSetup(menu);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case(R.id.action_sort_modified_date):
+                item.setChecked(true);
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_MODIFIED_ON);
+                return true;
+
+            case(R.id.action_sort_created_date):
+                item.setChecked(true);
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_CREATED_ON);
+                return true;
+
+            case(R.id.action_sort_company_name):
+                item.setChecked(true);
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_COMPANY_NAME);
+                return true;
+
+            case(R.id.action_sort_role):
+                item.setChecked(true);
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_ROLE);
+                return true;
+
+            case(R.id.action_sort_salary):
+                item.setChecked(true);
+                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_SALARY);
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
      * On click method to create a new Internship
      * @param view create button that was clicked
      */
-    public void createInternship(View view) {
+    public void goToCreateInternship(View view) {
         Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
         intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, false);
         startActivity(intent);
@@ -309,8 +328,8 @@ public class MainActivity extends AppCompatActivity {
             mDataSource.deleteInternship(deleteInternship.getInternshipID());
         }
         //update the RecyclerView through the adapter
-        recyclerAdapter.internshipsList = internships;
-        recyclerAdapter.notifyDataSetChanged();
+        applicationListRecyclerAdapter.internshipsList = internships;
+        applicationListRecyclerAdapter.notifyDataSetChanged();
 
         //empty the map holding the selected internships
         selectedInternshipCardMap.clear();
@@ -382,6 +401,34 @@ public class MainActivity extends AppCompatActivity {
             deprioritiseItem.setVisible(false);
         }
 
+    }
+
+    private void searchMenuActionSetup(Menu menu) {
+        MenuItem searchItem = menu.findItem(R.id.action_search_internships);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        //set the on query text listener of the search view, and give it the adapter so that it can access the list
+        searchView.setOnQueryTextListener(new MyOnQueryTextListener(applicationListRecyclerAdapter));
+
+        //get the search manager to set the searchable.xml to the search view
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.onActionViewExpanded();
+
+        //change the color of the caret in the search view from the default accent color to white
+        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        try {
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.set(searchTextView, R.drawable.cursor); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //if the search button was pressed in the main activity, then open the search view (searchbar) when this activity opens
+        if(intent.getBooleanExtra(SEARCH_FROM_MAIN, false)) {
+            searchItem.expandActionView();
+        }
     }
 
 }

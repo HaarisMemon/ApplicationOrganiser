@@ -146,8 +146,11 @@ public class DataSource {
             internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
             internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
+            internship.setUrl(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_URL)));
+            internship.setSalary(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_SALARY)));
             internship.setPriority(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_PRIORITY)) == 1);
             internship.setNotes(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_NOTES)));
+            internship.setCreatedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_CREATED_ON)));
             internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
 
             //add all the internship's stages to the list stored in the internship object
@@ -182,7 +185,9 @@ public class DataSource {
             internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
             internship.setUrl(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_URL)));
             internship.setSalary(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_SALARY)));
+            internship.setPriority(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_PRIORITY)) == 1);
             internship.setNotes(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_NOTES)));
+            internship.setCreatedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_CREATED_ON)));
             internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
 
             //add all the internship's stages to the list stored in the internship object

@@ -24,6 +24,7 @@ public class Internship {
     private String url;
     private int salary;
     private String notes;
+    private String createdDate;
     private String modifiedDate;
     private boolean isSelected;
 
@@ -80,6 +81,11 @@ public class Internship {
         values.put(InternshipTable.COLUMN_URL, url);
         values.put(InternshipTable.COLUMN_SALARY, salary);
         values.put(InternshipTable.COLUMN_NOTES, notes);
+
+        //if no created date, then Internship not stored in database yet (newly created)
+        if(createdDate != null) {
+            values.put(InternshipTable.COLUMN_CREATED_ON, createdDate);
+        }
 
         //if no modified date, then Internship not stored in database yet (newly created)
         if(modifiedDate != null) {
@@ -275,12 +281,24 @@ public class Internship {
         return null;
     }
 
+    public String getModifiedDate() {
+        return modifiedDate;
+    }
+
     /**
      * Sets the date that the Internship was last updated in the database
      * @param modifiedDate of when Internship last updated
      */
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
     /**
