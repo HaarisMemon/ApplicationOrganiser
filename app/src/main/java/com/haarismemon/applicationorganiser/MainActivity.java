@@ -232,6 +232,22 @@ public class MainActivity extends AppCompatActivity {
         final MenuItem searchItem = menu.findItem(R.id.action_search_internships);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
+        //hides other menu items in action bar when search bar is expanded
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+
+            @Override
+            public boolean onMenuItemActionExpand(final MenuItem item) {
+                setItemsVisibility(menu, searchItem, false);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(final MenuItem item) {
+                setItemsVisibility(menu, searchItem, true);
+                return true;
+            }
+        });
+
         //set the on query text listener of the search view, and give it the adapter so that it can access the list
         searchView.setOnQueryTextListener(new MyOnQueryTextListener(applicationListRecyclerAdapter));
 
@@ -249,6 +265,14 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setItemsVisibility(final Menu menu, final MenuItem searchMenuItem, final boolean isVisible) {
+        for (int i = 0; i < menu.size(); ++i) {
+            MenuItem item = menu.getItem(i);
+            if (item != searchMenuItem) item.setVisible(isVisible);
+        }
+        invalidateOptionsMenu();
     }
 
     /**
