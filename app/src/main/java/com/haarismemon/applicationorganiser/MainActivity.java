@@ -231,11 +231,12 @@ public class MainActivity extends AppCompatActivity {
     private void changeSort(String sortByField, boolean isAscending, MenuItem currentSelectedSortItem) {
         if(currentSelectedSortItem.isChecked()) {
             toggleOrderItemAscendingOrDescending();
+            applicationListRecyclerAdapter.reverseOrder();
         } else {
             setOrderItemToAscendingOrDescending(isAscending);
+            applicationListRecyclerAdapter.sortInternships(sortByField);
         }
 
-        applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_SALARY);
         currentSelectedSortItem.setChecked(true);
     }
 
