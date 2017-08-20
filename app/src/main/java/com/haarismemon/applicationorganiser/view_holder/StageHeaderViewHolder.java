@@ -7,31 +7,27 @@ import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * This class represents the View Holder which is used to hold an Application Stage CardView's data to display
  */
 public class StageHeaderViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView editedText;
-    public TextView stageNameText;
-    public TextView currentStatusText;
-    public TextView dateOfStartText;
-    public TextView dateOfCompletionText;
-    public TextView dateOfReplyText;
-    public TextView stageDescriptionText;
-    public ImageView stageInfoStatusIcon;
+    @BindView(R.id.editedDateStageText) public TextView editedText;
+    @BindView(R.id.stageNameText) public TextView stageNameText;
+    @BindView(R.id.currentStatusText) public TextView currentStatusText;
+    @BindView(R.id.dateOfStartText) public TextView dateOfStartText;
+    @BindView(R.id.dateOfCompletionText) public TextView dateOfCompletionText;
+    @BindView(R.id.dateOfReplyText) public TextView dateOfReplyText;
+    @BindView(R.id.stageNotesText) public TextView stageNotesText;
+    @BindView(R.id.stageInfoStatusIcon) public ImageView stageInfoStatusIcon;
 
     public StageHeaderViewHolder(View itemView) {
         super(itemView);
 
-        editedText = (TextView) itemView.findViewById(R.id.editedDateStageText);
-        stageNameText = (TextView) itemView.findViewById(R.id.stageNameText);
-        currentStatusText = (TextView) itemView.findViewById(R.id.currentStatusText);
-        dateOfStartText = (TextView) itemView.findViewById(R.id.dateOfStartText);
-        dateOfCompletionText = (TextView) itemView.findViewById(R.id.dateOfCompletionText);
-        dateOfReplyText = (TextView) itemView.findViewById(R.id.dateOfReplyText);
-        stageDescriptionText = (TextView) itemView.findViewById(R.id.stageNotesText);
-        stageInfoStatusIcon = (ImageView) itemView.findViewById(R.id.stageInfoStatusIcon);
+        ButterKnife.bind(this, itemView);
     }
 
 }

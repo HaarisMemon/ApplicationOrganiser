@@ -6,31 +6,27 @@ import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * This class represents the View Holder which is used to hold a Internships Header CardView's data to display
  */
 public class InternshipHeaderViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView editedText;
-    public TextView companyNameText;
-    public TextView roleText;
-    public TextView lengthText;
-    public TextView locationText;
-    public TextView urlText;
-    public TextView salaryText;
-    public TextView notesText;
+    @BindView(R.id.editedDateInternshipText) public TextView editedText;
+    @BindView(R.id.companyNameText) public TextView companyNameText;
+    @BindView(R.id.roleText) public TextView roleText;
+    @BindView(R.id.lengthText) public TextView lengthText;
+    @BindView(R.id.locationText) public TextView locationText;
+    @BindView(R.id.urlText) public TextView urlText;
+    @BindView(R.id.salaryText) public TextView salaryText;
+    @BindView(R.id.notesText) public TextView notesText;
 
     public InternshipHeaderViewHolder(View itemView) {
         super(itemView);
 
-        editedText = (TextView) itemView.findViewById(R.id.editedDateInternshipText);
-        companyNameText = (TextView) itemView.findViewById(R.id.companyNameText);
-        roleText = (TextView) itemView.findViewById(R.id.roleText);
-        lengthText = (TextView) itemView.findViewById(R.id.lengthText);
-        locationText = (TextView) itemView.findViewById(R.id.locationText);
-        urlText = (TextView) itemView.findViewById(R.id.urlText);
-        salaryText = (TextView) itemView.findViewById(R.id.salaryText);
-        notesText = (TextView) itemView.findViewById(R.id.notesText);
+        ButterKnife.bind(this, itemView);
     }
 
 }

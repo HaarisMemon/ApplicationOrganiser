@@ -1,7 +1,6 @@
 package com.haarismemon.applicationorganiser.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
@@ -66,7 +65,7 @@ public class StageInformationRecyclerAdapter extends RecyclerView.Adapter<Recycl
         if(stage.getDateOfReply() != null && (stage.isCompleted() && !stage.isWaitingForResponse())) stageHolder.dateOfReplyText.setText(stage.getDateOfReply());
         else cardView.findViewById(R.id.replyDateGroup).setVisibility(View.GONE);
 
-        if(stage.getNotes() != null) stageHolder.stageDescriptionText.setText(stage.getNotes());
+        if(stage.getNotes() != null) stageHolder.stageNotesText.setText(stage.getNotes());
         else cardView.findViewById(R.id.notesGroup).setVisibility(View.GONE);
     }
 

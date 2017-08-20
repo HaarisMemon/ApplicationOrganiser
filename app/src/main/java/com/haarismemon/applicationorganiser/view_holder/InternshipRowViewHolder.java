@@ -7,25 +7,24 @@ import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * This class represents the View Holder which is used to hold a CardView's data to display
  */
 public class InternshipRowViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView companyName;
-    public TextView role;
-    public TextView updatedDate;
-    public ImageView internshipStatusIcon;
-    public ImageView priorityImage;
+    @BindView(R.id.companyNameCardView) public TextView companyName;
+    @BindView(R.id.roleCardView) public TextView role;
+    @BindView(R.id.updatedDateCardView) public TextView updatedDate;
+    @BindView(R.id.internshipStatusIcon) public ImageView internshipStatusIcon;
+    @BindView(R.id.priorityImage) public ImageView priorityImage;
 
     public InternshipRowViewHolder(View itemView) {
         super(itemView);
 
-        companyName = (TextView) itemView.findViewById(R.id.companyNameCardView);
-        role = (TextView) itemView.findViewById(R.id.roleCardView);
-        updatedDate = (TextView) itemView.findViewById(R.id.updatedDateCardView);
-        internshipStatusIcon = (ImageView) itemView.findViewById(R.id.internshipStatusIcon);
-        priorityImage = (ImageView) itemView.findViewById(R.id.priorityImage);
+        ButterKnife.bind(this, itemView);
     }
 
 }

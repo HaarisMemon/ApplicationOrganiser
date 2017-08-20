@@ -15,27 +15,33 @@
 
         <menu>
 
-            <item android:id="@+id/action_sort_reverse"
-                android:title="Reverse Order"/>
+            <item android:id="@+id/action_sort_order"
+                android:title="Descending Order"
+                android:icon="@drawable/ic_arrow_downward_black_24dp"/>
 
             <group
                 android:checkableBehavior="single">
 
                 <item android:id="@+id/action_sort_modified_date"
                     android:title="Modified Date"
-                    android:checked="true"/>
+                    android:checked="true"
+                    android:icon="@drawable/ic_edit_black_24dp"/>
 
                 <item android:id="@+id/action_sort_created_date"
-                    android:title="Created Date" />
+                    android:title="Created Date"
+                    android:icon="@drawable/ic_access_time_black_24dp"/>
 
                 <item android:id="@+id/action_sort_company_name"
-                    android:title="Company Name" />
+                    android:title="Company Name"
+                    android:icon="@drawable/ic_business_black_24dp"/>
 
                 <item android:id="@+id/action_sort_role"
-                    android:title="Role" />
+                    android:title="Role"
+                    android:icon="@drawable/ic_business_center_black_24dp"/>
 
                 <item android:id="@+id/action_sort_salary"
-                    android:title="Salary" />
+                    android:title="Salary"
+                    android:icon="@drawable/ic_attach_money_black_24dp"/>
             </group>
         </menu>
 

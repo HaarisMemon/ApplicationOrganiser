@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean isSelectionMode = false;
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    MenuItem orderItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,45 +188,75 @@ public class MainActivity extends AppCompatActivity {
 
         searchMenuActionSetup(menu);
 
+        orderItem = menu.findItem(R.id.action_sort_order);
+
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
 
-            case(R.id.action_sort_reverse):
+            case(R.id.action_sort_order):
+                toggleOrderItemAscendingOrDescending();
                 applicationListRecyclerAdapter.reverseOrder();
                 return true;
 
             case(R.id.action_sort_modified_date):
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_MODIFIED_ON, item);
-                item.setChecked(true);
+                changeSort(InternshipTable.COLUMN_MODIFIED_ON, false, item);
                 return true;
 
             case(R.id.action_sort_created_date):
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_CREATED_ON, item);
-                item.setChecked(true);
+                changeSort(InternshipTable.COLUMN_CREATED_ON, false, item);
                 return true;
 
             case(R.id.action_sort_company_name):
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_COMPANY_NAME, item);
-                item.setChecked(true);
+                changeSort(InternshipTable.COLUMN_COMPANY_NAME, true, item);
                 return true;
 
             case(R.id.action_sort_role):
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_ROLE, item);
-                item.setChecked(true);
+                changeSort(InternshipTable.COLUMN_ROLE, true, item);
                 return true;
 
             case(R.id.action_sort_salary):
-                applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_SALARY, item);
-                item.setChecked(true);
+                changeSort(InternshipTable.COLUMN_SALARY, false, item);
                 return true;
 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void changeSort(String sortByField, boolean isAscending, MenuItem currentSelectedSortItem) {
+        if(currentSelectedSortItem.isChecked()) {
+            toggleOrderItemAscendingOrDescending();
+        } else {
+            setOrderItemToAscendingOrDescending(isAscending);
+        }
+
+        applicationListRecyclerAdapter.sortInternships(InternshipTable.COLUMN_SALARY);
+        currentSelectedSortItem.setChecked(true);
+    }
+
+    private void setOrderItemToAscendingOrDescending(boolean isAscending) {
+        if(isAscending) {
+            orderItem.setTitle("Ascending Order");
+            orderItem.setIcon(R.drawable.ic_arrow_upward_black_24dp);
+        } else {
+            orderItem.setTitle("Descending Order");
+            orderItem.setIcon(R.drawable.ic_arrow_downward_black_24dp);
+        }
+    }
+
+    private void toggleOrderItemAscendingOrDescending() {
+        if(orderItem.getTitle().toString().toLowerCase().contains("ascending")) {
+            orderItem.setTitle("Descending Order");
+            orderItem.setIcon(R.drawable.ic_arrow_downward_black_24dp);
+        } else {
+            orderItem.setTitle("Ascending Order");
+            orderItem.setIcon(R.drawable.ic_arrow_upward_black_24dp);
+        }
     }
 
     private void searchMenuActionSetup(final Menu menu) {

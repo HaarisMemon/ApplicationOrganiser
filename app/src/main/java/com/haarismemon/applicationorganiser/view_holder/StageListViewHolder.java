@@ -7,23 +7,23 @@ import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * This class represents the View Holder which is used to hold a CardView's data to display
  */
 public class StageListViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView stageName;
-    public TextView status;
-    public TextView updatedDate;
-    public ImageView stageStatusIcon;
+    @BindView(R.id.stageNameCardView) public TextView stageName;
+    @BindView(R.id.statusCardView) public TextView status;
+    @BindView(R.id.updatedDateCardView) public TextView updatedDate;
+    @BindView(R.id.stageStatusIcon) public ImageView stageStatusIcon;
 
     public StageListViewHolder(View itemView) {
         super(itemView);
 
-        stageName = (TextView) itemView.findViewById(R.id.stageNameCardView);
-        status = (TextView) itemView.findViewById(R.id.statusCardView);
-        updatedDate = (TextView) itemView.findViewById(R.id.updatedDateCardView);
-        stageStatusIcon = (ImageView) itemView.findViewById(R.id.stageStatusIcon);
+        ButterKnife.bind(this, itemView);
     }
 
 }
