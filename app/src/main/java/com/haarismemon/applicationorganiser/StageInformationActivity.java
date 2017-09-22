@@ -1,6 +1,5 @@
 package com.haarismemon.applicationorganiser;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -12,12 +11,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-import com.haarismemon.applicationorganiser.adapter.StageInformationRecyclerAdapter;
+import com.haarismemon.applicationorganiser.adapter.StageInformationAdapter;
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
+import com.haarismemon.applicationorganiser.model.Internship;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,10 +30,11 @@ import butterknife.ButterKnife;
 public class StageInformationActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
+    private Internship parentInternship;
     private ApplicationStage stage;
     private Intent intent;
 
-    StageInformationRecyclerAdapter stageInformationRecyclerAdapter;
+    StageInformationAdapter stageInformationAdapter;
     @BindView(R.id.stageInformationRecyclerView) RecyclerView stageInformationRecyclerView;
 
     @Override
@@ -50,14 +52,17 @@ public class StageInformationActivity extends AppCompatActivity {
 
         mDataSource = new DataSource(this);
         intent = getIntent();
+
         //application stage that has the same id that was sent in the intent
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
+        //internship that has the same id that was sent in the intent
+        parentInternship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.INTERNSHIP_ID, -1));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageInformationRecyclerView.setLayoutManager(layoutManager);
         stageInformationRecyclerView.setHasFixedSize(true);
-        stageInformationRecyclerAdapter = new StageInformationRecyclerAdapter(getApplicationContext(), stage);
-        stageInformationRecyclerView.setAdapter(stageInformationRecyclerAdapter);
+        stageInformationAdapter = new StageInformationAdapter(getApplicationContext(), parentInternship, stage);
+        stageInformationRecyclerView.setAdapter(stageInformationAdapter);
 
     }
 

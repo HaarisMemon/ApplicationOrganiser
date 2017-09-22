@@ -90,9 +90,6 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //store view as card view so to access card view methods
-                CardView cardView = (CardView) view;
-
                 //if when single clicked the selection mode is already on
                 if(context.isSelectionMode) {
                     //if internship was already selected

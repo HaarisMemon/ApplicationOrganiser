@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.haarismemon.applicationorganiser.adapter.StageListRecyclerAdapter;
+import com.haarismemon.applicationorganiser.adapter.InternshipInformationAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
@@ -39,7 +39,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
     /**
      * StageList adapter of RecylerView for stages in the activity
      */
-    StageListRecyclerAdapter adapter;
+    InternshipInformationAdapter adapter;
 
     @BindView(R.id.stageRecyclerView) RecyclerView stageRecyclerView;
 
@@ -75,7 +75,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
         stageRecyclerView.setLayoutManager(layoutManager);
         stageRecyclerView.setHasFixedSize(true);
 
-        adapter = new StageListRecyclerAdapter(getApplicationContext(), internship, stages, isSourceMainActivity);
+        adapter = new InternshipInformationAdapter(getApplicationContext(), internship, stages, isSourceMainActivity);
         stageRecyclerView.setAdapter(adapter);
 
         displayMessageIfNoStages();

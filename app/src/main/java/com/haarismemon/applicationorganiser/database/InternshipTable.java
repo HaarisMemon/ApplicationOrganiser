@@ -21,6 +21,8 @@ public class InternshipTable {
     public static final String COLUMN_CREATED_ON = "created_on";
     public static final String COLUMN_MODIFIED_ON = "modified_on";
 
+    public static final String INTERNSHIP_ID = "internship_id";
+
     /**
      * List of all columns in the Internship Table as String constants
      */

@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.MainActivity;
 import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.StageInformationActivity;
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
+import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
 import com.haarismemon.applicationorganiser.view_holder.InternshipHeaderViewHolder;
@@ -25,7 +27,7 @@ import java.util.List;
  * This class represents the Recycler Adapter for the Stage List.
  * It constructs the list and puts the stage's information onto each card view in the list.
  */
-public class StageListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private Internship internship;
@@ -35,7 +37,7 @@ public class StageListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_STAGE = 1;
 
-    public StageListRecyclerAdapter(Context context, Internship internship, List<ApplicationStage> stagesList, boolean isSourceMainActivity) {
+    public InternshipInformationAdapter(Context context, Internship internship, List<ApplicationStage> stagesList, boolean isSourceMainActivity) {
         this.context = context;
         this.internship = internship;
         this.stagesList = stagesList;
@@ -105,7 +107,9 @@ public class StageListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
                 public void onClick(View view) {
                     //go to new activity to see the stage information of application stage clicked
                     Intent intent = new Intent(context, StageInformationActivity.class);
-                    //send the stage id of the stage clicked, in the intent
+                    //send the stage id of the stage clicked and the parent internship, in the intent
+                    Toast.makeText(context, "intern info: " + internship.getInternshipID() + "", Toast.LENGTH_SHORT).show();
+                    intent.putExtra(InternshipTable.INTERNSHIP_ID, internship.getInternshipID());
                     intent.putExtra(ApplicationStageTable.COLUMN_ID, stage.getStageID());
 
                     if(isSourceMainActivity) {
