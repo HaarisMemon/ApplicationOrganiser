@@ -462,6 +462,15 @@ public class StageEditActivity extends AppCompatActivity {
             DatePickerDialog dialog = new DatePickerDialog(StageEditActivity.this,
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     mDataSetListener, year, month, day);
+
+            dialog.setButton(DialogInterface.BUTTON_NEUTRAL, "Clear Date", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    clickedDateEditText.getText().clear();
+                }
+            });
+
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
         } else {
