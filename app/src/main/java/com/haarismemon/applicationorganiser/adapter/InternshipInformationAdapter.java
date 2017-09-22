@@ -1,15 +1,14 @@
 package com.haarismemon.applicationorganiser.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.MainActivity;
 import com.haarismemon.applicationorganiser.R;
@@ -70,14 +69,32 @@ public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerV
 
             InternshipHeaderViewHolder internshipHolder = (InternshipHeaderViewHolder) holder;
 
+            CardView cardView = (CardView) internshipHolder.itemView;
+
             internshipHolder.editedText.setText(context.getString(R.string.editedModified) + " " + internship.getModifiedShortDateTime());
             internshipHolder.companyNameText.setText(internship.getCompanyName() != null ? internship.getCompanyName() : "None");
             internshipHolder.roleText.setText(internship.getRole() != null ? internship.getRole() : "None");
-            internshipHolder.lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
-            internshipHolder.locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
-            internshipHolder.urlText.setText(internship.getUrl() != null ? internship.getUrl() : "None");
-            internshipHolder.salaryText.setText(internship.getSalary() != 0 ? "£" + internship.getSalary() : "None");
-            internshipHolder.notesText.setText(internship.getNotes() != null ? internship.getNotes() : "No Notes");
+
+            if(internship.getLength() != null) internshipHolder.lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
+            else cardView.findViewById(R.id.lengthGroup).setVisibility(View.GONE);
+
+            if(internship.getLocation() != null) internshipHolder.locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
+            else cardView.findViewById(R.id.locationGroup).setVisibility(View.GONE);
+
+            if(internship.getUrl() != null) internshipHolder.urlText.setText(internship.getUrl() != null ? internship.getUrl() : "None");
+            else cardView.findViewById(R.id.urlGroup).setVisibility(View.GONE);
+
+            if(internship.getSalary() != 0) internshipHolder.salaryText.setText(internship.getSalary() != 0 ? "£" + internship.getSalary() : "None");
+            else cardView.findViewById(R.id.salaryGroup).setVisibility(View.GONE);
+
+            if(internship.getNotes() != null) internshipHolder.notesText.setText(internship.getNotes() != null ? internship.getNotes() : "No Notes");
+            else cardView.findViewById(R.id.notesGroup).setVisibility(View.GONE);
+
+            if(internship.isPriority()) {
+                internshipHolder.priorityImage.setVisibility(View.VISIBLE);
+            } else {
+                internshipHolder.priorityImage.setVisibility(View.INVISIBLE);
+            }
 
         } else if(holder instanceof StageListViewHolder) {
 
@@ -108,7 +125,6 @@ public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerV
                     //go to new activity to see the stage information of application stage clicked
                     Intent intent = new Intent(context, StageInformationActivity.class);
                     //send the stage id of the stage clicked and the parent internship, in the intent
-                    Toast.makeText(context, "intern info: " + internship.getInternshipID() + "", Toast.LENGTH_SHORT).show();
                     intent.putExtra(InternshipTable.INTERNSHIP_ID, internship.getInternshipID());
                     intent.putExtra(ApplicationStageTable.COLUMN_ID, stage.getStageID());
 

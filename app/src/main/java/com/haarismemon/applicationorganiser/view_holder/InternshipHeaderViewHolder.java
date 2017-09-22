@@ -2,6 +2,7 @@ package com.haarismemon.applicationorganiser.view_holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.R;
@@ -22,6 +23,7 @@ public class InternshipHeaderViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.urlText) public TextView urlText;
     @BindView(R.id.salaryText) public TextView salaryText;
     @BindView(R.id.notesText) public TextView notesText;
+    @BindView(R.id.priorityImage) public ImageView priorityImage;
 
     public InternshipHeaderViewHolder(View itemView) {
         super(itemView);
