@@ -3,21 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Deprioritise Internships"
+        android:title="@string/select_all"
+        android:icon="@drawable/ic_select_all_white_24dp"
+        android:id="@+id/action_mode_select_all"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:title="@string/deprioritise_internships"
         android:icon="@drawable/ic_star_border_white_24dp"
         android:id="@+id/action_mode_deprioritise"
         app:showAsAction="always"/>
 
     <item
-        android:title="Prioritise Internships"
+        android:title="@string/prioritise_internships"
         android:icon="@drawable/ic_star_white_24dp"
         android:id="@+id/action_mode_prioritise"
         app:showAsAction="always"/>
 
     <item
-        android:title="Delete Internships"
+        android:title="@string/delete_internships"
         android:icon="@drawable/ic_delete_white_24dp"
         android:id="@+id/action_mode_delete"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
 </menu>

@@ -3,11 +3,9 @@ package com.haarismemon.applicationorganiser;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -26,17 +24,8 @@ import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,29 +37,25 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
-    private RecyclerView.LayoutManager layoutManager;
-    private ActionMode actionMode;
+    public ActionMode actionMode;
     private ActionMode.Callback actionModeCallback;
-    private MenuItem prioritiseItem;
-    private MenuItem deprioritiseItem;
+    public MenuItem prioritiseItem;
+    public MenuItem deprioritiseItem;
 
     private List<Internship> internships;
-    private Map<Internship, CardView> selectedInternshipCardMap;
+    private List<Internship> selectedInternships;
 
     /**
      * RecyclerAdapter of RecyclerView for internships in the activity
      */
     ApplicationListRecyclerAdapter applicationListRecyclerAdapter;
 
-    /**
-     * a key used when passing boolean to the intent to this activity to check if search needs to be performed
-     */
-    public static final String SEARCH_FROM_MAIN = "SEARCH_FROM_MAIN";
-
     public static final String SOURCE = "SOURCE";
 
     //used to check if currently in selection mode (whether any internships has been selected)
     public boolean isSelectionMode = false;
+
+    private boolean isAllSelected = false;
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     MenuItem orderItem;
@@ -93,15 +78,15 @@ public class MainActivity extends AppCompatActivity {
 
         displayMessageIfNoInternships();
 
-        //map to track which internships have been selected, and which card they are linked to
-        selectedInternshipCardMap = new HashMap<>();
+        //list to track which internships have been selected
+        selectedInternships = new ArrayList<>();
 
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setFocusable(false);
         //give the recycler adapter the list of all internships
-        applicationListRecyclerAdapter = new ApplicationListRecyclerAdapter(this, internships);
+        applicationListRecyclerAdapter = new ApplicationListRecyclerAdapter(this, internships, selectedInternships);
         //set the adapter to the recycler view
         recyclerView.setAdapter(applicationListRecyclerAdapter);
 
@@ -152,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
                         switchActionMode(false);
                         return true;
 
+                    case R.id.action_mode_select_all:
+                        selectAllInternships();
+                        return true;
+
                 }
 
                 return false;
@@ -160,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDestroyActionMode(ActionMode actionMode) {
                 isSelectionMode = false;
+                isAllSelected = false;
                 //unselect all selected internships
                 unselectSelectedInternships();
                 //update the recycler view
@@ -336,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //this method updates the title in the action bar in action mode, and is called every time internship selected
-    private void updateActionModeCounter(int counter) {
+    public void updateActionModeCounter(int counter) {
         if(counter == 1) {
             actionMode.setTitle(counter + " internship selected");
         } else {
@@ -344,108 +334,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Selects or deselects the internship depending on value of toBeSelected,
-     * and updates the action bar counter and the card background
-     * If 0 internships are selected, then action mode turns off
-     * @param cardView that is linked to the internship in the RecyclerView
-     * @param internship that is to be selected or deselected
-     * @param toBeSelected true if the internship is to be selected
-     */
-    public void prepareSelection(CardView cardView, Internship internship, boolean toBeSelected) {
-        //update the internship being selected
-        internship.setSelected(toBeSelected);
-
-        //if to be selected put internship in selected map, and update the cardView background
-        if(toBeSelected) {
-            selectedInternshipCardMap.put(internship, cardView);
-            updateCardBackground(cardView, true);
-        } else {
-            selectedInternshipCardMap.remove(internship);
-            updateCardBackground(cardView, false);
-        }
-
-        decideToPrioritiseOrDeprioritiseInternships(selectedInternshipCardMap.keySet());
-
-        //if user selects no internships then exit action mode
-        if(selectedInternshipCardMap.size() == 0) {
-            switchActionMode(false);
-        } else if(actionMode != null) {
-            updateActionModeCounter(selectedInternshipCardMap.size());
-        }
-
-    }
-
-    /**
-     * Update the color of the cardView background depending on whether it is selected or not
-     * @param cardView to change background of
-     * @param isSelected true if background to set is highlighted, otherwise set to original color
-     */
-    public void updateCardBackground(CardView cardView, boolean isSelected) {
-        if(isSelected) {
-            cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.internshipCardBackgroundSelected));
-        } else {
-            cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.internshipCardBackgroundDefault));
-        }
-    }
-
-    //unselects all the selected internships
-    private void unselectSelectedInternships() {
-        for(Internship internship : selectedInternshipCardMap.keySet()) {
-            internship.setSelected(false);
-            updateCardBackground(selectedInternshipCardMap.get(internship), false);
-        }
-
-        selectedInternshipCardMap.clear();
-    }
-
-    //deletes all selected internships
-    private void deleteSelectedInternships() {
-        //for all selected internships
-        for(Internship deleteInternship : selectedInternshipCardMap.keySet()) {
-            //remove from list
-            internships.remove(deleteInternship);
-            //delete from database
-            mDataSource.deleteInternship(deleteInternship.getInternshipID());
-        }
-        //update the RecyclerView through the adapter
-        applicationListRecyclerAdapter.internshipsList = internships;
-        applicationListRecyclerAdapter.notifyDataSetChanged();
-
-        //empty the map holding the selected internships
-        selectedInternshipCardMap.clear();
-
-        displayMessageIfNoInternships();
-    }
-
-    //prioritises all selected internships
-    private void prioritiseSelectedInternships() {
-        //for all selected internships
-        for(Internship internship : selectedInternshipCardMap.keySet()) {
-            internship.setSelected(false);
-            internship.setPriority(true);
-
-            mDataSource.updateInternshipPriority(internship);
-        }
-        //empty the map holding the selected internships
-        selectedInternshipCardMap.clear();
-    }
-
-    //deprioritises all selected internships
-    private void deprioritiseSelectedInternships() {
-        //for all selected internships
-        for(Internship internship : selectedInternshipCardMap.keySet()) {
-            internship.setSelected(false);
-            internship.setPriority(false);
-
-            mDataSource.updateInternshipPriority(internship);
-        }
-        //empty the map holding the selected internships
-        selectedInternshipCardMap.clear();
-    }
-
     //displays message to inform user to add their first internship if internship list is empty
-    private void displayMessageIfNoInternships() {
+    public void displayMessageIfNoInternships() {
         if(internships.isEmpty()) {
             RelativeLayout mainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
 
@@ -460,28 +350,70 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //method used each time internship selected in multi selection to decide to show prioritise or deprioritise action
-    private void decideToPrioritiseOrDeprioritiseInternships(Set<Internship> selectedInternships) {
-        boolean isCurrentlyAllPrioritised = false;
-
+    //unselects all the selected internships
+    private void unselectSelectedInternships() {
         for(Internship internship : selectedInternships) {
-            if(internship.isPriority()) {
-                isCurrentlyAllPrioritised = true;
-            } else {
-                isCurrentlyAllPrioritised = false;
-                break;
-            }
+            internship.setSelected(false);
         }
 
-        //only show deprioritise action if all internships are prioritised
-        if(isCurrentlyAllPrioritised) {
-            prioritiseItem.setVisible(false);
-            deprioritiseItem.setVisible(true);
+        applicationListRecyclerAdapter.notifyDataSetChanged();
+
+        selectedInternships.clear();
+    }
+
+    //deletes all selected internships
+    private void deleteSelectedInternships() {
+        //for all selected internships
+        for(Internship deleteInternship : selectedInternships) {
+            //remove from list
+            internships.remove(deleteInternship);
+            //delete from database
+            mDataSource.deleteInternship(deleteInternship.getInternshipID());
+        }
+        //update the RecyclerView through the adapter
+        applicationListRecyclerAdapter.internshipsList = internships;
+        applicationListRecyclerAdapter.notifyDataSetChanged();
+
+        //empty the map holding the selected internships
+        selectedInternships.clear();
+
+        displayMessageIfNoInternships();
+    }
+
+    //prioritises all selected internships
+    private void prioritiseSelectedInternships() {
+        //for all selected internships
+        for(Internship internship : selectedInternships) {
+            internship.setSelected(false);
+            internship.setPriority(true);
+
+            mDataSource.updateInternshipPriority(internship);
+        }
+        //empty the map holding the selected internships
+        selectedInternships.clear();
+    }
+
+    //deprioritises all selected internships
+    private void deprioritiseSelectedInternships() {
+        //for all selected internships
+        for(Internship internship : selectedInternships) {
+            internship.setSelected(false);
+            internship.setPriority(false);
+
+            mDataSource.updateInternshipPriority(internship);
+        }
+        //empty the map holding the selected internships
+        selectedInternships.clear();
+    }
+
+    private void selectAllInternships() {
+        if(!isAllSelected) {
+            applicationListRecyclerAdapter.selectAllInternships();
+            isAllSelected = true;
         } else {
-            prioritiseItem.setVisible(true);
-            deprioritiseItem.setVisible(false);
+            applicationListRecyclerAdapter.deselectAllInternships();
+            isAllSelected = false;
         }
-
     }
 
 }

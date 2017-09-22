@@ -6,7 +6,6 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -35,10 +34,14 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
 
     public List<Internship> internshipsList;
     private MainActivity context;
+    private List<Internship> selectedInternships;
 
-    public ApplicationListRecyclerAdapter(MainActivity context, List<Internship> internshipsList) {
+    public ApplicationListRecyclerAdapter(MainActivity context,
+                                          List<Internship> internshipsList,
+                                          List<Internship> selectedInternships) {
         this.internshipsList = internshipsList;
         this.context = context;
+        this.selectedInternships = selectedInternships;
     }
 
     @Override
@@ -80,9 +83,8 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
                 DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
             }
 
-        } else {
+        } else
             DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
-        }
 
         //go to Internship Information when item in Applications List is clicked
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -94,13 +96,11 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
                 //if when single clicked the selection mode is already on
                 if(context.isSelectionMode) {
                     //if internship was already selected
+                    //if wasn't already selected, then select the internship
                     if(internship.isSelected()) {
                         //deselect the internship
-                        context.prepareSelection(cardView, internship, false);
-                    } else {
-                        //if wasn't already selected, then select the internship
-                        context.prepareSelection(cardView, internship, true);
-                    }
+                        prepareSelection(internship, false);
+                    } else prepareSelection(internship, true);
 
                 } else {
                     //else a single click will take you to the internship information page
@@ -118,17 +118,15 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                CardView cardView = (CardView) holder.itemView;
-
                 //if the selection mode is off
                 if(!context.isSelectionMode) {
                     //switch the selection mode on
                     context.switchActionMode(true);
                     //select the internship that was long clicked
-                    context.prepareSelection(cardView, internship, true);
+                    prepareSelection(internship, true);
                 } else {
                     //else deselect internship if the selection mode was on
-                    context.prepareSelection(cardView, internship, false);
+                    prepareSelection(internship, false);
                 }
 
                 return true;
@@ -139,9 +137,9 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
 
         //on adapter refresh update the card backgrounds to back to default colors
         if(internship.isSelected()) {
-            context.updateCardBackground(cardView, true);
+            updateCardBackground(cardView, true);
         } else {
-            context.updateCardBackground(cardView, false);
+            updateCardBackground(cardView, false);
         }
 
     }
@@ -222,4 +220,93 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
         Collections.reverse(internshipsList);
         notifyDataSetChanged();
     }
+
+    /**
+     * Selects or deselects the internship depending on value of toBeSelected,
+     * and updates the action bar counter and the card background
+     * If 0 internships are selected, then action mode turns off
+     * @param internship that is to be selected or deselected
+     * @param toBeSelected true if the internship is to be selected
+     */
+    private void prepareSelection(Internship internship, boolean toBeSelected) {
+        //update the internship being selected
+        internship.setSelected(toBeSelected);
+
+        //if to be selected put internship in selected map, and update the cardView background
+        if(toBeSelected) {
+            selectedInternships.add(internship);
+        } else {
+            selectedInternships.remove(internship);
+        }
+
+        decideToPrioritiseOrDeprioritiseInternships(selectedInternships);
+
+        //if user selects no internships then exit action mode
+        if(selectedInternships.size() == 0) {
+            context.switchActionMode(false);
+        } else if(context.actionMode != null) {
+            context.updateActionModeCounter(selectedInternships.size());
+        }
+
+        notifyDataSetChanged();
+
+    }
+
+    /**
+     * Update the color of the cardView background depending on whether it is selected or not
+     * @param cardView to change background of
+     * @param isSelected true if background to set is highlighted, otherwise set to original color
+     */
+    private void updateCardBackground(CardView cardView, boolean isSelected) {
+        if(isSelected) {
+            cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.internshipCardBackgroundSelected));
+        } else {
+            cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.internshipCardBackgroundDefault));
+        }
+    }
+
+    //method used each time internship selected in multi selection to decide to show prioritise or deprioritise action
+    private void decideToPrioritiseOrDeprioritiseInternships(List<Internship> selectedInternships) {
+        boolean isCurrentlyAllPrioritised = false;
+
+        for(Internship internship : selectedInternships) {
+            if(internship.isPriority()) {
+                isCurrentlyAllPrioritised = true;
+            } else {
+                isCurrentlyAllPrioritised = false;
+                break;
+            }
+        }
+
+        //only show deprioritise action if all internships are prioritised
+        if(isCurrentlyAllPrioritised) {
+            context.prioritiseItem.setVisible(false);
+            context.deprioritiseItem.setVisible(true);
+        } else {
+            context.prioritiseItem.setVisible(true);
+            context.deprioritiseItem.setVisible(false);
+        }
+
+    }
+
+    public void selectAllInternships() {
+        selectedInternships.clear();
+
+        for(Internship internship : internshipsList) {
+            prepareSelection(internship, true);
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public void deselectAllInternships() {
+        List<Internship> selected = new ArrayList<>(selectedInternships);
+
+        for(Internship internship : selected) {
+            prepareSelection(internship, false);
+        }
+
+        notifyDataSetChanged();
+    }
+
 }
