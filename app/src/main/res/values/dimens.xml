@@ -6,6 +6,11 @@
     <dimen name="editedModifiedDateTextSize">16sp</dimen>
     <dimen name="editedModifiedDateMargin">10dp</dimen>
 
-    <dimen name="stageEditInputLeftMargin">35dp</dimen>
+    <dimen name="stageEditInputLeftMargin">40dp</dimen>
     <dimen name="stageDateWidth">170dp</dimen>
+
+    <dimen name="textInputMargin">5dp</dimen>
+
+    <dimen name="cardViewTextSize">20sp</dimen>
+    <dimen name="cardViewTitlesMarginBottom">10dp</dimen>
 </resources>

@@ -10,11 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/stageRecyclerView"
-        style="@style/scrollBarStyle"
-        android:overScrollMode="never"
-        android:paddingTop="6dp"
-        android:paddingBottom="80dp"
-        android:clipToPadding="false"/>
+        style="@style/recyclerStyle" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,15 +31,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/internshipInfoEditFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="@android:color/holo_blue_dark"
-        app:fabSize="normal"
         app:srcCompat="@drawable/ic_mode_edit_white_24dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
-        android:onClick="editInternship"/>
+        android:onClick="editInternship"
+        style="@style/floatingActionButton" />
 
 </RelativeLayout>

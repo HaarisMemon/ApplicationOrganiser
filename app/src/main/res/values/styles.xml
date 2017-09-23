@@ -20,9 +20,14 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="editedModifiedText">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">italic|bold</item>
-        <item name="android:alpha">0.8</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:text">Edited:</item>
     </style>
     
     <style name="scrollBarStyle">
@@ -31,6 +36,109 @@
         <item name="android:scrollbarThumbVertical">@color/colorAccent</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:fadeScrollbars">false</item>
+    </style>
+
+    <style name="recyclerStyle" parent="@style/scrollBarStyle">
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">80dp</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:overScrollMode">never</item>
+    </style>
+
+    <style name="floatingActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="backgroundTint">@android:color/holo_blue_dark</item>
+        <item name="fabSize">normal</item>
+    </style>
+
+    <style name="stageEditDate">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_marginStart">35dp</item>
+        <item name="android:focusable">false</item>
+        <item name="android:inputType">date</item>
+    </style>
+
+    <style name="customCardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="cardElevation">3dp</item>
+        <item name="cardCornerRadius">5dp</item>
+        <item name="cardBackgroundColor">@color/internshipCardBackgroundDefault</item>
+    </style>
+
+    <style name="headerCardViewLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">30dp</item>
+        <item name="android:layout_marginEnd">30dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="rowCardViewRelativeLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="android:layout_marginTop">13dp</item>
+        <item name="android:layout_marginBottom">13dp</item>
+    </style>
+
+    <style name="cardViewTitles">
+        <item name="android:textSize">@dimen/cardViewTextSize</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="rowCardViewTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginEnd">50dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="rowCardViewSmallTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_marginEnd">45dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="priorityBookmark">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_priority</item>
+        <item name="android:layout_marginStart">2dp</item>
+        <item name="android:layout_marginTop">-7dp</item>
+        <item name="android:tint">#e00000</item>
+        <item name="android:visibility">visible</item>
+    </style>
+
+    <style name="statusIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_status</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:tint">@android:color/black</item>
     </style>
 
 </resources>

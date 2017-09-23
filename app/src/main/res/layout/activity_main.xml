@@ -11,22 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
-        style="@style/scrollBarStyle"
-        android:paddingTop="6dp"
-        android:paddingBottom="80dp"
-        android:clipToPadding="false"/>
+        style="@style/recyclerStyle"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/listAddInternshipFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="@android:color/holo_blue_dark"
-        app:fabSize="normal"
         app:srcCompat="@drawable/ic_add_white_24dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
-        android:onClick="goToCreateInternship"/>
+        android:onClick="goToCreateInternship"
+        style="@style/floatingActionButton" />
 
 </RelativeLayout>

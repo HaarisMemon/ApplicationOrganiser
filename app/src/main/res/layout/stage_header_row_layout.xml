@@ -1,49 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="3dp"
-    app:cardCornerRadius="4dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    style="@style/customCardView">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            style="@style/headerCardViewLinearLayout"
             android:id="@+id/internshipDetailsLayout">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/stageNameGroup">
+                android:id="@+id/stageNameGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Stage"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/stage"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Stage"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/stage"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/stageNameText"/>
 
             </LinearLayout>
@@ -52,21 +37,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/statusGroup">
+                android:id="@+id/statusGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current Status"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/current_status"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current Status"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/current_status"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/currentStatusText"/>
 
             </LinearLayout>
@@ -75,21 +59,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/startDateGroup">
+                android:id="@+id/startDateGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date of Start"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/date_of_start"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date of Start"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/date_of_start"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/dateOfStartText"/>
 
             </LinearLayout>
@@ -98,21 +81,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/completedDateGroup">
+                android:id="@+id/completedDateGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date of Completion"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/date_of_completion"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date of Completion"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/date_of_completion"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/dateOfCompletionText"/>
 
             </LinearLayout>
@@ -121,21 +103,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/replyDateGroup">
+                android:id="@+id/replyDateGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date of Reply"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/date_of_reply"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date of Reply"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/date_of_reply"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/dateOfReplyText"/>
 
             </LinearLayout>
@@ -144,47 +125,35 @@
                 android:id="@+id/notesGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Notes"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:text="@string/notes"
+                    style="@style/cardViewTitles" />
 
                 <TextView
                     android:id="@+id/stageNotesText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="Notes"
-                    android:textSize="20sp" />
+                    android:text="@string/notes"
+                    android:textSize="@dimen/cardViewTextSize" />
 
             </LinearLayout>
 
         </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/editedDateStageText"
-            style="@style/editedModifiedText"
-            android:layout_margin="20dp"
-            android:text="Edited:"/>
+            style="@style/editedModifiedText" />
 
         <ImageView
             android:id="@+id/stageInfoStatusIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
             android:paddingBottom="11dp"
             android:layout_marginEnd="11dp"
-            app:srcCompat="@drawable/ic_status"
-            android:tint="@android:color/black" />
+            style="@style/statusIcon" />
 
     </RelativeLayout>
 

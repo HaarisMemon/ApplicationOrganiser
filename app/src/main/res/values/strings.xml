@@ -13,6 +13,7 @@
 
     <string name="addFirstInternship">Click the + button below to add your first Internship</string>
     <string name="addFirstStage">Click the + button above to add your first Application Stage</string>
+
     <string name="select_all">Select All</string>
     <string name="deprioritise_internships">Deprioritise Internships</string>
     <string name="prioritise_internships">Prioritise Internships</string>
@@ -20,4 +21,34 @@
     <string name="create_new_application_stage">Create new Application Stage</string>
     <string name="delete_internship">Delete Internship</string>
     <string name="edit_internship">Edit Internship</string>
+
+    <string name="company">Company</string>
+    <string name="role">Role</string>
+    <string name="length">Length</string>
+    <string name="location">Location</string>
+    <string name="website">Website</string>
+    <string name="salary">Salary</string>
+    <string name="notes">Notes</string>
+    <string name="stage">Stage</string>
+    <string name="completed">Completed?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="waiting_for_response">Waiting for response?</string>
+    <string name="successful">Successful?</string>
+    <string name="start_date">Start Date</string>
+    <string name="pick_start_date">Pick Start Date</string>
+    <string name="completion_date">Completion Date</string>
+    <string name="pick_completion_date">Pick Completion Date</string>
+    <string name="reply_date">Reply Date</string>
+    <string name="pick_reply_date">Pick Reply Date</string>
+    <string name="image_shows_if_the_internship_is_of_priority_or_is_a_favourite">
+        Image shows if the internship is of priority, or is a favourite.
+    </string>
+
+    <string name="current_status">Current Status</string>
+    <string name="date_of_start">Date of Start</string>
+    <string name="date_of_completion">Date of Completion</string>
+    <string name="date_of_reply">Date of Reply</string>
+    <string name="date">Date</string>
+    <string name="image_shows_the_current_status_of_the_internship">Image shows the current status of the internship.</string>
 </resources>

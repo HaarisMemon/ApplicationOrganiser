@@ -1,59 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="3dp"
-    app:cardCornerRadius="4dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    style="@style/customCardView">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_priority"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="-7dp"
-        android:tint="#e00000"
-        android:visibility="visible"
-        android:id="@+id/priorityImage" />
+        style="@style/priorityBookmark"
+        android:id="@+id/priorityImage"
+        android:contentDescription="@string/image_shows_if_the_internship_is_of_priority_or_is_a_favourite"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            style="@style/headerCardViewLinearLayout"
             android:id="@+id/internshipDetailsLayout">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/companyGroup">
+                android:id="@+id/companyGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Company"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/company"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Company"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/company"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/companyNameText"/>
 
             </LinearLayout>
@@ -62,21 +42,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/roleGroup">
+            android:id="@+id/roleGroup"
+            android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Role"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/role"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Role"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/role"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/roleText"/>
 
             </LinearLayout>
@@ -85,21 +64,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/lengthGroup">
+                android:id="@+id/lengthGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Length"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/length"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Length"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/length"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/lengthText"/>
 
             </LinearLayout>
@@ -108,21 +86,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/locationGroup">
+                android:id="@+id/locationGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Location"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/location"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Location"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/location"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/locationText"/>
 
             </LinearLayout>
@@ -131,21 +108,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/urlGroup">
+                android:id="@+id/urlGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Website"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/website"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Website"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/website"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/urlText"
                     android:autoLink="web"/>
 
@@ -155,21 +131,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/salaryGroup">
+                android:id="@+id/salaryGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Salary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/salary"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Salary"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/salary"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/salaryText"/>
 
             </LinearLayout>
@@ -178,21 +153,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/notesGroup">
+                android:id="@+id/notesGroup"
+                android:layout_marginBottom="@dimen/cardViewTitlesMarginBottom">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Notes"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:text="@string/notes"
+                    style="@style/cardViewTitles"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Notes"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
+                    android:text="@string/notes"
+                    android:textSize="@dimen/cardViewTextSize"
                     android:id="@+id/notesText"/>
 
             </LinearLayout>
@@ -200,14 +174,8 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/editedDateInternshipText"
-            style="@style/editedModifiedText"
-            android:layout_margin="20dp"
-            android:text="Edited:"/>
+            style="@style/editedModifiedText" />
 
     </RelativeLayout>
 
