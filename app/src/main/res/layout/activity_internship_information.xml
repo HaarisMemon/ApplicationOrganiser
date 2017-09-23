@@ -13,7 +13,7 @@
         style="@style/scrollBarStyle"
         android:overScrollMode="never"
         android:paddingTop="6dp"
-        android:paddingBottom="6dp"
+        android:paddingBottom="80dp"
         android:clipToPadding="false"/>
 
     <RelativeLayout

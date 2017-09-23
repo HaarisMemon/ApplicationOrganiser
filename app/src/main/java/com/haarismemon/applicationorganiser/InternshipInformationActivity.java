@@ -204,8 +204,6 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        boolean isSourceMainActivity = getIntent().getBooleanExtra(MainActivity.SOURCE, false);
-
         //if last activity was the main activity then do normal back press to keep the previous activity state
         if(isSourceMainActivity) {
             super.onBackPressed();
