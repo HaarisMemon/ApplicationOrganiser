@@ -42,6 +42,8 @@ public class InternshipInformationActivity extends AppCompatActivity {
     InternshipInformationAdapter adapter;
 
     @BindView(R.id.stageRecyclerView) RecyclerView stageRecyclerView;
+    private MenuItem prioritiseItem;
+    private MenuItem deprioritiseItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,18 @@ public class InternshipInformationActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.internship_menu, menu);
+
+        prioritiseItem = menu.findItem(R.id.action_mode_prioritise);
+        deprioritiseItem = menu.findItem(R.id.action_mode_deprioritise);
+
+        if(internship.isPriority()) {
+            prioritiseItem.setVisible(false);
+            deprioritiseItem.setVisible(true);
+        } else {
+            prioritiseItem.setVisible(true);
+            deprioritiseItem.setVisible(false);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -140,9 +154,27 @@ public class InternshipInformationActivity extends AppCompatActivity {
                 editInternship(null);
                 return true;
 
+            case R.id.action_mode_prioritise:
+                prioritiseInternship(true);
+                return true;
+
+            case R.id.action_mode_deprioritise:
+                prioritiseInternship(false);
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void prioritiseInternship(boolean setToPriority) {
+        internship.setPriority(setToPriority);
+        mDataSource.updateInternshipPriority(internship);
+
+        prioritiseItem.setVisible(!setToPriority);
+        deprioritiseItem.setVisible(setToPriority);
+
+        recreate();
     }
 
     /**

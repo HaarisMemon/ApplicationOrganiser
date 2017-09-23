@@ -17,4 +17,7 @@
     <string name="deprioritise_internships">Deprioritise Internships</string>
     <string name="prioritise_internships">Prioritise Internships</string>
     <string name="delete_internships">Delete Internships</string>
+    <string name="create_new_application_stage">Create new Application Stage</string>
+    <string name="delete_internship">Delete Internship</string>
+    <string name="edit_internship">Edit Internship</string>
 </resources>

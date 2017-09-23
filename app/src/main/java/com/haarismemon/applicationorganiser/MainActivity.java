@@ -172,6 +172,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //add search action button to action bar
         getMenuInflater().inflate(R.menu.main_menu, menu);

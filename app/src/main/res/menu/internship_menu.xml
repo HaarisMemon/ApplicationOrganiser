@@ -3,19 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Create new Application Stage"
+        android:title="@string/create_new_application_stage"
         android:icon="@drawable/ic_add_white_24dp"
         android:id="@+id/action_create_stage"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:title="Delete Internship"
+        android:title="@string/deprioritise_internships"
+        android:icon="@drawable/ic_star_white_24dp"
+        android:id="@+id/action_mode_deprioritise"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:title="@string/prioritise_internships"
+        android:icon="@drawable/ic_star_border_white_24dp"
+        android:id="@+id/action_mode_prioritise"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:title="@string/delete_internship"
         android:icon="@drawable/ic_delete_white_24dp"
         android:id="@+id/action_delete_internship"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:title="Edit Internship"
+        android:title="@string/edit_internship"
         android:icon="@drawable/ic_mode_edit_white_24dp"
         android:id="@+id/action_edit_internship"
         app:showAsAction="ifRoom"/>

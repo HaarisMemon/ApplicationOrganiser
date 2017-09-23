@@ -32,8 +32,8 @@ import java.util.List;
  */
 public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<InternshipRowViewHolder> {
 
-    public List<Internship> internshipsList;
     private MainActivity context;
+    public List<Internship> internshipsList;
     private List<Internship> selectedInternships;
 
     public ApplicationListRecyclerAdapter(MainActivity context,
