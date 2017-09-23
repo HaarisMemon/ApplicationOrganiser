@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isAllSelected = false;
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.drawerLayout) DrawerLayout mDrawerLayout;
+    @BindView(R.id.filterDrawer) LinearLayout filterDrawer;
     MenuItem orderItem;
 
     @Override
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        setTitle("Application Organiser");
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         mDataSource = new DataSource(this);
         mDataSource.open();
@@ -217,6 +221,12 @@ public class MainActivity extends AppCompatActivity {
 
             case(R.id.action_sort_salary):
                 changeSort(InternshipTable.COLUMN_SALARY, false, item);
+                return true;
+
+            case(R.id.action_filter_internships):
+                if(mDrawerLayout.isDrawerOpen(filterDrawer)) mDrawerLayout.closeDrawer(filterDrawer);
+                else mDrawerLayout.openDrawer(filterDrawer);
+
                 return true;
 
         }

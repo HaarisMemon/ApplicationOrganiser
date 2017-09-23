@@ -51,4 +51,8 @@
     <string name="date_of_reply">Date of Reply</string>
     <string name="date">Date</string>
     <string name="image_shows_the_current_status_of_the_internship">Image shows the current status of the internship.</string>
+    <string name="search_internships">Search Internships</string>
+    <string name="sort_internships">Sort Internships</string>
+    <string name="filter_internships">Filter Internships</string>
+    <string name="filters">Filters</string>
 </resources>
