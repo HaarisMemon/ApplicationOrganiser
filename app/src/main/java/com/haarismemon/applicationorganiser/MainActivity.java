@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawerLayout.setFocusableInTouchMode(false);
 
         mDataSource = new DataSource(this);
         mDataSource.open();
@@ -436,4 +437,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(filterDrawer))
+            mDrawerLayout.closeDrawer(filterDrawer);
+        else super.onBackPressed();
+    }
 }
