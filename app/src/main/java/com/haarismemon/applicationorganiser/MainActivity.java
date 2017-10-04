@@ -182,12 +182,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        recreate();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //add search action button to action bar
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -281,14 +275,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemActionExpand(final MenuItem item) {
-                Toast.makeText(MainActivity.this, "search enable", Toast.LENGTH_SHORT).show();
                 setItemsVisibility(menu, searchItem, false);
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(final MenuItem item) {
-                Toast.makeText(MainActivity.this, "search disabled", Toast.LENGTH_SHORT).show();
                 setItemsVisibility(menu, searchItem, true);
                 return true;
             }

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.adapter.InternshipInformationAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
@@ -174,6 +175,8 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         prioritiseItem.setVisible(!setToPriority);
         deprioritiseItem.setVisible(setToPriority);
+
+        getIntent().putExtra(MainActivity.SOURCE, false);
 
         recreate();
     }
