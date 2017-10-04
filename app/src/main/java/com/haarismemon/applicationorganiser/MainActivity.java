@@ -16,9 +16,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +32,16 @@ import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.haarismemon.applicationorganiser.R.id.lengthSpinner;
+import static com.haarismemon.applicationorganiser.R.id.prioritySwitch;
+import static com.haarismemon.applicationorganiser.R.string.salary;
 
 /**
  * This class represents the activity which displays the list of all Internships
@@ -67,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.filterDrawer) LinearLayout filterDrawer;
     MenuItem orderItem;
 
+    @BindView(R.id.roleSpinner) Spinner roleSpinner;
+    @BindView(R.id.lengthSpinner) Spinner lengthSpinner;
+    @BindView(R.id.locationSpinner) Spinner locationSpinner;
+    @BindView(R.id.salarySpinner) Spinner salarySpinner;
+    @BindView(R.id.stageSpinner) Spinner stageSpinner;
+    @BindView(R.id.prioritySwitch) Switch prioritySwitch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
         //ArrayList of all internships in the database
         internships = mDataSource.getAllInternship();
+
+        setUpFilterPanelSpinners();
 
         displayMessageIfNoInternships();
 
@@ -167,6 +185,35 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+    }
+
+    private void setUpFilterPanelSpinners() {
+        ArrayAdapter<String> roleAdapter = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, Collections.singletonList("Any Role"));
+        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        roleSpinner.setAdapter(roleAdapter);
+
+        ArrayAdapter<String> lengthAdapter = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, Collections.singletonList("Any Length"));
+        lengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lengthSpinner.setAdapter(lengthAdapter);
+
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, Collections.singletonList("Any Location"));
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        locationSpinner.setAdapter(locationAdapter);
+
+        ArrayAdapter<String> salaryAdapter = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, Collections.singletonList("Any Salary"));
+        salaryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        salarySpinner.setAdapter(salaryAdapter);
+
+        ArrayAdapter<String> stageAdapter = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, Collections.singletonList("Any Stage"));
+        stageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        stageSpinner.setAdapter(stageAdapter);
+
+        prioritySwitch.setChecked(false);
     }
 
     @Override

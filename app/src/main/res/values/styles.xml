@@ -153,4 +153,18 @@
         <item name="android:tint">@android:color/black</item>
     </style>
 
+    <style name="filterTitleStyle">
+        <!--<item name="android:layout_marginStart">25dp</item>-->
+        <!--<item name="android:layout_marginEnd">25dp</item>-->
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="spinnerUnderlineStyle">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+
 </resources>

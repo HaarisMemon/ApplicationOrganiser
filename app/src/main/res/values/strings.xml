@@ -55,4 +55,7 @@
     <string name="sort_internships">Sort Internships</string>
     <string name="filter_internships">Filter Internships</string>
     <string name="filters">Filters</string>
+    <string name="reset_all">Reset All</string>
+    <string name="apply">Apply</string>
+    <string name="only_priority">Only Priority</string>
 </resources>

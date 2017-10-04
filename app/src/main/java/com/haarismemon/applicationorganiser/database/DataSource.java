@@ -12,7 +12,10 @@ import com.haarismemon.applicationorganiser.model.Internship;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class is used to easily access the database and execute commands
@@ -354,6 +357,91 @@ public class DataSource {
         //updated the internship's modified date, that the application stage belongs to
         mDatabase.update(InternshipTable.TABLE_INTERNSHIP, parentInternshipValues, InternshipTable.COLUMN_ID + " = ?",
                 new String[] {Long.toString(applicationStage.getInternshipID())});
+    }
+
+    public Set<String> getAllRoles() {
+        Set<String> roles = new LinkedHashSet<>();
+
+        //query the whole Internship Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
+                null, null, null, null, InternshipTable.COLUMN_ROLE);
+
+        //while there is a next row
+        while (cursor.moveToNext()) {
+            roles.add(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
+        }
+
+        cursor.close();
+
+        return roles;
+    }
+
+    public Set<String> getAllLengths() {
+        Set<String> lengths = new LinkedHashSet<>();
+
+        //query the whole Internship Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
+                null, null, null, null, InternshipTable.COLUMN_LENGTH);
+
+        //while there is a next row
+        while (cursor.moveToNext()) {
+            lengths.add(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
+        }
+
+        cursor.close();
+
+        return lengths;
+    }
+
+    public Set<String> getAllLocations() {
+        Set<String> locations = new LinkedHashSet<>();
+
+        //query the whole Internship Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
+                null, null, null, null, InternshipTable.COLUMN_LOCATION);
+
+        //while there is a next row
+        while (cursor.moveToNext()) {
+            locations.add(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
+        }
+
+        cursor.close();
+
+        return locations;
+    }
+
+    public Set<Integer> getAllSalary() {
+        Set<Integer> salaries = new LinkedHashSet<>();
+
+        //query the whole Internship Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
+                null, null, null, null, InternshipTable.COLUMN_SALARY + " DESC");
+
+        //while there is a next row
+        while (cursor.moveToNext()) {
+            salaries.add(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_SALARY)));
+        }
+
+        cursor.close();
+
+        return salaries;
+    }
+
+    public Set<String> getAllStageNames() {
+        Set<String> stages = new LinkedHashSet<>();
+
+        //query the whole Internship Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
+                null, null, null, null, ApplicationStageTable.COLUMN_STAGE_NAME);
+
+        //while there is a next row
+        while (cursor.moveToNext()) {
+            stages.add(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_STAGE_NAME)));
+        }
+
+        cursor.close();
+
+        return stages;
     }
 
 }
