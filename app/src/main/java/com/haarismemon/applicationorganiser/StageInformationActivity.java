@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class StageInformationActivity extends AppCompatActivity {
     private Intent intent;
 
     StageInformationAdapter stageInformationAdapter;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.stageInformationRecyclerView) RecyclerView stageInformationRecyclerView;
 
     @Override
@@ -43,9 +45,9 @@ public class StageInformationActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         //adds a back button to the action bar
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle("Application Stage");
 

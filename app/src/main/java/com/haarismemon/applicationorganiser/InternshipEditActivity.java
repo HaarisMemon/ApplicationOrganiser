@@ -3,10 +3,10 @@ package com.haarismemon.applicationorganiser;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +33,8 @@ public class InternshipEditActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private boolean isEditMode;
     private Internship internship;
-    
+
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.companyNameEditText) TextInputEditText companyNameEditText;
     @BindView(R.id.roleEditText) TextInputEditText roleEditText;
     @BindView(R.id.lengthEditText) TextInputEditText lengthEditText;
@@ -49,9 +50,9 @@ public class InternshipEditActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         //adds a back button to the action bar
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
 

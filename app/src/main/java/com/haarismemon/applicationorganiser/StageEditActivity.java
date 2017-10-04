@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,6 +57,7 @@ public class StageEditActivity extends AppCompatActivity {
 
     DatePickerDialog.OnDateSetListener mDataSetListener;
     EditText clickedDateEditText = null;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.stageNameEditText) AutoCompleteTextView stageNameEditText;
     @BindView(R.id.notesStageEditText) TextInputEditText notesStageEditText;
     @BindView(R.id.yesCompletedRadio) RadioButton yesComplete;
@@ -83,9 +84,9 @@ public class StageEditActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         //adds a back button to the action bar
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
 

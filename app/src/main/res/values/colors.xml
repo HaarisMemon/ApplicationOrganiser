@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#1a61c4</color>
     <color name="colorAccent">#4a8600</color>
 
+    <color name="textColorPrimary">#d0000000</color>
+
     <color name="appBackgroundColor">#EEEEEE</color>
 
     <color name="homeButtonsBackgroundColor">@android:color/holo_blue_dark</color>

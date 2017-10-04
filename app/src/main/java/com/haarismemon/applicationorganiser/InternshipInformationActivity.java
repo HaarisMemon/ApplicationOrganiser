@@ -2,12 +2,12 @@ package com.haarismemon.applicationorganiser;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +41,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
      */
     InternshipInformationAdapter adapter;
 
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.stageRecyclerView) RecyclerView stageRecyclerView;
     private MenuItem prioritiseItem;
     private MenuItem deprioritiseItem;
@@ -52,9 +53,9 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         //adds a back button to the action bar
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle("Internship");
 

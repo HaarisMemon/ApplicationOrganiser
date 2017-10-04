@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.haarismemon.applicationorganiser.MainActivity"
     android:id="@+id/drawerLayout">
 
@@ -12,11 +13,15 @@
         android:layout_height="match_parent"
         android:id="@+id/mainRelativeLayout">
 
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar"/>
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recyclerView"
-            style="@style/recyclerStyle"/>
+            style="@style/recyclerStyle"
+            android:layout_below="@id/toolbar"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/listAddInternshipFAB"

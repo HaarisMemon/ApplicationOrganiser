@@ -6,11 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.haarismemon.applicationorganiser.InternshipInformationActivity">
 
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/stageRecyclerView"
-        style="@style/recyclerStyle" />
+        style="@style/recyclerStyle"
+        android:layout_below="@id/toolbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

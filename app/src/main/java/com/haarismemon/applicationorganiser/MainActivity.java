@@ -7,10 +7,11 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.ActionMode;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isAllSelected = false;
 
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.drawerLayout) DrawerLayout mDrawerLayout;
     @BindView(R.id.filterDrawer) LinearLayout filterDrawer;
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
@@ -331,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
         //if turnOn is true, then start action mode
         if(turnOn) {
             isSelectionMode = true;
-            actionMode = startActionMode(actionModeCallback);
+            actionMode = startSupportActionMode(actionModeCallback);
         } else {
             //else if turnOn is false, then exit action mode
             if (actionMode != null) {
