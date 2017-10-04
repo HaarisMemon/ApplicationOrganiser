@@ -20,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
@@ -280,12 +281,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemActionExpand(final MenuItem item) {
+                Toast.makeText(MainActivity.this, "search enable", Toast.LENGTH_SHORT).show();
                 setItemsVisibility(menu, searchItem, false);
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(final MenuItem item) {
+                Toast.makeText(MainActivity.this, "search disabled", Toast.LENGTH_SHORT).show();
                 setItemsVisibility(menu, searchItem, true);
                 return true;
             }
@@ -310,12 +313,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setItemsVisibility(final Menu menu, final MenuItem searchMenuItem, final boolean isVisible) {
+    private void setItemsVisibility(final Menu menu, final MenuItem searchMenuItem, final boolean isItemsVisible) {
         for (int i = 0; i < menu.size(); ++i) {
             MenuItem item = menu.getItem(i);
-            if (item != searchMenuItem) item.setVisible(isVisible);
+            item.setVisible(isItemsVisible);
         }
-        invalidateOptionsMenu();
+
+        if(isItemsVisible) invalidateOptionsMenu();
     }
 
     /**
