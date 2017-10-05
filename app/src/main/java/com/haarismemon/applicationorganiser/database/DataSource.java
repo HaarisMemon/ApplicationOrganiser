@@ -69,6 +69,24 @@ public class DataSource {
     }
 
     /**
+     * Reinsert an internship row in the database for an exisitng Internship that was deleted
+     * @param internship is passed with all the fields set
+     * @return internship object with the same Internship ID field set
+     */
+    public void recreateInternship(Internship internship) {
+        //makes a ContentValues object using all the fields in the internship object
+        ContentValues values = internship.toValues();
+
+        values.put(InternshipTable.COLUMN_ID, internship.getInternshipID());
+
+        mDatabase.insert(InternshipTable.TABLE_INTERNSHIP, null, values);
+
+        for(ApplicationStage stage : internship.getApplicationStages()) {
+            recreateApplicationStage(stage);
+        }
+    }
+
+    /**
      * Inserts a row in the database for a new Application Stage
      * Also updates the MODIFIED_ON column of the parent Internship in the Internship Table
      * @param applicationStage is passed with all the fields set
@@ -96,6 +114,14 @@ public class DataSource {
                 new String[] {Long.toString(internshipID)});
 
         return applicationStage;
+    }
+
+    private void recreateApplicationStage(ApplicationStage applicationStage) {
+        //makes a ContentValues object using all the fields in the internship object
+        ContentValues values = applicationStage.toValues();
+        values.put(ApplicationStageTable.COLUMN_ID, applicationStage.getStageID());
+
+        mDatabase.insert(ApplicationStageTable.TABLE_APPLICATION_STAGE, null, values);
     }
 
     /**

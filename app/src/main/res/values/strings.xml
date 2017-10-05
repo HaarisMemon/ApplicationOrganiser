@@ -58,4 +58,7 @@
     <string name="reset_all">Reset All</string>
     <string name="apply">Apply</string>
     <string name="only_priority">Only Priority</string>
+
+    <string name="deleted_snackbar_string">Deleted</string>
+    <string name="undo_snackbar_string">Undo</string>
 </resources>

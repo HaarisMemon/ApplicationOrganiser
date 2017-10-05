@@ -3,6 +3,7 @@ package com.haarismemon.applicationorganiser;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
@@ -32,16 +32,11 @@ import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.haarismemon.applicationorganiser.R.id.lengthSpinner;
-import static com.haarismemon.applicationorganiser.R.id.prioritySwitch;
-import static com.haarismemon.applicationorganiser.R.string.salary;
 
 /**
  * This class represents the activity which displays the list of all Internships
@@ -57,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Internship> internships;
     private List<Internship> selectedInternships;
+    private List<Internship> deletedInternships;
+    private List<Internship> internshipsBeforeDeletion;
 
     /**
      * RecyclerAdapter of RecyclerView for internships in the activity
@@ -69,13 +66,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean isSelectionMode = false;
 
     private boolean isAllSelected = false;
-
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.drawerLayout) DrawerLayout mDrawerLayout;
     @BindView(R.id.filterDrawer) LinearLayout filterDrawer;
-    MenuItem orderItem;
 
+    MenuItem orderItem;
     @BindView(R.id.roleSpinner) Spinner roleSpinner;
     @BindView(R.id.lengthSpinner) Spinner lengthSpinner;
     @BindView(R.id.locationSpinner) Spinner locationSpinner;
@@ -108,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
 
         //list to track which internships have been selected
         selectedInternships = new ArrayList<>();
+        //list to store list of internships before deletion
+        internshipsBeforeDeletion = new ArrayList<>();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -147,6 +145,27 @@ public class MainActivity extends AppCompatActivity {
                         deleteSelectedInternships();
                         //exit action mode
                         switchActionMode(false);
+
+                        Snackbar.make(findViewById(R.id.drawerLayout),
+                                R.string.deleted_snackbar_string, Snackbar.LENGTH_LONG)
+                                .setAction(R.string.undo_snackbar_string, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        for(Internship internship : deletedInternships) {
+                                            internship.setSelected(false);
+                                            mDataSource.recreateInternship(internship);
+                                        }
+
+                                        internships = internshipsBeforeDeletion;
+                                        applicationListRecyclerAdapter.internshipsList = internshipsBeforeDeletion;
+
+                                        applicationListRecyclerAdapter.notifyDataSetChanged();
+
+                                        deletedInternships.clear();
+                                    }
+                                })
+                                .show();
+
                         return true;
 
                     //when the priority action button is pressed in action mode
@@ -427,6 +446,8 @@ public class MainActivity extends AppCompatActivity {
 
     //deletes all selected internships
     private void deleteSelectedInternships() {
+        internshipsBeforeDeletion = new ArrayList<>(internships);
+
         //for all selected internships
         for(Internship deleteInternship : selectedInternships) {
             //remove from list
@@ -437,6 +458,8 @@ public class MainActivity extends AppCompatActivity {
         //update the RecyclerView through the adapter
         applicationListRecyclerAdapter.internshipsList = internships;
         applicationListRecyclerAdapter.notifyDataSetChanged();
+
+        deletedInternships = new ArrayList<>(selectedInternships);
 
         //empty the map holding the selected internships
         selectedInternships.clear();

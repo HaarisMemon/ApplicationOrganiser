@@ -3,6 +3,7 @@ package com.haarismemon.applicationorganiser.model;
 import android.content.ContentValues;
 
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
+import com.haarismemon.applicationorganiser.database.InternshipTable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,7 @@ public class ApplicationStage {
     private String dateOfReply;
     private String notes;
     private long internshipID;
+    private String createdDate;
     private String modifiedDate;
 
     public static final String[] defaultApplicationStageNames = {
@@ -262,6 +264,14 @@ public class ApplicationStage {
         this.modifiedDate = modifiedDate;
     }
 
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
     /**
      * Returns the current status of this application stage as an enum.
      * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, NOT_STARTED
@@ -318,6 +328,11 @@ public class ApplicationStage {
         values.put(ApplicationStageTable.COLUMN_REPLY_DATE, dateOfReply);
         values.put(ApplicationStageTable.COLUMN_NOTES, notes);
         values.put(ApplicationStageTable.COLUMN_INTERNSHIP_ID, internshipID);
+
+        //if no created date, then application stage not stored in database yet (newly created)
+        if(createdDate != null) {
+            values.put(InternshipTable.COLUMN_CREATED_ON, createdDate);
+        }
 
         //if no modified date, then Application Stage not stored in database yet (newly created)
         if(modifiedDate != null) {
