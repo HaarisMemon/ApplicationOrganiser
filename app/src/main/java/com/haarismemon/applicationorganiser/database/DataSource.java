@@ -17,6 +17,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.haarismemon.applicationorganiser.R.drawable.cursor;
+
 /**
  * This class is used to easily access the database and execute commands
  * @author HaarisMemon
@@ -407,7 +409,7 @@ public class DataSource {
 
         //query the whole Internship Table for all rows in descending order of modified date
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, null, null, InternshipTable.COLUMN_LENGTH);
+                InternshipTable.COLUMN_LENGTH + " IS NOT NULL", null, null, null, InternshipTable.COLUMN_LENGTH);
 
         //while there is a next row
         while (cursor.moveToNext()) {
@@ -457,7 +459,7 @@ public class DataSource {
         Set<String> stages = new LinkedHashSet<>();
 
         //query the whole Internship Table for all rows in descending order of modified date
-        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
+        Cursor cursor = mDatabase.query(ApplicationStageTable.TABLE_APPLICATION_STAGE, ApplicationStageTable.ALL_COLUMNS,
                 null, null, null, null, ApplicationStageTable.COLUMN_STAGE_NAME);
 
         //while there is a next row

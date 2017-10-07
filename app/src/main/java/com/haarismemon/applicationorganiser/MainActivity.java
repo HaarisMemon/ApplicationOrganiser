@@ -17,23 +17,27 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.listener.FilterDialogOnClickListener;
+import com.haarismemon.applicationorganiser.listener.MyOnQueryTextListener;
+import com.haarismemon.applicationorganiser.model.FilterType;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,29 +59,33 @@ public class MainActivity extends AppCompatActivity {
     private List<Internship> deletedInternships;
     private List<Internship> internshipsBeforeDeletion;
 
+    private Map<FilterType, List<Integer>> filterSelectedItemsIndexes;
+
     /**
      * RecyclerAdapter of RecyclerView for internships in the activity
      */
     ApplicationListRecyclerAdapter applicationListRecyclerAdapter;
 
     public static final String SOURCE = "SOURCE";
+    public static final String FILTER_LIST = "FILTER_LIST";
+    public static final String FILTER_TYPE = "FILTER_TYPE";
+    public static final String CHECKED_ITEMS = "CHECKED_ITEMS";
 
     //used to check if currently in selection mode (whether any internships has been selected)
     public boolean isSelectionMode = false;
-
     private boolean isAllSelected = false;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
+
     @BindView(R.id.drawerLayout) DrawerLayout mDrawerLayout;
     @BindView(R.id.filterDrawer) LinearLayout filterDrawer;
-
-    MenuItem orderItem;
-    @BindView(R.id.roleSpinner) Spinner roleSpinner;
-    @BindView(R.id.lengthSpinner) Spinner lengthSpinner;
-    @BindView(R.id.locationSpinner) Spinner locationSpinner;
-    @BindView(R.id.salarySpinner) Spinner salarySpinner;
-    @BindView(R.id.stageSpinner) Spinner stageSpinner;
+    @BindView(R.id.roleSelect) TextView roleSelect;
+    @BindView(R.id.lengthSelect) TextView lengthSelect;
+    @BindView(R.id.locationSelect) TextView locationSelect;
+    @BindView(R.id.salarySelect) TextView salarySelect;
+    @BindView(R.id.stageSelect) TextView stageSelect;
     @BindView(R.id.prioritySwitch) Switch prioritySwitch;
+    MenuItem orderItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         //ArrayList of all internships in the database
         internships = mDataSource.getAllInternship();
 
-        setUpFilterPanelSpinners();
+        setUpFilterPanel();
 
         displayMessageIfNoInternships();
 
@@ -206,35 +214,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setUpFilterPanelSpinners() {
-        ArrayAdapter<String> roleAdapter = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, Collections.singletonList("Any Role"));
-        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        roleSpinner.setAdapter(roleAdapter);
-
-        ArrayAdapter<String> lengthAdapter = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, Collections.singletonList("Any Length"));
-        lengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        lengthSpinner.setAdapter(lengthAdapter);
-
-        ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, Collections.singletonList("Any Location"));
-        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        locationSpinner.setAdapter(locationAdapter);
-
-        ArrayAdapter<String> salaryAdapter = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, Collections.singletonList("Any Salary"));
-        salaryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        salarySpinner.setAdapter(salaryAdapter);
-
-        ArrayAdapter<String> stageAdapter = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, Collections.singletonList("Any Stage"));
-        stageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        stageSpinner.setAdapter(stageAdapter);
-
-        prioritySwitch.setChecked(false);
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -298,6 +277,68 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setUpFilterPanel() {
+        filterSelectedItemsIndexes = new HashMap<>();
+
+        //add all filter types to the map
+        for(FilterType filterType : FilterType.values()) {
+            filterSelectedItemsIndexes.put(filterType, null);
+        }
+
+        roleSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
+                mDataSource.getAllRoles(), filterSelectedItemsIndexes, FilterType.ROLE));
+
+        lengthSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
+                mDataSource.getAllLengths(), filterSelectedItemsIndexes, FilterType.LENGTH));
+
+        locationSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
+                mDataSource.getAllLocations(), filterSelectedItemsIndexes, FilterType.LOCATION));
+
+        //TODO Change salary to a number slider instead of a spinner
+
+        Set<Integer> salary = mDataSource.getAllSalary();
+        Set<String> stringSalary = new LinkedHashSet<>();
+        for(Integer salaryInteger : salary) {
+            stringSalary.add(salaryInteger.toString());
+        }
+        salarySelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
+                stringSalary, filterSelectedItemsIndexes, FilterType.SALARY));
+
+        stageSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
+                mDataSource.getAllStageNames(), filterSelectedItemsIndexes, FilterType.STAGE));
+
+        prioritySwitch.setChecked(false);
+
+        updateFilterPanel();
+    }
+
+    /**
+     * Stores the selected item's indexes for the particular filter type.
+     * @param filterType the filter type that the items selected correspond to
+     * @param selectedItemIndexes list of integer indexes of the items selected
+     */
+    public void onUserSelectValue(FilterType filterType, List<Integer> selectedItemIndexes) {
+        filterSelectedItemsIndexes.put(filterType, selectedItemIndexes);
+        updateFilterPanel();
+    }
+
+    private void updateFilterPanel() {
+        updateFilterSelectText(FilterType.ROLE, roleSelect);
+        updateFilterSelectText(FilterType.LENGTH, lengthSelect);
+        updateFilterSelectText(FilterType.LOCATION, locationSelect);
+        updateFilterSelectText(FilterType.SALARY, salarySelect);
+        updateFilterSelectText(FilterType.STAGE, stageSelect);
+    }
+
+    private void updateFilterSelectText(FilterType filterType, TextView selectText) {
+        List<Integer> selectedItems = filterSelectedItemsIndexes.get(filterType);
+        if(selectedItems == null || selectedItems.isEmpty()) {
+            selectText.setText("All " + filterType.toString());
+        } else {
+            selectText.setText(selectedItems.size() + " selected");
+        }
     }
 
     private void changeSort(String sortByField, boolean isAscending, MenuItem currentSelectedSortItem) {

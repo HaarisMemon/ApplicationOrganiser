@@ -1,4 +1,4 @@
-package com.haarismemon.applicationorganiser;
+package com.haarismemon.applicationorganiser.listener;
 
 import android.support.v7.widget.SearchView;
 

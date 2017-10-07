@@ -77,10 +77,13 @@
                     android:text="@string/role"
                     style="@style/filterTitleStyle"/>
 
-                <Spinner
+                <TextView
+                    android:id="@+id/roleSelect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/roleSpinner"/>
+                    android:textSize="16sp"
+                    android:text="Any Role"
+                    style="@android:style/Widget.Material.Spinner" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -92,10 +95,13 @@
                     android:text="@string/length"
                     style="@style/filterTitleStyle"/>
 
-                <Spinner
+                <TextView
+                    android:id="@+id/lengthSelect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/lengthSpinner"/>
+                    android:textSize="16sp"
+                    android:text="Any Length"
+                    style="@android:style/Widget.Material.Spinner" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -106,11 +112,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/location"
                     style="@style/filterTitleStyle"/>
-
-                <Spinner
+                <TextView
+                    android:id="@+id/locationSelect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/locationSpinner"/>
+                    android:textSize="16sp"
+                    android:text="Any Location"
+                    style="@android:style/Widget.Material.Spinner" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -121,11 +129,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/salary"
                     style="@style/filterTitleStyle"/>
-
-                <Spinner
+                <TextView
+                    android:id="@+id/salarySelect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/salarySpinner"/>
+                    android:textSize="16sp"
+                    android:text="Any Salary"
+                    style="@android:style/Widget.Material.Spinner" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -137,10 +147,13 @@
                     android:text="@string/stage"
                     style="@style/filterTitleStyle"/>
 
-                <Spinner
+                <TextView
+                    android:id="@+id/stageSelect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/stageSpinner"/>
+                    android:textSize="16sp"
+                    android:text="Any Stage"
+                    style="@android:style/Widget.Material.Spinner" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
