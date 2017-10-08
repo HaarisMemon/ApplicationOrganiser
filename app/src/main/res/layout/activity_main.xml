@@ -196,12 +196,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/reset_all"
-                    style="?android:attr/buttonBarButtonStyle"/>
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:onClick="resetAllFilter"/>
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/apply"/>
+                    android:text="@string/apply"
+                    android:onClick="applyFilter"/>
 
             </LinearLayout>
 

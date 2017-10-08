@@ -2,7 +2,6 @@ package com.haarismemon.applicationorganiser;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -93,7 +92,7 @@ public class StageInformationActivity extends AppCompatActivity {
             case R.id.action_delete_stage:
                 //show alert dialog to confirm deletion
                 new AlertDialog.Builder(this)
-                        .setTitle(getResources().getString(R.string.deleteDialogTitle))
+                        .setTitle(getResources().getString(R.string.areYouSureDialogTitle))
                         .setMessage(getResources().getString(R.string.deleteDialogMessage))
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override

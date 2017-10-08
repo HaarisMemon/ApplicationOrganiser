@@ -2,10 +2,12 @@ package com.haarismemon.applicationorganiser;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
@@ -28,13 +30,14 @@ import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.listener.FilterDialogOnClickListener;
 import com.haarismemon.applicationorganiser.listener.MyOnQueryTextListener;
+import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.FilterType;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private List<Internship> internshipsBeforeDeletion;
 
     private Map<FilterType, List<Integer>> filterSelectedItemsIndexes;
+    private boolean isFilterPriority = false;
+
+    Set<FilterType> filtersCurrentlyApplied;
 
     /**
      * RecyclerAdapter of RecyclerView for internships in the activity
@@ -74,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     //used to check if currently in selection mode (whether any internships has been selected)
     public boolean isSelectionMode = false;
     private boolean isAllSelected = false;
+
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
@@ -105,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
         //ArrayList of all internships in the database
         internships = mDataSource.getAllInternship();
+
+        filtersCurrentlyApplied = new HashSet<>();
 
         setUpFilterPanel();
 
@@ -298,8 +307,8 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO Change salary to a number slider instead of a spinner
 
-        Set<Integer> salary = mDataSource.getAllSalary();
-        Set<String> stringSalary = new LinkedHashSet<>();
+        List<Integer> salary = mDataSource.getAllSalary();
+        List<String> stringSalary = new ArrayList<>();
         for(Integer salaryInteger : salary) {
             stringSalary.add(salaryInteger.toString());
         }
@@ -320,7 +329,15 @@ public class MainActivity extends AppCompatActivity {
      * @param selectedItemIndexes list of integer indexes of the items selected
      */
     public void onUserSelectValue(FilterType filterType, List<Integer> selectedItemIndexes) {
+        if(selectedItemIndexes.isEmpty()) {
+            selectedItemIndexes = null;
+            filtersCurrentlyApplied.remove(filterType);
+        } else {
+            filtersCurrentlyApplied.add(filterType);
+        }
+
         filterSelectedItemsIndexes.put(filterType, selectedItemIndexes);
+
         updateFilterPanel();
     }
 
@@ -334,11 +351,82 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateFilterSelectText(FilterType filterType, TextView selectText) {
         List<Integer> selectedItems = filterSelectedItemsIndexes.get(filterType);
-        if(selectedItems == null || selectedItems.isEmpty()) {
-            selectText.setText("All " + filterType.toString());
-        } else {
+        if(filtersCurrentlyApplied.contains(filterType)) {
             selectText.setText(selectedItems.size() + " selected");
+        } else if(filtersCurrentlyApplied.isEmpty()) {
+            selectText.setText("All " + filterType.toString() + "s");
+        } else {
+            selectText.setText("None selected");
         }
+    }
+
+    public void resetAllFilter(View view) {
+        mDrawerLayout.closeDrawer(filterDrawer);
+
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.areYouSureDialogTitle))
+                .setMessage("All selections will be cleared")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //add all filter types to the map
+                        for(FilterType filterType : FilterType.values()) {
+                            filterSelectedItemsIndexes.put(filterType, null);
+                        }
+
+                        prioritySwitch.setChecked(false);
+                        isFilterPriority = false;
+
+                        filtersCurrentlyApplied.clear();
+
+                        applicationListRecyclerAdapter.internshipsList = internships;
+                        applicationListRecyclerAdapter.notifyDataSetChanged();
+
+                        updateFilterPanel();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    public void applyFilter(View view) {
+        List<String> selectedRoles = getAllItemsNotFromIndex(mDataSource.getAllRoles(),
+                filterSelectedItemsIndexes.get(FilterType.ROLE));
+
+        List<String> selectedLengths = getAllItemsNotFromIndex(mDataSource.getAllLengths(),
+                filterSelectedItemsIndexes.get(FilterType.LENGTH));
+
+        List<String> selectedLocations = getAllItemsNotFromIndex(mDataSource.getAllLocations(),
+                filterSelectedItemsIndexes.get(FilterType.LOCATION));
+
+        //TODO FIX SALARY
+
+        List<String> selectedStages = getAllItemsNotFromIndex(mDataSource.getAllStageNames(),
+                filterSelectedItemsIndexes.get(FilterType.STAGE));
+
+        if(prioritySwitch.isChecked()) isFilterPriority = true;
+        else isFilterPriority = false;
+
+        applicationListRecyclerAdapter.internshipsList = filterInternships(selectedRoles,
+                selectedLengths, selectedLocations, null, selectedStages);
+
+        applicationListRecyclerAdapter.notifyDataSetChanged();
+
+        mDrawerLayout.closeDrawer(filterDrawer);
+    }
+
+    private List<String> getAllItemsNotFromIndex(List<String> allItems, List<Integer> selectedIndexes) {
+        if(selectedIndexes != null) {
+            List<String> result = new ArrayList<>();
+            for (int i = 0; i < allItems.size(); i++) {
+                if (selectedIndexes.contains(i)) {
+                    result.add(allItems.get(i));
+                }
+            }
+
+            return result;
+        }
+        else return null;
     }
 
     private void changeSort(String sortByField, boolean isAscending, MenuItem currentSelectedSortItem) {
@@ -550,4 +638,100 @@ public class MainActivity extends AppCompatActivity {
             mDrawerLayout.closeDrawer(filterDrawer);
         else super.onBackPressed();
     }
+
+    private List<Internship> filterInternships(List<String> roles,
+                                   List<String> lengths,
+                                   List<String> locations,
+                                   List<String> salaries,
+                                   List<String> stages) {
+
+        List<Internship> result = new ArrayList<>();
+
+        for (Internship internship : internships) {
+            if (isFilterPriority && !internship.isPriority()) {
+                continue;
+            }
+
+            //if no filters have been selected then no filters are applied, so show all internships
+            if(!filtersCurrentlyApplied.isEmpty()) {
+                Internship returnedInternship = matchInternship(internship, roles, lengths, locations, salaries, stages);
+                if (returnedInternship != null) result.add(returnedInternship);
+            } else {
+                result.add(internship);
+            }
+        }
+
+        return result;
+    }
+
+    private Internship matchInternship(Internship internship,
+                                       List<String> roles,
+                                       List<String> lengths,
+                                       List<String> locations,
+                                       List<String> salaries,
+                                       List<String> stages) {
+        if(roles != null) {
+            boolean roleMatched = false;
+            for (String role : roles) {
+                if (internship.getRole().equals(role)) {
+                    roleMatched = true;
+                    break;
+                }
+            }
+            if(!roleMatched) return null;
+        }
+
+        if(lengths != null) {
+            boolean lengthMatched = false;
+            for (String length : lengths) {
+                if (internship.getLength() != null && internship.getLength().equals(length)) {
+                    lengthMatched = true;
+                    break;
+                }
+            }
+            if(!lengthMatched) return null;
+        }
+
+        if(locations != null) {
+            boolean locationMatched = false;
+            for (String location : locations) {
+                if (internship.getLocation() != null && internship.getLocation().equals(location)) {
+                    locationMatched = true;
+                    break;
+                }
+            }
+            if(!locationMatched) return null;
+        }
+
+        if(salaries != null) {
+            boolean salaryMatched = false;
+            for (String salary : salaries) {
+                if (internship.getSalary() == Integer.parseInt(salary)) {
+                    salaryMatched = true;
+                    break;
+                }
+            }
+            if(!salaryMatched) return null;
+        }
+
+        if(stages != null) {
+            boolean stageMatched = false;
+            for (String stageName : stages) {
+                for (ApplicationStage stage : internship.getApplicationStages()) {
+                    if (stage.getStageName().equals(stageName)) {
+                        stageMatched = true;
+                        break;
+                    }
+                }
+            }
+            if(!stageMatched) return null;
+        }
+
+        return internship;
+    }
+
+    public void setInternshipList(List<Internship> internshipList) {
+        internships = internshipList;
+    }
+
 }

@@ -24,12 +24,12 @@ public class FilterDialogOnClickListener implements View.OnClickListener {
 
     private FragmentManager mFragmentManager;
     //list of all items of the filter type
-    private Set<String> itemsListForDialog;
+    private List<String> itemsListForDialog;
     private Map<FilterType, List<Integer>> selectedItemsIndexesMap;
     private FilterType filterType;
 
     public FilterDialogOnClickListener(FragmentManager mFragmentManager,
-                                       Set<String> itemsListForDialog,
+                                       List<String> itemsListForDialog,
                                        Map<FilterType, List<Integer>> selectedItemsIndexesMap,
                                        FilterType filterType) {
         this.mFragmentManager = mFragmentManager;

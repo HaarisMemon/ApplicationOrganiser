@@ -387,12 +387,12 @@ public class DataSource {
                 new String[] {Long.toString(applicationStage.getInternshipID())});
     }
 
-    public Set<String> getAllRoles() {
-        Set<String> roles = new LinkedHashSet<>();
+    public List<String> getAllRoles() {
+        List<String> roles = new ArrayList<>();
 
         //query the whole Internship Table for all rows in descending order of modified date
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, null, null, InternshipTable.COLUMN_ROLE);
+                null, null, InternshipTable.COLUMN_ROLE, null, InternshipTable.COLUMN_ROLE);
 
         //while there is a next row
         while (cursor.moveToNext()) {
@@ -404,12 +404,12 @@ public class DataSource {
         return roles;
     }
 
-    public Set<String> getAllLengths() {
-        Set<String> lengths = new LinkedHashSet<>();
+    public List<String> getAllLengths() {
+        List<String> lengths = new ArrayList<>();
 
         //query the whole Internship Table for all rows in descending order of modified date
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                InternshipTable.COLUMN_LENGTH + " IS NOT NULL", null, null, null, InternshipTable.COLUMN_LENGTH);
+                InternshipTable.COLUMN_LENGTH + " IS NOT NULL", null, InternshipTable.COLUMN_LENGTH, null, InternshipTable.COLUMN_LENGTH);
 
         //while there is a next row
         while (cursor.moveToNext()) {
@@ -421,12 +421,12 @@ public class DataSource {
         return lengths;
     }
 
-    public Set<String> getAllLocations() {
-        Set<String> locations = new LinkedHashSet<>();
+    public List<String> getAllLocations() {
+        List<String> locations = new ArrayList<>();
 
         //query the whole Internship Table for all rows in descending order of modified date
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, null, null, InternshipTable.COLUMN_LOCATION);
+                null, null, InternshipTable.COLUMN_LOCATION, null, InternshipTable.COLUMN_LOCATION);
 
         //while there is a next row
         while (cursor.moveToNext()) {
@@ -438,12 +438,12 @@ public class DataSource {
         return locations;
     }
 
-    public Set<Integer> getAllSalary() {
-        Set<Integer> salaries = new LinkedHashSet<>();
+    public List<Integer> getAllSalary() {
+        List<Integer> salaries = new ArrayList<>();
 
         //query the whole Internship Table for all rows in descending order of modified date
         Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, null, null, InternshipTable.COLUMN_SALARY + " DESC");
+                null, null, InternshipTable.COLUMN_SALARY, null, InternshipTable.COLUMN_SALARY + " DESC");
 
         //while there is a next row
         while (cursor.moveToNext()) {
@@ -455,12 +455,12 @@ public class DataSource {
         return salaries;
     }
 
-    public Set<String> getAllStageNames() {
-        Set<String> stages = new LinkedHashSet<>();
+    public List<String> getAllStageNames() {
+        List<String> stages = new ArrayList<>();
 
         //query the whole Internship Table for all rows in descending order of modified date
         Cursor cursor = mDatabase.query(ApplicationStageTable.TABLE_APPLICATION_STAGE, ApplicationStageTable.ALL_COLUMNS,
-                null, null, null, null, ApplicationStageTable.COLUMN_STAGE_NAME);
+                null, null, ApplicationStageTable.COLUMN_STAGE_NAME, null, ApplicationStageTable.COLUMN_STAGE_NAME);
 
         //while there is a next row
         while (cursor.moveToNext()) {

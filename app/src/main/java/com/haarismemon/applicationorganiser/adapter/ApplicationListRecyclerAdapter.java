@@ -208,6 +208,8 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
 
         internshipsList = sortedInternships;
         notifyDataSetChanged();
+
+        context.setInternshipList(internshipsList);
     }
 
     /**

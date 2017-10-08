@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.adapter.InternshipInformationAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
@@ -124,7 +123,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
             case R.id.action_delete_internship:
                 //show alert dialog to confirm deletion
                 new AlertDialog.Builder(this)
-                        .setTitle(getResources().getString(R.string.deleteDialogTitle))
+                        .setTitle(getResources().getString(R.string.areYouSureDialogTitle))
                         .setMessage(getResources().getString(R.string.deleteDialogMessage))
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
