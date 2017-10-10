@@ -109,13 +109,13 @@ public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerV
             ApplicationStage.Status currentStatus = stage.getCurrentStatus();
 
             if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                DrawableCompat.setTint(stageHolder.stageStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusSuccessful));
+                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_successful);
             } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                DrawableCompat.setTint(stageHolder.stageStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusInProgress));
+                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_in_progress);
             } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                DrawableCompat.setTint(stageHolder.stageStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusUnsuccessful));
+                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_unsuccessful);
             } else {
-                DrawableCompat.setTint(stageHolder.stageStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
+                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
             }
 
             //go to Internship Information when item in Applications List is clicked

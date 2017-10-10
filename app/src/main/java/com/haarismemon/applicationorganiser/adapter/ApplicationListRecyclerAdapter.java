@@ -74,13 +74,13 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
             ApplicationStage.Status currentStatus = stage.getCurrentStatus();
 
             if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusSuccessful));
+                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_successful);
             } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusInProgress));
+                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_in_progress);
             } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusUnsuccessful));
+                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_unsuccessful);
             } else {
-                DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
+                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
             }
 
         } else

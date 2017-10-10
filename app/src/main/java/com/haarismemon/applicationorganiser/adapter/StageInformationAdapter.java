@@ -1,6 +1,7 @@
 package com.haarismemon.applicationorganiser.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
@@ -84,13 +85,13 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 ApplicationStage.Status currentStatus = stage.getCurrentStatus();
 
                 if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                    DrawableCompat.setTint(internshipHolder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusSuccessful));
+                    internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_successful);
                 } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                    DrawableCompat.setTint(internshipHolder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusInProgress));
+                    internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_in_progress);
                 } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                    DrawableCompat.setTint(internshipHolder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusUnsuccessful));
+                    internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_unsuccessful);
                 } else {
-                    DrawableCompat.setTint(internshipHolder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
+                    internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
                 }
 
             } else
@@ -109,14 +110,14 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             ApplicationStage.Status currentStatus = stage.getCurrentStatus();
 
-            if (currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                DrawableCompat.setTint(stageHolder.stageInfoStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusSuccessful));
-            } else if (currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                DrawableCompat.setTint(stageHolder.stageInfoStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusInProgress));
-            } else if (currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                DrawableCompat.setTint(stageHolder.stageInfoStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusUnsuccessful));
+            if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
+                stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_successful);
+            } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
+                stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_in_progress);
+            } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
+                stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_unsuccessful);
             } else {
-                DrawableCompat.setTint(stageHolder.stageInfoStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
+                stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
             }
 
             if (stage.getDateOfStart() != null)

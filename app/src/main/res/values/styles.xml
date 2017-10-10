@@ -149,15 +149,12 @@
     <style name="statusIcon">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:src">@drawable/ic_status</item>
+        <item name="android:src">@drawable/ic_status_successful</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentEnd">true</item>
-        <item name="android:tint">@android:color/black</item>
     </style>
 
     <style name="filterTitleStyle">
-        <!--<item name="android:layout_marginStart">25dp</item>-->
-        <!--<item name="android:layout_marginEnd">25dp</item>-->
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:textSize">14sp</item>
