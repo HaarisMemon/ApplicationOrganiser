@@ -1,5 +1,6 @@
 package com.haarismemon.applicationorganiser;
 
+import android.app.DialogFragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.locationSelect) TextView locationSelect;
     @BindView(R.id.salarySelect) TextView salarySelect;
     @BindView(R.id.stageSelect) TextView stageSelect;
+    @BindView(R.id.statusSelect) TextView statusSelect;
     @BindView(R.id.prioritySwitch) Switch prioritySwitch;
     MenuItem orderItem;
 
@@ -320,6 +322,30 @@ public class MainActivity extends AppCompatActivity {
 
         prioritySwitch.setChecked(false);
 
+        statusSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                List<Integer> selectedItemsIndexes = filterSelectedItemsIndexes.get(FilterType.STATUS);
+
+                //selectedItemsIndexes is null when nothing initially has been selected
+                if(selectedItemsIndexes != null) {
+                    boolean[] checkedItems = new boolean[ApplicationStage.Status.values().length];
+
+                    //converts the indexes into boolean array of all items with value true if index in list
+                    for (Integer selectedItemIndex : selectedItemsIndexes) {
+                        checkedItems[selectedItemIndex] = true;
+                    }
+
+                    bundle.putBooleanArray(CHECKED_ITEMS, checkedItems);
+                }
+
+                DialogFragment dialogFragment = new StatusFilterDialogFragment();
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(getFragmentManager(), "Status Filter Dialog");
+            }
+        });
+
         updateFilterPanel();
     }
 
@@ -347,6 +373,21 @@ public class MainActivity extends AppCompatActivity {
         updateFilterSelectText(FilterType.LOCATION, locationSelect);
         updateFilterSelectText(FilterType.SALARY, salarySelect);
         updateFilterSelectText(FilterType.STAGE, stageSelect);
+
+        if(filterSelectedItemsIndexes.get(FilterType.STATUS) != null &&
+                filterSelectedItemsIndexes.get(FilterType.STATUS).size() == 1) {
+
+            ApplicationStage.Status status = getAllStatusFromIndex(
+                    filterSelectedItemsIndexes.get(FilterType.STATUS)).get(0);
+            statusSelect.setText(status.toString());
+
+            statusSelect.setCompoundDrawablesWithIntrinsicBounds(getResources().getIdentifier("ic_status_" + status.getIconNameText(), "drawable", getPackageName()), 0, 0, 0);
+            statusSelect.setCompoundDrawablePadding(16);
+
+        } else {
+            updateFilterSelectText(FilterType.STATUS, statusSelect);
+            statusSelect.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
     }
 
     private void updateFilterSelectText(FilterType filterType, TextView selectText) {
@@ -354,7 +395,7 @@ public class MainActivity extends AppCompatActivity {
         if(filtersCurrentlyApplied.contains(filterType)) {
             selectText.setText(selectedItems.size() + " selected");
         } else if(filtersCurrentlyApplied.isEmpty()) {
-            selectText.setText("All " + filterType.toString() + "s");
+            selectText.setText("All " + filterType.getTextPlural());
         } else {
             selectText.setText("None selected");
         }
@@ -390,37 +431,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void applyFilter(View view) {
-        List<String> selectedRoles = getAllItemsNotFromIndex(mDataSource.getAllRoles(),
+        List<String> selectedRoles = getAllItemsFromIndex(mDataSource.getAllRoles(),
                 filterSelectedItemsIndexes.get(FilterType.ROLE));
 
-        List<String> selectedLengths = getAllItemsNotFromIndex(mDataSource.getAllLengths(),
+        List<String> selectedLengths = getAllItemsFromIndex(mDataSource.getAllLengths(),
                 filterSelectedItemsIndexes.get(FilterType.LENGTH));
 
-        List<String> selectedLocations = getAllItemsNotFromIndex(mDataSource.getAllLocations(),
+        List<String> selectedLocations = getAllItemsFromIndex(mDataSource.getAllLocations(),
                 filterSelectedItemsIndexes.get(FilterType.LOCATION));
 
         //TODO FIX SALARY
 
-        List<String> selectedStages = getAllItemsNotFromIndex(mDataSource.getAllStageNames(),
+        List<String> selectedStages = getAllItemsFromIndex(mDataSource.getAllStageNames(),
                 filterSelectedItemsIndexes.get(FilterType.STAGE));
+
+        List<ApplicationStage.Status> selectedStatus = getAllStatusFromIndex(
+                filterSelectedItemsIndexes.get(FilterType.STATUS));
 
         if(prioritySwitch.isChecked()) isFilterPriority = true;
         else isFilterPriority = false;
 
         applicationListRecyclerAdapter.internshipsList = filterInternships(selectedRoles,
-                selectedLengths, selectedLocations, null, selectedStages);
+                selectedLengths, selectedLocations, null, selectedStages,
+                selectedStatus);
 
         applicationListRecyclerAdapter.notifyDataSetChanged();
 
         mDrawerLayout.closeDrawer(filterDrawer);
     }
 
-    private List<String> getAllItemsNotFromIndex(List<String> allItems, List<Integer> selectedIndexes) {
+    private List<String> getAllItemsFromIndex(List<String> allItems, List<Integer> selectedIndexes) {
         if(selectedIndexes != null) {
             List<String> result = new ArrayList<>();
             for (int i = 0; i < allItems.size(); i++) {
                 if (selectedIndexes.contains(i)) {
                     result.add(allItems.get(i));
+                }
+            }
+
+            return result;
+        }
+        else return null;
+    }
+
+    private List<ApplicationStage.Status> getAllStatusFromIndex(List<Integer> selectedIndexes) {
+        ApplicationStage.Status[] statusList = ApplicationStage.Status.values();
+
+        if(selectedIndexes != null) {
+            List<ApplicationStage.Status> result = new ArrayList<>();
+            for (int i = 0; i < statusList.length; i++) {
+                if (selectedIndexes.contains(i)) {
+                    result.add(statusList[i]);
                 }
             }
 
@@ -643,7 +704,8 @@ public class MainActivity extends AppCompatActivity {
                                    List<String> lengths,
                                    List<String> locations,
                                    List<String> salaries,
-                                   List<String> stages) {
+                                   List<String> stages,
+                                   List<ApplicationStage.Status> status) {
 
         List<Internship> result = new ArrayList<>();
 
@@ -654,7 +716,7 @@ public class MainActivity extends AppCompatActivity {
 
             //if no filters have been selected then no filters are applied, so show all internships
             if(!filtersCurrentlyApplied.isEmpty()) {
-                Internship returnedInternship = matchInternship(internship, roles, lengths, locations, salaries, stages);
+                Internship returnedInternship = matchInternship(internship, roles, lengths, locations, salaries, stages, status);
                 if (returnedInternship != null) result.add(returnedInternship);
             } else {
                 result.add(internship);
@@ -669,7 +731,19 @@ public class MainActivity extends AppCompatActivity {
                                        List<String> lengths,
                                        List<String> locations,
                                        List<String> salaries,
-                                       List<String> stages) {
+                                       List<String> stages,
+                                       List<ApplicationStage.Status> statusList) {
+        if(statusList != null) {
+            boolean statusMatched = false;
+            for (ApplicationStage.Status status : statusList) {
+                if (internship.getCurrentStage().getCurrentStatus().equals(status)) {
+                    statusMatched = true;
+                    break;
+                }
+            }
+            if(!statusMatched) return null;
+        }
+
         if(roles != null) {
             boolean roleMatched = false;
             for (String role : roles) {

@@ -7,6 +7,8 @@ import com.haarismemon.applicationorganiser.database.InternshipTable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents a stage in the internship application process
@@ -15,18 +17,32 @@ import java.text.SimpleDateFormat;
 public class ApplicationStage {
 
     public enum Status {
-        SUCCESSFUL("Successful"), WAITING("In Progress"),
-        UNSUCCESSFUL("Unsuccessful"), NOT_STARTED("Not Started");
+        SUCCESSFUL("Successful", "successful"), WAITING("In Progress", "in_progress"),
+        UNSUCCESSFUL("Unsuccessful", "unsuccessful"), NOT_STARTED("Not Started", "incomplete");
 
         private String text;
+        private String iconNameText;
 
-        Status(String text) {
+        Status(String text, String iconNameText) {
             this.text = text;
+            this.iconNameText = iconNameText;
         }
 
         @Override
         public String toString() {
             return text;
+        }
+
+        public static List<String> getStatusStrings() {
+            List<String> strings = new ArrayList<>();
+            for(Status status : values()) {
+                strings.add(status.toString());
+            }
+            return strings;
+        }
+
+        public String getIconNameText() {
+            return iconNameText;
         }
     }
 

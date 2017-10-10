@@ -6,18 +6,24 @@ package com.haarismemon.applicationorganiser.model;
 
 public enum FilterType {
 
-    ROLE("Role"), LENGTH("Length"), LOCATION("Location"),
-    SALARY("Salary"), STAGE("Stage");
+    ROLE("Role", "Roles"), LENGTH("Length", "Lengths"), LOCATION("Location", "Locations"),
+    SALARY("Salary", "Salaries"), STAGE("Stage", "Stages"), STATUS("Status", "Status");
 
     private String text;
+    private String textPlural;
 
-    FilterType(String text) {
+    FilterType(String text, String textPlural) {
         this.text = text;
+        this.textPlural = textPlural;
     }
 
     @Override
     public String toString() {
         return text;
+    }
+
+    public String getTextPlural() {
+        return textPlural;
     }
 
     public static FilterType findFilterByName(String filterName) {
