@@ -56,10 +56,18 @@
                     android:layout_height="wrap_content"
                     android:text="@string/filters"
                     android:textSize="18sp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
                     android:id="@+id/filterTitleText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Results"
+                    android:id="@+id/filterResultsText"
+                    style="@style/filterTitleStyle"
+                    android:layout_marginBottom="20dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -79,7 +87,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Any Role"
+                        android:text="@string/role"
                         style="@android:style/Widget.Material.Spinner" />
                     <View
                         android:layout_width="match_parent"
@@ -97,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Any Length"
+                        android:text="@string/length"
                         style="@android:style/Widget.Material.Spinner" />
                     <View
                         android:layout_width="match_parent"
@@ -114,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Any Location"
+                        android:text="@string/location"
                         style="@android:style/Widget.Material.Spinner" />
                     <View
                         android:layout_width="match_parent"
@@ -131,7 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Any Salary"
+                        android:text="@string/salary"
                         style="@android:style/Widget.Material.Spinner" />
                     <View
                         android:layout_width="match_parent"
@@ -149,7 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Any Stage"
+                        android:text="@string/stage"
                         style="@android:style/Widget.Material.Spinner" />
                     <View
                         android:layout_width="match_parent"
@@ -159,7 +167,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Status"
+                        android:text="@string/status"
                         style="@style/filterTitleStyle"/>
 
                     <TextView
@@ -167,7 +175,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Any Status"
+                        android:text="@string/status"
                         style="@android:style/Widget.Material.Spinner"/>
                     <View
                         android:layout_width="match_parent"
@@ -214,9 +222,12 @@
 
                     <Button
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
+                        android:id="@+id/filterApplyButton"
                         android:text="@string/apply"
-                        android:onClick="applyFilter"/>
+                        android:onClick="applyFilter"
+                        android:background="@color/colorAccent"
+                        android:textColor="@android:color/white"/>
 
                 </LinearLayout>
 

@@ -29,6 +29,7 @@
     <string name="website">Website</string>
     <string name="salary">Salary</string>
     <string name="notes">Notes</string>
+    <string name="status">Status</string>
     <string name="stage">Stage</string>
     <string name="completed">Completed?</string>
     <string name="yes">Yes</string>

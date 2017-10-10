@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Map<FilterType, List<Integer>> filterSelectedItemsIndexes;
     private boolean isFilterPriority = false;
+    private boolean isFilterChangeMade = false;
 
     Set<FilterType> filtersCurrentlyApplied;
 
@@ -94,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.stageSelect) TextView stageSelect;
     @BindView(R.id.statusSelect) TextView statusSelect;
     @BindView(R.id.prioritySwitch) Switch prioritySwitch;
+    @BindView(R.id.filterResultsText) TextView filterResultsText;
+    @BindView(R.id.filterApplyButton) Button filterApplyButton;
     MenuItem orderItem;
 
     @Override
@@ -116,8 +120,6 @@ public class MainActivity extends AppCompatActivity {
         internships = mDataSource.getAllInternship();
 
         filtersCurrentlyApplied = new HashSet<>();
-
-        setUpFilterPanel();
 
         displayMessageIfNoInternships();
 
@@ -223,6 +225,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        setUpFilterPanel();
+
     }
 
     @Override
@@ -307,6 +311,14 @@ public class MainActivity extends AppCompatActivity {
         locationSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
                 mDataSource.getAllLocations(), filterSelectedItemsIndexes, FilterType.LOCATION));
 
+        prioritySwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isFilterChangeMade = true;
+                updateFilterPanel();
+            }
+        });
+
         //TODO Change salary to a number slider instead of a spinner
 
         List<Integer> salary = mDataSource.getAllSalary();
@@ -364,6 +376,8 @@ public class MainActivity extends AppCompatActivity {
 
         filterSelectedItemsIndexes.put(filterType, selectedItemIndexes);
 
+        isFilterChangeMade = true;
+
         updateFilterPanel();
     }
 
@@ -388,6 +402,11 @@ public class MainActivity extends AppCompatActivity {
             updateFilterSelectText(FilterType.STATUS, statusSelect);
             statusSelect.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
+
+        filterResultsText.setText(applicationListRecyclerAdapter.internshipsList.size() + " Internships");
+
+        if(isFilterChangeMade) filterApplyButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        else filterApplyButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
     }
 
     private void updateFilterSelectText(FilterType filterType, TextView selectText) {
@@ -423,6 +442,8 @@ public class MainActivity extends AppCompatActivity {
                         applicationListRecyclerAdapter.internshipsList = internships;
                         applicationListRecyclerAdapter.notifyDataSetChanged();
 
+                        isFilterChangeMade = false;
+
                         updateFilterPanel();
                     }
                 })
@@ -456,6 +477,10 @@ public class MainActivity extends AppCompatActivity {
                 selectedStatus);
 
         applicationListRecyclerAdapter.notifyDataSetChanged();
+
+        isFilterChangeMade = false;
+
+        updateFilterPanel();
 
         mDrawerLayout.closeDrawer(filterDrawer);
     }
