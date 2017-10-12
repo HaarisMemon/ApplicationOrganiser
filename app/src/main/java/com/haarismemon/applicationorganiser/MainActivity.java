@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Internship> internshipsBeforeDeletion;
 
     private Map<FilterType, List<Integer>> filterSelectedItemsIndexes;
-    private boolean isFilterPriority = false;
+    private Boolean isFilterPriority;
     private boolean isFilterChangeMade = false;
 
     Set<FilterType> filtersCurrentlyApplied;
@@ -113,14 +113,26 @@ public class MainActivity extends AppCompatActivity {
         A originalMin;
         B originalMax;
 
-        A min;
-        B max;
+        private A min;
+        private B max;
+
+        boolean isRangeUpdated;
 
         MinMaxSalary(A min, B max) {
             this.min = min;
             this.originalMin = min;
             this.max = max;
             this.originalMax = max;
+        }
+
+        public void setMin(A min) {
+            this.min = min;
+            isRangeUpdated = true;
+        }
+
+        public void setMax(B max) {
+            this.max = max;
+            isRangeUpdated = true;
         }
     }
 
@@ -341,6 +353,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isFilterChangeMade = true;
+                isFilterPriority = prioritySwitch.isChecked();
                 updateFilterPanel();
             }
         });
@@ -393,8 +406,8 @@ public class MainActivity extends AppCompatActivity {
         salarySelect.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
             @Override
             public void finalValue(Number minValue, Number maxValue) {
-                minMaxSalary.min = minValue.intValue();
-                minMaxSalary.max = maxValue.intValue();
+                minMaxSalary.setMin(minValue.intValue());
+                minMaxSalary.setMax(maxValue.intValue());
 
                 isFilterChangeMade = true;
                 updateFilterPanel();
@@ -458,13 +471,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateFilterSelectText(FilterType filterType, TextView selectText) {
         List<Integer> selectedItems = filterSelectedItemsIndexes.get(filterType);
-        if(filtersCurrentlyApplied.contains(filterType)) {
-            selectText.setText(selectedItems.size() + " selected");
-        } else if(filtersCurrentlyApplied.isEmpty() && !isFilterChangeMade) {
-            selectText.setText("All " + filterType.getTextPlural());
-        } else {
+        if (checkFilterIsChanged()) {
             selectText.setText("None selected");
+        } else if(filtersCurrentlyApplied.contains(filterType)) {
+            selectText.setText(selectedItems.size() + " selected");
+        } else if(filtersCurrentlyApplied.isEmpty()) {
+            selectText.setText("All " + filterType.getTextPlural());
         }
+    }
+
+    private boolean checkFilterIsChanged() {
+        for(List<Integer> filterSelectedIndexes : filterSelectedItemsIndexes.values()) {
+            if(filterSelectedIndexes != null && !filterSelectedIndexes.isEmpty()) return true;
+        }
+
+        if(minMaxSalary.isRangeUpdated) return true;
+        else if(isFilterPriority != null) return true;
+
+        return false;
     }
 
     public void resetAllFilter(View view) {
@@ -482,10 +506,13 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         prioritySwitch.setChecked(false);
-                        isFilterPriority = false;
+                        isFilterPriority = null;
+
+                        minMaxSalary.isRangeUpdated = false;
 
                         salarySelect.setMinStartValue(minMaxSalary.originalMin)
-                                .setMaxStartValue(minMaxSalary.originalMax).apply();
+                                .setMaxStartValue(minMaxSalary.originalMax)
+                                .setGap(10f).apply();
 
                         filtersCurrentlyApplied.clear();
 
@@ -517,8 +544,6 @@ public class MainActivity extends AppCompatActivity {
 
             List<ApplicationStage.Status> selectedStatus = getAllStatusFromIndex(
                     filterSelectedItemsIndexes.get(FilterType.STATUS));
-
-            isFilterPriority = prioritySwitch.isChecked();
 
             applicationListRecyclerAdapter.internshipsList = filterInternships(selectedRoles,
                     selectedLengths, selectedLocations, selectedStages,
@@ -783,7 +808,7 @@ public class MainActivity extends AppCompatActivity {
         List<Internship> result = new ArrayList<>();
 
         for (Internship internship : internships) {
-            if (isFilterPriority && !internship.isPriority()) {
+            if (isFilterPriority != null && isFilterPriority && !internship.isPriority()) {
                 continue;
             }
 

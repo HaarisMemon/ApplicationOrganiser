@@ -173,7 +173,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:steps="1000"
-                            app:gap="5"
+                            app:gap="10"
                             app:data_type="_integer"
                             app:bar_color="@android:color/darker_gray"
                             app:bar_highlight_color="@color/colorAccent"
