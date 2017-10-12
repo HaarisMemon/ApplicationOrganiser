@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.haarismemon.applicationorganiser.MainActivity"
-    android:id="@+id/drawerLayout">
+    android:id="@+id/drawerLayout"
+    tools:openDrawer="end">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,20 +33,47 @@
     </RelativeLayout>
 
     <!-- The navigation drawer -->
-    <LinearLayout android:id="@+id/filterDrawer"
+    <RelativeLayout android:id="@+id/filterDrawer"
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:background="#eeeeee"
-        android:orientation="vertical"
         android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="bottom|end"
+            android:id="@+id/filterButtons">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reset_all"
+                style="?android:attr/buttonBarButtonStyle"
+                android:onClick="resetAllFilter"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/filterApplyButton"
+                android:text="@string/apply"
+                android:onClick="applyFilter"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"/>
+
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
             android:overScrollMode="never"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:layout_above="@id/filterButtons">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -56,7 +84,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/filters"
                     android:textSize="18sp"
-                    android:layout_marginBottom="20dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
                     android:id="@+id/filterTitleText"/>
@@ -65,16 +92,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Results"
+                    android:layout_below="@id/filterTitleText"
                     android:id="@+id/filterResultsText"
                     style="@style/filterTitleStyle"
-                    android:layout_marginBottom="20dp"/>
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="25dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="60dp"
-                    android:layout_below="@id/filterTitleText">
+                    android:layout_below="@id/filterResultsText">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -92,7 +120,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        style="@style/spinnerUnderlineStyle"/>
+                        style="@style/spinnerUnderlineStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -134,17 +162,42 @@
                         android:layout_height="wrap_content"
                         android:text="@string/salary"
                         style="@style/filterTitleStyle"/>
-                    <TextView
-                        android:id="@+id/salarySelect"
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/salary"
-                        style="@android:style/Widget.Material.Spinner" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        style="@style/spinnerUnderlineStyle"/>
+                        android:layout_marginBottom="@dimen/filterPanelMarginSpacing">
+
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/salarySelect"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:steps="1000"
+                            app:gap="5"
+                            app:data_type="_integer"
+                            app:bar_color="@android:color/darker_gray"
+                            app:bar_highlight_color="@color/colorAccent"
+                            app:left_thumb_image="@drawable/thumb"
+                            app:right_thumb_image="@drawable/thumb"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:id="@+id/minText"
+                            android:layout_alignStart="@id/salarySelect"
+                            android:layout_below="@id/salarySelect"
+                            android:text="min"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:id="@+id/maxText"
+                            android:layout_alignEnd="@id/salarySelect"
+                            android:layout_below="@id/salarySelect"
+                            android:text="max"/>
+                    </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -185,8 +238,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/filterPanelMarginSpacing">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -205,36 +257,10 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="bottom|end">
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reset_all"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:onClick="resetAllFilter"/>
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:id="@+id/filterApplyButton"
-                        android:text="@string/apply"
-                        android:onClick="applyFilter"
-                        android:background="@color/colorAccent"
-                        android:textColor="@android:color/white"/>
-
-                </LinearLayout>
-
             </RelativeLayout>
 
         </ScrollView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>

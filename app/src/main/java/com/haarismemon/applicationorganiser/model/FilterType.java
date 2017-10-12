@@ -6,8 +6,12 @@ package com.haarismemon.applicationorganiser.model;
 
 public enum FilterType {
 
-    ROLE("Role", "Roles"), LENGTH("Length", "Lengths"), LOCATION("Location", "Locations"),
-    SALARY("Salary", "Salaries"), STAGE("Stage", "Stages"), STATUS("Status", "Status");
+    ROLE("Role", "Roles"),
+    LENGTH("Length", "Lengths"),
+    LOCATION("Location", "Locations"),
+//    SALARY("Salary", "Salaries"),
+    STAGE("Stage", "Stages"),
+    STATUS("Status", "Status");
 
     private String text;
     private String textPlural;

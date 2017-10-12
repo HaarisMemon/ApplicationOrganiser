@@ -24,9 +24,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
+import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.InternshipTable;
@@ -37,6 +41,7 @@ import com.haarismemon.applicationorganiser.model.FilterType;
 import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -46,6 +51,8 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.R.attr.min;
 
 /**
  * This class represents the activity which displays the list of all Internships
@@ -88,17 +95,36 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
     @BindView(R.id.drawerLayout) DrawerLayout mDrawerLayout;
-    @BindView(R.id.filterDrawer) LinearLayout filterDrawer;
+    @BindView(R.id.filterDrawer) RelativeLayout filterDrawer;
     @BindView(R.id.roleSelect) TextView roleSelect;
     @BindView(R.id.lengthSelect) TextView lengthSelect;
     @BindView(R.id.locationSelect) TextView locationSelect;
-    @BindView(R.id.salarySelect) TextView salarySelect;
+    @BindView(R.id.minText) TextView minText;
+    @BindView(R.id.maxText) TextView maxText;
+    @BindView(R.id.salarySelect) CrystalRangeSeekbar salarySelect;
     @BindView(R.id.stageSelect) TextView stageSelect;
     @BindView(R.id.statusSelect) TextView statusSelect;
     @BindView(R.id.prioritySwitch) Switch prioritySwitch;
     @BindView(R.id.filterResultsText) TextView filterResultsText;
     @BindView(R.id.filterApplyButton) Button filterApplyButton;
     MenuItem orderItem;
+
+    private class MinMaxSalary<A, B> {
+        A originalMin;
+        B originalMax;
+
+        A min;
+        B max;
+
+        MinMaxSalary(A min, B max) {
+            this.min = min;
+            this.originalMin = min;
+            this.max = max;
+            this.originalMax = max;
+        }
+    }
+
+    private MinMaxSalary<Integer, Integer> minMaxSalary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -319,15 +345,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //TODO Change salary to a number slider instead of a spinner
-
-        List<Integer> salary = mDataSource.getAllSalary();
-        List<String> stringSalary = new ArrayList<>();
-        for(Integer salaryInteger : salary) {
-            stringSalary.add(salaryInteger.toString());
-        }
-        salarySelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
-                stringSalary, filterSelectedItemsIndexes, FilterType.SALARY));
 
         stageSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
                 mDataSource.getAllStageNames(), filterSelectedItemsIndexes, FilterType.STAGE));
@@ -358,7 +375,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        List<Integer> salary = mDataSource.getAllSalary();
+        minMaxSalary = new MinMaxSalary<>(salary.get(salary.size() - 1), salary.get(0));
+
+        salarySelect.setMinValue(minMaxSalary.min);
+        salarySelect.setMaxValue(minMaxSalary.max);
+
+        salarySelect.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                minText.setText(convertToMoneyString(minValue));
+                maxText.setText(convertToMoneyString(maxValue));
+            }
+        });
+
+        // set final value listener
+        salarySelect.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
+            @Override
+            public void finalValue(Number minValue, Number maxValue) {
+                minMaxSalary.min = minValue.intValue();
+                minMaxSalary.max = maxValue.intValue();
+
+                isFilterChangeMade = true;
+                updateFilterPanel();
+            }
+        });
+
         updateFilterPanel();
+    }
+
+    private String convertToMoneyString(Number value) {
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        return "£" + formatter.format(value);
     }
 
     /**
@@ -385,7 +433,6 @@ public class MainActivity extends AppCompatActivity {
         updateFilterSelectText(FilterType.ROLE, roleSelect);
         updateFilterSelectText(FilterType.LENGTH, lengthSelect);
         updateFilterSelectText(FilterType.LOCATION, locationSelect);
-        updateFilterSelectText(FilterType.SALARY, salarySelect);
         updateFilterSelectText(FilterType.STAGE, stageSelect);
 
         if(filterSelectedItemsIndexes.get(FilterType.STATUS) != null &&
@@ -403,7 +450,7 @@ public class MainActivity extends AppCompatActivity {
             statusSelect.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
 
-        filterResultsText.setText(applicationListRecyclerAdapter.internshipsList.size() + " Internships");
+        filterResultsText.setText("Showing " + applicationListRecyclerAdapter.internshipsList.size() + " Internships");
 
         if(isFilterChangeMade) filterApplyButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         else filterApplyButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
@@ -413,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
         List<Integer> selectedItems = filterSelectedItemsIndexes.get(filterType);
         if(filtersCurrentlyApplied.contains(filterType)) {
             selectText.setText(selectedItems.size() + " selected");
-        } else if(filtersCurrentlyApplied.isEmpty()) {
+        } else if(filtersCurrentlyApplied.isEmpty() && !isFilterChangeMade) {
             selectText.setText("All " + filterType.getTextPlural());
         } else {
             selectText.setText("None selected");
@@ -437,6 +484,9 @@ public class MainActivity extends AppCompatActivity {
                         prioritySwitch.setChecked(false);
                         isFilterPriority = false;
 
+                        salarySelect.setMinStartValue(minMaxSalary.originalMin)
+                                .setMaxStartValue(minMaxSalary.originalMax).apply();
+
                         filtersCurrentlyApplied.clear();
 
                         applicationListRecyclerAdapter.internshipsList = internships;
@@ -452,35 +502,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void applyFilter(View view) {
-        List<String> selectedRoles = getAllItemsFromIndex(mDataSource.getAllRoles(),
-                filterSelectedItemsIndexes.get(FilterType.ROLE));
+        if(isFilterChangeMade) {
+            List<String> selectedRoles = getAllItemsFromIndex(mDataSource.getAllRoles(),
+                    filterSelectedItemsIndexes.get(FilterType.ROLE));
 
-        List<String> selectedLengths = getAllItemsFromIndex(mDataSource.getAllLengths(),
-                filterSelectedItemsIndexes.get(FilterType.LENGTH));
+            List<String> selectedLengths = getAllItemsFromIndex(mDataSource.getAllLengths(),
+                    filterSelectedItemsIndexes.get(FilterType.LENGTH));
 
-        List<String> selectedLocations = getAllItemsFromIndex(mDataSource.getAllLocations(),
-                filterSelectedItemsIndexes.get(FilterType.LOCATION));
+            List<String> selectedLocations = getAllItemsFromIndex(mDataSource.getAllLocations(),
+                    filterSelectedItemsIndexes.get(FilterType.LOCATION));
 
-        //TODO FIX SALARY
+            List<String> selectedStages = getAllItemsFromIndex(mDataSource.getAllStageNames(),
+                    filterSelectedItemsIndexes.get(FilterType.STAGE));
 
-        List<String> selectedStages = getAllItemsFromIndex(mDataSource.getAllStageNames(),
-                filterSelectedItemsIndexes.get(FilterType.STAGE));
+            List<ApplicationStage.Status> selectedStatus = getAllStatusFromIndex(
+                    filterSelectedItemsIndexes.get(FilterType.STATUS));
 
-        List<ApplicationStage.Status> selectedStatus = getAllStatusFromIndex(
-                filterSelectedItemsIndexes.get(FilterType.STATUS));
+            isFilterPriority = prioritySwitch.isChecked();
 
-        if(prioritySwitch.isChecked()) isFilterPriority = true;
-        else isFilterPriority = false;
+            applicationListRecyclerAdapter.internshipsList = filterInternships(selectedRoles,
+                    selectedLengths, selectedLocations, selectedStages,
+                    selectedStatus);
 
-        applicationListRecyclerAdapter.internshipsList = filterInternships(selectedRoles,
-                selectedLengths, selectedLocations, null, selectedStages,
-                selectedStatus);
+            applicationListRecyclerAdapter.notifyDataSetChanged();
 
-        applicationListRecyclerAdapter.notifyDataSetChanged();
+            isFilterChangeMade = false;
 
-        isFilterChangeMade = false;
-
-        updateFilterPanel();
+            updateFilterPanel();
+        }
 
         mDrawerLayout.closeDrawer(filterDrawer);
     }
@@ -726,11 +775,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private List<Internship> filterInternships(List<String> roles,
-                                   List<String> lengths,
-                                   List<String> locations,
-                                   List<String> salaries,
-                                   List<String> stages,
-                                   List<ApplicationStage.Status> status) {
+                                               List<String> lengths,
+                                               List<String> locations,
+                                               List<String> stages,
+                                               List<ApplicationStage.Status> status) {
 
         List<Internship> result = new ArrayList<>();
 
@@ -740,8 +788,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //if no filters have been selected then no filters are applied, so show all internships
-            if(!filtersCurrentlyApplied.isEmpty()) {
-                Internship returnedInternship = matchInternship(internship, roles, lengths, locations, salaries, stages, status);
+            if(!filtersCurrentlyApplied.isEmpty() || isFilterChangeMade ) {
+                Internship returnedInternship = matchInternship(internship, roles, lengths, locations, stages, status);
                 if (returnedInternship != null) result.add(returnedInternship);
             } else {
                 result.add(internship);
@@ -755,7 +803,6 @@ public class MainActivity extends AppCompatActivity {
                                        List<String> roles,
                                        List<String> lengths,
                                        List<String> locations,
-                                       List<String> salaries,
                                        List<String> stages,
                                        List<ApplicationStage.Status> statusList) {
         if(statusList != null) {
@@ -802,17 +849,6 @@ public class MainActivity extends AppCompatActivity {
             if(!locationMatched) return null;
         }
 
-        if(salaries != null) {
-            boolean salaryMatched = false;
-            for (String salary : salaries) {
-                if (internship.getSalary() == Integer.parseInt(salary)) {
-                    salaryMatched = true;
-                    break;
-                }
-            }
-            if(!salaryMatched) return null;
-        }
-
         if(stages != null) {
             boolean stageMatched = false;
             for (String stageName : stages) {
@@ -825,6 +861,9 @@ public class MainActivity extends AppCompatActivity {
             }
             if(!stageMatched) return null;
         }
+
+        if (!(minMaxSalary.min <= internship.getSalary() && internship.getSalary() <= minMaxSalary.max))
+            return null;
 
         return internship;
     }
