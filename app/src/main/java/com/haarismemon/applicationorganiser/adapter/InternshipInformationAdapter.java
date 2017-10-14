@@ -106,15 +106,9 @@ public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerV
 
             ApplicationStage.Status currentStatus = stage.getStatus();
 
-            if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_successful);
-            } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_in_progress);
-            } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_unsuccessful);
-            } else {
-                stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
-            }
+            stageHolder.stageStatusIcon.setImageResource(
+                    context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
+                            "drawable", context.getPackageName()));
 
             //go to Internship Information when item in Applications List is clicked
             stageHolder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -78,18 +78,11 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 ApplicationStage.Status currentStatus = stage.getStatus();
 
-                if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                    internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_successful);
-                } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                    internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_in_progress);
-                } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                    internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_unsuccessful);
-                } else {
-                    internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
-                }
+                internshipHolder.internshipStatusIcon.setImageResource(
+                        context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
+                                "drawable", context.getPackageName()));
 
-            } else
-                DrawableCompat.setTint(internshipHolder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
+            } else internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
 
         } else if(holder instanceof StageHeaderViewHolder) {
 
@@ -104,15 +97,9 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             ApplicationStage.Status currentStatus = stage.getStatus();
 
-            if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_successful);
-            } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_in_progress);
-            } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_unsuccessful);
-            } else {
-                stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
-            }
+            stageHolder.stageInfoStatusIcon.setImageResource(
+                    context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
+                            "drawable", context.getPackageName()));
 
             if (stage.getDateOfStart() != null)
                 stageHolder.dateOfStartText.setText(stage.getDateOfStart());

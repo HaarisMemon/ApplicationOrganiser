@@ -73,18 +73,11 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
 
             ApplicationStage.Status currentStatus = stage.getStatus();
 
-            if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
-                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_successful);
-            } else if(currentStatus.equals(ApplicationStage.Status.WAITING)) {
-                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_in_progress);
-            } else if(currentStatus.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
-                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_unsuccessful);
-            } else {
-                holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
-            }
+            holder.internshipStatusIcon.setImageResource(
+                    context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
+                            "drawable", context.getPackageName()));
 
-        } else
-            DrawableCompat.setTint(holder.internshipStatusIcon.getDrawable(), ContextCompat.getColor(context, R.color.statusIncomplete));
+        } else holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
 
         //go to Internship Information when item in Applications List is clicked
         holder.itemView.setOnClickListener(new View.OnClickListener() {
