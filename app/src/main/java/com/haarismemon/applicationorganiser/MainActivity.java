@@ -347,22 +347,14 @@ public class MainActivity extends AppCompatActivity {
             filterSelectedItemsIndexes.put(filterType, null);
         }
 
-        //todo update the get all lists to remove ones that are not filtered
+        roleSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
+                mDataSource.getAllRoles(), filterSelectedItemsIndexes, FilterType.ROLE));
 
-        FilterDialogOnClickListener roleListener = new FilterDialogOnClickListener(getFragmentManager(),
-                mDataSource.getAllRoles(),
-                filterSelectedItemsIndexes, FilterType.ROLE);
-        roleSelect.setOnClickListener(roleListener);
+        lengthSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
+                        mDataSource.getAllLengths(), filterSelectedItemsIndexes, FilterType.LENGTH));
 
-        FilterDialogOnClickListener lengthListener = new FilterDialogOnClickListener(getFragmentManager(),
-                mDataSource.getAllLengths(),
-                filterSelectedItemsIndexes, FilterType.LENGTH);
-        lengthSelect.setOnClickListener(lengthListener);
-
-        FilterDialogOnClickListener locationListener = new FilterDialogOnClickListener(getFragmentManager(),
-                mDataSource.getAllLocations(),
-                filterSelectedItemsIndexes, FilterType.LOCATION);
-        locationSelect.setOnClickListener(locationListener);
+        locationSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
+                        mDataSource.getAllLocations(), filterSelectedItemsIndexes, FilterType.LOCATION));
 
         prioritySwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,10 +365,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FilterDialogOnClickListener stageListener = new FilterDialogOnClickListener(getFragmentManager(),
-                mDataSource.getAllStageNames(),
-                filterSelectedItemsIndexes, FilterType.STAGE);
-        stageSelect.setOnClickListener(stageListener);
+        stageSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
+                        mDataSource.getAllStageNames(), filterSelectedItemsIndexes, FilterType.STAGE));
 
         prioritySwitch.setChecked(false);
 
@@ -543,11 +533,19 @@ public class MainActivity extends AppCompatActivity {
         List<Integer> selectedItems = filterSelectedItemsIndexes.get(filterType);
         if(selectedItems != null && selectedItems.size() > 0) {
             selectText.setText(selectedItems.size() + " selected");
-        } else if(!checkFilterIsChanged() && (selectedItems == null || selectedItems.isEmpty())) {
-            selectText.setText("All " + filterType.getTextPlural());
-        } else {
+        } else if(isAnyFilterItemsSelected() || checkFilterIsChanged()){
             selectText.setText("None selected");
+        } else {
+            selectText.setText("All " + filterType.getTextPlural());
         }
+    }
+
+    private boolean isAnyFilterItemsSelected() {
+        for(List<Integer> selectedItems : filterSelectedItemsIndexes.values()) {
+            if(selectedItems != null && selectedItems.size() > 0) return true   ;
+        }
+
+        return false;
     }
 
     private boolean checkFilterIsChanged() {
