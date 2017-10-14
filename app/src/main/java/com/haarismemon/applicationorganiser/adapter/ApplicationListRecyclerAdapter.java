@@ -153,6 +153,8 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
     public void searchFilter(List<Internship> filteredInternships) {
         internshipsList = filteredInternships;
         notifyDataSetChanged();
+
+        context.displayMessageIfNoInternships(true);
     }
 
     /**

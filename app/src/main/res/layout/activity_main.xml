@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.haarismemon.applicationorganiser.MainActivity"
-    android:id="@+id/drawerLayout"
-    tools:openDrawer="end">
+    android:id="@+id/drawerLayout">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,6 +15,17 @@
 
         <include layout="@layout/toolbar"
             android:id="@+id/toolbar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:lineSpacingExtra="8dp"
+            android:gravity="center"
+            android:id="@+id/emptyMessageText"
+            android:textSize="22sp"
+            android:layout_centerInParent="true"
+            android:text="Empty List Message"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -172,13 +182,13 @@
                             android:id="@+id/salarySelect"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:steps="1000"
-                            app:gap="10"
                             app:data_type="_integer"
                             app:bar_color="@android:color/darker_gray"
                             app:bar_highlight_color="@color/colorAccent"
                             app:left_thumb_image="@drawable/thumb"
-                            app:right_thumb_image="@drawable/thumb"/>
+                            app:left_thumb_image_pressed="@drawable/thumb_pressed"
+                            app:right_thumb_image="@drawable/thumb"
+                            app:right_thumb_image_pressed="@drawable/thumb_pressed"/>
 
                         <TextView
                             android:layout_width="wrap_content"

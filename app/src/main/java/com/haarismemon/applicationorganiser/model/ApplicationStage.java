@@ -288,6 +288,7 @@ public class ApplicationStage {
         this.createdDate = createdDate;
     }
 
+    //todo change name to getStatus
     /**
      * Returns the current status of this application stage as an enum.
      * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, NOT_STARTED

@@ -11,8 +11,10 @@
 
     <string name="search_hint">Search for an Internship</string>
 
-    <string name="addFirstInternship">Click the + button below to add your first Internship</string>
-    <string name="addFirstStage">Click the + button above to add your first Application Stage</string>
+    <string name="addFirstInternship">Click the + button below to add your first Internship.</string>
+    <string name="addFirstStage">Click the + button above to add your first Application Stage.</string>
+    <string name="noResultsWithFilter">"No results match your filter."</string>
+    <string name="noMatchFromSearch">"No match from search."</string>
 
     <string name="select_all">Select All</string>
     <string name="deprioritise_internships">Deprioritise Internships</string>

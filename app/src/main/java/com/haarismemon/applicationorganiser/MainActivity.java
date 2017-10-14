@@ -22,9 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -51,8 +49,6 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.R.attr.min;
 
 /**
  * This class represents the activity which displays the list of all Internships
@@ -94,8 +90,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
+    @BindView(R.id.mainRelativeLayout) RelativeLayout mainRelativeLayout;
     @BindView(R.id.drawerLayout) DrawerLayout mDrawerLayout;
     @BindView(R.id.filterDrawer) RelativeLayout filterDrawer;
+    @BindView(R.id.emptyMessageText) TextView emptyMessageText;
     @BindView(R.id.roleSelect) TextView roleSelect;
     @BindView(R.id.lengthSelect) TextView lengthSelect;
     @BindView(R.id.locationSelect) TextView locationSelect;
@@ -109,34 +107,37 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.filterApplyButton) Button filterApplyButton;
     MenuItem orderItem;
 
-    private class MinMaxSalary<A, B> {
-        A originalMin;
-        B originalMax;
+    private class MinMaxSalary {
+        Integer originalMin;
+        Integer originalMax;
 
-        private A min;
-        private B max;
+        private Integer min;
+        private Integer max;
 
         boolean isRangeUpdated;
 
-        MinMaxSalary(A min, B max) {
+        MinMaxSalary(Integer min, Integer max) {
             this.min = min;
-            this.originalMin = min;
             this.max = max;
-            this.originalMax = max;
+
+            Double originalMinDouble = Math.floor(min / 1000.0) * 1000;
+            Double originalMaxDouble = Math.ceil(max / 1000.0) * 1000;
+            this.originalMin = originalMinDouble.intValue();
+            this.originalMax = originalMaxDouble.intValue();
         }
 
-        public void setMin(A min) {
+        public void setMin(Integer min) {
             this.min = min;
             isRangeUpdated = true;
         }
 
-        public void setMax(B max) {
+        public void setMax(Integer max) {
             this.max = max;
             isRangeUpdated = true;
         }
     }
 
-    private MinMaxSalary<Integer, Integer> minMaxSalary;
+    private MinMaxSalary minMaxSalary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,8 +159,6 @@ public class MainActivity extends AppCompatActivity {
         internships = mDataSource.getAllInternship();
 
         filtersCurrentlyApplied = new HashSet<>();
-
-        displayMessageIfNoInternships();
 
         //list to track which internships have been selected
         selectedInternships = new ArrayList<>();
@@ -205,6 +204,10 @@ public class MainActivity extends AppCompatActivity {
                         //exit action mode
                         switchActionMode(false);
 
+                        setupSalarySeekbarRange(true);
+
+                        //todo update salary range in snackbar action, not outside
+
                         Snackbar.make(findViewById(R.id.drawerLayout),
                                 R.string.deleted_snackbar_string, Snackbar.LENGTH_LONG)
                                 .setAction(R.string.undo_snackbar_string, new View.OnClickListener() {
@@ -219,6 +222,8 @@ public class MainActivity extends AppCompatActivity {
                                         applicationListRecyclerAdapter.internshipsList = internshipsBeforeDeletion;
 
                                         applicationListRecyclerAdapter.notifyDataSetChanged();
+
+                                        displayMessageIfNoInternships(false);
 
                                         deletedInternships.clear();
                                     }
@@ -262,6 +267,8 @@ public class MainActivity extends AppCompatActivity {
                 applicationListRecyclerAdapter.notifyDataSetChanged();
             }
         };
+
+        displayMessageIfNoInternships(false);
 
         setUpFilterPanel();
 
@@ -340,14 +347,22 @@ public class MainActivity extends AppCompatActivity {
             filterSelectedItemsIndexes.put(filterType, null);
         }
 
-        roleSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
-                mDataSource.getAllRoles(), filterSelectedItemsIndexes, FilterType.ROLE));
+        //todo update the get all lists to remove ones that are not filtered
 
-        lengthSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
-                mDataSource.getAllLengths(), filterSelectedItemsIndexes, FilterType.LENGTH));
+        FilterDialogOnClickListener roleListener = new FilterDialogOnClickListener(getFragmentManager(),
+                mDataSource.getAllRoles(),
+                filterSelectedItemsIndexes, FilterType.ROLE);
+        roleSelect.setOnClickListener(roleListener);
 
-        locationSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
-                mDataSource.getAllLocations(), filterSelectedItemsIndexes, FilterType.LOCATION));
+        FilterDialogOnClickListener lengthListener = new FilterDialogOnClickListener(getFragmentManager(),
+                mDataSource.getAllLengths(),
+                filterSelectedItemsIndexes, FilterType.LENGTH);
+        lengthSelect.setOnClickListener(lengthListener);
+
+        FilterDialogOnClickListener locationListener = new FilterDialogOnClickListener(getFragmentManager(),
+                mDataSource.getAllLocations(),
+                filterSelectedItemsIndexes, FilterType.LOCATION);
+        locationSelect.setOnClickListener(locationListener);
 
         prioritySwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -358,9 +373,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        stageSelect.setOnClickListener(new FilterDialogOnClickListener(getFragmentManager(),
-                mDataSource.getAllStageNames(), filterSelectedItemsIndexes, FilterType.STAGE));
+        FilterDialogOnClickListener stageListener = new FilterDialogOnClickListener(getFragmentManager(),
+                mDataSource.getAllStageNames(),
+                filterSelectedItemsIndexes, FilterType.STAGE);
+        stageSelect.setOnClickListener(stageListener);
 
         prioritySwitch.setChecked(false);
 
@@ -388,11 +404,67 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        List<Integer> salary = mDataSource.getAllSalary();
-        minMaxSalary = new MinMaxSalary<>(salary.get(salary.size() - 1), salary.get(0));
+        setupSalarySeekbarRange(false);
 
-        salarySelect.setMinValue(minMaxSalary.min);
-        salarySelect.setMaxValue(minMaxSalary.max);
+        updateFilterPanel();
+    }
+
+    private void setupSalarySeekbarRange(boolean isInternshipBeingDeleted) {
+        salarySelect.setSteps(-1f);
+        salarySelect.setGap(0);
+
+        List<Integer> salary = mDataSource.getAllSalary();
+        int newMinSalary = 0;
+        int newMaxSalary = 0;
+
+        if(!salary.isEmpty()) {
+            newMinSalary = salary.get(salary.size() - 1);
+            newMaxSalary = salary.get(0);
+
+            if(newMaxSalary == 0) newMaxSalary = 1000;
+        }
+
+        if(isInternshipBeingDeleted && minMaxSalary.originalMin != null && minMaxSalary.originalMax != null &&
+                newMaxSalary > 0) {
+            int currentMinStart = minMaxSalary.originalMin;
+            int currentMaxEnd = minMaxSalary.originalMax;
+
+            int currentMinProgress = minMaxSalary.min;
+            int currentMaxProgress = minMaxSalary.max;
+
+            if(currentMinProgress > newMinSalary && currentMinProgress > currentMinStart) {
+                currentMinStart = newMinSalary;
+            } else {
+                currentMinProgress = newMinSalary;
+                currentMinStart = newMinSalary;
+            }
+
+            if(currentMaxProgress < newMaxSalary && currentMaxProgress < currentMaxEnd) {
+                currentMaxEnd = newMaxSalary;
+            } else {
+                currentMaxProgress = newMaxSalary;
+                currentMaxEnd = newMaxSalary;
+            }
+
+            minMaxSalary = new MinMaxSalary(currentMinStart, currentMaxEnd);
+
+            salarySelect.setMinValue(minMaxSalary.originalMin);
+            salarySelect.setMaxValue(minMaxSalary.originalMax);
+            salarySelect.setMinStartValue(currentMinProgress)
+                    .setMaxStartValue(currentMaxProgress).apply();
+        } else {
+            minMaxSalary = new MinMaxSalary(newMinSalary, newMaxSalary);
+
+            salarySelect.setMinValue(minMaxSalary.originalMin);
+            salarySelect.setMaxValue(minMaxSalary.originalMax);
+            salarySelect.setMinStartValue(minMaxSalary.originalMin)
+                    .setMaxStartValue(minMaxSalary.originalMax).apply();
+        }
+
+        if(minMaxSalary.originalMax - minMaxSalary.originalMin > 1000) {
+            salarySelect.setSteps(1000f);
+            salarySelect.setGap(2);
+        }
 
         salarySelect.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
@@ -413,8 +485,6 @@ public class MainActivity extends AppCompatActivity {
                 updateFilterPanel();
             }
         });
-
-        updateFilterPanel();
     }
 
     private String convertToMoneyString(Number value) {
@@ -471,24 +541,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateFilterSelectText(FilterType filterType, TextView selectText) {
         List<Integer> selectedItems = filterSelectedItemsIndexes.get(filterType);
-        if (checkFilterIsChanged()) {
-            selectText.setText("None selected");
-        } else if(filtersCurrentlyApplied.contains(filterType)) {
+        if(selectedItems != null && selectedItems.size() > 0) {
             selectText.setText(selectedItems.size() + " selected");
-        } else if(filtersCurrentlyApplied.isEmpty()) {
+        } else if(!checkFilterIsChanged() && (selectedItems == null || selectedItems.isEmpty())) {
             selectText.setText("All " + filterType.getTextPlural());
+        } else {
+            selectText.setText("None selected");
         }
     }
 
     private boolean checkFilterIsChanged() {
-        for(List<Integer> filterSelectedIndexes : filterSelectedItemsIndexes.values()) {
-            if(filterSelectedIndexes != null && !filterSelectedIndexes.isEmpty()) return true;
-        }
-
-        if(minMaxSalary.isRangeUpdated) return true;
-        else if(isFilterPriority != null) return true;
-
-        return false;
+        return isFilterChangeMade || minMaxSalary.isRangeUpdated || isFilterPriority != null;
     }
 
     public void resetAllFilter(View view) {
@@ -522,6 +585,8 @@ public class MainActivity extends AppCompatActivity {
                         isFilterChangeMade = false;
 
                         updateFilterPanel();
+
+                        displayMessageIfNoInternships(false);
                     }
                 })
                 .setNegativeButton("No", null)
@@ -554,6 +619,8 @@ public class MainActivity extends AppCompatActivity {
             isFilterChangeMade = false;
 
             updateFilterPanel();
+
+            displayMessageIfNoInternships(false);
         }
 
         mDrawerLayout.closeDrawer(filterDrawer);
@@ -707,18 +774,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //displays message to inform user to add their first internship if internship list is empty
-    public void displayMessageIfNoInternships() {
-        if(internships.isEmpty()) {
-            RelativeLayout mainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
+    public void displayMessageIfNoInternships(boolean isFilteringForSearch) {
+        if(applicationListRecyclerAdapter.internshipsList.isEmpty()) {
+            emptyMessageText.setVisibility(View.VISIBLE);
 
-            TextView messageWhenEmpty = new TextView(this);
-            messageWhenEmpty.setText(getResources().getString(R.string.addFirstInternship));
-
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-            messageWhenEmpty.setLayoutParams(layoutParams);
-
-            mainRelativeLayout.addView(messageWhenEmpty);
+            if(isFilteringForSearch) {
+                emptyMessageText.setText(getResources().getString(R.string.noMatchFromSearch));
+            } else if(!internships.isEmpty()) {
+                emptyMessageText.setText(getResources().getString(R.string.noResultsWithFilter));
+            } else {
+                emptyMessageText.setText(getResources().getString(R.string.addFirstInternship));
+            }
+        } else {
+            emptyMessageText.setVisibility(View.GONE);
         }
     }
 
@@ -739,13 +807,16 @@ public class MainActivity extends AppCompatActivity {
 
         //for all selected internships
         for(Internship deleteInternship : selectedInternships) {
-            //remove from list
+            //remove internship from original unfiltered list
             internships.remove(deleteInternship);
+
+            //remove internship from filtered list of internships (allows filter to remain even after deletion)
+            applicationListRecyclerAdapter.internshipsList.remove(deleteInternship);
+
             //delete from database
             mDataSource.deleteInternship(deleteInternship.getInternshipID());
         }
         //update the RecyclerView through the adapter
-        applicationListRecyclerAdapter.internshipsList = internships;
         applicationListRecyclerAdapter.notifyDataSetChanged();
 
         deletedInternships = new ArrayList<>(selectedInternships);
@@ -753,7 +824,7 @@ public class MainActivity extends AppCompatActivity {
         //empty the map holding the selected internships
         selectedInternships.clear();
 
-        displayMessageIfNoInternships();
+        displayMessageIfNoInternships(false);
     }
 
     //prioritises all selected internships

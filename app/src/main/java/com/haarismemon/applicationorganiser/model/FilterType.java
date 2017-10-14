@@ -9,7 +9,6 @@ public enum FilterType {
     ROLE("Role", "Roles"),
     LENGTH("Length", "Lengths"),
     LOCATION("Location", "Locations"),
-//    SALARY("Salary", "Salaries"),
     STAGE("Stage", "Stages"),
     STATUS("Status", "Status");
 
