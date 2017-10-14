@@ -29,7 +29,6 @@ import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -446,7 +445,7 @@ public class StageEditActivity extends AppCompatActivity {
                 otherwise display todays date on the dialog  */
             if(!clickedDateEditText.getText().toString().equals("")
                     && clickedDateEditText.getTag() != null
-                    && ((String) clickedDateEditText.getTag()).equals(DATE_PICKED)) {
+                    && (clickedDateEditText.getTag()).equals(DATE_PICKED)) {
                 String dates[] = clickedDateEditText.getText().toString().split("/");
 
                 day = Integer.parseInt(dates[0]);

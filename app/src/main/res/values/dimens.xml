@@ -14,4 +14,6 @@
     <dimen name="cardViewTextSize">20sp</dimen>
     <dimen name="cardViewTitlesMarginBottom">10dp</dimen>
     <dimen name="filterPanelMarginSpacing">23dp</dimen>
+    <dimen name="stageEditorInputMarginStart">30dp</dimen>
+    <dimen name="stageEditorInputMarginTop">10dp</dimen>
 </resources>

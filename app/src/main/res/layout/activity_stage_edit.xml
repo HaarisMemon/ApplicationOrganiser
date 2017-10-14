@@ -23,15 +23,16 @@
             android:layout_width="0px"
             android:layout_height="0px" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:id="@+id/stageAutoCompleteLayout">
+                android:id="@+id/stageAutoCompleteLayout"
+                android:layout_weight="1">
 
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
@@ -44,15 +45,14 @@
             </android.support.design.widget.TextInputLayout>
 
             <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/ic_lightbulb"
-                android:layout_alignEnd="@id/stageAutoCompleteLayout"
-                android:layout_alignBottom="@id/stageAutoCompleteLayout"
                 style="?android:attr/buttonBarButtonStyle"
                 android:onClick="suggestStageName"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <GridLayout
             android:layout_width="match_parent"
@@ -76,8 +76,9 @@
                 android:orientation="horizontal"
                 android:layout_row="0"
                 android:layout_column="1"
-                android:layout_marginStart="@dimen/stageEditInputLeftMargin"
-                android:id="@+id/completedRadioGroup">
+                android:id="@+id/completedRadioGroup"
+                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                android:layout_marginTop="@dimen/stageEditorInputMarginTop">
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -110,9 +111,10 @@
                 android:orientation="horizontal"
                 android:layout_row="1"
                 android:layout_column="1"
-                android:layout_marginStart="@dimen/stageEditInputLeftMargin"
                 android:id="@+id/waitingRadioGroup"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                android:layout_marginTop="@dimen/stageEditorInputMarginTop">
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -145,9 +147,10 @@
                 android:orientation="horizontal"
                 android:layout_row="2"
                 android:layout_column="1"
-                android:layout_marginStart="@dimen/stageEditInputLeftMargin"
                 android:id="@+id/successfulRadioGroup"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                android:layout_marginTop="@dimen/stageEditorInputMarginTop">
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -179,7 +182,9 @@
                 android:id="@+id/startDateEditText"
                 android:onClick="pickDate"
                 android:layout_row="3"
-                android:layout_column="1"/>
+                android:layout_column="1"
+                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -198,7 +203,9 @@
                 android:onClick="pickDate"
                 android:layout_row="4"
                 android:layout_column="1"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -217,15 +224,15 @@
                 android:onClick="pickDate"
                 android:layout_row="5"
                 android:layout_column="1"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
 
         </GridLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp">
+            android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"

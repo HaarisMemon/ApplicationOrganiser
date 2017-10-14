@@ -82,7 +82,8 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
                                 "drawable", context.getPackageName()));
 
-            } else internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
+            } else
+                internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
 
         } else if(holder instanceof StageHeaderViewHolder) {
 
@@ -105,12 +106,20 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 stageHolder.dateOfStartText.setText(stage.getDateOfStart());
             else stageHolder.dateOfStartText.setText("No Start Date");
 
-            if (stage.getDateOfCompletion() != null && stage.isCompleted())
-                stageHolder.dateOfCompletionText.setText(stage.getDateOfCompletion());
+            if (stage.isCompleted()) {
+                if(stage.getDateOfCompletion() != null)
+                    stageHolder.dateOfCompletionText.setText(stage.getDateOfCompletion());
+                else
+                    stageHolder.dateOfCompletionText.setText("No Completion Date");
+            }
             else cardView.findViewById(R.id.completedDateGroup).setVisibility(View.GONE);
 
-            if (stage.getDateOfReply() != null && (stage.isCompleted() && !stage.isWaitingForResponse()))
-                stageHolder.dateOfReplyText.setText(stage.getDateOfReply());
+            if (stage.isCompleted() && !stage.isWaitingForResponse()) {
+                if(stage.getDateOfReply() != null)
+                    stageHolder.dateOfReplyText.setText(stage.getDateOfReply());
+                else
+                    stageHolder.dateOfReplyText.setText("No Reply Date");
+            }
             else cardView.findViewById(R.id.replyDateGroup).setVisibility(View.GONE);
 
             if (stage.getNotes() != null) stageHolder.stageNotesText.setText(stage.getNotes());
