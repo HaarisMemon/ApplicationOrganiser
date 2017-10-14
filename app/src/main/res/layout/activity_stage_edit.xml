@@ -23,24 +23,43 @@
             android:layout_width="0px"
             android:layout_height="0px" />
 
-        <android.support.design.widget.TextInputLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <AutoCompleteTextView
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/stage"
-                android:id="@+id/stageNameEditText"
-                android:maxLines="1"
-                android:inputType="textCapSentences"/>
+                android:layout_alignParentLeft="true"
+                android:id="@+id/stageAutoCompleteLayout">
 
-        </android.support.design.widget.TextInputLayout>
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/stage"
+                    android:id="@+id/stageNameEditText"
+                    android:maxLines="1"
+                    android:inputType="textCapSentences"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_lightbulb"
+                android:layout_alignEnd="@id/stageAutoCompleteLayout"
+                android:layout_alignBottom="@id/stageAutoCompleteLayout"
+                style="?android:attr/buttonBarButtonStyle"
+                android:onClick="suggestStageName"/>
+
+        </RelativeLayout>
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/stageEditGridLayout">
+            android:id="@+id/stageEditGridLayout"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -204,7 +223,9 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"

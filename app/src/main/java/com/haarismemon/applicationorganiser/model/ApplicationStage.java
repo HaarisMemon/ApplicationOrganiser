@@ -60,9 +60,9 @@ public class ApplicationStage {
     private String modifiedDate;
 
     public static final String[] defaultApplicationStageNames = {
-            "Online Application Form", "Online Situation Judgement Test", "Online Numerical Test",
-            "Online Verbal Reasoning Test", "Online Abstract Test", "Telephone Interview",
-            "Online Video Interview", "Business Interview", "Assessment Centre"
+            "Online Application", "Online Situation Judgement Test", "Online Numerical Test",
+            "Online Abstract Test", "Online Verbal Reasoning Test", "Telephone Interview",
+            "Online Video Interview", "Interview", "Assessment Centre"
     };
 
     /**

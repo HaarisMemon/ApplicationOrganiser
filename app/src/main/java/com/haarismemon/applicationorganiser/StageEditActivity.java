@@ -29,9 +29,12 @@ import com.haarismemon.applicationorganiser.database.InternshipTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.haarismemon.applicationorganiser.model.ApplicationStage.defaultApplicationStageNames;
 
 /**
  * This class represents the activity to edit an Application Stage
@@ -493,5 +496,31 @@ public class StageEditActivity extends AppCompatActivity {
                     }
                 });
         discardDialog.show();
+    }
+
+    public void suggestStageName(View view) {
+        final String[] stageNames = defaultApplicationStageNames;
+
+        new AlertDialog.Builder(StageEditActivity.this)
+                .setTitle("Stage name suggestions")
+                .setItems(stageNames, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String stageName = stageNames[i];
+                        stageNameEditText.setText(stageName);
+                        stageNameEditText.dismissDropDown();
+                        stageNameEditText.setSelection(stageName.length());
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .show();
+
+
     }
 }
