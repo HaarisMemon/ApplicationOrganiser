@@ -99,7 +99,8 @@ public class StageEditActivity extends AppCompatActivity {
         //store the internship id that the stage belongs to
         parentInternshipID = intent.getLongExtra(InternshipTable.COLUMN_ID, -1L);
 
-        ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, ApplicationStage.defaultApplicationStageNames);
+        ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, mDataSource.getAllStageNames());
 
         stageNameEditText.setAdapter(stageNameAdapter);
         stageNameEditText.setThreshold(0);

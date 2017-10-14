@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.haarismemon.applicationorganiser.InternshipEditActivity">
+    tools:context="com.haarismemon.applicationorganiser.InternshipEditActivity"
+    android:background="@color/cardview_light_background">
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
@@ -21,6 +22,12 @@
             android:orientation="vertical"
             android:layout_margin="10dp">
 
+            <View
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px" />
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/company"
                     android:id="@+id/companyNameEditText"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:inputType="textCapSentences"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -41,12 +48,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/textInputMargin">
 
-                <android.support.design.widget.TextInputEditText
+                <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/role"
                     android:id="@+id/roleEditText"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:inputType="textCapSentences"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -56,12 +63,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/textInputMargin">
 
-                <android.support.design.widget.TextInputEditText
+                <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/length"
                     android:id="@+id/lengthEditText"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:inputType="textCapSentences"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -71,12 +78,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/textInputMargin">
 
-                <android.support.design.widget.TextInputEditText
+                <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location"
                     android:id="@+id/locationEditText"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:inputType="textCapSentences"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -91,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/website"
                     android:id="@+id/urlEditText"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:inputType="textCapSentences"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -106,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/salary"
                     android:id="@+id/salaryEditText"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:inputType="number"/>
 
             </android.support.design.widget.TextInputLayout>

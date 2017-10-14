@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.database.DataSource;
@@ -36,9 +38,9 @@ public class InternshipEditActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.companyNameEditText) TextInputEditText companyNameEditText;
-    @BindView(R.id.roleEditText) TextInputEditText roleEditText;
-    @BindView(R.id.lengthEditText) TextInputEditText lengthEditText;
-    @BindView(R.id.locationEditText) TextInputEditText locationEditText;
+    @BindView(R.id.roleEditText) AutoCompleteTextView roleEditText;
+    @BindView(R.id.lengthEditText) AutoCompleteTextView lengthEditText;
+    @BindView(R.id.locationEditText) AutoCompleteTextView locationEditText;
     @BindView(R.id.urlEditText) TextInputEditText urlEditText;
     @BindView(R.id.salaryEditText) TextInputEditText salaryEditText;
     @BindView(R.id.notesEditText) TextInputEditText notesEditText;
@@ -80,6 +82,21 @@ public class InternshipEditActivity extends AppCompatActivity {
         } else {
             setTitle("New Internship");
         }
+
+        ArrayAdapter<String> roleNameAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, mDataSource.getAllRoles());
+        roleEditText.setAdapter(roleNameAdapter);
+        roleEditText.setThreshold(0);
+
+        ArrayAdapter<String> lengthAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, mDataSource.getAllLengths());
+        lengthEditText.setAdapter(lengthAdapter);
+        lengthEditText.setThreshold(0);
+
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, mDataSource.getAllLocations());
+        locationEditText.setAdapter(locationAdapter);
+        locationEditText.setThreshold(0);
 
     }
 

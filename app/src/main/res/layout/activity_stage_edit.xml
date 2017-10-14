@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.haarismemon.applicationorganiser.StageEditActivity">
+    tools:context="com.haarismemon.applicationorganiser.StageEditActivity"
+    android:background="@color/cardview_light_background">
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
@@ -22,13 +23,19 @@
             android:layout_width="0px"
             android:layout_height="0px" />
 
-        <AutoCompleteTextView
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/stage"
-            android:id="@+id/stageNameEditText"
-            android:maxLines="1"
-            android:inputType="textCapSentences"/>
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/stage"
+                android:id="@+id/stageNameEditText"
+                android:maxLines="1"
+                android:inputType="textCapSentences"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <GridLayout
             android:layout_width="match_parent"
