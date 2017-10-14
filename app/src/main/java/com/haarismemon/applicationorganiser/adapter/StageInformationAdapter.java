@@ -1,25 +1,19 @@
 package com.haarismemon.applicationorganiser.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.Internship;
-import com.haarismemon.applicationorganiser.view_holder.InternshipHeaderViewHolder;
 import com.haarismemon.applicationorganiser.view_holder.InternshipRowViewHolder;
 import com.haarismemon.applicationorganiser.view_holder.StageHeaderViewHolder;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * This class represents the Recycler Adapter for the Stage Information.
@@ -82,7 +76,7 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             if(stage != null) {
 
-                ApplicationStage.Status currentStatus = stage.getCurrentStatus();
+                ApplicationStage.Status currentStatus = stage.getStatus();
 
                 if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
                     internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_successful);
@@ -106,9 +100,9 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
             //adds the application stage information to the cardView holder
             stageHolder.editedText.setText(context.getString(R.string.editedModified) + " " + stage.getModifiedShortDateTime());
             stageHolder.stageNameText.setText(stage.getStageName());
-            stageHolder.currentStatusText.setText(stage.getCurrentStatus().toString());
+            stageHolder.currentStatusText.setText(stage.getStatus().toString());
 
-            ApplicationStage.Status currentStatus = stage.getCurrentStatus();
+            ApplicationStage.Status currentStatus = stage.getStatus();
 
             if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
                 stageHolder.stageInfoStatusIcon.setImageResource(R.drawable.ic_status_successful);

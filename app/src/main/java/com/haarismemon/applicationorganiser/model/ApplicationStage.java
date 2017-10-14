@@ -18,7 +18,7 @@ public class ApplicationStage {
 
     public enum Status {
         SUCCESSFUL("Successful", "successful"), WAITING("In Progress", "in_progress"),
-        UNSUCCESSFUL("Unsuccessful", "unsuccessful"), NOT_STARTED("Not Started", "incomplete");
+        UNSUCCESSFUL("Unsuccessful", "unsuccessful"), INCOMPLETE("Incomplete", "incomplete");
 
         private String text;
         private String iconNameText;
@@ -288,13 +288,12 @@ public class ApplicationStage {
         this.createdDate = createdDate;
     }
 
-    //todo change name to getStatus
     /**
      * Returns the current status of this application stage as an enum.
-     * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, NOT_STARTED
+     * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, INCOMPLETE
      * @return status enum of application stage
      */
-    public Status getCurrentStatus() {
+    public Status getStatus() {
         if(isCompleted) {
             if(isWaitingForResponse) {
                 return Status.WAITING;
@@ -306,7 +305,7 @@ public class ApplicationStage {
                 }
             }
         } else {
-            return Status.NOT_STARTED;
+            return Status.INCOMPLETE;
         }
     }
 
@@ -316,7 +315,7 @@ public class ApplicationStage {
      */
     @Override
     public String toString() {
-        return stageName + " - " + getCurrentStatus();
+        return stageName + " - " + getStatus();
     }
 
     /**

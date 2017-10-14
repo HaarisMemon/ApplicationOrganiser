@@ -71,7 +71,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
 
         if(stage != null) {
 
-            ApplicationStage.Status currentStatus = stage.getCurrentStatus();
+            ApplicationStage.Status currentStatus = stage.getStatus();
 
             if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
                 holder.internshipStatusIcon.setImageResource(R.drawable.ic_status_successful);

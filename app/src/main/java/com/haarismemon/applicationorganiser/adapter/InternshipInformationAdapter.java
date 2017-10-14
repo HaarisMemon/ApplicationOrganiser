@@ -2,8 +2,6 @@ package com.haarismemon.applicationorganiser.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -103,10 +101,10 @@ public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerV
 
             //adds the company name, role and last updated date to the cardView holder
             stageHolder.stageName.setText(stage.getStageName());
-            stageHolder.status.setText(stage.getCurrentStatus().toString());
+            stageHolder.status.setText(stage.getStatus().toString());
             stageHolder.updatedDate.setText(stage.getModifiedShortDate());
 
-            ApplicationStage.Status currentStatus = stage.getCurrentStatus();
+            ApplicationStage.Status currentStatus = stage.getStatus();
 
             if(currentStatus.equals(ApplicationStage.Status.SUCCESSFUL)) {
                 stageHolder.stageStatusIcon.setImageResource(R.drawable.ic_status_successful);
