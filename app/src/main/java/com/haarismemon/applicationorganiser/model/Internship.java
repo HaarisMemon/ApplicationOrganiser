@@ -340,4 +340,28 @@ public class Internship {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+    
+    public static Internship of(String companyName,
+            String role,
+            String length,
+            String location,
+            boolean priority,
+            String url,
+            int salary,
+            String notes,
+            boolean isSelected) {
+        Internship internship = new Internship();
+
+        internship.setCompanyName(companyName);
+        internship.setRole(role);
+        internship.setLength(length);
+        internship.setLocation(location);
+        internship.setPriority(priority);
+        internship.setUrl(url);
+        internship.setSalary(salary);
+        internship.setNotes(notes);
+        internship.setSelected(isSelected);
+
+        return internship;
+    }
 }

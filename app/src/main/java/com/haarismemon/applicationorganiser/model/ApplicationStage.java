@@ -357,5 +357,27 @@ public class ApplicationStage {
 
         return values;
     }
+    
+    public static ApplicationStage of(String stageName,
+            boolean isCompleted,
+            boolean isWaitingForResponse,
+            boolean isSuccessful,
+            String dateOfStart,
+            String dateOfCompletion,
+            String dateOfReply,
+            String notes) {
+        ApplicationStage stage = new ApplicationStage();
+        
+        stage.setStageName(stageName);
+        stage.setCompleted(isCompleted);
+        stage.setWaitingForResponse(isWaitingForResponse);
+        stage.setSuccessful(isSuccessful);
+        stage.setDateOfStart(dateOfStart);
+        stage.setDateOfCompletion(dateOfCompletion);
+        stage.setDateOfReply(dateOfReply);
+        stage.setNotes(notes);
+
+        return stage;
+    }
 
 }

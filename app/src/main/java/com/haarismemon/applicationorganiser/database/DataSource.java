@@ -138,20 +138,24 @@ public class DataSource {
         //if there are no internships and stages then populate
         if(numInternships == 0 && numApplicationStageCount == 0) {
 
-            List<Internship> internships = SeedApplications.parse();
+            Internship internship = Internship.of("Example Company", "Software Engineering Placement Year",
+                    "12 Months", "London", false, "www.examplecompany.com", 15000,
+                    "I have signed the contract with Example Company, and will be starting next June.",
+                    false);
 
-            //if there are no stages then populate
-            for (Internship internship : internships) {
+            ApplicationStage stage1 = ApplicationStage.of("Online Application", true, false, true,
+                    "16/11/2016", "16/11/2016", "22/11/2016", "Online application required CV and Cover Letter.");
 
-                createInternship(internship);
+            ApplicationStage stage2 = ApplicationStage.of("Assessment Centre", true, false, true,
+                    "12/01/2017", "12/01/2017", "02/02/2017", "Assessment Centre involved 2 Interviews, and a Group Task.");
 
-                for (ApplicationStage stage : internship.getApplicationStages()) {
+            internship.addStage(stage1);
+            internship.addStage(stage2);
 
-                    createApplicationStage(stage, internship.getInternshipID());
+            createInternship(internship);
+            createApplicationStage(stage1, internship.getInternshipID());
+            createApplicationStage(stage2, internship.getInternshipID());
 
-                }
-
-            }
         }
     }
 
