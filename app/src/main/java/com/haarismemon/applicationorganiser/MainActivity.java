@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -81,14 +82,17 @@ public class MainActivity extends AppCompatActivity {
     public static final String FILTER_LIST = "FILTER_LIST";
     public static final String FILTER_TYPE = "FILTER_TYPE";
     public static final String CHECKED_ITEMS = "CHECKED_ITEMS";
+    private String SELECTED_INTERNSHIPS = "SELECTED_INTERNSHIPS";
+    private String SELECTION_MODE = "SELECTION_MODE";
 
     //used to check if currently in selection mode (whether any internships has been selected)
     public boolean isSelectionMode = false;
     private boolean isAllSelected = false;
 
+    private boolean[] internshipsSelected;
+
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
-
     @BindView(R.id.mainRelativeLayout) RelativeLayout mainRelativeLayout;
     @BindView(R.id.drawerLayout) DrawerLayout mDrawerLayout;
     @BindView(R.id.filterDrawer) RelativeLayout filterDrawer;
@@ -177,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         actionModeCallback = new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                actionMode.setTitle("0 internships selected");
+                actionMode.setTitle(selectedInternships.size() + " internships selected");
 
                 MenuInflater inflater = actionMode.getMenuInflater();
                 inflater.inflate(R.menu.main_action_mode_menu, menu);
@@ -276,6 +280,25 @@ public class MainActivity extends AppCompatActivity {
 
         setUpFilterPanel();
 
+        if(savedInstanceState != null) {
+            boolean[] internshipsSelected = savedInstanceState.getBooleanArray(SELECTED_INTERNSHIPS);
+
+            for (int i = 0; i < internships.size(); i++) {
+                Internship internship = internships.get(i);
+                boolean isSelected = internshipsSelected[i];
+                internship.setSelected(isSelected);
+
+                if(isSelected) {
+                    selectedInternships.add(internship);
+                }
+            }
+
+            isSelectionMode = savedInstanceState.getBoolean(SELECTION_MODE);
+            switchActionMode(isSelectionMode);
+
+            applicationListRecyclerAdapter.decideToPrioritiseOrDeprioritiseInternships(selectedInternships);
+        }
+
     }
 
     @Override
@@ -341,6 +364,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        internshipsSelected = new boolean[internships.size()];
+
+        for (int i = 0; i < internships.size(); i++) {
+            internshipsSelected[i] = internships.get(i).isSelected();
+        }
+
+        outState.putBooleanArray(SELECTED_INTERNSHIPS, internshipsSelected);
+
+        outState.putBoolean(SELECTION_MODE, isSelectionMode);
     }
 
     private void setUpFilterPanel() {

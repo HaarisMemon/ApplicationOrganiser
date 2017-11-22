@@ -260,7 +260,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Interns
     }
 
     //method used each time internship selected in multi selection to decide to show prioritise or deprioritise action
-    private void decideToPrioritiseOrDeprioritiseInternships(List<Internship> selectedInternships) {
+    public void decideToPrioritiseOrDeprioritiseInternships(List<Internship> selectedInternships) {
         boolean isCurrentlyAllPrioritised = false;
 
         for(Internship internship : selectedInternships) {
