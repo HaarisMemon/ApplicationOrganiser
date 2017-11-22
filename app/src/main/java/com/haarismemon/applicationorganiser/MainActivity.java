@@ -296,7 +296,10 @@ public class MainActivity extends AppCompatActivity {
             isSelectionMode = savedInstanceState.getBoolean(SELECTION_MODE);
             switchActionMode(isSelectionMode);
 
-            applicationListRecyclerAdapter.decideToPrioritiseOrDeprioritiseInternships(selectedInternships);
+            if(isSelectionMode) {
+                applicationListRecyclerAdapter.decideToPrioritiseOrDeprioritiseInternships(selectedInternships);
+            }
+
         }
 
     }
