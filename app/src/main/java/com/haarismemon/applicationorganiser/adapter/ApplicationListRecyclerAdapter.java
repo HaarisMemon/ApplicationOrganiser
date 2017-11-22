@@ -34,6 +34,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
     private MainActivity context;
     public List<Application> applicationsList;
     private List<Application> selectedApplications;
+    private boolean isSortBySalary;
 
     public ApplicationListRecyclerAdapter(MainActivity context,
                                           List<Application> applicationsList,
@@ -56,7 +57,13 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         final Application application = applicationsList.get(position);
         //adds the company name, role and last updated date to the cardView holder
         holder.companyName.setText(application.getCompanyName());
-        holder.role.setText(application.getRole());
+
+        if(isSortBySalary) {
+            holder.role.setText(application.getSalary() != 0 ? "£" + application.getSalary() : "No Salary");
+        } else {
+            holder.role.setText(application.getRole());
+        }
+
         holder.updatedDate.setText(application.getModifiedShortDate());
 
         if(application.isPriority()) {
@@ -302,4 +309,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         notifyDataSetChanged();
     }
 
+    public void setSortBySalary(boolean sortBySalary) {
+        isSortBySalary = sortBySalary;
+    }
 }

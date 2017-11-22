@@ -338,22 +338,27 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case(R.id.action_sort_modified_date):
+                applicationListRecyclerAdapter.setSortBySalary(false);
                 changeSort(ApplicationTable.COLUMN_MODIFIED_ON, false, item);
                 return true;
 
             case(R.id.action_sort_created_date):
+                applicationListRecyclerAdapter.setSortBySalary(false);
                 changeSort(ApplicationTable.COLUMN_CREATED_ON, false, item);
                 return true;
 
             case(R.id.action_sort_company_name):
+                applicationListRecyclerAdapter.setSortBySalary(false);
                 changeSort(ApplicationTable.COLUMN_COMPANY_NAME, true, item);
                 return true;
 
             case(R.id.action_sort_role):
+                applicationListRecyclerAdapter.setSortBySalary(false);
                 changeSort(ApplicationTable.COLUMN_ROLE, true, item);
                 return true;
 
             case(R.id.action_sort_salary):
+                applicationListRecyclerAdapter.setSortBySalary(true);
                 changeSort(ApplicationTable.COLUMN_SALARY, false, item);
                 return true;
 
