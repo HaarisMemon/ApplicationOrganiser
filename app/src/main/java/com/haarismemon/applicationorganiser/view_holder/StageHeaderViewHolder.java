@@ -18,6 +18,7 @@ public class StageHeaderViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.editedDateStageText) public TextView editedText;
     @BindView(R.id.stageNameText) public TextView stageNameText;
     @BindView(R.id.currentStatusText) public TextView currentStatusText;
+    @BindView(R.id.dateOfDeadlineText) public TextView dateOfDeadlineText;
     @BindView(R.id.dateOfStartText) public TextView dateOfStartText;
     @BindView(R.id.dateOfCompletionText) public TextView dateOfCompletionText;
     @BindView(R.id.dateOfReplyText) public TextView dateOfReplyText;

@@ -188,7 +188,7 @@ public class ApplicationInformationActivity extends AppCompatActivity {
         //send a boolean in the intent, of whether the application is being edited (or created)
         intent.putExtra(ApplicationEditActivity.APPLICATION_EDIT_MODE, false);
         //send the id of the application that stage will belong to, in the intent
-        intent.putExtra(ApplicationTable.COLUMN_ID, application.getApplicationID());
+        intent.putExtra(ApplicationTable.APPLICATION_ID, application.getApplicationID());
         startActivity(intent);
     }
 

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.database.DataSource;
 import com.haarismemon.applicationorganiser.database.ApplicationTable;
+import com.haarismemon.applicationorganiser.model.Application;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
@@ -82,9 +83,11 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     @BindView(R.id.successfulRadioGroup) RadioGroup successfulRadioGroup;
     @BindView(R.id.waitingText) TextView waitingText;
     @BindView(R.id.successfulText) TextView successfulText;
+    @BindView(R.id.deadlineDateText) TextView deadlineDateText;
     @BindView(R.id.startDateText) TextView startDateText;
     @BindView(R.id.completionDateText) TextView completionDateText;
     @BindView(R.id.replyDateText) TextView replyDateText;
+    @BindView(R.id.deadlineDateEditText) EditText deadlineDateEditText;
     @BindView(R.id.startDateEditText) EditText startDateEditText;
     @BindView(R.id.completionDateEditText) EditText completionDateEditText;
     @BindView(R.id.replyDateEditText) EditText replyDateEditText;
@@ -109,7 +112,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
         //application stage that has the same id that was sent in the intent
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1L));
         //store the application id that the stage belongs to
-        parentApplicationID = intent.getLongExtra(ApplicationTable.COLUMN_ID, -1L);
+        parentApplicationID = intent.getLongExtra(ApplicationTable.APPLICATION_ID, -1L);
 
         ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, mDataSource.getAllStageNames());
@@ -119,6 +122,9 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
         stageNameEditText.clearFocus();
 
         //if the date is not null and the date is picked, then set the DATE_PICKED tag
+        if(stage.getDateOfDeadline() != null) {
+            deadlineDateEditText.setTag(DATE_PICKED);
+        }
         if(stage.getDateOfStart() != null) {
             startDateEditText.setTag(DATE_PICKED);
         }
@@ -283,6 +289,9 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
                 noSuccessful.setChecked(true);
             }
 
+            if(stage.getDateOfDeadline() != null) {
+                deadlineDateEditText.setText(stage.getDateOfDeadline());
+            }
             if(stage.getDateOfStart() != null) {
                 startDateEditText.setText(stage.getDateOfStart());
             }
@@ -305,6 +314,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
 
         stageNameEditText.addTextChangedListener(this);
         notesStageEditText.addTextChangedListener(this);
+        deadlineDateText.addTextChangedListener(this);
         startDateEditText.addTextChangedListener(this);
         completionDateEditText.addTextChangedListener(this);
         replyDateEditText.addTextChangedListener(this);
@@ -420,6 +430,10 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
             if (yesSuccessful.isChecked()) newStage.setSuccessful(true);
             else newStage.setSuccessful(false);
 
+            if (deadlineDateEditText.getText().toString().contains("/"))
+                newStage.setDateOfDeadline(deadlineDateEditText.getText().toString());
+            else newStage.setDateOfDeadline(null);
+
             if (startDateEditText.getText().toString().contains("/"))
                 newStage.setDateOfStart(startDateEditText.getText().toString());
             else newStage.setDateOfStart(null);
@@ -444,6 +458,8 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
             Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
             //send the stage ID, in the intent
             intent.putExtra(ApplicationStageTable.COLUMN_ID, newStage.getStageID());
+            intent.putExtra(ApplicationTable.APPLICATION_ID, parentApplicationID);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 
             return true;
@@ -460,7 +476,9 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
      */
     public void pickDate(View view) {
         //set the date button to which button that was clicked
-        if(view.getId() == R.id.startDateEditText) {
+        if(view.getId() == R.id.deadlineDateEditText) {
+            clickedDateEditText = (EditText) findViewById(R.id.deadlineDateEditText);
+        } else if(view.getId() == R.id.startDateEditText) {
             clickedDateEditText = (EditText) findViewById(R.id.startDateEditText);
         } else if(view.getId() == R.id.completionDateEditText) {
             clickedDateEditText = (EditText) findViewById(R.id.completionDateEditText);

@@ -166,20 +166,19 @@
 
             </RadioGroup>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/start_date"
+                android:text="@string/date_of_deadline"
                 android:layout_row="3"
                 android:layout_column="0"
                 android:layout_gravity="center_vertical"
-                android:id="@+id/startDateText"/>
+                android:id="@+id/deadlineDateText"/>
 
             <EditText
                 style="@style/stageEditDate"
-                android:hint="@string/pick_start_date"
-                android:id="@+id/startDateEditText"
+                android:hint="@string/pick_deadline_date"
+                android:id="@+id/deadlineDateEditText"
                 android:onClick="pickDate"
                 android:layout_row="3"
                 android:layout_column="1"
@@ -189,8 +188,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/completion_date"
+                android:text="@string/date_of_start"
                 android:layout_row="4"
+                android:layout_column="0"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/startDateText"/>
+
+            <EditText
+                style="@style/stageEditDate"
+                android:hint="@string/pick_start_date"
+                android:id="@+id/startDateEditText"
+                android:onClick="pickDate"
+                android:layout_row="4"
+                android:layout_column="1"
+                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_of_completion"
+                android:layout_row="5"
                 android:layout_column="0"
                 android:layout_gravity="center_vertical"
                 android:visibility="gone"
@@ -201,7 +219,7 @@
                 android:hint="@string/pick_completion_date"
                 android:id="@+id/completionDateEditText"
                 android:onClick="pickDate"
-                android:layout_row="4"
+                android:layout_row="5"
                 android:layout_column="1"
                 android:visibility="gone"
                 android:layout_marginStart="@dimen/stageEditorInputMarginStart"
@@ -210,8 +228,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/reply_date"
-                android:layout_row="5"
+                android:text="@string/date_of_reply"
+                android:layout_row="6"
                 android:layout_column="0"
                 android:layout_gravity="center_vertical"
                 android:visibility="gone"
@@ -222,7 +240,7 @@
                 android:hint="@string/pick_reply_date"
                 android:id="@+id/replyDateEditText"
                 android:onClick="pickDate"
-                android:layout_row="5"
+                android:layout_row="6"
                 android:layout_column="1"
                 android:visibility="gone"
                 android:layout_marginStart="@dimen/stageEditorInputMarginStart"

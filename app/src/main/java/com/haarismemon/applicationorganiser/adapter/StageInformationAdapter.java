@@ -100,6 +100,10 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
                             "drawable", context.getPackageName()));
 
+            if (stage.getDateOfDeadline() != null)
+                stageHolder.dateOfDeadlineText.setText(stage.getDateOfDeadline());
+            else cardView.findViewById(R.id.deadlineDateGroup).setVisibility(View.GONE);
+
             if (stage.getDateOfStart() != null)
                 stageHolder.dateOfStartText.setText(stage.getDateOfStart());
             else stageHolder.dateOfStartText.setText("No Start Date");

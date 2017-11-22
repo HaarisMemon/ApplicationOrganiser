@@ -40,20 +40,19 @@
     <string name="no">No</string>
     <string name="waiting_for_response">Waiting for response?</string>
     <string name="successful">Successful?</string>
-    <string name="start_date">Start Date</string>
+    <string name="pick_deadline_date">Pick Deadline Date</string>
     <string name="pick_start_date">Pick Start Date</string>
-    <string name="completion_date">Completion Date</string>
     <string name="pick_completion_date">Pick Completion Date</string>
-    <string name="reply_date">Reply Date</string>
     <string name="pick_reply_date">Pick Reply Date</string>
     <string name="image_shows_if_the_application_is_of_priority_or_is_a_favourite">
         Image shows if the application is of priority, or is a favourite.
     </string>
 
     <string name="current_status">Current Status</string>
-    <string name="date_of_start">Date of Start</string>
-    <string name="date_of_completion">Date of Completion</string>
-    <string name="date_of_reply">Date of Reply</string>
+    <string name="date_of_deadline">Deadline Date</string>
+    <string name="date_of_start">Start Date</string>
+    <string name="date_of_completion">Completion Date</string>
+    <string name="date_of_reply">Reply Date</string>
     <string name="date">Date</string>
     <string name="image_shows_the_current_status_of_the_application">Image shows the current status of the application.</string>
     <string name="search_applications">Search Applications</string>

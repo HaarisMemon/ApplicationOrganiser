@@ -135,6 +135,7 @@ public class StageInformationActivity extends AppCompatActivity {
         intent.putExtra(StageEditActivity.STAGE_EDIT_MODE, true);
         //send the id of the application stage to be edited, in the intent
         intent.putExtra(ApplicationStageTable.COLUMN_ID, stage.getStageID());
+        intent.putExtra(ApplicationTable.APPLICATION_ID, parentApplication.getApplicationID());
         startActivity(intent);
     }
 

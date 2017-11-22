@@ -51,6 +51,7 @@ public class ApplicationStage {
     private boolean isCompleted;
     private boolean isWaitingForResponse;
     private boolean isSuccessful;
+    private String dateOfDeadline;
     private String dateOfStart;
     private String dateOfCompletion;
     private String dateOfReply;
@@ -145,6 +146,23 @@ public class ApplicationStage {
      */
     public void setSuccessful(boolean successful) {
         isSuccessful = successful;
+    }
+
+    /**
+     * Returns the deadline date of the application stage
+     * @return deadline date of the application stage
+     */
+    public String getDateOfDeadline() {
+        if(dateOfDeadline != null && dateOfDeadline.equals("null")) return null;
+        return dateOfDeadline;
+    }
+
+    /**
+     * Sets the deadline date of the application stage
+     * @param dateOfDeadline the application stage's deadline date
+     */
+    public void setDateOfDeadline(String dateOfDeadline) {
+        this.dateOfDeadline = dateOfDeadline;
     }
 
     /**
@@ -339,6 +357,7 @@ public class ApplicationStage {
         values.put(ApplicationStageTable.COLUMN_IS_COMPLETED, isCompleted);
         values.put(ApplicationStageTable.COLUMN_IS_WAITING, isWaitingForResponse);
         values.put(ApplicationStageTable.COLUMN_IS_SUCCESSFUL, isSuccessful);
+        values.put(ApplicationStageTable.COLUMN_DEADLINE_DATE, dateOfDeadline);
         values.put(ApplicationStageTable.COLUMN_START_DATE, dateOfStart);
         values.put(ApplicationStageTable.COLUMN_COMPLETE_DATE, dateOfCompletion);
         values.put(ApplicationStageTable.COLUMN_REPLY_DATE, dateOfReply);
@@ -362,6 +381,7 @@ public class ApplicationStage {
             boolean isCompleted,
             boolean isWaitingForResponse,
             boolean isSuccessful,
+            String dateOfDeadline,
             String dateOfStart,
             String dateOfCompletion,
             String dateOfReply,
@@ -372,6 +392,7 @@ public class ApplicationStage {
         stage.setCompleted(isCompleted);
         stage.setWaitingForResponse(isWaitingForResponse);
         stage.setSuccessful(isSuccessful);
+        stage.setDateOfDeadline(dateOfDeadline);
         stage.setDateOfStart(dateOfStart);
         stage.setDateOfCompletion(dateOfCompletion);
         stage.setDateOfReply(dateOfReply);

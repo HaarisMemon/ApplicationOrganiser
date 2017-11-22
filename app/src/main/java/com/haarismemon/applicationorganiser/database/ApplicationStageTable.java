@@ -14,6 +14,7 @@ public class ApplicationStageTable {
     public static final String COLUMN_IS_COMPLETED = "is_completed";
     public static final String COLUMN_IS_WAITING = "is_waiting";
     public static final String COLUMN_IS_SUCCESSFUL = "is_successful";
+    public static final String COLUMN_DEADLINE_DATE = "deadline_date";
     public static final String COLUMN_START_DATE = "start_date";
     public static final String COLUMN_COMPLETE_DATE = "complete_date";
     public static final String COLUMN_REPLY_DATE = "reply_date";
@@ -27,9 +28,9 @@ public class ApplicationStageTable {
      */
     public static final String[] ALL_COLUMNS = {
             COLUMN_ID, COLUMN_STAGE_NAME, COLUMN_IS_COMPLETED,
-            COLUMN_IS_WAITING, COLUMN_IS_SUCCESSFUL, COLUMN_START_DATE, COLUMN_COMPLETE_DATE,
-            COLUMN_REPLY_DATE, COLUMN_NOTES, COLUMN_CREATED_ON, COLUMN_MODIFIED_ON,
-            COLUMN_APPLICATION_ID
+            COLUMN_IS_WAITING, COLUMN_IS_SUCCESSFUL, COLUMN_DEADLINE_DATE, COLUMN_START_DATE,
+            COLUMN_COMPLETE_DATE, COLUMN_REPLY_DATE, COLUMN_NOTES, COLUMN_CREATED_ON,
+            COLUMN_MODIFIED_ON, COLUMN_APPLICATION_ID
     };
 
     /**
@@ -44,10 +45,11 @@ public class ApplicationStageTable {
                     COLUMN_IS_WAITING + " INTEGER DEFAULT 0, " +
                     COLUMN_IS_SUCCESSFUL + " INTEGER DEFAULT 0, " +
                     //TEXT as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS").
-                    COLUMN_START_DATE + " VARCHAR, " +
+                    COLUMN_DEADLINE_DATE + " DATETIME, " +
+                    COLUMN_START_DATE + " DATETIME, " +
                     COLUMN_COMPLETE_DATE + " DATETIME, " +
                     COLUMN_REPLY_DATE + " DATETIME, " +
-                    COLUMN_NOTES + " DATETIME, " +
+                    COLUMN_NOTES + " VARCHAR, " +
                     COLUMN_CREATED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')), " +
                     COLUMN_MODIFIED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))," +
                     COLUMN_APPLICATION_ID + " INTEGER, " +

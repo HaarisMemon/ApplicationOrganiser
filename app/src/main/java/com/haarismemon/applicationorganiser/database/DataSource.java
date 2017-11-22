@@ -139,10 +139,10 @@ public class DataSource {
                     false);
 
             ApplicationStage stage1 = ApplicationStage.of("Online Application", true, false, true,
-                    "16/11/2016", "16/11/2016", "22/11/2016", "Online application required CV and Cover Letter.");
+                    "01/12/2016", "16/11/2016", "16/11/2016", "22/11/2016", "Online application required CV and Cover Letter.");
 
             ApplicationStage stage2 = ApplicationStage.of("Assessment Centre", true, false, true,
-                    "12/01/2017", "12/01/2017", "02/02/2017", "Assessment Centre involved 2 Interviews, and a Group Task.");
+                    "12/01/2017", "12/01/2017", "12/01/2017", "02/02/2017", "Assessment Centre involved 2 Interviews, and a Group Task.");
 
             application.addStage(stage1);
             application.addStage(stage2);
@@ -284,6 +284,7 @@ public class DataSource {
             stage.setCompleted(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_COMPLETED)) == 1);
             stage.setWaitingForResponse(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_WAITING)) == 1);
             stage.setSuccessful(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_SUCCESSFUL)) == 1);
+            stage.setDateOfDeadline(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_DEADLINE_DATE)));
             stage.setDateOfStart(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_START_DATE)));
             stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_COMPLETE_DATE)));
             stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
@@ -300,7 +301,7 @@ public class DataSource {
     }
 
     /**
-     * Delete Internsip with matching id
+     * Delete Application with matching id
      * @param applicationID id of application to delete
      */
     public void deleteApplication(long applicationID) {
