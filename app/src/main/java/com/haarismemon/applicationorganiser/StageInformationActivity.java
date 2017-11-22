@@ -15,9 +15,9 @@ import android.view.View;
 import com.haarismemon.applicationorganiser.adapter.StageInformationAdapter;
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.database.DataSource;
-import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.database.ApplicationTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
-import com.haarismemon.applicationorganiser.model.Internship;
+import com.haarismemon.applicationorganiser.model.Application;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 public class StageInformationActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
-    private Internship parentInternship;
+    private Application parentApplication;
     private ApplicationStage stage;
     private Intent intent;
 
@@ -48,20 +48,20 @@ public class StageInformationActivity extends AppCompatActivity {
         //adds a back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setTitle("Application Stage");
+        setTitle(getResources().getString(R.string.stage));
 
         mDataSource = new DataSource(this);
         intent = getIntent();
 
         //application stage that has the same id that was sent in the intent
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
-        //internship that has the same id that was sent in the intent
-        parentInternship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.INTERNSHIP_ID, -1));
+        //application that has the same id that was sent in the intent
+        parentApplication = mDataSource.getApplication(intent.getLongExtra(ApplicationTable.APPLICATION_ID, -1));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageInformationRecyclerView.setLayoutManager(layoutManager);
         stageInformationRecyclerView.setHasFixedSize(true);
-        stageInformationAdapter = new StageInformationAdapter(getApplicationContext(), parentInternship, stage);
+        stageInformationAdapter = new StageInformationAdapter(getApplicationContext(), parentApplication, stage);
         stageInformationRecyclerView.setAdapter(stageInformationAdapter);
 
     }
@@ -99,10 +99,10 @@ public class StageInformationActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteApplicationStage(stage.getStageID());
 
-                                //go back to the internship information activity
-                                Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-                                //send the ID of the internship this stage belongs to, in the intent
-                                intent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
+                                //go back to the application information activity
+                                Intent intent = new Intent(getApplicationContext(), ApplicationInformationActivity.class);
+                                //send the ID of the application this stage belongs to, in the intent
+                                intent.putExtra(ApplicationTable.COLUMN_ID, stage.getApplicationID());
                                 startActivity(intent);
                             }
                         })
@@ -141,8 +141,8 @@ public class StageInformationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Intent backIntent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-        backIntent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
+        Intent backIntent = new Intent(getApplicationContext(), ApplicationInformationActivity.class);
+        backIntent.putExtra(ApplicationTable.COLUMN_ID, stage.getApplicationID());
         backIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         boolean isSourceMainActivity = getIntent().getBooleanExtra(MainActivity.SOURCE, false);

@@ -12,10 +12,10 @@ import com.haarismemon.applicationorganiser.MainActivity;
 import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.StageInformationActivity;
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
-import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.database.ApplicationTable;
+import com.haarismemon.applicationorganiser.model.Application;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
-import com.haarismemon.applicationorganiser.model.Internship;
-import com.haarismemon.applicationorganiser.view_holder.InternshipHeaderViewHolder;
+import com.haarismemon.applicationorganiser.view_holder.ApplicationHeaderViewHolder;
 import com.haarismemon.applicationorganiser.view_holder.StageListViewHolder;
 
 import java.util.List;
@@ -24,19 +24,19 @@ import java.util.List;
  * This class represents the Recycler Adapter for the Stage List.
  * It constructs the list and puts the stage's information onto each card view in the list.
  */
-public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ApplicationInformationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private Internship internship;
+    private Application application;
     private List<ApplicationStage> stagesList;
     private boolean isSourceMainActivity;
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_STAGE = 1;
 
-    public InternshipInformationAdapter(Context context, Internship internship, List<ApplicationStage> stagesList, boolean isSourceMainActivity) {
+    public ApplicationInformationAdapter(Context context, Application application, List<ApplicationStage> stagesList, boolean isSourceMainActivity) {
         this.context = context;
-        this.internship = internship;
+        this.application = application;
         this.stagesList = stagesList;
         this.isSourceMainActivity = isSourceMainActivity;
     }
@@ -51,8 +51,8 @@ public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_HEADER) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.internship_header_row_layout, parent, false);
-            return new InternshipHeaderViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.application_header_row_layout, parent, false);
+            return new ApplicationHeaderViewHolder(view);
         } else if(viewType == TYPE_STAGE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stage_list_row_layout, parent, false);
             return new StageListViewHolder(view);
@@ -63,35 +63,35 @@ public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(holder instanceof InternshipHeaderViewHolder) {
+        if(holder instanceof ApplicationHeaderViewHolder) {
 
-            InternshipHeaderViewHolder internshipHolder = (InternshipHeaderViewHolder) holder;
+            ApplicationHeaderViewHolder applicationHolder = (ApplicationHeaderViewHolder) holder;
 
-            CardView cardView = (CardView) internshipHolder.itemView;
+            CardView cardView = (CardView) applicationHolder.itemView;
 
-            internshipHolder.editedText.setText(context.getString(R.string.editedModified) + " " + internship.getModifiedShortDateTime());
-            internshipHolder.companyNameText.setText(internship.getCompanyName() != null ? internship.getCompanyName() : "None");
-            internshipHolder.roleText.setText(internship.getRole() != null ? internship.getRole() : "None");
+            applicationHolder.editedText.setText(context.getString(R.string.editedModified) + " " + application.getModifiedShortDateTime());
+            applicationHolder.companyNameText.setText(application.getCompanyName() != null ? application.getCompanyName() : "None");
+            applicationHolder.roleText.setText(application.getRole() != null ? application.getRole() : "None");
 
-            if(internship.getLength() != null) internshipHolder.lengthText.setText(internship.getLength() != null ? internship.getLength() : "None");
+            if(application.getLength() != null) applicationHolder.lengthText.setText(application.getLength() != null ? application.getLength() : "None");
             else cardView.findViewById(R.id.lengthGroup).setVisibility(View.GONE);
 
-            if(internship.getLocation() != null) internshipHolder.locationText.setText(internship.getLocation() != null ? internship.getLocation() : "None");
+            if(application.getLocation() != null) applicationHolder.locationText.setText(application.getLocation() != null ? application.getLocation() : "None");
             else cardView.findViewById(R.id.locationGroup).setVisibility(View.GONE);
 
-            if(internship.getUrl() != null) internshipHolder.urlText.setText(internship.getUrl() != null ? internship.getUrl() : "None");
+            if(application.getUrl() != null) applicationHolder.urlText.setText(application.getUrl() != null ? application.getUrl() : "None");
             else cardView.findViewById(R.id.urlGroup).setVisibility(View.GONE);
 
-            if(internship.getSalary() != 0) internshipHolder.salaryText.setText(internship.getSalary() != 0 ? "£" + internship.getSalary() : "None");
+            if(application.getSalary() != 0) applicationHolder.salaryText.setText(application.getSalary() != 0 ? "£" + application.getSalary() : "None");
             else cardView.findViewById(R.id.salaryGroup).setVisibility(View.GONE);
 
-            if(internship.getNotes() != null) internshipHolder.notesText.setText(internship.getNotes() != null ? internship.getNotes() : "No Notes");
+            if(application.getNotes() != null) applicationHolder.notesText.setText(application.getNotes() != null ? application.getNotes() : "No Notes");
             else cardView.findViewById(R.id.notesGroup).setVisibility(View.GONE);
 
-            if(internship.isPriority()) {
-                internshipHolder.priorityImage.setVisibility(View.VISIBLE);
+            if(application.isPriority()) {
+                applicationHolder.priorityImage.setVisibility(View.VISIBLE);
             } else {
-                internshipHolder.priorityImage.setVisibility(View.INVISIBLE);
+                applicationHolder.priorityImage.setVisibility(View.INVISIBLE);
             }
 
         } else if(holder instanceof StageListViewHolder) {
@@ -110,14 +110,14 @@ public class InternshipInformationAdapter extends RecyclerView.Adapter<RecyclerV
                     context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
                             "drawable", context.getPackageName()));
 
-            //go to Internship Information when item in Applications List is clicked
+            //go to Application Information when item in Applications List is clicked
             stageHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //go to new activity to see the stage information of application stage clicked
                     Intent intent = new Intent(context, StageInformationActivity.class);
-                    //send the stage id of the stage clicked and the parent internship, in the intent
-                    intent.putExtra(InternshipTable.INTERNSHIP_ID, internship.getInternshipID());
+                    //send the stage id of the stage clicked and the parent application, in the intent
+                    intent.putExtra(ApplicationTable.APPLICATION_ID, application.getApplicationID());
                     intent.putExtra(ApplicationStageTable.COLUMN_ID, stage.getStageID());
 
                     if(isSourceMainActivity) {

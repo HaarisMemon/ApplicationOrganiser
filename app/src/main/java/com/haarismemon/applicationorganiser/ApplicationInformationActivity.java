@@ -13,11 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.haarismemon.applicationorganiser.adapter.InternshipInformationAdapter;
+import com.haarismemon.applicationorganiser.adapter.ApplicationInformationAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
-import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.database.ApplicationTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
-import com.haarismemon.applicationorganiser.model.Internship;
+import com.haarismemon.applicationorganiser.model.Application;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,20 +26,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * This class represents the activity which displays the information of an Internship with list of its stages
+ * This class represents the activity which displays the information of an Application with list of its stages
  * @author HaarisMemon
  */
-public class InternshipInformationActivity extends AppCompatActivity {
+public class ApplicationInformationActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
-    private Internship internship = null;
+    private Application application = null;
     private boolean isSourceMainActivity;
     private List<ApplicationStage> stages;
 
     /**
      * StageList adapter of RecylerView for stages in the activity
      */
-    InternshipInformationAdapter adapter;
+    ApplicationInformationAdapter adapter;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.stageRecyclerView) RecyclerView stageRecyclerView;
@@ -49,7 +49,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_internship_information);
+        setContentView(R.layout.activity_application_information);
 
         ButterKnife.bind(this);
 
@@ -57,7 +57,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
         //adds a back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setTitle("Internship");
+        setTitle(getResources().getString(R.string.application));
 
         mDataSource = new DataSource(this);
         mDataSource.open();
@@ -65,20 +65,20 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
         isSourceMainActivity = intent.getBooleanExtra(MainActivity.SOURCE, false);
 
-        //internship that has the same id that was sent in the intent
-        internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1));
+        //application that has the same id that was sent in the intent
+        application = mDataSource.getApplication(intent.getLongExtra(ApplicationTable.COLUMN_ID, -1));
 
-        //arraylist of all application stages linked to the internship in the database
+        //arraylist of all application stages linked to the application in the database
         stages = new ArrayList<>();
-        //add dummy application stage object to be replaced by the internship header card view
+        //add dummy application stage object to be replaced by the application header card view
         stages.add(new ApplicationStage());
-        stages.addAll(mDataSource.getAllApplicationStages(internship.getInternshipID()));
+        stages.addAll(mDataSource.getAllApplicationStages(application.getApplicationID()));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageRecyclerView.setLayoutManager(layoutManager);
         stageRecyclerView.setHasFixedSize(true);
 
-        adapter = new InternshipInformationAdapter(getApplicationContext(), internship, stages, isSourceMainActivity);
+        adapter = new ApplicationInformationAdapter(getApplicationContext(), application, stages, isSourceMainActivity);
         stageRecyclerView.setAdapter(adapter);
 
         displayMessageIfNoStages();
@@ -100,12 +100,12 @@ public class InternshipInformationActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.internship_menu, menu);
+        getMenuInflater().inflate(R.menu.application_menu, menu);
 
         prioritiseItem = menu.findItem(R.id.action_mode_prioritise);
         deprioritiseItem = menu.findItem(R.id.action_mode_deprioritise);
 
-        if(internship.isPriority()) {
+        if(application.isPriority()) {
             prioritiseItem.setVisible(false);
             deprioritiseItem.setVisible(true);
         } else {
@@ -120,7 +120,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             //when the delete button is pressed in the action bar
-            case R.id.action_delete_internship:
+            case R.id.action_delete_application:
                 //show alert dialog to confirm deletion
                 new AlertDialog.Builder(this)
                         .setTitle(getResources().getString(R.string.areYouSureDialogTitle))
@@ -128,7 +128,7 @@ public class InternshipInformationActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mDataSource.deleteInternship(internship.getInternshipID());
+                                mDataSource.deleteApplication(application.getApplicationID());
 
                                 //go back to the application list activity
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -150,17 +150,17 @@ public class InternshipInformationActivity extends AppCompatActivity {
                 createStage();
                 return true;
 
-            //when the edit internship action button is pressed
-            case R.id.action_edit_internship:
-                editInternship(null);
+            //when the edit application action button is pressed
+            case R.id.action_edit_application:
+                editApplication(null);
                 return true;
 
             case R.id.action_mode_prioritise:
-                prioritiseInternship(true);
+                prioritiseApplication(true);
                 return true;
 
             case R.id.action_mode_deprioritise:
-                prioritiseInternship(false);
+                prioritiseApplication(false);
                 return true;
 
         }
@@ -168,9 +168,9 @@ public class InternshipInformationActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void prioritiseInternship(boolean setToPriority) {
-        internship.setPriority(setToPriority);
-        mDataSource.updateInternshipPriority(internship);
+    private void prioritiseApplication(boolean setToPriority) {
+        application.setPriority(setToPriority);
+        mDataSource.updateApplicationPriority(application);
 
         prioritiseItem.setVisible(!setToPriority);
         deprioritiseItem.setVisible(setToPriority);
@@ -185,23 +185,23 @@ public class InternshipInformationActivity extends AppCompatActivity {
      */
     private void createStage() {
         Intent intent = new Intent(getApplicationContext(), StageEditActivity.class);
-        //send a boolean in the intent, of whether the internship is being edited (or created)
-        intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, false);
-        //send the id of the internship that stage will belong to, in the intent
-        intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
+        //send a boolean in the intent, of whether the application is being edited (or created)
+        intent.putExtra(ApplicationEditActivity.APPLICATION_EDIT_MODE, false);
+        //send the id of the application that stage will belong to, in the intent
+        intent.putExtra(ApplicationTable.COLUMN_ID, application.getApplicationID());
         startActivity(intent);
     }
 
     /**
-     * On click method to edit an existing Internship
+     * On click method to edit an existing Application
      * @param view edit button that was clicked
      */
-    public void editInternship(View view) {
-        Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
-        //send a boolean that an internship is being edited, in the intent
-        intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, true);
-        //send the id of the internship to be edited, in the intent
-        intent.putExtra(InternshipTable.COLUMN_ID, internship.getInternshipID());
+    public void editApplication(View view) {
+        Intent intent = new Intent(getApplicationContext(), ApplicationEditActivity.class);
+        //send a boolean that an application is being edited, in the intent
+        intent.putExtra(ApplicationEditActivity.APPLICATION_EDIT_MODE, true);
+        //send the id of the application to be edited, in the intent
+        intent.putExtra(ApplicationTable.COLUMN_ID, application.getApplicationID());
         startActivity(intent);
     }
 

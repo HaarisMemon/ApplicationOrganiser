@@ -35,9 +35,9 @@
             android:layout_below="@id/toolbar"/>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/listAddInternshipFAB"
+            android:id="@+id/listAddApplicationFAB"
             app:srcCompat="@drawable/ic_add_white_24dp"
-            android:onClick="goToCreateInternship"
+            android:onClick="goToCreateApplication"
             style="@style/floatingActionButton" />
 
     </RelativeLayout>

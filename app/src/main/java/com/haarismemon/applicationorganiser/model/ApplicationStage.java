@@ -3,7 +3,7 @@ package com.haarismemon.applicationorganiser.model;
 import android.content.ContentValues;
 
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
-import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.database.ApplicationTable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class represents a stage in the internship application process
+ * This class represents a stage in the application application process
  * @author HaarisMemon
  */
 public class ApplicationStage {
@@ -55,7 +55,7 @@ public class ApplicationStage {
     private String dateOfCompletion;
     private String dateOfReply;
     private String notes;
-    private long internshipID;
+    private long applicationID;
     private String createdDate;
     private String modifiedDate;
 
@@ -216,19 +216,19 @@ public class ApplicationStage {
     }
 
     /**
-     * Returns the ID of Internship that the application stage belongs to, obtained from database
-     * @return ID of Internship which this application stage belongs to
+     * Returns the ID of Application that the application stage belongs to, obtained from database
+     * @return ID of Application which this application stage belongs to
      */
-    public long getInternshipID() {
-        return internshipID;
+    public long getApplicationID() {
+        return applicationID;
     }
 
     /**
-     * Sets the ID of Internship that the application stage belongs to, obtained from database table
-     * @param internshipID that the application stage is linked to
+     * Sets the ID of Application that the application stage belongs to, obtained from database table
+     * @param applicationID that the application stage is linked to
      */
-    public void setInternshipID(long internshipID) {
-        this.internshipID = internshipID;
+    public void setApplicationID(long applicationID) {
+        this.applicationID = applicationID;
     }
 
     /**
@@ -253,9 +253,9 @@ public class ApplicationStage {
     }
 
     /**
-     * Returns the date that the Internship was last updated in the database
+     * Returns the date that the Application was last updated in the database
      * Date returned in friendly format (MMM dd) to be displayed in app
-     * @return string date of when Internship last updated in format (MMM dd)
+     * @return string date of when Application last updated in format (MMM dd)
      */
     public String getModifiedShortDate() {
         if(modifiedDate != null) {
@@ -343,11 +343,11 @@ public class ApplicationStage {
         values.put(ApplicationStageTable.COLUMN_COMPLETE_DATE, dateOfCompletion);
         values.put(ApplicationStageTable.COLUMN_REPLY_DATE, dateOfReply);
         values.put(ApplicationStageTable.COLUMN_NOTES, notes);
-        values.put(ApplicationStageTable.COLUMN_INTERNSHIP_ID, internshipID);
+        values.put(ApplicationStageTable.COLUMN_APPLICATION_ID, applicationID);
 
         //if no created date, then application stage not stored in database yet (newly created)
         if(createdDate != null) {
-            values.put(InternshipTable.COLUMN_CREATED_ON, createdDate);
+            values.put(ApplicationTable.COLUMN_CREATED_ON, createdDate);
         }
 
         //if no modified date, then Application Stage not stored in database yet (newly created)

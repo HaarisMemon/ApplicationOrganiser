@@ -20,7 +20,7 @@ public class ApplicationStageTable {
     public static final String COLUMN_NOTES = "notes";
     public static final String COLUMN_CREATED_ON = "created_on";
     public static final String COLUMN_MODIFIED_ON = "modified_on";
-    public static final String COLUMN_INTERNSHIP_ID = "internship_id";
+    public static final String COLUMN_APPLICATION_ID = "application_id";
 
     /**
      * List of all columns in the Application Stage Table as String constants
@@ -29,7 +29,7 @@ public class ApplicationStageTable {
             COLUMN_ID, COLUMN_STAGE_NAME, COLUMN_IS_COMPLETED,
             COLUMN_IS_WAITING, COLUMN_IS_SUCCESSFUL, COLUMN_START_DATE, COLUMN_COMPLETE_DATE,
             COLUMN_REPLY_DATE, COLUMN_NOTES, COLUMN_CREATED_ON, COLUMN_MODIFIED_ON,
-            COLUMN_INTERNSHIP_ID
+            COLUMN_APPLICATION_ID
     };
 
     /**
@@ -50,8 +50,8 @@ public class ApplicationStageTable {
                     COLUMN_NOTES + " DATETIME, " +
                     COLUMN_CREATED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')), " +
                     COLUMN_MODIFIED_ON + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))," +
-                    COLUMN_INTERNSHIP_ID + " INTEGER, " +
-                    "FOREIGN KEY(" + COLUMN_INTERNSHIP_ID + ") REFERENCES " + InternshipTable.TABLE_INTERNSHIP + "(" + InternshipTable.COLUMN_ID + ") " +
+                    COLUMN_APPLICATION_ID + " INTEGER, " +
+                    "FOREIGN KEY(" + COLUMN_APPLICATION_ID + ") REFERENCES " + ApplicationTable.TABLE_APPLICATION + "(" + ApplicationTable.COLUMN_ID + ") " +
                     ")";
 
     /**

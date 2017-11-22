@@ -6,18 +6,13 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.haarismemon.applicationorganiser.model.Application;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
-import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
-
-import static com.haarismemon.applicationorganiser.R.drawable.cursor;
 
 /**
  * This class is used to easily access the database and execute commands
@@ -55,51 +50,51 @@ public class DataSource {
     }
 
     /**
-     * Inserts a row in the database for a new Internship
-     * @param internship is passed with all the fields set
-     * @return internship object with the new Internship ID field set
+     * Inserts a row in the database for a new Application
+     * @param application is passed with all the fields set
+     * @return application object with the new Application ID field set
      */
-    public Internship createInternship(Internship internship) {
-        //makes a ContentValues object using all the fields in the internship object
-        ContentValues values = internship.toValues();
+    public Application createApplication(Application application) {
+        //makes a ContentValues object using all the fields in the application object
+        ContentValues values = application.toValues();
 
-        long internshipID = mDatabase.insert(InternshipTable.TABLE_INTERNSHIP, null, values);
-        //sets the Internship ID to the id returned (last row) from the database
-        internship.setInternshipID(internshipID);
+        long applicationID = mDatabase.insert(ApplicationTable.TABLE_APPLICATION, null, values);
+        //sets the Application ID to the id returned (last row) from the database
+        application.setApplicationID(applicationID);
 
-        return internship;
+        return application;
     }
 
     /**
-     * Reinsert an internship row in the database for an exisitng Internship that was deleted
-     * @param internship is passed with all the fields set
-     * @return internship object with the same Internship ID field set
+     * Reinsert an application row in the database for an exisitng Application that was deleted
+     * @param application is passed with all the fields set
+     * @return application object with the same Application ID field set
      */
-    public void recreateInternship(Internship internship) {
-        //makes a ContentValues object using all the fields in the internship object
-        ContentValues values = internship.toValues();
+    public void recreateApplication(Application application) {
+        //makes a ContentValues object using all the fields in the application object
+        ContentValues values = application.toValues();
 
-        values.put(InternshipTable.COLUMN_ID, internship.getInternshipID());
+        values.put(ApplicationTable.COLUMN_ID, application.getApplicationID());
 
-        mDatabase.insert(InternshipTable.TABLE_INTERNSHIP, null, values);
+        mDatabase.insert(ApplicationTable.TABLE_APPLICATION, null, values);
 
-        for(ApplicationStage stage : internship.getApplicationStages()) {
+        for(ApplicationStage stage : application.getApplicationStages()) {
             recreateApplicationStage(stage);
         }
     }
 
     /**
      * Inserts a row in the database for a new Application Stage
-     * Also updates the MODIFIED_ON column of the parent Internship in the Internship Table
+     * Also updates the MODIFIED_ON column of the parent Application in the Application Table
      * @param applicationStage is passed with all the fields set
-     * @param internshipID of Internship that the application stage will belong to
+     * @param applicationID of Application that the application stage will belong to
      * @return application stage object with the new Stage ID field set
      */
-    public ApplicationStage createApplicationStage(ApplicationStage applicationStage, long internshipID) {
-        //sets the parent internship ID of the application stage object
-        applicationStage.setInternshipID(internshipID);
+    public ApplicationStage createApplicationStage(ApplicationStage applicationStage, long applicationID) {
+        //sets the parent application ID of the application stage object
+        applicationStage.setApplicationID(applicationID);
 
-        //makes a ContentValues object using all the fields in the internship object
+        //makes a ContentValues object using all the fields in the application object
         ContentValues values = applicationStage.toValues();
         long stageID = mDatabase.insert(ApplicationStageTable.TABLE_APPLICATION_STAGE, null, values);
         //sets the Application Stage ID to the id returned (last row) from the database
@@ -107,19 +102,19 @@ public class DataSource {
 
         String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-        //update the Internship's modified_on column as the current date
-        ContentValues parentInternshipValues = new ContentValues();
-        parentInternshipValues.put(InternshipTable.COLUMN_MODIFIED_ON, currentDate);
+        //update the Application's modified_on column as the current date
+        ContentValues parentApplicationValues = new ContentValues();
+        parentApplicationValues.put(ApplicationTable.COLUMN_MODIFIED_ON, currentDate);
 
-        //when a new stage is created the internship modified date should also be updated
-        mDatabase.update(InternshipTable.TABLE_INTERNSHIP, parentInternshipValues, InternshipTable.COLUMN_ID + " = ?",
-                new String[] {Long.toString(internshipID)});
+        //when a new stage is created the application modified date should also be updated
+        mDatabase.update(ApplicationTable.TABLE_APPLICATION, parentApplicationValues, ApplicationTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(applicationID)});
 
         return applicationStage;
     }
 
     private void recreateApplicationStage(ApplicationStage applicationStage) {
-        //makes a ContentValues object using all the fields in the internship object
+        //makes a ContentValues object using all the fields in the application object
         ContentValues values = applicationStage.toValues();
         values.put(ApplicationStageTable.COLUMN_ID, applicationStage.getStageID());
 
@@ -130,15 +125,15 @@ public class DataSource {
      * Seeds the database with dummy data if the database is empty
      */
     public void seedDatbase() {
-        //gets the number of internships in the database
-        long numInternships = DatabaseUtils.queryNumEntries(mDatabase, InternshipTable.TABLE_INTERNSHIP);
+        //gets the number of applications in the database
+        long numApplications = DatabaseUtils.queryNumEntries(mDatabase, ApplicationTable.TABLE_APPLICATION);
         //gets the number of stages in the database
         long numApplicationStageCount = DatabaseUtils.queryNumEntries(mDatabase, ApplicationStageTable.TABLE_APPLICATION_STAGE);
 
-        //if there are no internships and stages then populate
-        if(numInternships == 0 && numApplicationStageCount == 0) {
+        //if there are no applications and stages then populate
+        if(numApplications == 0 && numApplicationStageCount == 0) {
 
-            Internship internship = Internship.of("Example Company", "Software Engineering Placement Year",
+            Application application = Application.of("Example Company", "Software Engineering Placement Year",
                     "12 Months", "London", false, "www.examplecompany.com", 15000,
                     "I have signed the contract with Example Company, and will be starting next June.",
                     false);
@@ -149,103 +144,103 @@ public class DataSource {
             ApplicationStage stage2 = ApplicationStage.of("Assessment Centre", true, false, true,
                     "12/01/2017", "12/01/2017", "02/02/2017", "Assessment Centre involved 2 Interviews, and a Group Task.");
 
-            internship.addStage(stage1);
-            internship.addStage(stage2);
+            application.addStage(stage1);
+            application.addStage(stage2);
 
-            createInternship(internship);
-            createApplicationStage(stage1, internship.getInternshipID());
-            createApplicationStage(stage2, internship.getInternshipID());
+            createApplication(application);
+            createApplicationStage(stage1, application.getApplicationID());
+            createApplicationStage(stage2, application.getApplicationID());
 
         }
     }
 
     /**
-     * Returns all the internships in the database in descending order of when they were modified/updated
-     * @return list of internship objects from the database
+     * Returns all the applications in the database in descending order of when they were modified/updated
+     * @return list of application objects from the database
      */
-    public List<Internship> getAllInternship() {
-        List<Internship> internships = new ArrayList<>();
+    public List<Application> getAllApplication() {
+        List<Application> applications = new ArrayList<>();
 
-        //query the whole Internship Table for all rows in descending order of modified date
-        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, null, null, InternshipTable.COLUMN_MODIFIED_ON + " DESC");
+        //query the whole Application Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(ApplicationTable.TABLE_APPLICATION, ApplicationTable.ALL_COLUMNS,
+                null, null, null, null, ApplicationTable.COLUMN_MODIFIED_ON + " DESC");
 
         //while there is a next row
         while (cursor.moveToNext()) {
-            Internship internship = new Internship();
+            Application application = new Application();
 
-            long internshipID = cursor.getLong(cursor.getColumnIndex(InternshipTable.COLUMN_ID));
+            long applicationID = cursor.getLong(cursor.getColumnIndex(ApplicationTable.COLUMN_ID));
 
-            internship.setInternshipID(internshipID);
-            internship.setCompanyName(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_COMPANY_NAME)));
-            internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
-            internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
-            internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
-            internship.setUrl(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_URL)));
-            internship.setSalary(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_SALARY)));
-            internship.setPriority(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_PRIORITY)) == 1);
-            internship.setNotes(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_NOTES)));
-            internship.setCreatedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_CREATED_ON)));
-            internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
+            application.setApplicationID(applicationID);
+            application.setCompanyName(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_COMPANY_NAME)));
+            application.setRole(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_ROLE)));
+            application.setLength(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_LENGTH)));
+            application.setLocation(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_LOCATION)));
+            application.setUrl(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_URL)));
+            application.setSalary(cursor.getInt(cursor.getColumnIndex(ApplicationTable.COLUMN_SALARY)));
+            application.setPriority(cursor.getInt(cursor.getColumnIndex(ApplicationTable.COLUMN_PRIORITY)) == 1);
+            application.setNotes(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_NOTES)));
+            application.setCreatedDate(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_CREATED_ON)));
+            application.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_MODIFIED_ON)));
 
-            //add all the internship's stages to the list stored in the internship object
-            internship.setApplicationStages(getAllApplicationStages(internshipID));
+            //add all the application's stages to the list stored in the application object
+            application.setApplicationStages(getAllApplicationStages(applicationID));
 
-            internships.add(internship);
+            applications.add(application);
         }
 
         cursor.close();
 
-        return internships;
+        return applications;
     }
 
     /**
-     * Returns an internship from the database that has the same id passed in
-     * @param internshipID id of internship looking for
-     * @return internship object that has the same id as internshipID
+     * Returns an application from the database that has the same id passed in
+     * @param applicationID id of application looking for
+     * @return application object that has the same id as applicationID
      */
-    public Internship getInternship(long internshipID) {
-        //query the Internship Table for a row with matching id
-        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                InternshipTable.COLUMN_ID + "=?", new String[] {Long.toString(internshipID)}, null, null, null);
+    public Application getApplication(long applicationID) {
+        //query the Application Table for a row with matching id
+        Cursor cursor = mDatabase.query(ApplicationTable.TABLE_APPLICATION, ApplicationTable.ALL_COLUMNS,
+                ApplicationTable.COLUMN_ID + "=?", new String[] {Long.toString(applicationID)}, null, null, null);
 
-        Internship internship = new Internship();
-        //the first row found should be the internship looking for, so break
+        Application application = new Application();
+        //the first row found should be the application looking for, so break
         while(cursor.moveToNext()) {
 
-            internship.setInternshipID(cursor.getLong(cursor.getColumnIndex(InternshipTable.COLUMN_ID)));
-            internship.setCompanyName(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_COMPANY_NAME)));
-            internship.setRole(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
-            internship.setLength(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
-            internship.setLocation(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
-            internship.setUrl(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_URL)));
-            internship.setSalary(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_SALARY)));
-            internship.setPriority(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_PRIORITY)) == 1);
-            internship.setNotes(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_NOTES)));
-            internship.setCreatedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_CREATED_ON)));
-            internship.setModifiedDate(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_MODIFIED_ON)));
+            application.setApplicationID(cursor.getLong(cursor.getColumnIndex(ApplicationTable.COLUMN_ID)));
+            application.setCompanyName(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_COMPANY_NAME)));
+            application.setRole(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_ROLE)));
+            application.setLength(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_LENGTH)));
+            application.setLocation(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_LOCATION)));
+            application.setUrl(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_URL)));
+            application.setSalary(cursor.getInt(cursor.getColumnIndex(ApplicationTable.COLUMN_SALARY)));
+            application.setPriority(cursor.getInt(cursor.getColumnIndex(ApplicationTable.COLUMN_PRIORITY)) == 1);
+            application.setNotes(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_NOTES)));
+            application.setCreatedDate(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_CREATED_ON)));
+            application.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_MODIFIED_ON)));
 
-            //add all the internship's stages to the list stored in the internship object
-            internship.setApplicationStages(getAllApplicationStages(internshipID));
+            //add all the application's stages to the list stored in the application object
+            application.setApplicationStages(getAllApplicationStages(applicationID));
 
             break;
         }
 
         cursor.close();
 
-        return internship;
+        return application;
     }
 
     /**
-     * Returns all the application stages in the database that belong to a particular Internship
-     * @return list of application stages objects from the database that belong to a particular Internship
+     * Returns all the application stages in the database that belong to a particular Application
+     * @return list of application stages objects from the database that belong to a particular Application
      */
-    public List<ApplicationStage> getAllApplicationStages(long internshipID) {
+    public List<ApplicationStage> getAllApplicationStages(long applicationID) {
         List<ApplicationStage> applicationStages = new ArrayList<>();
 
-        //query the whole Application Stage Table for all rows in descending order of creation date with matching internship id
+        //query the whole Application Stage Table for all rows in descending order of creation date with matching application id
         Cursor cursor = mDatabase.query(ApplicationStageTable.TABLE_APPLICATION_STAGE, ApplicationStageTable.ALL_COLUMNS,
-                ApplicationStageTable.COLUMN_INTERNSHIP_ID + "=?", new String[] {Long.toString(internshipID)}, null, null, InternshipTable.COLUMN_CREATED_ON);
+                ApplicationStageTable.COLUMN_APPLICATION_ID + "=?", new String[] {Long.toString(applicationID)}, null, null, ApplicationTable.COLUMN_CREATED_ON);
 
         while(cursor.moveToNext()) {
             ApplicationStage stage = new ApplicationStage();
@@ -259,7 +254,7 @@ public class DataSource {
             stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_COMPLETE_DATE)));
             stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
             stage.setNotes(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_NOTES)));
-            stage.setInternshipID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_INTERNSHIP_ID)));
+            stage.setApplicationID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_APPLICATION_ID)));
             stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_MODIFIED_ON)));
 
             applicationStages.add(stage);
@@ -293,7 +288,7 @@ public class DataSource {
             stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_COMPLETE_DATE)));
             stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
             stage.setNotes(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_NOTES)));
-            stage.setInternshipID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_INTERNSHIP_ID)));
+            stage.setApplicationID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_APPLICATION_ID)));
             stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_MODIFIED_ON)));
 
             break;
@@ -306,18 +301,18 @@ public class DataSource {
 
     /**
      * Delete Internsip with matching id
-     * @param internshipID id of internship to delete
+     * @param applicationID id of application to delete
      */
-    public void deleteInternship(long internshipID) {
-        //delete the internship row which has an id of internshipID
-        mDatabase.delete(InternshipTable.TABLE_INTERNSHIP,
-                InternshipTable.COLUMN_ID + " = ?",
-                new String[]{Long.toString(internshipID)});
+    public void deleteApplication(long applicationID) {
+        //delete the application row which has an id of applicationID
+        mDatabase.delete(ApplicationTable.TABLE_APPLICATION,
+                ApplicationTable.COLUMN_ID + " = ?",
+                new String[]{Long.toString(applicationID)});
 
-        //delete all application stages that belong to the internship to delete
+        //delete all application stages that belong to the application to delete
         mDatabase.delete(ApplicationStageTable.TABLE_APPLICATION_STAGE,
-                ApplicationStageTable.COLUMN_INTERNSHIP_ID + " = ?",
-                new String[] {Long.toString(internshipID)});
+                ApplicationStageTable.COLUMN_APPLICATION_ID + " = ?",
+                new String[] {Long.toString(applicationID)});
     }
 
     /**
@@ -332,37 +327,37 @@ public class DataSource {
     }
 
     /**
-     * Update internship row which includes the modified on date
-     * @param internship object with all fields filled in
+     * Update application row which includes the modified on date
+     * @param application object with all fields filled in
      */
-    public void updateInternship(Internship internship) {
+    public void updateApplication(Application application) {
         //current date formatted for the modified date column
         String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-        ContentValues values = internship.toValues();
+        ContentValues values = application.toValues();
         //update the modified on date by the current date
-        values.put(InternshipTable.COLUMN_MODIFIED_ON, currentDate);
+        values.put(ApplicationTable.COLUMN_MODIFIED_ON, currentDate);
 
-        //update internship that has matching id
-        mDatabase.update(InternshipTable.TABLE_INTERNSHIP, values,
-                InternshipTable.COLUMN_ID + " = ?",
-                new String[] {Long.toString(internship.getInternshipID())});
+        //update application that has matching id
+        mDatabase.update(ApplicationTable.TABLE_APPLICATION, values,
+                ApplicationTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(application.getApplicationID())});
     }
 
     /**
-     * Update internship priority without updating the modified date
-     * @param internship object for which to update the priority of
+     * Update application priority without updating the modified date
+     * @param application object for which to update the priority of
      */
-    public void updateInternshipPriority(Internship internship) {
+    public void updateApplicationPriority(Application application) {
 
         ContentValues values = new ContentValues();
         //update the modified on date by the current date
-        values.put(InternshipTable.COLUMN_PRIORITY, internship.isPriority());
+        values.put(ApplicationTable.COLUMN_PRIORITY, application.isPriority());
 
-        //update internship that has matching id
-        mDatabase.update(InternshipTable.TABLE_INTERNSHIP, values,
-                InternshipTable.COLUMN_ID + " = ?",
-                new String[] {Long.toString(internship.getInternshipID())});
+        //update application that has matching id
+        mDatabase.update(ApplicationTable.TABLE_APPLICATION, values,
+                ApplicationTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(application.getApplicationID())});
     }
 
     /**
@@ -382,25 +377,25 @@ public class DataSource {
                 ApplicationStageTable.COLUMN_ID + " = ?",
                 new String[] {Long.toString(applicationStage.getStageID())});
 
-        //update the Internship's modified_on column as the current date too
-        ContentValues parentInternshipValues = new ContentValues();
-        parentInternshipValues.put(InternshipTable.COLUMN_MODIFIED_ON, currentDate);
+        //update the Application's modified_on column as the current date too
+        ContentValues parentApplicationValues = new ContentValues();
+        parentApplicationValues.put(ApplicationTable.COLUMN_MODIFIED_ON, currentDate);
 
-        //updated the internship's modified date, that the application stage belongs to
-        mDatabase.update(InternshipTable.TABLE_INTERNSHIP, parentInternshipValues, InternshipTable.COLUMN_ID + " = ?",
-                new String[] {Long.toString(applicationStage.getInternshipID())});
+        //updated the application's modified date, that the application stage belongs to
+        mDatabase.update(ApplicationTable.TABLE_APPLICATION, parentApplicationValues, ApplicationTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(applicationStage.getApplicationID())});
     }
 
     public List<String> getAllRoles() {
         List<String> roles = new ArrayList<>();
 
-        //query the whole Internship Table for all rows in descending order of modified date
-        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, InternshipTable.COLUMN_ROLE, null, InternshipTable.COLUMN_ROLE);
+        //query the whole Application Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(ApplicationTable.TABLE_APPLICATION, ApplicationTable.ALL_COLUMNS,
+                null, null, ApplicationTable.COLUMN_ROLE, null, ApplicationTable.COLUMN_ROLE);
 
         //while there is a next row
         while (cursor.moveToNext()) {
-            roles.add(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_ROLE)));
+            roles.add(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_ROLE)));
         }
 
         cursor.close();
@@ -411,13 +406,13 @@ public class DataSource {
     public List<String> getAllLengths() {
         List<String> lengths = new ArrayList<>();
 
-        //query the whole Internship Table for all rows in descending order of modified date
-        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                InternshipTable.COLUMN_LENGTH + " IS NOT NULL", null, InternshipTable.COLUMN_LENGTH, null, InternshipTable.COLUMN_LENGTH);
+        //query the whole Application Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(ApplicationTable.TABLE_APPLICATION, ApplicationTable.ALL_COLUMNS,
+                ApplicationTable.COLUMN_LENGTH + " IS NOT NULL", null, ApplicationTable.COLUMN_LENGTH, null, ApplicationTable.COLUMN_LENGTH);
 
         //while there is a next row
         while (cursor.moveToNext()) {
-            lengths.add(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LENGTH)));
+            lengths.add(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_LENGTH)));
         }
 
         cursor.close();
@@ -428,13 +423,13 @@ public class DataSource {
     public List<String> getAllLocations() {
         List<String> locations = new ArrayList<>();
 
-        //query the whole Internship Table for all rows in descending order of modified date
-        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, InternshipTable.COLUMN_LOCATION, null, InternshipTable.COLUMN_LOCATION);
+        //query the whole Application Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(ApplicationTable.TABLE_APPLICATION, ApplicationTable.ALL_COLUMNS,
+                null, null, ApplicationTable.COLUMN_LOCATION, null, ApplicationTable.COLUMN_LOCATION);
 
         //while there is a next row
         while (cursor.moveToNext()) {
-            locations.add(cursor.getString(cursor.getColumnIndex(InternshipTable.COLUMN_LOCATION)));
+            locations.add(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_LOCATION)));
         }
 
         cursor.close();
@@ -445,13 +440,13 @@ public class DataSource {
     public List<Integer> getAllSalary() {
         List<Integer> salaries = new ArrayList<>();
 
-        //query the whole Internship Table for all rows in descending order of modified date
-        Cursor cursor = mDatabase.query(InternshipTable.TABLE_INTERNSHIP, InternshipTable.ALL_COLUMNS,
-                null, null, InternshipTable.COLUMN_SALARY, null, InternshipTable.COLUMN_SALARY + " DESC");
+        //query the whole Application Table for all rows in descending order of modified date
+        Cursor cursor = mDatabase.query(ApplicationTable.TABLE_APPLICATION, ApplicationTable.ALL_COLUMNS,
+                null, null, ApplicationTable.COLUMN_SALARY, null, ApplicationTable.COLUMN_SALARY + " DESC");
 
         //while there is a next row
         while (cursor.moveToNext()) {
-            salaries.add(cursor.getInt(cursor.getColumnIndex(InternshipTable.COLUMN_SALARY)));
+            salaries.add(cursor.getInt(cursor.getColumnIndex(ApplicationTable.COLUMN_SALARY)));
         }
 
         cursor.close();
@@ -462,7 +457,7 @@ public class DataSource {
     public List<String> getAllStageNames() {
         List<String> stages = new ArrayList<>();
 
-        //query the whole Internship Table for all rows in descending order of modified date
+        //query the whole Application Table for all rows in descending order of modified date
         Cursor cursor = mDatabase.query(ApplicationStageTable.TABLE_APPLICATION_STAGE, ApplicationStageTable.ALL_COLUMNS,
                 null, null, ApplicationStageTable.COLUMN_STAGE_NAME, null, ApplicationStageTable.COLUMN_STAGE_NAME);
 

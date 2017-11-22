@@ -20,12 +20,12 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
-        <activity android:name=".InternshipInformationActivity"
+        <activity android:name=".ApplicationInformationActivity"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".StageInformationActivity"
-            android:parentActivityName=".InternshipInformationActivity"/>
-        <activity android:name=".InternshipEditActivity"
-            android:parentActivityName=".InternshipInformationActivity"/>
+            android:parentActivityName=".ApplicationInformationActivity"/>
+        <activity android:name=".ApplicationEditActivity"
+            android:parentActivityName=".ApplicationInformationActivity"/>
         <activity android:name=".StageEditActivity"
             android:parentActivityName=".StageInformationActivity"/>
     </application>

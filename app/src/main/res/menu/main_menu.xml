@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="@string/search_internships"
-        android:id="@+id/action_search_internships"
+    <item android:title="@string/search_applications"
+        android:id="@+id/action_search_applications"
         android:icon="@drawable/ic_search_white_24dp"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
-    <item android:title="@string/sort_internships"
-        android:id="@+id/action_sort_internships"
+    <item android:title="@string/sort_applications"
+        android:id="@+id/action_sort_applications"
         android:icon="@drawable/ic_sort_white_24dp"
         app:showAsAction="ifRoom">
 
@@ -47,8 +47,8 @@
 
     </item>
 
-    <item android:title="@string/filter_internships"
-        android:id="@+id/action_filter_internships"
+    <item android:title="@string/filter_applications"
+        android:id="@+id/action_filter_applications"
         android:icon="@drawable/ic_filter_list_white_24dp"
         app:showAsAction="ifRoom"/>
 

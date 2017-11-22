@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/priorityImage"
         style="@style/priorityBookmark"
-        android:contentDescription="@string/image_shows_if_the_internship_is_of_priority_or_is_a_favourite"/>
+        android:contentDescription="@string/image_shows_if_the_application_is_of_priority_or_is_a_favourite"/>
 
     <RelativeLayout
         style="@style/rowCardViewRelativeLayout">
@@ -31,10 +31,10 @@
             android:text="@string/date"/>
 
         <ImageView
-            android:id="@+id/internshipStatusIcon"
+            android:id="@+id/applicationStatusIcon"
             android:layout_below="@id/updatedDateCardView"
             style="@style/statusIcon"
-            android:contentDescription="@string/image_shows_the_current_status_of_the_internship"/>
+            android:contentDescription="@string/image_shows_the_current_status_of_the_application"/>
 
     </RelativeLayout>
 

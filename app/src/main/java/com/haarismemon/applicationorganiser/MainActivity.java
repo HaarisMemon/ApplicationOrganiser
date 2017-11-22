@@ -5,7 +5,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,12 +31,12 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListen
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
 import com.haarismemon.applicationorganiser.database.DataSource;
-import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.database.ApplicationTable;
 import com.haarismemon.applicationorganiser.listener.FilterDialogOnClickListener;
 import com.haarismemon.applicationorganiser.listener.MyOnQueryTextListener;
+import com.haarismemon.applicationorganiser.model.Application;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 import com.haarismemon.applicationorganiser.model.FilterType;
-import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
@@ -52,7 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * This class represents the activity which displays the list of all Internships
+ * This class represents the activity which displays the list of all Applications
  * @author HaarisMemon
  */
 public class MainActivity extends AppCompatActivity {
@@ -63,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
     public MenuItem prioritiseItem;
     public MenuItem deprioritiseItem;
 
-    private List<Internship> internships;
-    private List<Internship> selectedInternships;
-    private List<Internship> deletedInternshipsForUndo;
-    private List<Internship> internshipsBeforeDeletionForUndo;
+    private List<Application> applications;
+    private List<Application> selectedApplications;
+    private List<Application> deletedApplicationsForUndo;
+    private List<Application> applicationsBeforeDeletionForUndo;
     private Map<FilterType, List<Integer>> filterSelectedItemsIndexes;
     Set<FilterType> filtersCurrentlyApplied;
 
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isFilterChangeMade = false;
 
     /**
-     * RecyclerAdapter of RecyclerView for internships in the activity
+     * RecyclerAdapter of RecyclerView for applications in the activity
      */
     ApplicationListRecyclerAdapter applicationListRecyclerAdapter;
 
@@ -82,14 +81,14 @@ public class MainActivity extends AppCompatActivity {
     public static final String FILTER_LIST = "FILTER_LIST";
     public static final String FILTER_TYPE = "FILTER_TYPE";
     public static final String CHECKED_ITEMS = "CHECKED_ITEMS";
-    private String SELECTED_INTERNSHIPS = "SELECTED_INTERNSHIPS";
+    private String SELECTED_APPLICATIONS = "SELECTED_APPLICATIONS";
     private String SELECTION_MODE = "SELECTION_MODE";
 
-    //used to check if currently in selection mode (whether any internships has been selected)
+    //used to check if currently in selection mode (whether any applications has been selected)
     public boolean isSelectionMode = false;
     private boolean isAllSelected = false;
 
-    private boolean[] internshipsSelected;
+    private boolean[] applicationsSelected;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
@@ -158,22 +157,22 @@ public class MainActivity extends AppCompatActivity {
         mDataSource.open();
         mDataSource.seedDatbase();
 
-        //ArrayList of all internships in the database
-        internships = mDataSource.getAllInternship();
+        //ArrayList of all applications in the database
+        applications = mDataSource.getAllApplication();
 
         filtersCurrentlyApplied = new HashSet<>();
 
-        //list to track which internships have been selected
-        selectedInternships = new ArrayList<>();
-        //list to store list of internships before deletion
-        internshipsBeforeDeletionForUndo = new ArrayList<>();
+        //list to track which applications have been selected
+        selectedApplications = new ArrayList<>();
+        //list to store list of applications before deletion
+        applicationsBeforeDeletionForUndo = new ArrayList<>();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setFocusable(false);
-        //give the recycler adapter the list of all internships
-        applicationListRecyclerAdapter = new ApplicationListRecyclerAdapter(this, internships, selectedInternships);
+        //give the recycler adapter the list of all applications
+        applicationListRecyclerAdapter = new ApplicationListRecyclerAdapter(this, applications, selectedApplications);
         //set the adapter to the recycler view
         recyclerView.setAdapter(applicationListRecyclerAdapter);
 
@@ -181,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         actionModeCallback = new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                actionMode.setTitle(selectedInternships.size() + " internships selected");
+                actionMode.setTitle(selectedApplications.size() + " applications selected");
 
                 MenuInflater inflater = actionMode.getMenuInflater();
                 inflater.inflate(R.menu.main_action_mode_menu, menu);
@@ -202,8 +201,8 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     //when the delete action button is pressed in action mode
                     case R.id.action_mode_delete:
-                        //delete all selected internships
-                        deleteSelectedInternships();
+                        //delete all selected applications
+                        deleteSelectedApplications();
                         //exit action mode
                         switchActionMode(false);
 
@@ -217,19 +216,19 @@ public class MainActivity extends AppCompatActivity {
                                 .setAction(R.string.undo_snackbar_string, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        for(Internship internship : deletedInternshipsForUndo) {
-                                            internship.setSelected(false);
-                                            mDataSource.recreateInternship(internship);
+                                        for(Application application : deletedApplicationsForUndo) {
+                                            application.setSelected(false);
+                                            mDataSource.recreateApplication(application);
                                         }
 
-                                        internships = internshipsBeforeDeletionForUndo;
-                                        applicationListRecyclerAdapter.internshipsList = internshipsBeforeDeletionForUndo;
+                                        applications = applicationsBeforeDeletionForUndo;
+                                        applicationListRecyclerAdapter.applicationsList = applicationsBeforeDeletionForUndo;
 
                                         applicationListRecyclerAdapter.notifyDataSetChanged();
 
-                                        displayMessageIfNoInternships(false);
+                                        displayMessageIfNoApplications(false);
 
-                                        deletedInternshipsForUndo.clear();
+                                        deletedApplicationsForUndo.clear();
 
                                         minMaxSalary.setMin(oldMinPosition);
                                         minMaxSalary.setMax(oldMaxPosition);
@@ -242,22 +241,22 @@ public class MainActivity extends AppCompatActivity {
 
                     //when the priority action button is pressed in action mode
                     case R.id.action_mode_prioritise:
-                        //prioritise all selected internships
-                        prioritiseSelectedInternships();
+                        //prioritise all selected applications
+                        prioritiseSelectedApplications();
                         //exit action mode
                         switchActionMode(false);
                         return true;
 
                     //when the priority action button is pressed in action mode
                     case R.id.action_mode_deprioritise:
-                        //prioritise all selected internships
-                        deprioritiseSelectedInternships();
+                        //prioritise all selected applications
+                        deprioritiseSelectedApplications();
                         //exit action mode
                         switchActionMode(false);
                         return true;
 
                     case R.id.action_mode_select_all:
-                        selectAllInternships();
+                        selectAllApplications();
                         return true;
 
                 }
@@ -269,27 +268,27 @@ public class MainActivity extends AppCompatActivity {
             public void onDestroyActionMode(ActionMode actionMode) {
                 isSelectionMode = false;
                 isAllSelected = false;
-                //unselect all selected internships
-                unselectSelectedInternships();
+                //unselect all selected applications
+                unselectSelectedApplications();
                 //update the recycler view
                 applicationListRecyclerAdapter.notifyDataSetChanged();
             }
         };
 
-        displayMessageIfNoInternships(false);
+        displayMessageIfNoApplications(false);
 
         setUpFilterPanel();
 
         if(savedInstanceState != null) {
-            boolean[] internshipsSelected = savedInstanceState.getBooleanArray(SELECTED_INTERNSHIPS);
+            boolean[] applicationsSelected = savedInstanceState.getBooleanArray(SELECTED_APPLICATIONS);
 
-            for (int i = 0; i < internships.size(); i++) {
-                Internship internship = internships.get(i);
-                boolean isSelected = internshipsSelected[i];
-                internship.setSelected(isSelected);
+            for (int i = 0; i < applications.size(); i++) {
+                Application application = applications.get(i);
+                boolean isSelected = applicationsSelected[i];
+                application.setSelected(isSelected);
 
                 if(isSelected) {
-                    selectedInternships.add(internship);
+                    selectedApplications.add(application);
                 }
             }
 
@@ -297,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
             switchActionMode(isSelectionMode);
 
             if(isSelectionMode) {
-                applicationListRecyclerAdapter.decideToPrioritiseOrDeprioritiseInternships(selectedInternships);
+                applicationListRecyclerAdapter.decideToPrioritiseOrDeprioritiseApplications(selectedApplications);
             }
 
         }
@@ -339,26 +338,26 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case(R.id.action_sort_modified_date):
-                changeSort(InternshipTable.COLUMN_MODIFIED_ON, false, item);
+                changeSort(ApplicationTable.COLUMN_MODIFIED_ON, false, item);
                 return true;
 
             case(R.id.action_sort_created_date):
-                changeSort(InternshipTable.COLUMN_CREATED_ON, false, item);
+                changeSort(ApplicationTable.COLUMN_CREATED_ON, false, item);
                 return true;
 
             case(R.id.action_sort_company_name):
-                changeSort(InternshipTable.COLUMN_COMPANY_NAME, true, item);
+                changeSort(ApplicationTable.COLUMN_COMPANY_NAME, true, item);
                 return true;
 
             case(R.id.action_sort_role):
-                changeSort(InternshipTable.COLUMN_ROLE, true, item);
+                changeSort(ApplicationTable.COLUMN_ROLE, true, item);
                 return true;
 
             case(R.id.action_sort_salary):
-                changeSort(InternshipTable.COLUMN_SALARY, false, item);
+                changeSort(ApplicationTable.COLUMN_SALARY, false, item);
                 return true;
 
-            case(R.id.action_filter_internships):
+            case(R.id.action_filter_applications):
                 if(mDrawerLayout.isDrawerOpen(filterDrawer)) mDrawerLayout.closeDrawer(filterDrawer);
                 else mDrawerLayout.openDrawer(filterDrawer);
 
@@ -373,13 +372,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        internshipsSelected = new boolean[internships.size()];
+        applicationsSelected = new boolean[applications.size()];
 
-        for (int i = 0; i < internships.size(); i++) {
-            internshipsSelected[i] = internships.get(i).isSelected();
+        for (int i = 0; i < applications.size(); i++) {
+            applicationsSelected[i] = applications.get(i).isSelected();
         }
 
-        outState.putBooleanArray(SELECTED_INTERNSHIPS, internshipsSelected);
+        outState.putBooleanArray(SELECTED_APPLICATIONS, applicationsSelected);
 
         outState.putBoolean(SELECTION_MODE, isSelectionMode);
     }
@@ -444,7 +443,7 @@ public class MainActivity extends AppCompatActivity {
         updateFilterPanel();
     }
 
-    private void setupSalarySeekbarRange(boolean isInternshipBeingDeleted) {
+    private void setupSalarySeekbarRange(boolean isApplicationBeingDeleted) {
         salarySelect.setSteps(-1f);
         salarySelect.setGap(0);
 
@@ -459,7 +458,7 @@ public class MainActivity extends AppCompatActivity {
             if(newMaxSalary == 0) newMaxSalary = 1000;
         }
 
-        if(isInternshipBeingDeleted && minMaxSalary.originalMin != null && minMaxSalary.originalMax != null &&
+        if(isApplicationBeingDeleted && minMaxSalary.originalMin != null && minMaxSalary.originalMax != null &&
                 newMaxSalary > 0) {
             int currentMinStart;
             int currentMaxEnd;
@@ -574,7 +573,7 @@ public class MainActivity extends AppCompatActivity {
             statusSelect.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
 
-        filterResultsText.setText("Showing " + applicationListRecyclerAdapter.internshipsList.size() + " Internships");
+        filterResultsText.setText("Showing " + applicationListRecyclerAdapter.applicationsList.size() + " Applications");
 
         if(isFilterChangeMade) filterApplyButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         else filterApplyButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
@@ -617,14 +616,14 @@ public class MainActivity extends AppCompatActivity {
 
                         filtersCurrentlyApplied.clear();
 
-                        applicationListRecyclerAdapter.internshipsList = internships;
+                        applicationListRecyclerAdapter.applicationsList = applications;
                         applicationListRecyclerAdapter.notifyDataSetChanged();
 
                         isFilterChangeMade = false;
 
                         updateFilterPanel();
 
-                        displayMessageIfNoInternships(false);
+                        displayMessageIfNoApplications(false);
                     }
                 })
                 .setNegativeButton("No", null)
@@ -648,7 +647,7 @@ public class MainActivity extends AppCompatActivity {
             List<ApplicationStage.Status> selectedStatus = getAllStatusFromIndex(
                     filterSelectedItemsIndexes.get(FilterType.STATUS));
 
-            applicationListRecyclerAdapter.internshipsList = filterInternships(selectedRoles,
+            applicationListRecyclerAdapter.applicationsList = filterApplications(selectedRoles,
                     selectedLengths, selectedLocations, selectedStages,
                     selectedStatus);
 
@@ -658,7 +657,7 @@ public class MainActivity extends AppCompatActivity {
 
             updateFilterPanel();
 
-            displayMessageIfNoInternships(false);
+            displayMessageIfNoApplications(false);
         }
 
         mDrawerLayout.closeDrawer(filterDrawer);
@@ -700,7 +699,7 @@ public class MainActivity extends AppCompatActivity {
             applicationListRecyclerAdapter.reverseOrder();
         } else {
             setOrderItemToAscendingOrDescending(isAscending);
-            applicationListRecyclerAdapter.sortInternships(sortByField);
+            applicationListRecyclerAdapter.sortApplications(sortByField);
         }
 
         currentSelectedSortItem.setChecked(true);
@@ -727,7 +726,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void searchMenuActionSetup(final Menu menu) {
-        final MenuItem searchItem = menu.findItem(R.id.action_search_internships);
+        final MenuItem searchItem = menu.findItem(R.id.action_search_applications);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         //hides other menu items in action bar when search bar is expanded
@@ -775,12 +774,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * On click method to create a new Internship
+     * On click method to create a new Application
      * @param view create button that was clicked
      */
-    public void goToCreateInternship(View view) {
-        Intent intent = new Intent(getApplicationContext(), InternshipEditActivity.class);
-        intent.putExtra(InternshipEditActivity.INTERNSHIP_EDIT_MODE, false);
+    public void goToCreateApplication(View view) {
+        Intent intent = new Intent(getApplicationContext(), ApplicationEditActivity.class);
+        intent.putExtra(ApplicationEditActivity.APPLICATION_EDIT_MODE, false);
         startActivity(intent);
     }
 
@@ -802,101 +801,101 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //this method updates the title in the action bar in action mode, and is called every time internship selected
+    //this method updates the title in the action bar in action mode, and is called every time application selected
     public void updateActionModeCounter(int counter) {
         if(counter == 1) {
-            actionMode.setTitle(counter + " internship selected");
+            actionMode.setTitle(counter + " application selected");
         } else {
-            actionMode.setTitle(counter + " internships selected");
+            actionMode.setTitle(counter + " applications selected");
         }
     }
 
-    //displays message to inform user to add their first internship if internship list is empty
-    public void displayMessageIfNoInternships(boolean isFilteringForSearch) {
-        if(applicationListRecyclerAdapter.internshipsList.isEmpty()) {
+    //displays message to inform user to add their first application if application list is empty
+    public void displayMessageIfNoApplications(boolean isFilteringForSearch) {
+        if(applicationListRecyclerAdapter.applicationsList.isEmpty()) {
             emptyMessageText.setVisibility(View.VISIBLE);
 
             if(isFilteringForSearch) {
                 emptyMessageText.setText(getResources().getString(R.string.noMatchFromSearch));
-            } else if(!internships.isEmpty()) {
+            } else if(!applications.isEmpty()) {
                 emptyMessageText.setText(getResources().getString(R.string.noResultsWithFilter));
             } else {
-                emptyMessageText.setText(getResources().getString(R.string.addFirstInternship));
+                emptyMessageText.setText(getResources().getString(R.string.addFirstApplication));
             }
         } else {
             emptyMessageText.setVisibility(View.GONE);
         }
     }
 
-    //unselects all the selected internships
-    private void unselectSelectedInternships() {
-        for(Internship internship : selectedInternships) {
-            internship.setSelected(false);
+    //unselects all the selected applications
+    private void unselectSelectedApplications() {
+        for(Application application : selectedApplications) {
+            application.setSelected(false);
         }
 
         applicationListRecyclerAdapter.notifyDataSetChanged();
 
-        selectedInternships.clear();
+        selectedApplications.clear();
     }
 
-    //deletes all selected internships
-    private void deleteSelectedInternships() {
-        internshipsBeforeDeletionForUndo = new ArrayList<>(internships);
+    //deletes all selected applications
+    private void deleteSelectedApplications() {
+        applicationsBeforeDeletionForUndo = new ArrayList<>(applications);
 
-        //for all selected internships
-        for(Internship deleteInternship : selectedInternships) {
-            //remove internship from original unfiltered list
-            internships.remove(deleteInternship);
+        //for all selected applications
+        for(Application deleteApplication : selectedApplications) {
+            //remove application from original unfiltered list
+            applications.remove(deleteApplication);
 
-            //remove internship from filtered list of internships (allows filter to remain even after deletion)
-            applicationListRecyclerAdapter.internshipsList.remove(deleteInternship);
+            //remove application from filtered list of applications (allows filter to remain even after deletion)
+            applicationListRecyclerAdapter.applicationsList.remove(deleteApplication);
 
             //delete from database
-            mDataSource.deleteInternship(deleteInternship.getInternshipID());
+            mDataSource.deleteApplication(deleteApplication.getApplicationID());
         }
         //update the RecyclerView through the adapter
         applicationListRecyclerAdapter.notifyDataSetChanged();
 
-        deletedInternshipsForUndo = new ArrayList<>(selectedInternships);
+        deletedApplicationsForUndo = new ArrayList<>(selectedApplications);
 
-        //empty the map holding the selected internships
-        selectedInternships.clear();
+        //empty the map holding the selected applications
+        selectedApplications.clear();
 
-        displayMessageIfNoInternships(false);
+        displayMessageIfNoApplications(false);
     }
 
-    //prioritises all selected internships
-    private void prioritiseSelectedInternships() {
-        //for all selected internships
-        for(Internship internship : selectedInternships) {
-            internship.setSelected(false);
-            internship.setPriority(true);
+    //prioritises all selected applications
+    private void prioritiseSelectedApplications() {
+        //for all selected applications
+        for(Application application : selectedApplications) {
+            application.setSelected(false);
+            application.setPriority(true);
 
-            mDataSource.updateInternshipPriority(internship);
+            mDataSource.updateApplicationPriority(application);
         }
-        //empty the map holding the selected internships
-        selectedInternships.clear();
+        //empty the map holding the selected applications
+        selectedApplications.clear();
     }
 
-    //deprioritises all selected internships
-    private void deprioritiseSelectedInternships() {
-        //for all selected internships
-        for(Internship internship : selectedInternships) {
-            internship.setSelected(false);
-            internship.setPriority(false);
+    //deprioritises all selected applications
+    private void deprioritiseSelectedApplications() {
+        //for all selected applications
+        for(Application application : selectedApplications) {
+            application.setSelected(false);
+            application.setPriority(false);
 
-            mDataSource.updateInternshipPriority(internship);
+            mDataSource.updateApplicationPriority(application);
         }
-        //empty the map holding the selected internships
-        selectedInternships.clear();
+        //empty the map holding the selected applications
+        selectedApplications.clear();
     }
 
-    private void selectAllInternships() {
+    private void selectAllApplications() {
         if(!isAllSelected) {
-            applicationListRecyclerAdapter.selectAllInternships();
+            applicationListRecyclerAdapter.selectAllApplications();
             isAllSelected = true;
         } else {
-            applicationListRecyclerAdapter.deselectAllInternships();
+            applicationListRecyclerAdapter.deselectAllApplications();
             isAllSelected = false;
         }
     }
@@ -908,41 +907,41 @@ public class MainActivity extends AppCompatActivity {
         else super.onBackPressed();
     }
 
-    private List<Internship> filterInternships(List<String> roles,
-                                               List<String> lengths,
-                                               List<String> locations,
-                                               List<String> stages,
-                                               List<ApplicationStage.Status> status) {
+    private List<Application> filterApplications(List<String> roles,
+                                                List<String> lengths,
+                                                List<String> locations,
+                                                List<String> stages,
+                                                List<ApplicationStage.Status> status) {
 
-        List<Internship> result = new ArrayList<>();
+        List<Application> result = new ArrayList<>();
 
-        for (Internship internship : internships) {
-            if (isFilterPriority != null && isFilterPriority && !internship.isPriority()) {
+        for (Application application : applications) {
+            if (isFilterPriority != null && isFilterPriority && !application.isPriority()) {
                 continue;
             }
 
-            //if no filters have been selected then no filters are applied, so show all internships
+            //if no filters have been selected then no filters are applied, so show all applications
             if(!filtersCurrentlyApplied.isEmpty() || isFilterChangeMade ) {
-                Internship returnedInternship = matchInternship(internship, roles, lengths, locations, stages, status);
-                if (returnedInternship != null) result.add(returnedInternship);
+                Application returnedApplication = matchApplication(application, roles, lengths, locations, stages, status);
+                if (returnedApplication != null) result.add(returnedApplication);
             } else {
-                result.add(internship);
+                result.add(application);
             }
         }
 
         return result;
     }
 
-    private Internship matchInternship(Internship internship,
-                                       List<String> roles,
-                                       List<String> lengths,
-                                       List<String> locations,
-                                       List<String> stages,
-                                       List<ApplicationStage.Status> statusList) {
+    private Application matchApplication(Application application,
+                                        List<String> roles,
+                                        List<String> lengths,
+                                        List<String> locations,
+                                        List<String> stages,
+                                        List<ApplicationStage.Status> statusList) {
         if(statusList != null) {
             boolean statusMatched = false;
             for (ApplicationStage.Status status : statusList) {
-                if (internship.getCurrentStage().getStatus().equals(status)) {
+                if (application.getCurrentStage().getStatus().equals(status)) {
                     statusMatched = true;
                     break;
                 }
@@ -953,7 +952,7 @@ public class MainActivity extends AppCompatActivity {
         if(roles != null) {
             boolean roleMatched = false;
             for (String role : roles) {
-                if (internship.getRole().equals(role)) {
+                if (application.getRole().equals(role)) {
                     roleMatched = true;
                     break;
                 }
@@ -964,7 +963,7 @@ public class MainActivity extends AppCompatActivity {
         if(lengths != null) {
             boolean lengthMatched = false;
             for (String length : lengths) {
-                if (internship.getLength() != null && internship.getLength().equals(length)) {
+                if (application.getLength() != null && application.getLength().equals(length)) {
                     lengthMatched = true;
                     break;
                 }
@@ -975,7 +974,7 @@ public class MainActivity extends AppCompatActivity {
         if(locations != null) {
             boolean locationMatched = false;
             for (String location : locations) {
-                if (internship.getLocation() != null && internship.getLocation().equals(location)) {
+                if (application.getLocation() != null && application.getLocation().equals(location)) {
                     locationMatched = true;
                     break;
                 }
@@ -986,7 +985,7 @@ public class MainActivity extends AppCompatActivity {
         if(stages != null) {
             boolean stageMatched = false;
             for (String stageName : stages) {
-                for (ApplicationStage stage : internship.getApplicationStages()) {
+                for (ApplicationStage stage : application.getApplicationStages()) {
                     if (stage.getStageName().equals(stageName)) {
                         stageMatched = true;
                         break;
@@ -996,14 +995,14 @@ public class MainActivity extends AppCompatActivity {
             if(!stageMatched) return null;
         }
 
-        if (!(minMaxSalary.min <= internship.getSalary() && internship.getSalary() <= minMaxSalary.max))
+        if (!(minMaxSalary.min <= application.getSalary() && application.getSalary() <= minMaxSalary.max))
             return null;
 
-        return internship;
+        return application;
     }
 
-    public void setInternshipList(List<Internship> internshipList) {
-        internships = internshipList;
+    public void setApplicationList(List<Application> applicationList) {
+        applications = applicationList;
     }
 
 }

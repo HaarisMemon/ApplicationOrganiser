@@ -3,8 +3,8 @@ package com.haarismemon.applicationorganiser.listener;
 import android.support.v7.widget.SearchView;
 
 import com.haarismemon.applicationorganiser.adapter.ApplicationListRecyclerAdapter;
+import com.haarismemon.applicationorganiser.model.Application;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
-import com.haarismemon.applicationorganiser.model.Internship;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.List;
 public class MyOnQueryTextListener implements SearchView.OnQueryTextListener {
 
     private ApplicationListRecyclerAdapter myAdapter;
-    private List<Internship> internships;
+    private List<Application> applications;
 
     public MyOnQueryTextListener(ApplicationListRecyclerAdapter myAdapter) {
         this.myAdapter = myAdapter;
-        internships = myAdapter.internshipsList;
+        applications = myAdapter.applicationsList;
     }
 
     @Override
@@ -32,24 +32,24 @@ public class MyOnQueryTextListener implements SearchView.OnQueryTextListener {
     public boolean onQueryTextChange(String searchQuery) {
         //remove all excess whitespaces and make the text lowercase
         searchQuery = searchQuery.toLowerCase().trim().replaceAll(" +", " ");
-        List<Internship> filteredInternships = new ArrayList<>();
+        List<Application> filteredApplications = new ArrayList<>();
 
-        //loop through all the internships from the recycler view adapter
-        for (Internship internship : internships) {
-            //boolean to check if internship had already been added to the filtered list
+        //loop through all the applications from the recycler view adapter
+        for (Application application : applications) {
+            //boolean to check if application had already been added to the filtered list
             boolean isAlreadyAdded = false;
 
-            //if the current internship's company name contains the search query, then add to filtered list
-            if (internship.getCompanyName().toLowerCase().contains(searchQuery)) {
-                filteredInternships.add(internship);
+            //if the current application's company name contains the search query, then add to filtered list
+            if (application.getCompanyName().toLowerCase().contains(searchQuery)) {
+                filteredApplications.add(application);
                 isAlreadyAdded = true;
             }
 
-            for (ApplicationStage stage : internship.getApplicationStages()) {
-                /*if the current stage's name contains the search query, and parent internship not already added
-                /then add the parent internship to filtered list */
+            for (ApplicationStage stage : application.getApplicationStages()) {
+                /*if the current stage's name contains the search query, and parent application not already added
+                /then add the parent application to filtered list */
                 if (!isAlreadyAdded && stage.getStageName().toLowerCase().contains(searchQuery)) {
-                    filteredInternships.add(internship);
+                    filteredApplications.add(application);
                     isAlreadyAdded = true;
                 }
             }
@@ -57,7 +57,7 @@ public class MyOnQueryTextListener implements SearchView.OnQueryTextListener {
         }
 
         //update the recycler view
-        myAdapter.searchFilter(filteredInternships);
+        myAdapter.searchFilter(filteredApplications);
 
         return true;
     }

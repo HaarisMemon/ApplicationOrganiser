@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.database.ApplicationStageTable;
 import com.haarismemon.applicationorganiser.database.DataSource;
-import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.database.ApplicationTable;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
 
 import java.util.Calendar;
@@ -55,7 +55,7 @@ public class StageEditActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private boolean isEditMode;
     private ApplicationStage stage;
-    private long parentInternshipID;
+    private long parentApplicationID;
 
     DatePickerDialog.OnDateSetListener mDataSetListener;
     EditText clickedDateEditText = null;
@@ -98,8 +98,8 @@ public class StageEditActivity extends AppCompatActivity {
 
         //application stage that has the same id that was sent in the intent
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1L));
-        //store the internship id that the stage belongs to
-        parentInternshipID = intent.getLongExtra(InternshipTable.COLUMN_ID, -1L);
+        //store the application id that the stage belongs to
+        parentApplicationID = intent.getLongExtra(ApplicationTable.COLUMN_ID, -1L);
 
         ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, mDataSource.getAllStageNames());
@@ -225,7 +225,7 @@ public class StageEditActivity extends AppCompatActivity {
     private void editModeSetup() {
         //if editing application stage then display all existing application stage information
         if(isEditMode) {
-            setTitle("Edit Stage");
+            setTitle("Edit " + getResources().getString(R.string.stage));
 
             stageNameEditText.setText(stage.getStageName());
 
@@ -267,7 +267,7 @@ public class StageEditActivity extends AppCompatActivity {
             notesStageEditText.setText(stage.getNotes());
 
         } else {
-            setTitle("New Stage");
+            setTitle("New " + getResources().getString(R.string.stage));
 
             noComplete.setChecked(true);
             yesWaiting.setChecked(true);
@@ -318,10 +318,10 @@ public class StageEditActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mDataSource.deleteApplicationStage(stage.getStageID());
 
-                                //go back to the internship information activity
-                                Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-                                //send the ID of the internship this stage belongs to, in the intent
-                                intent.putExtra(InternshipTable.COLUMN_ID, stage.getInternshipID());
+                                //go back to the application information activity
+                                Intent intent = new Intent(getApplicationContext(), ApplicationInformationActivity.class);
+                                //send the ID of the application this stage belongs to, in the intent
+                                intent.putExtra(ApplicationTable.COLUMN_ID, stage.getApplicationID());
                                 startActivity(intent);
                             }
                         })
@@ -399,11 +399,11 @@ public class StageEditActivity extends AppCompatActivity {
 
             newStage.setNotes(notesStageEditText.getText().toString().replaceFirst("^ *", ""));
 
-            //if editing internship then update it, else create a new one in database
+            //if editing application then update it, else create a new one in database
             if (isEditMode) {
                 mDataSource.updateApplicationStage(newStage);
             } else {
-                mDataSource.createApplicationStage(newStage, parentInternshipID);
+                mDataSource.createApplicationStage(newStage, parentApplicationID);
             }
 
             Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);

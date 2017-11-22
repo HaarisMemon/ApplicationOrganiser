@@ -1,8 +1,6 @@
 package com.haarismemon.applicationorganiser.adapter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.haarismemon.applicationorganiser.R;
+import com.haarismemon.applicationorganiser.model.Application;
 import com.haarismemon.applicationorganiser.model.ApplicationStage;
-import com.haarismemon.applicationorganiser.model.Internship;
-import com.haarismemon.applicationorganiser.view_holder.InternshipRowViewHolder;
+import com.haarismemon.applicationorganiser.view_holder.ApplicationRowViewHolder;
 import com.haarismemon.applicationorganiser.view_holder.StageHeaderViewHolder;
 
 /**
@@ -22,15 +20,15 @@ import com.haarismemon.applicationorganiser.view_holder.StageHeaderViewHolder;
 public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private Internship parentInternship;
+    private Application parentApplication;
     private ApplicationStage stage;
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_STAGE = 1;
 
-    public StageInformationAdapter(Context context, Internship parentInternship, ApplicationStage stage) {
+    public StageInformationAdapter(Context context, Application parentApplication, ApplicationStage stage) {
         this.context = context;
-        this.parentInternship = parentInternship;
+        this.parentApplication = parentApplication;
         this.stage = stage;
     }
 
@@ -44,8 +42,8 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_HEADER) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.internship_row_layout, parent, false);
-            return new InternshipRowViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.application_row_layout, parent, false);
+            return new ApplicationRowViewHolder(view);
         } else if(viewType == TYPE_STAGE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stage_header_row_layout, parent, false);
             return new StageHeaderViewHolder(view);
@@ -56,34 +54,34 @@ public class StageInformationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(holder instanceof InternshipRowViewHolder) {
+        if(holder instanceof ApplicationRowViewHolder) {
 
-            InternshipRowViewHolder internshipHolder = (InternshipRowViewHolder) holder;
+            ApplicationRowViewHolder applicationHolder = (ApplicationRowViewHolder) holder;
 
             //adds the company name, role and last updated date to the cardView holder
-            internshipHolder.companyName.setText(parentInternship.getCompanyName());
-            internshipHolder.role.setText(parentInternship.getRole());
-            internshipHolder.updatedDate.setText(parentInternship.getModifiedShortDate());
+            applicationHolder.companyName.setText(parentApplication.getCompanyName());
+            applicationHolder.role.setText(parentApplication.getRole());
+            applicationHolder.updatedDate.setText(parentApplication.getModifiedShortDate());
 
-            if(parentInternship.isPriority()) {
-                internshipHolder.priorityImage.setVisibility(View.VISIBLE);
+            if(parentApplication.isPriority()) {
+                applicationHolder.priorityImage.setVisibility(View.VISIBLE);
             } else {
-                internshipHolder.priorityImage.setVisibility(View.INVISIBLE);
+                applicationHolder.priorityImage.setVisibility(View.INVISIBLE);
             }
 
             //update the status icon for the cardView holder
-            ApplicationStage stage = parentInternship.getCurrentStage();
+            ApplicationStage stage = parentApplication.getCurrentStage();
 
             if(stage != null) {
 
                 ApplicationStage.Status currentStatus = stage.getStatus();
 
-                internshipHolder.internshipStatusIcon.setImageResource(
+                applicationHolder.applicationStatusIcon.setImageResource(
                         context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
                                 "drawable", context.getPackageName()));
 
             } else
-                internshipHolder.internshipStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
+                applicationHolder.applicationStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
 
         } else if(holder instanceof StageHeaderViewHolder) {
 

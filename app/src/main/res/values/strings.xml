@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Application Organiser</string>
+    <string name="app_name">Application Tracker</string>
     <string name="editedModified">Edited:</string>
 
     <string name="discardDialogMessage">Are you sure you want to discard changes to this event?</string>
@@ -9,21 +9,24 @@
 
     <string name="pleaseFillForm">Please fill in the form before saving</string>
 
-    <string name="search_hint">Search for an Internship</string>
+    <string name="search_hint">Search for an Application</string>
 
-    <string name="addFirstInternship">Click the + button below to add your first Internship.</string>
+    <string name="addFirstApplication">Click the + button below to add your first Application.</string>
     <string name="addFirstStage">Click the + button above to add your first Application Stage.</string>
     <string name="noResultsWithFilter">"No results match your filter."</string>
     <string name="noMatchFromSearch">"No match from search."</string>
 
     <string name="select_all">Select All</string>
-    <string name="deprioritise_internships">Deprioritise Internships</string>
-    <string name="prioritise_internships">Prioritise Internships</string>
-    <string name="delete_internships">Delete Internships</string>
+    <string name="deprioritise_applications">Deprioritise Applications</string>
+    <string name="prioritise_applications">Prioritise Applications</string>
+    <string name="delete_applications">Delete Applications</string>
     <string name="create_new_application_stage">Create new Application Stage</string>
-    <string name="delete_internship">Delete Internship</string>
-    <string name="edit_internship">Edit Internship</string>
+    <string name="delete_application">Delete Application</string>
+    <string name="edit_application">Edit Application</string>
 
+    <string name="application">Application</string>
+    <string name="stage">Stage</string>
+    
     <string name="company">Company</string>
     <string name="role">Role</string>
     <string name="length">Length</string>
@@ -32,7 +35,6 @@
     <string name="salary">Salary</string>
     <string name="notes">Notes</string>
     <string name="status">Status</string>
-    <string name="stage">Stage</string>
     <string name="completed">Completed?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -44,8 +46,8 @@
     <string name="pick_completion_date">Pick Completion Date</string>
     <string name="reply_date">Reply Date</string>
     <string name="pick_reply_date">Pick Reply Date</string>
-    <string name="image_shows_if_the_internship_is_of_priority_or_is_a_favourite">
-        Image shows if the internship is of priority, or is a favourite.
+    <string name="image_shows_if_the_application_is_of_priority_or_is_a_favourite">
+        Image shows if the application is of priority, or is a favourite.
     </string>
 
     <string name="current_status">Current Status</string>
@@ -53,10 +55,10 @@
     <string name="date_of_completion">Date of Completion</string>
     <string name="date_of_reply">Date of Reply</string>
     <string name="date">Date</string>
-    <string name="image_shows_the_current_status_of_the_internship">Image shows the current status of the internship.</string>
-    <string name="search_internships">Search Internships</string>
-    <string name="sort_internships">Sort Internships</string>
-    <string name="filter_internships">Filter Internships</string>
+    <string name="image_shows_the_current_status_of_the_application">Image shows the current status of the application.</string>
+    <string name="search_applications">Search Applications</string>
+    <string name="sort_applications">Sort Applications</string>
+    <string name="filter_applications">Filter Applications</string>
     <string name="filters">Filters</string>
     <string name="reset_all">Reset All</string>
     <string name="apply">Apply</string>
@@ -64,4 +66,5 @@
 
     <string name="deleted_snackbar_string">Deleted</string>
     <string name="undo_snackbar_string">Undo</string>
+    <string name="save">Save</string>
 </resources>

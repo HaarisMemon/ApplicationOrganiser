@@ -15,26 +15,26 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.haarismemon.applicationorganiser.database.DataSource;
-import com.haarismemon.applicationorganiser.database.InternshipTable;
-import com.haarismemon.applicationorganiser.model.Internship;
+import com.haarismemon.applicationorganiser.database.ApplicationTable;
+import com.haarismemon.applicationorganiser.model.Application;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * This class represents the activity to edit an Internship
+ * This class represents the activity to edit an Application
  * @author HaarisMemon
  */
-public class InternshipEditActivity extends AppCompatActivity {
+public class ApplicationEditActivity extends AppCompatActivity {
 
     /**
-     * static string constant used as a key when passing the isEditMode boolean for an internship in the intent
+     * static string constant used as a key when passing the isEditMode boolean for an application in the intent
      */
-    public static final String INTERNSHIP_EDIT_MODE = "INTERNSHIP_EDIT_MODE";
+    public static final String APPLICATION_EDIT_MODE = "APPLICATION_EDIT_MODE";
 
     private DataSource mDataSource;
     private boolean isEditMode;
-    private Internship internship;
+    private Application application;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.companyNameEditText) TextInputEditText companyNameEditText;
@@ -48,7 +48,7 @@ public class InternshipEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_internship_edit);
+        setContentView(R.layout.activity_application_edit);
 
         ButterKnife.bind(this);
 
@@ -60,27 +60,27 @@ public class InternshipEditActivity extends AppCompatActivity {
 
         mDataSource = new DataSource(this);
         //checks intent to see if it is edit or creation mode
-        isEditMode = intent.getBooleanExtra(INTERNSHIP_EDIT_MODE, false);
+        isEditMode = intent.getBooleanExtra(APPLICATION_EDIT_MODE, false);
 
-        //internship that has the same id that was sent in the intent
-        internship = mDataSource.getInternship(intent.getLongExtra(InternshipTable.COLUMN_ID, -1L));
+        //application that has the same id that was sent in the intent
+        application = mDataSource.getApplication(intent.getLongExtra(ApplicationTable.COLUMN_ID, -1L));
 
-        //if editing internship then display all existing internship information
+        //if editing application then display all existing application information
         if(isEditMode) {
-            setTitle("Edit Internship");
+            setTitle("Edit Application");
 
-            companyNameEditText.setText(internship.getCompanyName());
-            roleEditText.setText(internship.getRole());
-            lengthEditText.setText(internship.getLength());
-            locationEditText.setText(internship.getLocation());
-            urlEditText.setText(internship.getUrl());
-            if(internship.getSalary() != 0) {
-                salaryEditText.setText(String.valueOf(internship.getSalary()));
+            companyNameEditText.setText(application.getCompanyName());
+            roleEditText.setText(application.getRole());
+            lengthEditText.setText(application.getLength());
+            locationEditText.setText(application.getLocation());
+            urlEditText.setText(application.getUrl());
+            if(application.getSalary() != 0) {
+                salaryEditText.setText(String.valueOf(application.getSalary()));
             }
-            notesEditText.setText(internship.getNotes());
+            notesEditText.setText(application.getNotes());
 
         } else {
-            setTitle("New Internship");
+            setTitle("New Application");
         }
 
         ArrayAdapter<String> roleNameAdapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -114,7 +114,7 @@ public class InternshipEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.internship_edit_menu, menu);
+        getMenuInflater().inflate(R.menu.application_edit_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -122,8 +122,8 @@ public class InternshipEditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             //when save button pressed
-            case R.id.action_save_internship:
-                saveInternship();
+            case R.id.action_save_application:
+                saveApplication();
                 return true;
             //when back button pressed in action bar
             case android.R.id.home:
@@ -131,7 +131,7 @@ public class InternshipEditActivity extends AppCompatActivity {
                 return true;
 
             //when the delete button is pressed in the action bar
-            case R.id.action_delete_internship_edit:
+            case R.id.action_delete_application_edit:
                 //show alert dialog to confirm deletion
                 new AlertDialog.Builder(this)
                         .setTitle(getResources().getString(R.string.areYouSureDialogTitle))
@@ -139,7 +139,7 @@ public class InternshipEditActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mDataSource.deleteInternship(internship.getInternshipID());
+                                mDataSource.deleteApplication(application.getApplicationID());
 
                                 //go back to the application list activity
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -157,11 +157,11 @@ public class InternshipEditActivity extends AppCompatActivity {
     }
 
     /**
-     * On click method to save an Internship
+     * On click method to save an Application
      * @param view save button that was clicked
      */
     public void saveButton(View view) {
-        saveInternship();
+        saveApplication();
     }
 
     /**
@@ -197,48 +197,48 @@ public class InternshipEditActivity extends AppCompatActivity {
     }
 
     /**
-     * Saves the current internship, and returns true if the validation and save was successful
+     * Saves the current application, and returns true if the validation and save was successful
      * @return true if the validation and save was successful
      */
-    private boolean saveInternship() {
-        //if the form is validated then save the internship, otherwise do not
+    private boolean saveApplication() {
+        //if the form is validated then save the application, otherwise do not
         if(validate()) {
-            Internship newInternship = null;
+            Application newApplication = null;
 
-            //if editing internship then use existing internship with existing ID, otherwise create new one
+            //if editing application then use existing application with existing ID, otherwise create new one
             if (isEditMode) {
-                newInternship = internship;
+                newApplication = application;
             } else {
-                newInternship = new Internship();
+                newApplication = new Application();
             }
 
-            newInternship.setCompanyName(companyNameEditText.getText().toString().toString().replaceFirst("^ *", ""));
-            newInternship.setRole(roleEditText.getText().toString().replaceFirst("^ *", ""));
-            newInternship.setLength(lengthEditText.getText().toString().replaceFirst("^ *", ""));
-            newInternship.setLocation(locationEditText.getText().toString().replaceFirst("^ *", ""));
-            newInternship.setUrl(urlEditText.getText().toString().replaceFirst("^ *", ""));
+            newApplication.setCompanyName(companyNameEditText.getText().toString().toString().replaceFirst("^ *", ""));
+            newApplication.setRole(roleEditText.getText().toString().replaceFirst("^ *", ""));
+            newApplication.setLength(lengthEditText.getText().toString().replaceFirst("^ *", ""));
+            newApplication.setLocation(locationEditText.getText().toString().replaceFirst("^ *", ""));
+            newApplication.setUrl(urlEditText.getText().toString().replaceFirst("^ *", ""));
 
             try {
                 String salary = salaryEditText.getText().toString().replaceFirst("^ *", "");
                 if(!salary.equals(""))
-                    newInternship.setSalary(Integer.parseInt(salary));
+                    newApplication.setSalary(Integer.parseInt(salary));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
 
-            newInternship.setNotes(notesEditText.getText().toString().replaceFirst("^ *", ""));
+            newApplication.setNotes(notesEditText.getText().toString().replaceFirst("^ *", ""));
 
-            //if editing internship then update it, else create a new one in database
+            //if editing application then update it, else create a new one in database
             if (isEditMode) {
-                mDataSource.updateInternship(newInternship);
+                mDataSource.updateApplication(newApplication);
             } else {
-                mDataSource.createInternship(newInternship);
+                mDataSource.createApplication(newApplication);
             }
 
-            //go to the Internship Information of the existing or new Internship made
-            Intent intent = new Intent(getApplicationContext(), InternshipInformationActivity.class);
-            //send the internship ID in the intent
-            intent.putExtra(InternshipTable.COLUMN_ID, newInternship.getInternshipID());
+            //go to the Application Information of the existing or new Application made
+            Intent intent = new Intent(getApplicationContext(), ApplicationInformationActivity.class);
+            //send the application ID in the intent
+            intent.putExtra(ApplicationTable.COLUMN_ID, newApplication.getApplicationID());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 
@@ -260,7 +260,7 @@ public class InternshipEditActivity extends AppCompatActivity {
                 .setNegativeButton("Discard", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        InternshipEditActivity.super.onBackPressed();
+                        ApplicationEditActivity.super.onBackPressed();
                     }
                 });
         discardDialog.show();

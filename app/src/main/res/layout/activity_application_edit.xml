@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.haarismemon.applicationorganiser.InternshipEditActivity"
+    tools:context="com.haarismemon.applicationorganiser.ApplicationEditActivity"
     android:background="@color/cardview_light_background">
 
     <include layout="@layout/toolbar"
@@ -138,7 +138,7 @@
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/internshipSaveFAB"
+        android:id="@+id/applicationSaveFAB"
         app:srcCompat="@drawable/ic_save_white_24dp"
         android:onClick="saveButton"
         style="@style/floatingActionButton"/>

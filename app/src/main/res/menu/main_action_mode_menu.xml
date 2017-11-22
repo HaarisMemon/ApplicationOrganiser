@@ -9,19 +9,19 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:title="@string/prioritise_internships"
+        android:title="@string/prioritise_applications"
         android:icon="@drawable/ic_star_white_24dp"
         android:id="@+id/action_mode_prioritise"
         app:showAsAction="always"/>
 
     <item
-        android:title="@string/deprioritise_internships"
+        android:title="@string/deprioritise_applications"
         android:icon="@drawable/ic_star_border_white_24dp"
         android:id="@+id/action_mode_deprioritise"
         app:showAsAction="always"/>
 
     <item
-        android:title="@string/delete_internships"
+        android:title="@string/delete_applications"
         android:icon="@drawable/ic_delete_white_24dp"
         android:id="@+id/action_mode_delete"
         app:showAsAction="ifRoom"/>

@@ -1,14 +1,14 @@
 package com.haarismemon.applicationorganiser.database;
 
 /**
- * This class contains all the static string constants for Internship to help
- * create the Internship Table in the database
+ * This class contains all the static string constants for Application to help
+ * create the Application Table in the database
  * @author HaarisMemon
  */
-public class InternshipTable {
+public class ApplicationTable {
 
-    //static String constants for all the columns in the Internship Table
-    public static final String TABLE_INTERNSHIP = "internship";
+    //static String constants for all the columns in the Application Table
+    public static final String TABLE_APPLICATION = "application";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_COMPANY_NAME = "company_name";
     public static final String COLUMN_ROLE = "role";
@@ -21,10 +21,10 @@ public class InternshipTable {
     public static final String COLUMN_CREATED_ON = "created_on";
     public static final String COLUMN_MODIFIED_ON = "modified_on";
 
-    public static final String INTERNSHIP_ID = "internship_id";
+    public static final String APPLICATION_ID = "application_id";
 
     /**
-     * List of all columns in the Internship Table as String constants
+     * List of all columns in the Application Table as String constants
      */
     public static final String[] ALL_COLUMNS = {
             COLUMN_ID, COLUMN_COMPANY_NAME, COLUMN_ROLE, COLUMN_LENGTH, COLUMN_LOCATION,
@@ -32,10 +32,10 @@ public class InternshipTable {
     };
 
     /**
-     * SQL Create statement to create the Internship table will all the columns, if not exists already
+     * SQL Create statement to create the Application table will all the columns, if not exists already
      */
     public static final String SQL_CREATE =
-            "CREATE TABLE IF NOT EXISTS " + TABLE_INTERNSHIP + " (" +
+            "CREATE TABLE IF NOT EXISTS " + TABLE_APPLICATION + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_COMPANY_NAME + " VARCHAR, " +
                 COLUMN_ROLE + " VARCHAR, " +
@@ -50,9 +50,9 @@ public class InternshipTable {
             ")";
 
     /**
-     * SQL Create statement to drop the Internship Table
+     * SQL Create statement to drop the Application Table
      */
     public static final String SQL_DELETE =
-            "DROP TABLE " + TABLE_INTERNSHIP;
+            "DROP TABLE " + TABLE_APPLICATION;
 
 }

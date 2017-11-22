@@ -6,7 +6,7 @@
     <ImageView
         style="@style/priorityBookmark"
         android:id="@+id/priorityImage"
-        android:contentDescription="@string/image_shows_if_the_internship_is_of_priority_or_is_a_favourite"/>
+        android:contentDescription="@string/image_shows_if_the_application_is_of_priority_or_is_a_favourite"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
 
         <LinearLayout
             style="@style/headerCardViewLinearLayout"
-            android:id="@+id/internshipDetailsLayout">
+            android:id="@+id/applicationDetailsLayout">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/editedDateInternshipText"
+            android:id="@+id/editedDateApplicationText"
             style="@style/editedModifiedText" />
 
     </RelativeLayout>

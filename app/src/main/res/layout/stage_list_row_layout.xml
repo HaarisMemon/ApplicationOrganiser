@@ -29,7 +29,7 @@
             android:id="@+id/stageStatusIcon"
             android:layout_below="@id/updatedDateCardView"
             style="@style/statusIcon"
-            android:contentDescription="@string/image_shows_the_current_status_of_the_internship"/>
+            android:contentDescription="@string/image_shows_the_current_status_of_the_application"/>
 
     </RelativeLayout>
 

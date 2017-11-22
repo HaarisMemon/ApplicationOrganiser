@@ -2,7 +2,7 @@ package com.haarismemon.applicationorganiser.model;
 
 import android.content.ContentValues;
 
-import com.haarismemon.applicationorganiser.database.InternshipTable;
+import com.haarismemon.applicationorganiser.database.ApplicationTable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class represents the Internship that a user has or will apply to
+ * This class represents the Application that a user has or will apply to
  * @author HaarisMemon
  */
-public class Internship {
+public class Application {
 
-    private long internshipID;
+    private long applicationID;
     private String companyName;
     private String role;
     private String length;
@@ -28,15 +28,15 @@ public class Internship {
     private String modifiedDate;
     private boolean isSelected;
 
-    //An internship application will contain a number of stages the user has reached in their application
+    //An application application will contain a number of stages the user has reached in their application
     private List<ApplicationStage> applicationStages;
 
-    public Internship() {
+    public Application() {
         applicationStages = new ArrayList<>();
     }
 
     /**
-     * Returns the most recent and current application stage of an internship
+     * Returns the most recent and current application stage of an application
      * @return The most recent application stage
      */
     public ApplicationStage getCurrentStage() {
@@ -45,75 +45,75 @@ public class Internship {
     }
 
     /**
-     * Check if two Internship objects are equal
-     * @param obj The second Internship object to compare it to
+     * Check if two Application objects are equal
+     * @param obj The second Application object to compare it to
      * @return true if the two Intnernship objects have same company name and role
      */
     @Override
     public boolean equals(Object obj) {
-        boolean isSameCompanyName = companyName.equals(((Internship) obj).companyName);
-        boolean isSameRole = role.equals(((Internship) obj).role);
+        boolean isSameCompanyName = companyName.equals(((Application) obj).companyName);
+        boolean isSameRole = role.equals(((Application) obj).role);
         return isSameCompanyName && isSameRole;
     }
 
     /**
-     * Returns a string representation of the Internship
-     * @return String of Internship's "[company name] - [role]"
+     * Returns a string representation of the Application
+     * @return String of Application's "[company name] - [role]"
      */
     @Override
     public String toString() {
-        String internshipString = companyName + " - " + role;
-        return internshipString;
+        String applicationString = companyName + " - " + role;
+        return applicationString;
     }
 
     /**
-     * Generates a ContentValues object with all fields of Internship stored, to use for database
+     * Generates a ContentValues object with all fields of Application stored, to use for database
      * @return
      */
     public ContentValues toValues() {
         ContentValues values = new ContentValues();
 
-        values.put(InternshipTable.COLUMN_COMPANY_NAME, companyName);
-        values.put(InternshipTable.COLUMN_ROLE, role);
-        values.put(InternshipTable.COLUMN_LENGTH, length);
-        values.put(InternshipTable.COLUMN_LOCATION, location);
-        values.put(InternshipTable.COLUMN_PRIORITY, priority);
-        values.put(InternshipTable.COLUMN_URL, url);
-        values.put(InternshipTable.COLUMN_SALARY, salary);
-        values.put(InternshipTable.COLUMN_NOTES, notes);
+        values.put(ApplicationTable.COLUMN_COMPANY_NAME, companyName);
+        values.put(ApplicationTable.COLUMN_ROLE, role);
+        values.put(ApplicationTable.COLUMN_LENGTH, length);
+        values.put(ApplicationTable.COLUMN_LOCATION, location);
+        values.put(ApplicationTable.COLUMN_PRIORITY, priority);
+        values.put(ApplicationTable.COLUMN_URL, url);
+        values.put(ApplicationTable.COLUMN_SALARY, salary);
+        values.put(ApplicationTable.COLUMN_NOTES, notes);
 
-        //if no created date, then Internship not stored in database yet (newly created)
+        //if no created date, then Application not stored in database yet (newly created)
         if(createdDate != null) {
-            values.put(InternshipTable.COLUMN_CREATED_ON, createdDate);
+            values.put(ApplicationTable.COLUMN_CREATED_ON, createdDate);
         }
 
-        //if no modified date, then Internship not stored in database yet (newly created)
+        //if no modified date, then Application not stored in database yet (newly created)
         if(modifiedDate != null) {
-            values.put(InternshipTable.COLUMN_MODIFIED_ON, modifiedDate);
+            values.put(ApplicationTable.COLUMN_MODIFIED_ON, modifiedDate);
         }
 
         return values;
     }
 
     /**
-     * Returns the Internship ID in database table
-     * @return ID of Internship row in database
+     * Returns the Application ID in database table
+     * @return ID of Application row in database
      */
-    public long getInternshipID() {
-        return internshipID;
+    public long getApplicationID() {
+        return applicationID;
     }
 
     /**
-     * Sets the Internship ID obtained from database table
-     * @param internshipID of Internship row in database
+     * Sets the Application ID obtained from database table
+     * @param applicationID of Application row in database
      */
-    public void setInternshipID(long internshipID) {
-        this.internshipID = internshipID;
+    public void setApplicationID(long applicationID) {
+        this.applicationID = applicationID;
     }
 
     /**
-     * Returns the company name of Internship
-     * @return company name of company offering the Internship
+     * Returns the company name of Application
+     * @return company name of company offering the Application
      */
     public String getCompanyName() {
         if(companyName != null && companyName.equals("")) companyName = null;
@@ -121,16 +121,16 @@ public class Internship {
     }
 
     /**
-     * Sets the company name of Internship
-     * @param companyName of  of company offering the Internship
+     * Sets the company name of Application
+     * @param companyName of  of company offering the Application
      */
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
     /**
-     * Returns the role of the Internship
-     * @return internship role
+     * Returns the role of the Application
+     * @return application role
      */
     public String getRole() {
         if(role != null && role.equals("")) role = null;
@@ -138,16 +138,16 @@ public class Internship {
     }
 
     /**
-     * Sets the role of the Internship
-     * @param role of Internship
+     * Sets the role of the Application
+     * @param role of Application
      */
     public void setRole(String role) {
         this.role = role;
     }
 
     /**
-     * Returns the length/duration of Internship
-     * @return length of employment in the Internship
+     * Returns the length/duration of Application
+     * @return length of employment in the Application
      */
     public String getLength() {
         if(length != null && length.equals("")) length = null;
@@ -155,8 +155,8 @@ public class Internship {
     }
 
     /**
-     * Sets the length/duration of Internship
-     * @param length of employment in the Internship
+     * Sets the length/duration of Application
+     * @param length of employment in the Application
      */
     public void setLength(String length) {
         this.length = length;
@@ -164,7 +164,7 @@ public class Internship {
 
     /**
      * Returns the location of company
-     * @return location of company where Internship is located
+     * @return location of company where Application is located
      */
     public String getLocation() {
         if(location != null && location.equals("")) location = null;
@@ -173,31 +173,31 @@ public class Internship {
 
     /**
      * Sets the location of company
-     * @param location of company where Internship is located
+     * @param location of company where Application is located
      */
     public void setLocation(String location) {
         this.location = location;
     }
 
     /**
-     * Returns if the internship is high priority
-     * @return true if the internship is high priority
+     * Returns if the application is high priority
+     * @return true if the application is high priority
      */
     public boolean isPriority() {
         return priority;
     }
 
     /**
-     * Sets the priority of the internship
-     * @param priority set to true if internship is high priority
+     * Sets the priority of the application
+     * @param priority set to true if application is high priority
      */
     public void setPriority(boolean priority) {
         this.priority = priority;
     }
 
     /**
-     * Returns the url of the website for internship
-     * @return url website string for internship
+     * Returns the url of the website for application
+     * @return url website string for application
      */
     public String getUrl() {
         if(url != null && url.equals("")) url = null;
@@ -205,24 +205,24 @@ public class Internship {
     }
 
     /**
-     * Sets the url website of the internship
-     * @param url website of the internship
+     * Sets the url website of the application
+     * @param url website of the application
      */
     public void setUrl(String url) {
         this.url = url;
     }
 
     /**
-     * Returns the salary of the internship
-     * @return salary of the internship
+     * Returns the salary of the application
+     * @return salary of the application
      */
     public int getSalary() {
         return salary;
     }
 
     /**
-     * Sets the salary of the internship
-     * @param salary salary of the internship
+     * Sets the salary of the application
+     * @param salary salary of the application
      */
     public void setSalary(int salary) {
         this.salary = salary;
@@ -246,9 +246,9 @@ public class Internship {
     }
 
     /**
-     * Returns the date that the Internship was last updated in the database
+     * Returns the date that the Application was last updated in the database
      * Date returned in friendly format (MMM dd HH:mm) to be displayed in app
-     * @return string date of when Internship last updated in format (MMM dd HH:mm)
+     * @return string date of when Application last updated in format (MMM dd HH:mm)
      */
     public String getModifiedShortDateTime() {
         SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -264,9 +264,9 @@ public class Internship {
     }
 
     /**
-     * Returns the date that the Internship was last updated in the database
+     * Returns the date that the Application was last updated in the database
      * Date returned in friendly format (MMM dd) to be displayed in app
-     * @return string date of when Internship last updated in format (MMM dd)
+     * @return string date of when Application last updated in format (MMM dd)
      */
     public String getModifiedShortDate() {
         SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -286,8 +286,8 @@ public class Internship {
     }
 
     /**
-     * Sets the date that the Internship was last updated in the database
-     * @param modifiedDate of when Internship last updated
+     * Sets the date that the Application was last updated in the database
+     * @param modifiedDate of when Application last updated
      */
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
@@ -302,31 +302,31 @@ public class Internship {
     }
 
     /**
-     * Returns all the stages of the Internship application
-     * @return stages of the Internship application
+     * Returns all the stages of the Application application
+     * @return stages of the Application application
      */
     public List<ApplicationStage> getApplicationStages() {
         return applicationStages;
     }
 
     /**
-     * Sets a list of all the stages of the Internship application
-     * @param applicationStages all stages of the Internship application
+     * Sets a list of all the stages of the Application application
+     * @param applicationStages all stages of the Application application
      */
     public void setApplicationStages(List<ApplicationStage> applicationStages) {
         this.applicationStages = applicationStages;
     }
 
     /**
-     * Adds an application stage to the Internship
-     * @param stage to be added to Internship
+     * Adds an application stage to the Application
+     * @param stage to be added to Application
      */
     public void addStage(ApplicationStage stage) {
         applicationStages.add(stage);
     }
 
     /**
-     * Returns whether the internship has been selected in the RecyclerView
+     * Returns whether the application has been selected in the RecyclerView
      * @return true if it has been selected in the RecyclerView
      */
     public boolean isSelected() {
@@ -334,34 +334,34 @@ public class Internship {
     }
 
     /**
-     * Set whether the internship has been selected in the RecyclerView
+     * Set whether the application has been selected in the RecyclerView
      * @param selected - true if it has been selected in the RecyclerView
      */
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
     
-    public static Internship of(String companyName,
-            String role,
-            String length,
-            String location,
-            boolean priority,
-            String url,
-            int salary,
-            String notes,
-            boolean isSelected) {
-        Internship internship = new Internship();
+    public static Application of(String companyName,
+                                 String role,
+                                 String length,
+                                 String location,
+                                 boolean priority,
+                                 String url,
+                                 int salary,
+                                 String notes,
+                                 boolean isSelected) {
+        Application application = new Application();
 
-        internship.setCompanyName(companyName);
-        internship.setRole(role);
-        internship.setLength(length);
-        internship.setLocation(location);
-        internship.setPriority(priority);
-        internship.setUrl(url);
-        internship.setSalary(salary);
-        internship.setNotes(notes);
-        internship.setSelected(isSelected);
+        application.setCompanyName(companyName);
+        application.setRole(role);
+        application.setLength(length);
+        application.setLocation(location);
+        application.setPriority(priority);
+        application.setUrl(url);
+        application.setSalary(salary);
+        application.setNotes(notes);
+        application.setSelected(isSelected);
 
-        return internship;
+        return application;
     }
 }

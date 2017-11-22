@@ -11,11 +11,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * This class represents the View Holder which is used to hold a Internships Header CardView's data to display
+ * This class represents the View Holder which is used to hold an Applications Header CardView's data to display
  */
-public class InternshipHeaderViewHolder extends RecyclerView.ViewHolder {
+public class ApplicationHeaderViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.editedDateInternshipText) public TextView editedText;
+    @BindView(R.id.editedDateApplicationText) public TextView editedText;
     @BindView(R.id.companyNameText) public TextView companyNameText;
     @BindView(R.id.roleText) public TextView roleText;
     @BindView(R.id.lengthText) public TextView lengthText;
@@ -25,7 +25,7 @@ public class InternshipHeaderViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.notesText) public TextView notesText;
     @BindView(R.id.priorityImage) public ImageView priorityImage;
 
-    public InternshipHeaderViewHolder(View itemView) {
+    public ApplicationHeaderViewHolder(View itemView) {
         super(itemView);
 
         ButterKnife.bind(this, itemView);
