@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,16 +27,17 @@ import butterknife.ButterKnife;
  * This class represents the activity to edit an Application
  * @author HaarisMemon
  */
-public class ApplicationEditActivity extends AppCompatActivity {
+public class ApplicationEditActivity extends AppCompatActivity implements TextWatcher {
 
     /**
      * static string constant used as a key when passing the isEditMode boolean for an application in the intent
      */
     public static final String APPLICATION_EDIT_MODE = "APPLICATION_EDIT_MODE";
 
+    private Application application;
     private DataSource mDataSource;
     private boolean isEditMode;
-    private Application application;
+    private boolean isChangeMade;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.companyNameEditText) TextInputEditText companyNameEditText;
@@ -97,6 +100,14 @@ public class ApplicationEditActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, mDataSource.getAllLocations());
         locationEditText.setAdapter(locationAdapter);
         locationEditText.setThreshold(0);
+
+        companyNameEditText.addTextChangedListener(this);
+        roleEditText.addTextChangedListener(this);
+        lengthEditText.addTextChangedListener(this);
+        locationEditText.addTextChangedListener(this);
+        urlEditText.addTextChangedListener(this);
+        salaryEditText.addTextChangedListener(this);
+        notesEditText.addTextChangedListener(this);
 
     }
 
@@ -253,16 +264,31 @@ public class ApplicationEditActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //show alert dialog to discard changes
-        AlertDialog.Builder discardDialog = new AlertDialog.Builder(this)
-                .setMessage(getResources().getString(R.string.discardDialogMessage))
-                .setPositiveButton("Keep Editing", null)
-                .setNegativeButton("Discard", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ApplicationEditActivity.super.onBackPressed();
-                    }
-                });
-        discardDialog.show();
+        if(isChangeMade) {
+            //show alert dialog to discard changes
+            AlertDialog.Builder discardDialog = new AlertDialog.Builder(this)
+                    .setMessage(getResources().getString(R.string.discardDialogMessage))
+                    .setPositiveButton("Keep Editing", null)
+                    .setNegativeButton("Discard", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ApplicationEditActivity.super.onBackPressed();
+                        }
+                    });
+            discardDialog.show();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        isChangeMade = true;
     }
 }

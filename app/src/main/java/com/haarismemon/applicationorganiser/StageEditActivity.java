@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,13 +35,20 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.haarismemon.applicationorganiser.R.id.companyNameEditText;
+import static com.haarismemon.applicationorganiser.R.id.lengthEditText;
+import static com.haarismemon.applicationorganiser.R.id.locationEditText;
+import static com.haarismemon.applicationorganiser.R.id.notesEditText;
+import static com.haarismemon.applicationorganiser.R.id.roleEditText;
+import static com.haarismemon.applicationorganiser.R.id.salaryEditText;
+import static com.haarismemon.applicationorganiser.R.id.urlEditText;
 import static com.haarismemon.applicationorganiser.model.ApplicationStage.defaultApplicationStageNames;
 
 /**
  * This class represents the activity to edit an Application Stage
  * @author HaarisMemon
  */
-public class StageEditActivity extends AppCompatActivity {
+public class StageEditActivity extends AppCompatActivity implements TextWatcher {
 
     /**
      * string constant used as a key when passing the isEditMode for an application stage boolean in the intent
@@ -53,9 +62,10 @@ public class StageEditActivity extends AppCompatActivity {
     public static final String DATE_PICKED = "DATE_PICKED";
 
     private DataSource mDataSource;
-    private boolean isEditMode;
     private ApplicationStage stage;
+    private boolean isEditMode;
     private long parentApplicationID;
+    private boolean isChangeMade;
 
     DatePickerDialog.OnDateSetListener mDataSetListener;
     EditText clickedDateEditText = null;
@@ -151,6 +161,7 @@ public class StageEditActivity extends AppCompatActivity {
         yesComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isChangeMade = true;
                 yesCompleteRadioClick();
             }
         });
@@ -158,6 +169,7 @@ public class StageEditActivity extends AppCompatActivity {
         noComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isChangeMade = true;
                 noCompleteRadioClick();
             }
         });
@@ -165,6 +177,7 @@ public class StageEditActivity extends AppCompatActivity {
         yesWaiting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isChangeMade = true;
                 yesWaitingRadioClick();
             }
         });
@@ -172,9 +185,25 @@ public class StageEditActivity extends AppCompatActivity {
         noWaiting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isChangeMade = true;
                 noWaitingRadioClick();
             }
         });
+
+        yesSuccessful.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isChangeMade = true;
+            }
+        });
+
+        noSuccessful.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isChangeMade = true;
+            }
+        });
+
     }
 
     private void yesCompleteRadioClick() {
@@ -273,6 +302,12 @@ public class StageEditActivity extends AppCompatActivity {
             yesWaiting.setChecked(true);
             noSuccessful.setChecked(true);
         }
+
+        stageNameEditText.addTextChangedListener(this);
+        notesStageEditText.addTextChangedListener(this);
+        startDateEditText.addTextChangedListener(this);
+        completionDateEditText.addTextChangedListener(this);
+        replyDateEditText.addTextChangedListener(this);
     }
 
     @Override
@@ -484,17 +519,21 @@ public class StageEditActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //show alert dialog to discard changes
-        AlertDialog.Builder discardDialog = new AlertDialog.Builder(this)
-                .setMessage(getResources().getString(R.string.discardDialogMessage))
-                .setPositiveButton("Keep Editing", null)
-                .setNegativeButton("Discard", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        StageEditActivity.super.onBackPressed();
-                    }
-                });
-        discardDialog.show();
+        if(isChangeMade) {
+            //show alert dialog to discard changes
+            AlertDialog.Builder discardDialog = new AlertDialog.Builder(this)
+                    .setMessage(getResources().getString(R.string.discardDialogMessage))
+                    .setPositiveButton("Keep Editing", null)
+                    .setNegativeButton("Discard", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            StageEditActivity.super.onBackPressed();
+                        }
+                    });
+            discardDialog.show();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void suggestStageName(View view) {
@@ -519,7 +558,16 @@ public class StageEditActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
 
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        isChangeMade = true;
     }
 }
