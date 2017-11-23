@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Application Tracker</string>
+    <string name="app_name">ApplicationTracker</string>
     <string name="editedModified">Edited:</string>
 
     <string name="discardDialogMessage">Are you sure you want to discard changes to this event?</string>
