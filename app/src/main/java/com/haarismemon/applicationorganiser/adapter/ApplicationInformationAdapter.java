@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.haarismemon.applicationorganiser.ApplicationInformationActivity;
 import com.haarismemon.applicationorganiser.MainActivity;
 import com.haarismemon.applicationorganiser.R;
 import com.haarismemon.applicationorganiser.StageInformationActivity;
@@ -26,6 +27,7 @@ import java.util.List;
  */
 public class ApplicationInformationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private ApplicationInformationActivity applicationInformationActivity;
     private Context context;
     private Application application;
     private List<ApplicationStage> stagesList;
@@ -34,8 +36,9 @@ public class ApplicationInformationAdapter extends RecyclerView.Adapter<Recycler
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_STAGE = 1;
 
-    public ApplicationInformationAdapter(Context context, Application application, List<ApplicationStage> stagesList, boolean isSourceMainActivity) {
-        this.context = context;
+    public ApplicationInformationAdapter(ApplicationInformationActivity applicationInformationActivity, Application application, List<ApplicationStage> stagesList, boolean isSourceMainActivity) {
+        this.applicationInformationActivity = applicationInformationActivity;
+        this.context = applicationInformationActivity;
         this.application = application;
         this.stagesList = stagesList;
         this.isSourceMainActivity = isSourceMainActivity;
@@ -125,6 +128,8 @@ public class ApplicationInformationAdapter extends RecyclerView.Adapter<Recycler
                     }
 
                     context.startActivity(intent);
+
+                    applicationInformationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
         }

@@ -78,7 +78,7 @@ public class ApplicationInformationActivity extends AppCompatActivity {
         stageRecyclerView.setLayoutManager(layoutManager);
         stageRecyclerView.setHasFixedSize(true);
 
-        adapter = new ApplicationInformationAdapter(getApplicationContext(), application, stages, isSourceMainActivity);
+        adapter = new ApplicationInformationAdapter(this, application, stages, isSourceMainActivity);
         stageRecyclerView.setAdapter(adapter);
 
         displayMessageIfNoStages();
@@ -215,6 +215,8 @@ public class ApplicationInformationActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     //displays message to inform user to add their first stage if stage list is empty

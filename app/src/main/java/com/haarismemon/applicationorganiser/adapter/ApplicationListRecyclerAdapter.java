@@ -106,6 +106,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
                     intent.putExtra(MainActivity.SOURCE, true);
                     context.startActivity(intent);
 
+                    context.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });
