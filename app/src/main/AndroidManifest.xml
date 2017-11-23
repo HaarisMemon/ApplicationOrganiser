@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.haarismemon.applicationorganiser">
+    package="com.memonade.applicationtracker">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity">
+            android:name="com.memonade.applicationtracker.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -20,14 +20,14 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
-        <activity android:name=".ApplicationInformationActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".StageInformationActivity"
-            android:parentActivityName=".ApplicationInformationActivity"/>
-        <activity android:name=".ApplicationEditActivity"
-            android:parentActivityName=".ApplicationInformationActivity"/>
-        <activity android:name=".StageEditActivity"
-            android:parentActivityName=".StageInformationActivity"/>
+        <activity android:name="com.memonade.applicationtracker.ApplicationInformationActivity"
+            android:parentActivityName="com.memonade.applicationtracker.MainActivity"/>
+        <activity android:name="com.memonade.applicationtracker.StageInformationActivity"
+            android:parentActivityName="com.memonade.applicationtracker.ApplicationInformationActivity"/>
+        <activity android:name="com.memonade.applicationtracker.ApplicationEditActivity"
+            android:parentActivityName="com.memonade.applicationtracker.ApplicationInformationActivity"/>
+        <activity android:name="com.memonade.applicationtracker.StageEditActivity"
+            android:parentActivityName="com.memonade.applicationtracker.StageInformationActivity"/>
     </application>
 
 </manifest>
