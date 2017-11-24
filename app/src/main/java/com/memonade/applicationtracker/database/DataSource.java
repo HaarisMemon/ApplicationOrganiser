@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * This class is used to easily access the database and execute commands
  * @author HaarisMemon
@@ -24,6 +26,9 @@ public class DataSource {
     private Context mContext;
     private SQLiteDatabase mDatabase;
     private DBHelper mDbHelper;
+
+    public static final String preference = "my_preference_file";
+    public static final String is_first_run = "is_first_run";
 
     /**
      * Constructs the DataSource class which includes getting a writable database
@@ -124,14 +129,15 @@ public class DataSource {
     /**
      * Seeds the database with dummy data if the database is empty
      */
-    public void seedDatbase() {
+    public void seedDatabase() {
         //gets the number of applications in the database
         long numApplications = DatabaseUtils.queryNumEntries(mDatabase, ApplicationTable.TABLE_APPLICATION);
         //gets the number of stages in the database
         long numApplicationStageCount = DatabaseUtils.queryNumEntries(mDatabase, ApplicationStageTable.TABLE_APPLICATION_STAGE);
 
         //if there are no applications and stages then populate
-        if(numApplications == 0 && numApplicationStageCount == 0) {
+        if(mContext.getSharedPreferences(preference, MODE_PRIVATE).getBoolean(is_first_run, true) &&
+                numApplications == 0 && numApplicationStageCount == 0) {
 
             Application application = Application.of("Example Company", "Software Engineering Placement Year",
                     "12 Months", "London", false, "www.examplecompany.com", 15000,
@@ -150,6 +156,9 @@ public class DataSource {
             createApplication(application);
             createApplicationStage(stage1, application.getApplicationID());
             createApplicationStage(stage2, application.getApplicationID());
+
+            // record the fact that the app has been started at least once
+            mContext.getSharedPreferences(preference, MODE_PRIVATE).edit().putBoolean(is_first_run, false).apply();
 
         }
     }
