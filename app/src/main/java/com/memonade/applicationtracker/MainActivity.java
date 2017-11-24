@@ -5,12 +5,12 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,8 +30,8 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.memonade.applicationtracker.adapter.ApplicationListRecyclerAdapter;
-import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.database.ApplicationTable;
+import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.listener.FilterDialogOnClickListener;
 import com.memonade.applicationtracker.listener.MyOnQueryTextListener;
 import com.memonade.applicationtracker.model.Application;
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDataSource = new DataSource(this);
         mDataSource.open();
-        mDataSource.seedDatbase();
+        mDataSource.seedDatabase();
 
         //ArrayList of all applications in the database
         applications = mDataSource.getAllApplication();
@@ -180,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
         actionModeCallback = new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                actionMode.setTitle(selectedApplications.size() + " applications selected");
+                actionMode.setTitle(selectedApplications.size() +
+                        getString(R.string.multi_select_applications_selected));
 
                 MenuInflater inflater = actionMode.getMenuInflater();
                 inflater.inflate(R.menu.main_action_mode_menu, menu);
@@ -570,7 +571,8 @@ public class MainActivity extends AppCompatActivity {
                     filterSelectedItemsIndexes.get(FilterType.STATUS)).get(0);
             statusSelect.setText(status.toString());
 
-            statusSelect.setCompoundDrawablesWithIntrinsicBounds(getResources().getIdentifier("ic_status_" + status.getIconNameText(), "drawable", getPackageName()), 0, 0, 0);
+            String ic_status = getString(R.string.status_icon_file_prefix);
+            statusSelect.setCompoundDrawablesWithIntrinsicBounds(getResources().getIdentifier(ic_status + status.getIconNameText(), "drawable", getPackageName()), 0, 0, 0);
             statusSelect.setCompoundDrawablePadding(16);
 
         } else {
@@ -587,12 +589,12 @@ public class MainActivity extends AppCompatActivity {
     private void updateFilterSelectText(FilterType filterType, TextView selectText) {
         List<Integer> selectedItems = filterSelectedItemsIndexes.get(filterType);
         if(selectedItems != null && selectedItems.size() > 0) {
-            selectText.setText(selectedItems.size() + " selected");
+            selectText.setText(String.format("%d selected", selectedItems.size()));
         } else if(!filtersCurrentlyApplied.isEmpty() || minMaxSalary.isRangeUpdated ||
                 isFilterPriority != null){
-            selectText.setText("None selected");
+            selectText.setText(R.string.filter_none_selected);
         } else {
-            selectText.setText("All " + filterType.getTextPlural());
+            selectText.setText(String.format("All %s", filterType.getTextPlural()));
         }
     }
 
@@ -601,7 +603,7 @@ public class MainActivity extends AppCompatActivity {
 
         new AlertDialog.Builder(this)
                 .setTitle(getResources().getString(R.string.areYouSureDialogTitle))
-                .setMessage("All selections will be cleared")
+                .setMessage(R.string.selections_will_be_cleared)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -712,20 +714,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void setOrderItemToAscendingOrDescending(boolean isAscending) {
         if(isAscending) {
-            orderItem.setTitle("Ascending Order");
+            orderItem.setTitle(R.string.ascending_order);
             orderItem.setIcon(R.drawable.ic_arrow_upward_black_24dp);
         } else {
-            orderItem.setTitle("Descending Order");
+            orderItem.setTitle(R.string.descending_order);
             orderItem.setIcon(R.drawable.ic_arrow_downward_black_24dp);
         }
     }
 
     private void toggleOrderItemAscendingOrDescending() {
-        if(orderItem.getTitle().toString().toLowerCase().contains("ascending")) {
-            orderItem.setTitle("Descending Order");
+        if(orderItem.getTitle().toString().equals(getString(R.string.ascending_order))) {
+            orderItem.setTitle(R.string.descending_order);
             orderItem.setIcon(R.drawable.ic_arrow_downward_black_24dp);
         } else {
-            orderItem.setTitle("Ascending Order");
+            orderItem.setTitle(R.string.ascending_order);
             orderItem.setIcon(R.drawable.ic_arrow_upward_black_24dp);
         }
     }
@@ -746,6 +748,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemActionCollapse(final MenuItem item) {
                 setItemsVisibility(menu, searchItem, true);
+                displayMessageIfNoApplications(false);
                 return true;
             }
         });
@@ -756,7 +759,7 @@ public class MainActivity extends AppCompatActivity {
         //get the search manager to set the searchable.xml to the search view
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.onActionViewExpanded();
+//        searchView.onActionViewExpanded();
 
         //change the color of the caret in the search view from the default accent color to white
         AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
@@ -809,9 +812,9 @@ public class MainActivity extends AppCompatActivity {
     //this method updates the title in the action bar in action mode, and is called every time application selected
     public void updateActionModeCounter(int counter) {
         if(counter == 1) {
-            actionMode.setTitle(counter + " application selected");
+            actionMode.setTitle(counter + getString(R.string.multi_select_single_application_selected));
         } else {
-            actionMode.setTitle(counter + " applications selected");
+            actionMode.setTitle(counter + getString(R.string.multi_select_applications_selected));
         }
     }
 

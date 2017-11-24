@@ -16,6 +16,10 @@ import java.util.List;
  */
 public class ApplicationStage {
 
+    private String databaseDatePattern = "yyyy-MM-dd HH:mm:ss";
+    private String shortDatePattern = "dd MMM";
+    private String longDatePattern = "MMM dd HH:mm";
+
     public enum Status {
         SUCCESSFUL("Successful", "successful"), WAITING("In Progress", "in_progress"),
         UNSUCCESSFUL("Unsuccessful", "unsuccessful"), INCOMPLETE("Incomplete", "incomplete");
@@ -256,8 +260,8 @@ public class ApplicationStage {
      */
     public String getModifiedShortDateTime() {
         if(modifiedDate != null) {
-            SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            SimpleDateFormat toString = new SimpleDateFormat("MMM dd HH:mm");
+            SimpleDateFormat toDate = new SimpleDateFormat(databaseDatePattern);
+            SimpleDateFormat toString = new SimpleDateFormat(longDatePattern);
 
             try {
                 //covert date to friendly format to display in app
@@ -277,8 +281,8 @@ public class ApplicationStage {
      */
     public String getModifiedShortDate() {
         if(modifiedDate != null) {
-            SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            SimpleDateFormat toString = new SimpleDateFormat("dd MMM");
+            SimpleDateFormat toDate = new SimpleDateFormat(databaseDatePattern);
+            SimpleDateFormat toString = new SimpleDateFormat(shortDatePattern);
 
             try {
                 return toString.format(toDate.parse(modifiedDate));

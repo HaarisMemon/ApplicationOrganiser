@@ -1,4 +1,4 @@
-package com.memonade.applicationtracker.model;
+package com.memonade.applicationtracker.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -13,12 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.memonade.applicationtracker.R;
+import com.memonade.applicationtracker.model.ApplicationStage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Haaris on 08/10/2017.
+ * This class represents the array adapter for the status filter spinner for the filter panel.
  */
 public class StatusFilterArrayAdapter extends ArrayAdapter<String> {
 

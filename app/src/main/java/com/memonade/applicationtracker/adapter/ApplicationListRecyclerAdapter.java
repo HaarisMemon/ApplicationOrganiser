@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.memonade.applicationtracker.MainActivity;
 import com.memonade.applicationtracker.ApplicationInformationActivity;
+import com.memonade.applicationtracker.MainActivity;
 import com.memonade.applicationtracker.R;
 import com.memonade.applicationtracker.database.ApplicationTable;
 import com.memonade.applicationtracker.model.Application;
@@ -59,7 +59,9 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         holder.companyName.setText(application.getCompanyName());
 
         if(isSortBySalary) {
-            holder.role.setText(application.getSalary() != 0 ? "£" + application.getSalary() : "No Salary");
+            String poundSign = context.getString(R.string.pound_sign);
+            String noSalary = context.getString(R.string.no_salary);
+            holder.role.setText(application.getSalary() != 0 ? poundSign + application.getSalary() : noSalary);
         } else {
             holder.role.setText(application.getRole());
         }
@@ -78,9 +80,10 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         if(stage != null) {
 
             ApplicationStage.Status currentStatus = stage.getStatus();
+            String ic_status = context.getString(R.string.status_icon_file_prefix);
 
             holder.applicationStatusIcon.setImageResource(
-                    context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
+                    context.getResources().getIdentifier(ic_status + currentStatus.getIconNameText(),
                             "drawable", context.getPackageName()));
 
         } else holder.applicationStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
@@ -170,7 +173,9 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
             @Override
             public int compare(Application application1, Application application2) {
 
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String databaseDateFormat = context.getString(R.string.database_date_format);
+
+                DateFormat df = new SimpleDateFormat(databaseDateFormat);
 
                 switch (sortByString) {
                     case ApplicationTable.COLUMN_CREATED_ON:

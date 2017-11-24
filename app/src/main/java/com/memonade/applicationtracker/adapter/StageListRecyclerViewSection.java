@@ -70,9 +70,10 @@ public class StageListRecyclerViewSection extends StatelessSection {
         stageHolder.updatedDate.setText(stage.getModifiedShortDate());
 
         ApplicationStage.Status currentStatus = stage.getStatus();
+        String ic_status = context.getString(R.string.status_icon_file_prefix);
 
         stageHolder.stageStatusIcon.setImageResource(
-                context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
+                context.getResources().getIdentifier(ic_status + currentStatus.getIconNameText(),
                         "drawable", context.getPackageName()));
 
         //go to Application Information when item in Applications List is clicked

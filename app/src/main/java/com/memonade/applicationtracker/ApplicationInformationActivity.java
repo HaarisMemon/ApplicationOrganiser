@@ -2,9 +2,9 @@ package com.memonade.applicationtracker;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import com.memonade.applicationtracker.adapter.ApplicationHeaderRecyclerViewSection;
 import com.memonade.applicationtracker.adapter.StageListRecyclerViewSection;
-import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.database.ApplicationTable;
-import com.memonade.applicationtracker.model.ApplicationStage;
+import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.model.Application;
+import com.memonade.applicationtracker.model.ApplicationStage;
 
 import java.util.ArrayList;
 import java.util.List;

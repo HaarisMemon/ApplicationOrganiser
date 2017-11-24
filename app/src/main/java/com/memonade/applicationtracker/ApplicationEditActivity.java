@@ -70,7 +70,7 @@ public class ApplicationEditActivity extends AppCompatActivity implements TextWa
 
         //if editing application then display all existing application information
         if(isEditMode) {
-            setTitle("Edit Application");
+            setTitle(getString(R.string.edit_application_activity_title));
 
             companyNameEditText.setText(application.getCompanyName());
             roleEditText.setText(application.getRole());
@@ -83,7 +83,7 @@ public class ApplicationEditActivity extends AppCompatActivity implements TextWa
             notesEditText.setText(application.getNotes());
 
         } else {
-            setTitle("New Application");
+            setTitle(getString(R.string.new_application_activity_title));
         }
 
         ArrayAdapter<String> roleNameAdapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -184,13 +184,13 @@ public class ApplicationEditActivity extends AppCompatActivity implements TextWa
 
         String companyNameText = companyNameEditText.getText().toString().replaceFirst("^ *", "");
         if(companyNameText.length() < 1) {
-            companyNameEditText.setError("Please enter the company name");
+            companyNameEditText.setError(getString(R.string.application_validate_company_name));
             isValid = false;
         }
 
         String roleText = roleEditText.getText().toString().replaceFirst("^ *", "");
         if(roleText.length() < 1) {
-            roleEditText.setError("Please enter the role");
+            roleEditText.setError(getString(R.string.application_validate_role));
             isValid = false;
         }
 
@@ -199,7 +199,7 @@ public class ApplicationEditActivity extends AppCompatActivity implements TextWa
             try {
                 Integer.parseInt(salaryText);
             } catch(NumberFormatException e) {
-                salaryEditText.setError("Please enter a valid salary with only number digits");
+                salaryEditText.setError(getString(R.string.application_validate_salary));
                 isValid = false;
             }
         }

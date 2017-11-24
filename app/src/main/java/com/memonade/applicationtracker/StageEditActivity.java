@@ -5,10 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,8 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.memonade.applicationtracker.database.ApplicationStageTable;
-import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.database.ApplicationTable;
+import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.model.ApplicationStage;
 
 import java.util.Calendar;
@@ -252,7 +252,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     private void editModeSetup() {
         //if editing application stage then display all existing application stage information
         if(isEditMode) {
-            setTitle("Edit " + getResources().getString(R.string.stage));
+            setTitle(getString(R.string.edit_stage_activity_title));
 
             stageNameEditText.setText(stage.getStageName());
 
@@ -297,7 +297,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
             notesStageEditText.setText(stage.getNotes());
 
         } else {
-            setTitle("New " + getResources().getString(R.string.stage));
+            setTitle(getString(R.string.new_stage_activity_title));
 
             noComplete.setChecked(true);
             yesWaiting.setChecked(true);
@@ -380,7 +380,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
 
         String stageNameText = stageNameEditText.getText().toString().replaceFirst("^ *", "");
         if(stageNameText.length() < 1) {
-            stageNameEditText.setError("Please enter the stage name");
+            stageNameEditText.setError(getString(R.string.stage_name_validation));
             isValid = false;
         }
 
@@ -550,7 +550,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
         final String[] stageNames = defaultApplicationStageNames;
 
         new AlertDialog.Builder(StageEditActivity.this)
-                .setTitle("Stage name suggestions")
+                .setTitle(R.string.stage_name_suggestions)
                 .setItems(stageNames, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

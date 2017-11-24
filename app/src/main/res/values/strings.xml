@@ -33,11 +33,11 @@
     <string name="location">Location</string>
     <string name="website">Website</string>
     <string name="salary">Salary</string>
+    <string name="no_salary">No Salary</string>
     <string name="notes">Notes</string>
+    <string name="no_notes">No Notes</string>
     <string name="status">Status</string>
     <string name="completed">Completed?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
     <string name="waiting_for_response">Waiting for response?</string>
     <string name="successful">Successful?</string>
     <string name="pick_deadline_date">Pick Deadline Date</string>
@@ -76,4 +76,27 @@
     <string name="stages_title">Stages</string>
     <string name="application_overview_title">Application Overview</string>
     <string name="stage_details_title">Stage Details</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="none">None</string>
+    <string name="pound_sign">£</string>
+    <string name="database_date_format">yyyy-MM-dd HH:mm:ss</string>
+    <string name="nice_date_format">dd MMM HH:mm</string>
+    <string name="status_icon_file_prefix">ic_status_</string>
+    <string name="edit_application_activity_title">Edit Application</string>
+    <string name="new_application_activity_title">New Application</string>
+    <string name="application_validate_company_name">Please enter the company name</string>
+    <string name="application_validate_role">Please enter the role</string>
+    <string name="application_validate_salary">Please enter a valid salary with only number digits</string>
+    <string name="multi_select_applications_selected"> applications selected</string>
+    <string name="multi_select_single_application_selected"> application selected</string>
+    <string name="filter_none_selected">None selected</string>
+    <string name="selections_will_be_cleared">All selections will be cleared</string>
+    <string name="ascending_order">Ascending Order</string>
+    <string name="descending_order">Descending Order</string>
+    <string name="edit_stage_activity_title">Edit Stage</string>
+    <string name="new_stage_activity_title">New Stage</string>
+    <string name="stage_name_validation">Please enter the stage name</string>
+    <string name="stage_name_suggestions">Stage name suggestions</string>
 </resources>

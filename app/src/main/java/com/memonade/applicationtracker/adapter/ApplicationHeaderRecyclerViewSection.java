@@ -50,23 +50,28 @@ public class ApplicationHeaderRecyclerViewSection extends StatelessSection {
 
         CardView cardView = (CardView) applicationHolder.itemView;
 
-        applicationHolder.editedText.setText(context.getString(R.string.editedModified) + " " + application.getModifiedShortDateTime());
-        applicationHolder.companyNameText.setText(application.getCompanyName() != null ? application.getCompanyName() : "None");
-        applicationHolder.roleText.setText(application.getRole() != null ? application.getRole() : "None");
+        String editModified = context.getString(R.string.editedModified);
+        String noneString = context.getString(R.string.none);
+        String poundSign = context.getString(R.string.pound_sign);
+        String noNotes = context.getString(R.string.no_notes);
 
-        if(application.getLength() != null) applicationHolder.lengthText.setText(application.getLength() != null ? application.getLength() : "None");
+        applicationHolder.editedText.setText(editModified + " " + application.getModifiedShortDateTime());
+        applicationHolder.companyNameText.setText(application.getCompanyName() != null ? application.getCompanyName() : noneString);
+        applicationHolder.roleText.setText(application.getRole() != null ? application.getRole() : noneString);
+
+        if(application.getLength() != null) applicationHolder.lengthText.setText(application.getLength() != null ? application.getLength() : noneString);
         else cardView.findViewById(R.id.lengthGroup).setVisibility(View.GONE);
 
-        if(application.getLocation() != null) applicationHolder.locationText.setText(application.getLocation() != null ? application.getLocation() : "None");
+        if(application.getLocation() != null) applicationHolder.locationText.setText(application.getLocation() != null ? application.getLocation() : noneString);
         else cardView.findViewById(R.id.locationGroup).setVisibility(View.GONE);
 
-        if(application.getUrl() != null) applicationHolder.urlText.setText(application.getUrl() != null ? application.getUrl() : "None");
+        if(application.getUrl() != null) applicationHolder.urlText.setText(application.getUrl() != null ? application.getUrl() : noneString);
         else cardView.findViewById(R.id.urlGroup).setVisibility(View.GONE);
 
-        if(application.getSalary() != 0) applicationHolder.salaryText.setText(application.getSalary() != 0 ? "£" + application.getSalary() : "None");
+        if(application.getSalary() != 0) applicationHolder.salaryText.setText(application.getSalary() != 0 ? poundSign + application.getSalary() : noneString);
         else cardView.findViewById(R.id.salaryGroup).setVisibility(View.GONE);
 
-        if(application.getNotes() != null) applicationHolder.notesText.setText(application.getNotes() != null ? application.getNotes() : "No Notes");
+        if(application.getNotes() != null) applicationHolder.notesText.setText(application.getNotes() != null ? application.getNotes() : noNotes);
         else cardView.findViewById(R.id.notesGroup).setVisibility(View.GONE);
 
         if(application.isPriority()) {

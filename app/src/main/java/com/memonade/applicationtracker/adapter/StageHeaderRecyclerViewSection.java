@@ -1,28 +1,19 @@
 package com.memonade.applicationtracker.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.memonade.applicationtracker.ApplicationInformationActivity;
-import com.memonade.applicationtracker.MainActivity;
 import com.memonade.applicationtracker.R;
 import com.memonade.applicationtracker.StageInformationActivity;
-import com.memonade.applicationtracker.database.ApplicationStageTable;
-import com.memonade.applicationtracker.database.ApplicationTable;
-import com.memonade.applicationtracker.model.Application;
 import com.memonade.applicationtracker.model.ApplicationStage;
 import com.memonade.applicationtracker.view_holder.StageHeaderViewHolder;
-import com.memonade.applicationtracker.view_holder.StageListViewHolder;
 import com.memonade.applicationtracker.view_holder.TitleSectionViewHolder;
-
-import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
-import static com.memonade.applicationtracker.R.string.stage;
+import static com.memonade.applicationtracker.R.drawable.ic_status;
 
 /**
  * This class represents a the Stages Header Section used in the Stage Information Recycler view.
@@ -66,9 +57,10 @@ public class StageHeaderRecyclerViewSection extends StatelessSection {
         stageHolder.currentStatusText.setText(stage.getStatus().toString());
 
         ApplicationStage.Status currentStatus = stage.getStatus();
+        String ic_status = context.getString(R.string.status_icon_file_prefix);
 
         stageHolder.stageInfoStatusIcon.setImageResource(
-                context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
+                context.getResources().getIdentifier(ic_status + currentStatus.getIconNameText(),
                         "drawable", context.getPackageName()));
 
         if (stage.getDateOfDeadline() != null)

@@ -1,16 +1,13 @@
 package com.memonade.applicationtracker.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.memonade.applicationtracker.ApplicationInformationActivity;
 import com.memonade.applicationtracker.R;
 import com.memonade.applicationtracker.StageInformationActivity;
 import com.memonade.applicationtracker.model.Application;
 import com.memonade.applicationtracker.model.ApplicationStage;
-import com.memonade.applicationtracker.view_holder.ApplicationHeaderViewHolder;
 import com.memonade.applicationtracker.view_holder.ApplicationRowViewHolder;
 import com.memonade.applicationtracker.view_holder.TitleSectionViewHolder;
 
@@ -67,9 +64,10 @@ public class ApplicationRowRecyclerViewSection extends StatelessSection {
         if(stage != null) {
 
             ApplicationStage.Status currentStatus = stage.getStatus();
+            String ic_status = context.getString(R.string.status_icon_file_prefix);
 
             applicationHolder.applicationStatusIcon.setImageResource(
-                    context.getResources().getIdentifier("ic_status_" + currentStatus.getIconNameText(),
+                    context.getResources().getIdentifier(ic_status + currentStatus.getIconNameText(),
                             "drawable", context.getPackageName()));
 
         } else

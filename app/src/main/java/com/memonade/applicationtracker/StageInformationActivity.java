@@ -2,9 +2,9 @@ package com.memonade.applicationtracker;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,10 +15,10 @@ import android.view.View;
 import com.memonade.applicationtracker.adapter.ApplicationRowRecyclerViewSection;
 import com.memonade.applicationtracker.adapter.StageHeaderRecyclerViewSection;
 import com.memonade.applicationtracker.database.ApplicationStageTable;
-import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.database.ApplicationTable;
-import com.memonade.applicationtracker.model.ApplicationStage;
+import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.model.Application;
+import com.memonade.applicationtracker.model.ApplicationStage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -28,6 +28,10 @@ public class Application {
     private String modifiedDate;
     private boolean isSelected;
 
+    private final String databaseDatePattern = "yyyy-MM-dd HH:mm:ss";
+    private final String loneDatePattern = "dd MMM HH:mm";
+    private final String shortDatePattern = "dd MMM";
+
     //An application application will contain a number of stages the user has reached in their application
     private List<ApplicationStage> applicationStages;
 
@@ -251,8 +255,8 @@ public class Application {
      * @return string date of when Application last updated in format (MMM dd HH:mm)
      */
     public String getModifiedShortDateTime() {
-        SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat toString = new SimpleDateFormat("dd MMM HH:mm");
+        SimpleDateFormat toDate = new SimpleDateFormat(databaseDatePattern);
+        SimpleDateFormat toString = new SimpleDateFormat(loneDatePattern);
 
         try {
             return toString.format(toDate.parse(modifiedDate));
@@ -269,8 +273,8 @@ public class Application {
      * @return string date of when Application last updated in format (MMM dd)
      */
     public String getModifiedShortDate() {
-        SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat toString = new SimpleDateFormat("dd MMM");
+        SimpleDateFormat toDate = new SimpleDateFormat(databaseDatePattern);
+        SimpleDateFormat toString = new SimpleDateFormat(shortDatePattern);
 
         try {
             return toString.format(toDate.parse(modifiedDate));

@@ -45,7 +45,7 @@ public class FilterDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Pick your " + filterType)
+        builder.setTitle(String.format("Pick your %s", filterType))
                 .setMultiChoiceItems(allItems, checkedItems,
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override

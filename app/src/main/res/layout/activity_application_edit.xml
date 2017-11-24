@@ -99,7 +99,7 @@
                     android:hint="@string/website"
                     android:id="@+id/urlEditText"
                     android:maxLines="1"
-                    android:inputType="textCapSentences"/>
+                    android:inputType="textUri"/>
 
             </android.support.design.widget.TextInputLayout>
 

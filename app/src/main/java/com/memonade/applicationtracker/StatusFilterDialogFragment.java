@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.memonade.applicationtracker.model.ApplicationStage;
 import com.memonade.applicationtracker.model.FilterType;
-import com.memonade.applicationtracker.model.StatusFilterArrayAdapter;
+import com.memonade.applicationtracker.adapter.StatusFilterArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +28,10 @@ public class StatusFilterDialogFragment extends DialogFragment {
 
     private List<Integer> mSelectedItems;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle("Pick your " + FilterType.STATUS.toString());
+        getDialog().setTitle(String.format("Pick your %s", FilterType.STATUS.toString()));
 
         mSelectedItems = new ArrayList<>();
         final List<String> statusStrings = ApplicationStage.Status.getStatusStrings();
