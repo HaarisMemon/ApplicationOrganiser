@@ -12,7 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.memonade.applicationtracker.adapter.StageInformationAdapter;
+import com.memonade.applicationtracker.adapter.ApplicationRowRecyclerViewSection;
+import com.memonade.applicationtracker.adapter.StageHeaderRecyclerViewSection;
 import com.memonade.applicationtracker.database.ApplicationStageTable;
 import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.database.ApplicationTable;
@@ -21,6 +22,7 @@ import com.memonade.applicationtracker.model.Application;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 /**
  * This class represents the activity which displays the information of an Application Stage
@@ -31,9 +33,8 @@ public class StageInformationActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private Application parentApplication;
     private ApplicationStage stage;
-    private Intent intent;
 
-    StageInformationAdapter stageInformationAdapter;
+    SectionedRecyclerViewAdapter sectionAdapter;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.stageInformationRecyclerView) RecyclerView stageInformationRecyclerView;
 
@@ -51,7 +52,7 @@ public class StageInformationActivity extends AppCompatActivity {
         setTitle(getResources().getString(R.string.stage));
 
         mDataSource = new DataSource(this);
-        intent = getIntent();
+        Intent intent = getIntent();
 
         //application stage that has the same id that was sent in the intent
         stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
@@ -61,8 +62,22 @@ public class StageInformationActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageInformationRecyclerView.setLayoutManager(layoutManager);
         stageInformationRecyclerView.setHasFixedSize(true);
-        stageInformationAdapter = new StageInformationAdapter(getApplicationContext(), parentApplication, stage);
-        stageInformationRecyclerView.setAdapter(stageInformationAdapter);
+
+        sectionAdapter = new SectionedRecyclerViewAdapter();
+
+        ApplicationRowRecyclerViewSection applicationSection =  new ApplicationRowRecyclerViewSection(
+                getApplication().getString(R.string.application_overview_title),
+                this,
+                parentApplication);
+        sectionAdapter.addSection(applicationSection);
+
+        StageHeaderRecyclerViewSection stageSection = new StageHeaderRecyclerViewSection(
+                getApplication().getString( R.string.stage_details_title),
+                this,
+                stage);
+        sectionAdapter.addSection(stageSection);
+
+        stageInformationRecyclerView.setAdapter(sectionAdapter);
 
     }
 

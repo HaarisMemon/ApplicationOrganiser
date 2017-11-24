@@ -11,8 +11,8 @@
 
     <string name="search_hint">Search for an Application</string>
 
-    <string name="addFirstApplication">Click the + button below to add your first Application.</string>
-    <string name="addFirstStage">Click the + button above to add your first Application Stage.</string>
+    <string name="addFirstApplication">Click the + button to add your first Application.</string>
+    <string name="addFirstStage">Click the + button to add your first Application Stage.</string>
     <string name="noResultsWithFilter">"No results match your filter."</string>
     <string name="noMatchFromSearch">"No match from search."</string>
 
@@ -50,9 +50,13 @@
 
     <string name="current_status">Current Status</string>
     <string name="date_of_deadline">Deadline Date</string>
+    <string name="no_date_of_deadline">No Deadline Date</string>
     <string name="date_of_start">Start Date</string>
+    <string name="no_date_of_start">No Start Date</string>
     <string name="date_of_completion">Completion Date</string>
+    <string name="no_date_of_completion">No Completion Date</string>
     <string name="date_of_reply">Reply Date</string>
+    <string name="no_date_of_reply">No Reply Date</string>
     <string name="date">Date</string>
     <string name="image_shows_the_current_status_of_the_application">Image shows the current status of the application.</string>
     <string name="search_applications">Search Applications</string>
@@ -67,4 +71,9 @@
     <string name="undo_snackbar_string">Undo</string>
     <string name="save">Save</string>
     <string name="recycler_section_title">Section Title</string>
+
+    <string name="application_details_title">Application Details</string>
+    <string name="stages_title">Stages</string>
+    <string name="application_overview_title">Application Overview</string>
+    <string name="stage_details_title">Stage Details</string>
 </resources>

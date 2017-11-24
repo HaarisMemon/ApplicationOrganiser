@@ -81,10 +81,19 @@ public class ApplicationInformationActivity extends AppCompatActivity {
 
         sectionAdapter = new SectionedRecyclerViewAdapter();
 
-        ApplicationHeaderRecyclerViewSection applictionSection = new ApplicationHeaderRecyclerViewSection("Application Details", this, application);
-        sectionAdapter.addSection(applictionSection);
+        ApplicationHeaderRecyclerViewSection applicationSection =  new ApplicationHeaderRecyclerViewSection(
+                getApplication().getString(R.string.application_details_title),
+                this,
+                application);
+        sectionAdapter.addSection(applicationSection);
+
         if(!stages.isEmpty()) {
-            StageListRecyclerViewSection stageListSection = new StageListRecyclerViewSection("Stages", this, application, stages, isSourceMainActivity);
+            StageListRecyclerViewSection stageListSection =  new StageListRecyclerViewSection(
+                    getApplication().getString(R.string.stages_title),
+                    this,
+                    application,
+                    stages,
+                    isSourceMainActivity);
             sectionAdapter.addSection(stageListSection);
         }
 
@@ -231,7 +240,7 @@ public class ApplicationInformationActivity extends AppCompatActivity {
     //displays message to inform user to add their first stage if stage list is empty
     private void displayMessageIfNoStages() {
         TextView messageWhenEmpty = (TextView) findViewById(R.id.addStageMessage);
-        if(stages.size() <= 1) {
+        if(stages.isEmpty()) {
             messageWhenEmpty.setVisibility(View.VISIBLE);
         } else {
             messageWhenEmpty.setVisibility(View.INVISIBLE);
