@@ -13,7 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.memonade.applicationtracker.adapter.ApplicationInformationAdapter;
+import com.memonade.applicationtracker.adapter.ApplicationHeaderRecyclerViewSection;
+import com.memonade.applicationtracker.adapter.StageListRecyclerViewSection;
 import com.memonade.applicationtracker.database.DataSource;
 import com.memonade.applicationtracker.database.ApplicationTable;
 import com.memonade.applicationtracker.model.ApplicationStage;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 /**
  * This class represents the activity which displays the information of an Application with list of its stages
@@ -39,7 +41,7 @@ public class ApplicationInformationActivity extends AppCompatActivity {
     /**
      * StageList adapter of RecylerView for stages in the activity
      */
-    ApplicationInformationAdapter adapter;
+    SectionedRecyclerViewAdapter sectionAdapter;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.stageRecyclerView) RecyclerView stageRecyclerView;
@@ -71,15 +73,22 @@ public class ApplicationInformationActivity extends AppCompatActivity {
         //arraylist of all application stages linked to the application in the database
         stages = new ArrayList<>();
         //add dummy application stage object to be replaced by the application header card view
-        stages.add(new ApplicationStage());
         stages.addAll(mDataSource.getAllApplicationStages(application.getApplicationID()));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageRecyclerView.setLayoutManager(layoutManager);
         stageRecyclerView.setHasFixedSize(true);
 
-        adapter = new ApplicationInformationAdapter(this, application, stages, isSourceMainActivity);
-        stageRecyclerView.setAdapter(adapter);
+        sectionAdapter = new SectionedRecyclerViewAdapter();
+
+        ApplicationHeaderRecyclerViewSection applictionSection = new ApplicationHeaderRecyclerViewSection("Application Details", this, application);
+        sectionAdapter.addSection(applictionSection);
+        if(!stages.isEmpty()) {
+            StageListRecyclerViewSection stageListSection = new StageListRecyclerViewSection("Stages", this, application, stages, isSourceMainActivity);
+            sectionAdapter.addSection(stageListSection);
+        }
+
+        stageRecyclerView.setAdapter(sectionAdapter);
 
         displayMessageIfNoStages();
 
@@ -95,7 +104,7 @@ public class ApplicationInformationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mDataSource.open();
-        adapter.notifyDataSetChanged();
+        sectionAdapter.notifyDataSetChanged();
     }
 
     @Override
