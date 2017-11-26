@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
+import com.memonade.apptracker.adapter.StatusFilterArrayAdapter;
 import com.memonade.apptracker.model.ApplicationStage;
 import com.memonade.apptracker.model.FilterType;
-import com.memonade.apptracker.adapter.StatusFilterArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

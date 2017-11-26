@@ -2,10 +2,10 @@ package com.memonade.apptracker;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,8 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
-import com.memonade.apptracker.database.DataSource;
 import com.memonade.apptracker.database.ApplicationTable;
+import com.memonade.apptracker.database.DataSource;
 import com.memonade.apptracker.model.Application;
 
 import butterknife.BindView;
