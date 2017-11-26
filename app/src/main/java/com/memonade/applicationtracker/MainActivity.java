@@ -462,6 +462,9 @@ public class MainActivity extends AppCompatActivity {
             newMaxSalary = salary.get(0);
 
             if(newMaxSalary == 0) newMaxSalary = 1000;
+
+            //if only one application in list, set the min to 0
+            if(newMinSalary == newMaxSalary) newMinSalary = 0;
         }
 
         if(isApplicationBeingDeleted && minMaxSalary.originalMin != null && minMaxSalary.originalMax != null &&
