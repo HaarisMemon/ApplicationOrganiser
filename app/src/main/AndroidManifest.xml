@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.memonade.applicationtracker">
+    package="com.memonade.apptracker">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/apptracker_icon_round"
-        android:roundIcon="@mipmap/apptracker_icon_round"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/apptracker_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity
-            android:name="com.memonade.applicationtracker.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
-        </activity>
 
-        <activity android:name="com.memonade.applicationtracker.ApplicationInformationActivity"
-            android:parentActivityName="com.memonade.applicationtracker.MainActivity"/>
-        <activity android:name="com.memonade.applicationtracker.StageInformationActivity"
-            android:parentActivityName="com.memonade.applicationtracker.ApplicationInformationActivity"/>
-        <activity android:name="com.memonade.applicationtracker.ApplicationEditActivity"
-            android:parentActivityName="com.memonade.applicationtracker.ApplicationInformationActivity"/>
-        <activity android:name="com.memonade.applicationtracker.StageEditActivity"
-            android:parentActivityName="com.memonade.applicationtracker.StageInformationActivity"/>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".ApplicationInformationActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".StageInformationActivity"
+            android:parentActivityName=".ApplicationInformationActivity" />
+        <activity
+            android:name=".ApplicationEditActivity"
+            android:parentActivityName=".ApplicationInformationActivity" />
+        <activity
+            android:name=".StageEditActivity"
+            android:parentActivityName=".StageInformationActivity" />
+        <activity
+            android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".LicencesActivity"
+            android:parentActivityName=".AboutActivity"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ApplicationTracker</string>
+    <string name="app_name">AppTracker</string>
     <string name="editedModified">Edited:</string>
 
     <string name="discardDialogMessage">Are you sure you want to discard changes to this event?</string>
@@ -26,7 +26,7 @@
 
     <string name="application">Application</string>
     <string name="stage">Stage</string>
-    
+
     <string name="company">Company</string>
     <string name="role">Role</string>
     <string name="length">Length</string>
@@ -62,6 +62,7 @@
     <string name="search_applications">Search Applications</string>
     <string name="sort_applications">Sort Applications</string>
     <string name="filter_applications">Filter Applications</string>
+    <string name="about">About</string>
     <string name="filters">Filters</string>
     <string name="reset_all">Reset All</string>
     <string name="apply">Apply</string>
@@ -99,4 +100,11 @@
     <string name="new_stage_activity_title">New Stage</string>
     <string name="stage_name_validation">Please enter the stage name</string>
     <string name="stage_name_suggestions">Stage name suggestions</string>
+    <string name="licences_title">Licences</string>
+
+    <string name="app_description">AppTracker allows you to keep track of and organise all your job applications in one central place.</string>
+    <string name="email_address">memonadestudios@gmail.com</string>
+    <string name="play_store_package">com.memonade.apptracker</string>
+    <string name="library_name">Library name</string>
+
 </resources>

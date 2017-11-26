@@ -43,7 +43,7 @@
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:text">Edited:</item>
     </style>
-    
+
     <style name="scrollBarStyle">
         <item name="android:scrollbarSize">3dp</item>
         <item name="android:scrollbarStyle">insideOverlay</item>
@@ -101,7 +101,7 @@
 
     <style name="rowCardViewRelativeLayout">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">24dp</item>
         <item name="android:layout_marginEnd">12dp</item>
         <item name="android:layout_marginTop">13dp</item>
