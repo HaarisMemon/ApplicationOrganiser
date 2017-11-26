@@ -369,6 +369,12 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
 
+            case(R.id.action_about):
+                Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+                startActivity(intent);
+
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);

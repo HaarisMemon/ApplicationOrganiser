@@ -52,4 +52,8 @@
         android:icon="@drawable/ic_filter_list_white_24dp"
         app:showAsAction="ifRoom"/>
 
+    <item android:title="@string/about"
+        android:id="@+id/action_about"
+        app:showAsAction="never"/>
+
 </menu>

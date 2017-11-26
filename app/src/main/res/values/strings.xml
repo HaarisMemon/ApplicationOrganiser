@@ -100,11 +100,12 @@
     <string name="new_stage_activity_title">New Stage</string>
     <string name="stage_name_validation">Please enter the stage name</string>
     <string name="stage_name_suggestions">Stage name suggestions</string>
-    <string name="licences_title">Licences</string>
+    <string name="licences_title">Open Source Licences</string>
 
     <string name="app_description">AppTracker allows you to keep track of and organise all your job applications in one central place.</string>
-    <string name="email_address">memonadestudios@gmail.com</string>
+    <string name="email_address">memonadestudios+feedback@gmail.com</string>
     <string name="play_store_package">com.memonade.apptracker</string>
     <string name="library_name">Library name</string>
+    <string name="developer_name">Developed by Memonade</string>
 
 </resources>
