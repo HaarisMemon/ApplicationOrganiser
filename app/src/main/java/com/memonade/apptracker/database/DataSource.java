@@ -7,7 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.memonade.apptracker.model.Application;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,27 +83,27 @@ public class DataSource {
 
         mDatabase.insert(ApplicationTable.TABLE_APPLICATION, null, values);
 
-        for(ApplicationStage stage : application.getApplicationStages()) {
-            recreateApplicationStage(stage);
+        for(Stage stage : application.getStages()) {
+            recreateStage(stage);
         }
     }
 
     /**
-     * Inserts a row in the database for a new Application Stage
+     * Inserts a row in the database for a new Stage
      * Also updates the MODIFIED_ON column of the parent Application in the Application Table
-     * @param applicationStage is passed with all the fields set
-     * @param applicationID of Application that the application stage will belong to
-     * @return application stage object with the new Stage ID field set
+     * @param stage is passed with all the fields set
+     * @param applicationID of Application that the stage will belong to
+     * @return stage object with the new Stage ID field set
      */
-    public ApplicationStage createApplicationStage(ApplicationStage applicationStage, long applicationID) {
-        //sets the parent application ID of the application stage object
-        applicationStage.setApplicationID(applicationID);
+    public Stage createStage(Stage stage, long applicationID) {
+        //sets the parent application ID of the stage object
+        stage.setApplicationID(applicationID);
 
         //makes a ContentValues object using all the fields in the application object
-        ContentValues values = applicationStage.toValues();
-        long stageID = mDatabase.insert(ApplicationStageTable.TABLE_APPLICATION_STAGE, null, values);
-        //sets the Application Stage ID to the id returned (last row) from the database
-        applicationStage.setStageID(stageID);
+        ContentValues values = stage.toValues();
+        long stageID = mDatabase.insert(StageTable.TABLE_APPLICATION_STAGE, null, values);
+        //sets the Stage ID to the id returned (last row) from the database
+        stage.setStageID(stageID);
 
         String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
@@ -115,15 +115,15 @@ public class DataSource {
         mDatabase.update(ApplicationTable.TABLE_APPLICATION, parentApplicationValues, ApplicationTable.COLUMN_ID + " = ?",
                 new String[] {Long.toString(applicationID)});
 
-        return applicationStage;
+        return stage;
     }
 
-    private void recreateApplicationStage(ApplicationStage applicationStage) {
+    private void recreateStage(Stage stage) {
         //makes a ContentValues object using all the fields in the application object
-        ContentValues values = applicationStage.toValues();
-        values.put(ApplicationStageTable.COLUMN_ID, applicationStage.getStageID());
+        ContentValues values = stage.toValues();
+        values.put(StageTable.COLUMN_ID, stage.getStageID());
 
-        mDatabase.insert(ApplicationStageTable.TABLE_APPLICATION_STAGE, null, values);
+        mDatabase.insert(StageTable.TABLE_APPLICATION_STAGE, null, values);
     }
 
     /**
@@ -133,29 +133,29 @@ public class DataSource {
         //gets the number of applications in the database
         long numApplications = DatabaseUtils.queryNumEntries(mDatabase, ApplicationTable.TABLE_APPLICATION);
         //gets the number of stages in the database
-        long numApplicationStageCount = DatabaseUtils.queryNumEntries(mDatabase, ApplicationStageTable.TABLE_APPLICATION_STAGE);
+        long numStageCount = DatabaseUtils.queryNumEntries(mDatabase, StageTable.TABLE_APPLICATION_STAGE);
 
         //if there are no applications and stages then populate
         if(mContext.getSharedPreferences(preference, MODE_PRIVATE).getBoolean(is_first_run, true) &&
-                numApplications == 0 && numApplicationStageCount == 0) {
+                numApplications == 0 && numStageCount == 0) {
 
             Application application = Application.of("Example Company", "Software Engineering Placement Year",
                     "12 Months", "London", false, "www.examplecompany.com", 15000,
                     "I have signed the contract with Example Company, and will be starting next June.",
                     false);
 
-            ApplicationStage stage1 = ApplicationStage.of("Online Application", true, false, true,
+            Stage stage1 = Stage.of("Online Application", true, false, true,
                     "01/12/2016", "16/11/2016", "16/11/2016", "22/11/2016", "Online application required CV and Cover Letter.");
 
-            ApplicationStage stage2 = ApplicationStage.of("Assessment Centre", true, false, true,
+            Stage stage2 = Stage.of("Assessment Centre", true, false, true,
                     "12/01/2017", "12/01/2017", "12/01/2017", "02/02/2017", "Assessment Centre involved 2 Interviews, and a Group Task.");
 
             application.addStage(stage1);
             application.addStage(stage2);
 
             createApplication(application);
-            createApplicationStage(stage1, application.getApplicationID());
-            createApplicationStage(stage2, application.getApplicationID());
+            createStage(stage1, application.getApplicationID());
+            createStage(stage2, application.getApplicationID());
 
             // record the fact that the app has been started at least once
             mContext.getSharedPreferences(preference, MODE_PRIVATE).edit().putBoolean(is_first_run, false).apply();
@@ -193,7 +193,7 @@ public class DataSource {
             application.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_MODIFIED_ON)));
 
             //add all the application's stages to the list stored in the application object
-            application.setApplicationStages(getAllApplicationStages(applicationID));
+            application.setStages(getAllStages(applicationID));
 
             applications.add(application);
         }
@@ -230,7 +230,7 @@ public class DataSource {
             application.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationTable.COLUMN_MODIFIED_ON)));
 
             //add all the application's stages to the list stored in the application object
-            application.setApplicationStages(getAllApplicationStages(applicationID));
+            application.setStages(getAllStages(applicationID));
 
             break;
         }
@@ -241,65 +241,65 @@ public class DataSource {
     }
 
     /**
-     * Returns all the application stages in the database that belong to a particular Application
-     * @return list of application stages objects from the database that belong to a particular Application
+     * Returns all the stages in the database that belong to a particular Application
+     * @return list of stages objects from the database that belong to a particular Application
      */
-    public List<ApplicationStage> getAllApplicationStages(long applicationID) {
-        List<ApplicationStage> applicationStages = new ArrayList<>();
+    public List<Stage> getAllStages(long applicationID) {
+        List<Stage> stages = new ArrayList<>();
 
-        //query the whole Application Stage Table for all rows in descending order of creation date with matching application id
-        Cursor cursor = mDatabase.query(ApplicationStageTable.TABLE_APPLICATION_STAGE, ApplicationStageTable.ALL_COLUMNS,
-                ApplicationStageTable.COLUMN_APPLICATION_ID + "=?", new String[] {Long.toString(applicationID)}, null, null, ApplicationTable.COLUMN_CREATED_ON);
+        //query the whole Stage Table for all rows in descending order of creation date with matching application id
+        Cursor cursor = mDatabase.query(StageTable.TABLE_APPLICATION_STAGE, StageTable.ALL_COLUMNS,
+                StageTable.COLUMN_APPLICATION_ID + "=?", new String[] {Long.toString(applicationID)}, null, null, ApplicationTable.COLUMN_CREATED_ON);
 
         while(cursor.moveToNext()) {
-            ApplicationStage stage = new ApplicationStage();
+            Stage stage = new Stage();
 
-            stage.setStageID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_ID)));
-            stage.setStageName(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_STAGE_NAME)));
-            stage.setCompleted(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_COMPLETED)) == 1);
-            stage.setWaitingForResponse(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_WAITING)) == 1);
-            stage.setSuccessful(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_SUCCESSFUL)) == 1);
-            stage.setDateOfStart(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_START_DATE)));
-            stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_COMPLETE_DATE)));
-            stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
-            stage.setNotes(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_NOTES)));
-            stage.setApplicationID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_APPLICATION_ID)));
-            stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_MODIFIED_ON)));
+            stage.setStageID(cursor.getLong(cursor.getColumnIndex(StageTable.COLUMN_ID)));
+            stage.setStageName(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_STAGE_NAME)));
+            stage.setCompleted(cursor.getInt(cursor.getColumnIndex(StageTable.COLUMN_IS_COMPLETED)) == 1);
+            stage.setWaitingForResponse(cursor.getInt(cursor.getColumnIndex(StageTable.COLUMN_IS_WAITING)) == 1);
+            stage.setSuccessful(cursor.getInt(cursor.getColumnIndex(StageTable.COLUMN_IS_SUCCESSFUL)) == 1);
+            stage.setDateOfStart(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_START_DATE)));
+            stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_COMPLETE_DATE)));
+            stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_REPLY_DATE)));
+            stage.setNotes(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_NOTES)));
+            stage.setApplicationID(cursor.getLong(cursor.getColumnIndex(StageTable.COLUMN_APPLICATION_ID)));
+            stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_MODIFIED_ON)));
 
-            applicationStages.add(stage);
+            stages.add(stage);
         }
 
         cursor.close();
 
-        return applicationStages;
+        return stages;
     }
 
     /**
-     * Returns an application stage from the database that has the same id passed in
-     * @param applicationStageID id of application stage looking for
-     * @return application stage object that has the same id as applicationStageID
+     * Returns an stage from the database that has the same id passed in
+     * @param stageID id of stage looking for
+     * @return stage object that has the same id as stageID
      */
-    public ApplicationStage getApplicationStage(long applicationStageID) {
-        //query the Application Stage Table for a row with matching id
-        Cursor cursor = mDatabase.query(ApplicationStageTable.TABLE_APPLICATION_STAGE, ApplicationStageTable.ALL_COLUMNS,
-                ApplicationStageTable.COLUMN_ID + "=?", new String[] {Long.toString(applicationStageID)}, null, null, null);
+    public Stage getStage(long stageID) {
+        //query the Stage Table for a row with matching id
+        Cursor cursor = mDatabase.query(StageTable.TABLE_APPLICATION_STAGE, StageTable.ALL_COLUMNS,
+                StageTable.COLUMN_ID + "=?", new String[] {Long.toString(stageID)}, null, null, null);
 
-        ApplicationStage stage = new ApplicationStage();
-        //the first row found should be the application stage looking for, so break
+        Stage stage = new Stage();
+        //the first row found should be the stage looking for, so break
         while(cursor.moveToNext()) {
 
-            stage.setStageID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_ID)));
-            stage.setStageName(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_STAGE_NAME)));
-            stage.setCompleted(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_COMPLETED)) == 1);
-            stage.setWaitingForResponse(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_WAITING)) == 1);
-            stage.setSuccessful(cursor.getInt(cursor.getColumnIndex(ApplicationStageTable.COLUMN_IS_SUCCESSFUL)) == 1);
-            stage.setDateOfDeadline(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_DEADLINE_DATE)));
-            stage.setDateOfStart(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_START_DATE)));
-            stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_COMPLETE_DATE)));
-            stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_REPLY_DATE)));
-            stage.setNotes(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_NOTES)));
-            stage.setApplicationID(cursor.getLong(cursor.getColumnIndex(ApplicationStageTable.COLUMN_APPLICATION_ID)));
-            stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_MODIFIED_ON)));
+            stage.setStageID(cursor.getLong(cursor.getColumnIndex(StageTable.COLUMN_ID)));
+            stage.setStageName(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_STAGE_NAME)));
+            stage.setCompleted(cursor.getInt(cursor.getColumnIndex(StageTable.COLUMN_IS_COMPLETED)) == 1);
+            stage.setWaitingForResponse(cursor.getInt(cursor.getColumnIndex(StageTable.COLUMN_IS_WAITING)) == 1);
+            stage.setSuccessful(cursor.getInt(cursor.getColumnIndex(StageTable.COLUMN_IS_SUCCESSFUL)) == 1);
+            stage.setDateOfDeadline(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_DEADLINE_DATE)));
+            stage.setDateOfStart(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_START_DATE)));
+            stage.setDateOfCompletion(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_COMPLETE_DATE)));
+            stage.setDateOfReply(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_REPLY_DATE)));
+            stage.setNotes(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_NOTES)));
+            stage.setApplicationID(cursor.getLong(cursor.getColumnIndex(StageTable.COLUMN_APPLICATION_ID)));
+            stage.setModifiedDate(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_MODIFIED_ON)));
 
             break;
         }
@@ -319,20 +319,20 @@ public class DataSource {
                 ApplicationTable.COLUMN_ID + " = ?",
                 new String[]{Long.toString(applicationID)});
 
-        //delete all application stages that belong to the application to delete
-        mDatabase.delete(ApplicationStageTable.TABLE_APPLICATION_STAGE,
-                ApplicationStageTable.COLUMN_APPLICATION_ID + " = ?",
+        //delete all stages that belong to the application to delete
+        mDatabase.delete(StageTable.TABLE_APPLICATION_STAGE,
+                StageTable.COLUMN_APPLICATION_ID + " = ?",
                 new String[] {Long.toString(applicationID)});
     }
 
     /**
-     * Delete Application Stage with matching id
-     * @param stageID id of application stage to delete
+     * Delete Stage with matching id
+     * @param stageID id of stage to delete
      */
-    public void deleteApplicationStage(long stageID) {
-        //delete the application stage row which has an id of stageID
-        mDatabase.delete(ApplicationStageTable.TABLE_APPLICATION_STAGE,
-                ApplicationStageTable.COLUMN_ID + " = ?",
+    public void deleteStage(long stageID) {
+        //delete the stage row which has an id of stageID
+        mDatabase.delete(StageTable.TABLE_APPLICATION_STAGE,
+                StageTable.COLUMN_ID + " = ?",
                 new String[] {Long.toString(stageID)});
     }
 
@@ -371,29 +371,29 @@ public class DataSource {
     }
 
     /**
-     * Update application stage row which includes the modified on date
-     * @param applicationStage object with all fields filled in
+     * Update stage row which includes the modified on date
+     * @param stage object with all fields filled in
      */
-    public void updateApplicationStage(ApplicationStage applicationStage) {
+    public void updateStage(Stage stage) {
         //current date formatted for the modified date column
         String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-        ContentValues values = applicationStage.toValues();
+        ContentValues values = stage.toValues();
         //update the modified on date by the current date
-        values.put(ApplicationStageTable.COLUMN_MODIFIED_ON, currentDate);
+        values.put(StageTable.COLUMN_MODIFIED_ON, currentDate);
 
-        //update application stage that has matching id
-        mDatabase.update(ApplicationStageTable.TABLE_APPLICATION_STAGE, values,
-                ApplicationStageTable.COLUMN_ID + " = ?",
-                new String[] {Long.toString(applicationStage.getStageID())});
+        //update stage that has matching id
+        mDatabase.update(StageTable.TABLE_APPLICATION_STAGE, values,
+                StageTable.COLUMN_ID + " = ?",
+                new String[] {Long.toString(stage.getStageID())});
 
         //update the Application's modified_on column as the current date too
         ContentValues parentApplicationValues = new ContentValues();
         parentApplicationValues.put(ApplicationTable.COLUMN_MODIFIED_ON, currentDate);
 
-        //updated the application's modified date, that the application stage belongs to
+        //updated the application's modified date, that the stage belongs to
         mDatabase.update(ApplicationTable.TABLE_APPLICATION, parentApplicationValues, ApplicationTable.COLUMN_ID + " = ?",
-                new String[] {Long.toString(applicationStage.getApplicationID())});
+                new String[] {Long.toString(stage.getApplicationID())});
     }
 
     public List<String> getAllRoles() {
@@ -468,12 +468,12 @@ public class DataSource {
         List<String> stages = new ArrayList<>();
 
         //query the whole Application Table for all rows in descending order of modified date
-        Cursor cursor = mDatabase.query(ApplicationStageTable.TABLE_APPLICATION_STAGE, ApplicationStageTable.ALL_COLUMNS,
-                null, null, ApplicationStageTable.COLUMN_STAGE_NAME, null, ApplicationStageTable.COLUMN_STAGE_NAME);
+        Cursor cursor = mDatabase.query(StageTable.TABLE_APPLICATION_STAGE, StageTable.ALL_COLUMNS,
+                null, null, StageTable.COLUMN_STAGE_NAME, null, StageTable.COLUMN_STAGE_NAME);
 
         //while there is a next row
         while (cursor.moveToNext()) {
-            stages.add(cursor.getString(cursor.getColumnIndex(ApplicationStageTable.COLUMN_STAGE_NAME)));
+            stages.add(cursor.getString(cursor.getColumnIndex(StageTable.COLUMN_STAGE_NAME)));
         }
 
         cursor.close();

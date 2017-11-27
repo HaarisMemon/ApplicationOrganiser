@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="@string/create_new_application_stage"
+        android:title="@string/create_new_stage"
         android:icon="@drawable/ic_add_white_24dp"
         android:id="@+id/action_create_stage"
         app:showAsAction="ifRoom"/>

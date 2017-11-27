@@ -7,7 +7,7 @@ import android.view.View;
 import com.memonade.apptracker.R;
 import com.memonade.apptracker.StageInformationActivity;
 import com.memonade.apptracker.model.Application;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 import com.memonade.apptracker.view_holder.ApplicationRowViewHolder;
 import com.memonade.apptracker.view_holder.TitleSectionViewHolder;
 
@@ -59,11 +59,11 @@ public class ApplicationRowRecyclerViewSection extends StatelessSection {
         }
 
         //update the status icon for the cardView holder
-        ApplicationStage stage = application.getCurrentStage();
+        Stage stage = application.getCurrentStage();
 
         if(stage != null) {
 
-            ApplicationStage.Status currentStatus = stage.getStatus();
+            Stage.Status currentStatus = stage.getStatus();
             String ic_status = context.getString(R.string.status_icon_file_prefix);
 
             applicationHolder.applicationStatusIcon.setImageResource(

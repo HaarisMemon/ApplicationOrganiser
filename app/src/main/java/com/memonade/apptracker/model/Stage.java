@@ -2,7 +2,7 @@ package com.memonade.apptracker.model;
 
 import android.content.ContentValues;
 
-import com.memonade.apptracker.database.ApplicationStageTable;
+import com.memonade.apptracker.database.StageTable;
 import com.memonade.apptracker.database.ApplicationTable;
 
 import java.text.ParseException;
@@ -14,7 +14,7 @@ import java.util.List;
  * This class represents a stage in the application application process
  * @author HaarisMemon
  */
-public class ApplicationStage {
+public class Stage {
 
     private String databaseDatePattern = "yyyy-MM-dd HH:mm:ss";
     private String shortDatePattern = "dd MMM";
@@ -64,23 +64,23 @@ public class ApplicationStage {
     private String createdDate;
     private String modifiedDate;
 
-    public static final String[] defaultApplicationStageNames = {
+    public static final String[] defaultStageNames = {
             "Online Application", "Online Situation Judgement Test", "Online Numerical Test",
             "Online Abstract Test", "Online Verbal Reasoning Test", "Telephone Interview",
             "Online Video Interview", "Interview", "Assessment Centre"
     };
 
     /**
-     * Returns the ID of the application stage from the database
-     * @return the ID of the application stage in the database table
+     * Returns the ID of the stage from the database
+     * @return the ID of the stage in the database table
      */
     public long getStageID() {
         return stageID;
     }
 
     /**
-     * Sets the ID of the application stage from the database
-     * @param stageID of the application stage in the database table
+     * Sets the ID of the stage from the database
+     * @param stageID of the stage in the database table
      */
     public void setStageID(long stageID) {
         this.stageID = stageID;
@@ -88,7 +88,7 @@ public class ApplicationStage {
 
     /**
      * Returns the name of the stage in the application process
-     * @return name of application stage
+     * @return name of stage
      */
     public String getStageName() {
         if(stageName != null && stageName.equals("")) stageName = null;
@@ -105,23 +105,23 @@ public class ApplicationStage {
     }
 
     /**
-     * Returns true if the user has completed this application stage
-     * @return true if the user has completed this application stage, false otherwise.
+     * Returns true if the user has completed this stage
+     * @return true if the user has completed this stage, false otherwise.
      */
     public boolean isCompleted() {
         return isCompleted;
     }
 
     /**
-     * Whether the user has completed the application stage
-     * @param completed where user completed the application stage
+     * Whether the user has completed the stage
+     * @param completed where user completed the stage
      */
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
 
     /**
-     * Returns true if the user is currently waiting for a response for an application stage
+     * Returns true if the user is currently waiting for a response for an stage
      * @return true if the user is currently waiting for response, false otherwise.
      */
     public boolean isWaitingForResponse() {
@@ -129,7 +129,7 @@ public class ApplicationStage {
     }
 
     /**
-     * Whether the user is currently waiting for a response for an application stage
+     * Whether the user is currently waiting for a response for an stage
      * @param waitingForResponse whether the user is currently waiting for a response
      */
     public void setWaitingForResponse(boolean waitingForResponse) {
@@ -137,24 +137,24 @@ public class ApplicationStage {
     }
 
     /**
-     * Returns true if the user is successful in this application stage
-     * @return true if the user is successful in this application stage, false otherwise.
+     * Returns true if the user is successful in this stage
+     * @return true if the user is successful in this stage, false otherwise.
      */
     public boolean isSuccessful() {
         return isSuccessful;
     }
 
     /**
-     * Whether the user is successful in this application stage
-     * @param successful whether the user is successful in this application stage
+     * Whether the user is successful in this stage
+     * @param successful whether the user is successful in this stage
      */
     public void setSuccessful(boolean successful) {
         isSuccessful = successful;
     }
 
     /**
-     * Returns the deadline date of the application stage
-     * @return deadline date of the application stage
+     * Returns the deadline date of the stage
+     * @return deadline date of the stage
      */
     public String getDateOfDeadline() {
         if(dateOfDeadline != null && dateOfDeadline.equals("null")) return null;
@@ -162,16 +162,16 @@ public class ApplicationStage {
     }
 
     /**
-     * Sets the deadline date of the application stage
-     * @param dateOfDeadline the application stage's deadline date
+     * Sets the deadline date of the stage
+     * @param dateOfDeadline the stage's deadline date
      */
     public void setDateOfDeadline(String dateOfDeadline) {
         this.dateOfDeadline = dateOfDeadline;
     }
 
     /**
-     * Returns the date at which the application stage had started
-     * @return date at which the application stage had started
+     * Returns the date at which the stage had started
+     * @return date at which the stage had started
      */
     public String getDateOfStart() {
         if(dateOfStart != null && dateOfStart.equals("null")) return null;
@@ -179,16 +179,16 @@ public class ApplicationStage {
     }
 
     /**
-     * Sets the date at which the application stage had started
-     * @param dateOfStart when the application stage had started
+     * Sets the date at which the stage had started
+     * @param dateOfStart when the stage had started
      */
     public void setDateOfStart(String dateOfStart) {
         this.dateOfStart = dateOfStart;
     }
 
     /**
-     * Returns the date at which the application stage had been completed
-     * @return date at which the application stage had been completed
+     * Returns the date at which the stage had been completed
+     * @return date at which the stage had been completed
      */
     public String getDateOfCompletion() {
         if(dateOfCompletion != null && dateOfCompletion.equals("null")) return null;
@@ -196,16 +196,16 @@ public class ApplicationStage {
     }
 
     /**
-     * Sets the date at which the application stage had been completed
-     * @param dateOfCompletion when the application stage had been completed
+     * Sets the date at which the stage had been completed
+     * @param dateOfCompletion when the stage had been completed
      */
     public void setDateOfCompletion(String dateOfCompletion) {
         this.dateOfCompletion = dateOfCompletion;
     }
 
     /**
-     * Returns the date at which user received reply about application stage
-     * @return date at which user received reply about application stage
+     * Returns the date at which user received reply about stage
+     * @return date at which user received reply about stage
      */
     public String getDateOfReply() {
         if(dateOfReply != null && dateOfReply.equals("null")) return null;
@@ -213,8 +213,8 @@ public class ApplicationStage {
     }
 
     /**
-     * Sets the date at which user received reply about application stage
-     * @param dateOfReply when user received reply about application stage
+     * Sets the date at which user received reply about stage
+     * @param dateOfReply when user received reply about stage
      */
     public void setDateOfReply(String dateOfReply) {
         this.dateOfReply = dateOfReply;
@@ -238,25 +238,25 @@ public class ApplicationStage {
     }
 
     /**
-     * Returns the ID of Application that the application stage belongs to, obtained from database
-     * @return ID of Application which this application stage belongs to
+     * Returns the ID of Application that the stage belongs to, obtained from database
+     * @return ID of Application which this stage belongs to
      */
     public long getApplicationID() {
         return applicationID;
     }
 
     /**
-     * Sets the ID of Application that the application stage belongs to, obtained from database table
-     * @param applicationID that the application stage is linked to
+     * Sets the ID of Application that the stage belongs to, obtained from database table
+     * @param applicationID that the stage is linked to
      */
     public void setApplicationID(long applicationID) {
         this.applicationID = applicationID;
     }
 
     /**
-     * Returns the date that the Application Stage was last updated in the database
+     * Returns the date that the Stage was last updated in the database
      * Date returned in friendly format (MMM dd HH:mm) to be displayed in app
-     * @return string date of when Application Stage last updated in format (MMM dd HH:mm)
+     * @return string date of when Stage last updated in format (MMM dd HH:mm)
      */
     public String getModifiedShortDateTime() {
         if(modifiedDate != null) {
@@ -295,8 +295,8 @@ public class ApplicationStage {
     }
 
     /**
-     * Sets the date that the Application Stage was last updated in the database
-     * @param modifiedDate of when Application Stage last updated
+     * Sets the date that the Stage was last updated in the database
+     * @param modifiedDate of when Stage last updated
      */
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
@@ -311,9 +311,9 @@ public class ApplicationStage {
     }
 
     /**
-     * Returns the current status of this application stage as an enum.
+     * Returns the current status of this stage as an enum.
      * Possible values: SUCCESSFUL, WAITING, UNSUCCESSFUL, INCOMPLETE
-     * @return status enum of application stage
+     * @return status enum of stage
      */
     public Status getStatus() {
         if(isCompleted) {
@@ -332,8 +332,8 @@ public class ApplicationStage {
     }
 
     /**
-     * Returns a string representation of the Application Stage
-     * @return String of Application Stage's "[stage name] - [Current Status]"
+     * Returns a string representation of the Stage
+     * @return String of Stage's "[stage name] - [Current Status]"
      */
     @Override
     public String toString() {
@@ -341,56 +341,56 @@ public class ApplicationStage {
     }
 
     /**
-     * Check if two Application Stage objects are equal
-     * @param obj The second Application Stage object to compare it to
-     * @return true if the two Application Stage objects have same stage name
+     * Check if two Stage objects are equal
+     * @param obj The second Stage object to compare it to
+     * @return true if the two Stage objects have same stage name
      */
     @Override
     public boolean equals(Object obj) {
-        return stageName.equals(((ApplicationStage) obj).getStageName());
+        return stageName.equals(((Stage) obj).getStageName());
     }
 
     /**
-     * Generates a ContentValues object with all fields of Application Stage stored, to use for database
+     * Generates a ContentValues object with all fields of Stage stored, to use for database
      * @return
      */
     public ContentValues toValues() {
         ContentValues values = new ContentValues();
 
-        values.put(ApplicationStageTable.COLUMN_STAGE_NAME, stageName);
-        values.put(ApplicationStageTable.COLUMN_IS_COMPLETED, isCompleted);
-        values.put(ApplicationStageTable.COLUMN_IS_WAITING, isWaitingForResponse);
-        values.put(ApplicationStageTable.COLUMN_IS_SUCCESSFUL, isSuccessful);
-        values.put(ApplicationStageTable.COLUMN_DEADLINE_DATE, dateOfDeadline);
-        values.put(ApplicationStageTable.COLUMN_START_DATE, dateOfStart);
-        values.put(ApplicationStageTable.COLUMN_COMPLETE_DATE, dateOfCompletion);
-        values.put(ApplicationStageTable.COLUMN_REPLY_DATE, dateOfReply);
-        values.put(ApplicationStageTable.COLUMN_NOTES, notes);
-        values.put(ApplicationStageTable.COLUMN_APPLICATION_ID, applicationID);
+        values.put(StageTable.COLUMN_STAGE_NAME, stageName);
+        values.put(StageTable.COLUMN_IS_COMPLETED, isCompleted);
+        values.put(StageTable.COLUMN_IS_WAITING, isWaitingForResponse);
+        values.put(StageTable.COLUMN_IS_SUCCESSFUL, isSuccessful);
+        values.put(StageTable.COLUMN_DEADLINE_DATE, dateOfDeadline);
+        values.put(StageTable.COLUMN_START_DATE, dateOfStart);
+        values.put(StageTable.COLUMN_COMPLETE_DATE, dateOfCompletion);
+        values.put(StageTable.COLUMN_REPLY_DATE, dateOfReply);
+        values.put(StageTable.COLUMN_NOTES, notes);
+        values.put(StageTable.COLUMN_APPLICATION_ID, applicationID);
 
-        //if no created date, then application stage not stored in database yet (newly created)
+        //if no created date, then stage not stored in database yet (newly created)
         if(createdDate != null) {
             values.put(ApplicationTable.COLUMN_CREATED_ON, createdDate);
         }
 
-        //if no modified date, then Application Stage not stored in database yet (newly created)
+        //if no modified date, then Stage not stored in database yet (newly created)
         if(modifiedDate != null) {
-            values.put(ApplicationStageTable.COLUMN_MODIFIED_ON, modifiedDate);
+            values.put(StageTable.COLUMN_MODIFIED_ON, modifiedDate);
         }
 
         return values;
     }
     
-    public static ApplicationStage of(String stageName,
-            boolean isCompleted,
-            boolean isWaitingForResponse,
-            boolean isSuccessful,
-            String dateOfDeadline,
-            String dateOfStart,
-            String dateOfCompletion,
-            String dateOfReply,
-            String notes) {
-        ApplicationStage stage = new ApplicationStage();
+    public static Stage of(String stageName,
+                           boolean isCompleted,
+                           boolean isWaitingForResponse,
+                           boolean isSuccessful,
+                           String dateOfDeadline,
+                           String dateOfStart,
+                           String dateOfCompletion,
+                           String dateOfReply,
+                           String notes) {
+        Stage stage = new Stage();
         
         stage.setStageName(stageName);
         stage.setCompleted(isCompleted);

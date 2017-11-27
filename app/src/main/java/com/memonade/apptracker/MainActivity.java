@@ -35,7 +35,7 @@ import com.memonade.apptracker.database.DataSource;
 import com.memonade.apptracker.listener.FilterDialogOnClickListener;
 import com.memonade.apptracker.listener.MyOnQueryTextListener;
 import com.memonade.apptracker.model.Application;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 import com.memonade.apptracker.model.FilterType;
 
 import java.lang.reflect.Field;
@@ -434,7 +434,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //selectedItemsIndexes is null when nothing initially has been selected
                 if(selectedItemsIndexes != null) {
-                    boolean[] checkedItems = new boolean[ApplicationStage.Status.values().length];
+                    boolean[] checkedItems = new boolean[Stage.Status.values().length];
 
                     //converts the indexes into boolean array of all items with value true if index in list
                     for (Integer selectedItemIndex : selectedItemsIndexes) {
@@ -576,7 +576,7 @@ public class MainActivity extends AppCompatActivity {
         if(filterSelectedItemsIndexes.get(FilterType.STATUS) != null &&
                 filterSelectedItemsIndexes.get(FilterType.STATUS).size() == 1) {
 
-            ApplicationStage.Status status = getAllStatusFromIndex(
+            Stage.Status status = getAllStatusFromIndex(
                     filterSelectedItemsIndexes.get(FilterType.STATUS)).get(0);
             statusSelect.setText(status.toString());
 
@@ -660,7 +660,7 @@ public class MainActivity extends AppCompatActivity {
             List<String> selectedStages = getAllItemsFromIndex(mDataSource.getAllStageNames(),
                     filterSelectedItemsIndexes.get(FilterType.STAGE));
 
-            List<ApplicationStage.Status> selectedStatus = getAllStatusFromIndex(
+            List<Stage.Status> selectedStatus = getAllStatusFromIndex(
                     filterSelectedItemsIndexes.get(FilterType.STATUS));
 
             applicationListRecyclerAdapter.applicationsList = filterApplications(selectedRoles,
@@ -693,11 +693,11 @@ public class MainActivity extends AppCompatActivity {
         else return null;
     }
 
-    private List<ApplicationStage.Status> getAllStatusFromIndex(List<Integer> selectedIndexes) {
-        ApplicationStage.Status[] statusList = ApplicationStage.Status.values();
+    private List<Stage.Status> getAllStatusFromIndex(List<Integer> selectedIndexes) {
+        Stage.Status[] statusList = Stage.Status.values();
 
         if(selectedIndexes != null) {
-            List<ApplicationStage.Status> result = new ArrayList<>();
+            List<Stage.Status> result = new ArrayList<>();
             for (int i = 0; i < statusList.length; i++) {
                 if (selectedIndexes.contains(i)) {
                     result.add(statusList[i]);
@@ -928,7 +928,7 @@ public class MainActivity extends AppCompatActivity {
                                                 List<String> lengths,
                                                 List<String> locations,
                                                 List<String> stages,
-                                                List<ApplicationStage.Status> status) {
+                                                List<Stage.Status> status) {
 
         List<Application> result = new ArrayList<>();
 
@@ -954,10 +954,10 @@ public class MainActivity extends AppCompatActivity {
                                         List<String> lengths,
                                         List<String> locations,
                                         List<String> stages,
-                                        List<ApplicationStage.Status> statusList) {
+                                        List<Stage.Status> statusList) {
         if(statusList != null) {
             boolean statusMatched = false;
-            for (ApplicationStage.Status status : statusList) {
+            for (Stage.Status status : statusList) {
                 if (application.getCurrentStage().getStatus().equals(status)) {
                     statusMatched = true;
                     break;
@@ -1002,7 +1002,7 @@ public class MainActivity extends AppCompatActivity {
         if(stages != null) {
             boolean stageMatched = false;
             for (String stageName : stages) {
-                for (ApplicationStage stage : application.getApplicationStages()) {
+                for (Stage stage : application.getStages()) {
                     if (stage.getStageName().equals(stageName)) {
                         stageMatched = true;
                         break;

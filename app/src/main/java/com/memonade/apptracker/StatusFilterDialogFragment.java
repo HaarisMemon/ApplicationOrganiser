@@ -12,7 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.memonade.apptracker.adapter.StatusFilterArrayAdapter;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 import com.memonade.apptracker.model.FilterType;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class StatusFilterDialogFragment extends DialogFragment {
         getDialog().setTitle(String.format("Pick your %s", FilterType.STATUS.toString()));
 
         mSelectedItems = new ArrayList<>();
-        final List<String> statusStrings = ApplicationStage.Status.getStatusStrings();
+        final List<String> statusStrings = Stage.Status.getStatusStrings();
 
         //get all the previously checked items (null at start)
         boolean[] checkedItems = getArguments().getBooleanArray(CHECKED_ITEMS);

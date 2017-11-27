@@ -35,7 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(ApplicationTable.SQL_CREATE);
-        sqLiteDatabase.execSQL(ApplicationStageTable.SQL_CREATE);
+        sqLiteDatabase.execSQL(StageTable.SQL_CREATE);
     }
 
     /**
@@ -48,7 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL(ApplicationTable.SQL_DELETE);
-        sqLiteDatabase.execSQL(ApplicationStageTable.SQL_DELETE);
+        sqLiteDatabase.execSQL(StageTable.SQL_DELETE);
         onCreate(sqLiteDatabase);
     }
 }

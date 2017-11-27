@@ -33,18 +33,18 @@ public class Application {
     private final String shortDatePattern = "dd MMM";
 
     //An application application will contain a number of stages the user has reached in their application
-    private List<ApplicationStage> applicationStages;
+    private List<Stage> stages;
 
     public Application() {
-        applicationStages = new ArrayList<>();
+        stages = new ArrayList<>();
     }
 
     /**
-     * Returns the most recent and current application stage of an application
-     * @return The most recent application stage
+     * Returns the most recent and current stage of an application
+     * @return The most recent stage
      */
-    public ApplicationStage getCurrentStage() {
-        if(!applicationStages.isEmpty()) return applicationStages.get(applicationStages.size() - 1);
+    public Stage getCurrentStage() {
+        if(!stages.isEmpty()) return stages.get(stages.size() - 1);
         return null;
     }
 
@@ -309,24 +309,24 @@ public class Application {
      * Returns all the stages of the Application application
      * @return stages of the Application application
      */
-    public List<ApplicationStage> getApplicationStages() {
-        return applicationStages;
+    public List<Stage> getStages() {
+        return stages;
     }
 
     /**
      * Sets a list of all the stages of the Application application
-     * @param applicationStages all stages of the Application application
+     * @param stages all stages of the Application application
      */
-    public void setApplicationStages(List<ApplicationStage> applicationStages) {
-        this.applicationStages = applicationStages;
+    public void setStages(List<Stage> stages) {
+        this.stages = stages;
     }
 
     /**
-     * Adds an application stage to the Application
+     * Adds an stage to the Application
      * @param stage to be added to Application
      */
-    public void addStage(ApplicationStage stage) {
-        applicationStages.add(stage);
+    public void addStage(Stage stage) {
+        stages.add(stage);
     }
 
     /**

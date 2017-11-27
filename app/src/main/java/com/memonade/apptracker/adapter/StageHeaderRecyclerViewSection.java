@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.memonade.apptracker.R;
 import com.memonade.apptracker.StageInformationActivity;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 import com.memonade.apptracker.view_holder.StageHeaderViewHolder;
 import com.memonade.apptracker.view_holder.TitleSectionViewHolder;
 
@@ -21,11 +21,11 @@ public class StageHeaderRecyclerViewSection extends StatelessSection {
 
     private Context context;
     private String title;
-    private ApplicationStage stage;
+    private Stage stage;
 
     public StageHeaderRecyclerViewSection(String title,
                                           StageInformationActivity stageInformationActivity,
-                                          ApplicationStage stage) {
+                                          Stage stage) {
         super(R.layout.section_title_layout, R.layout.stage_header_row_layout);
 
         this.title = title;
@@ -49,12 +49,12 @@ public class StageHeaderRecyclerViewSection extends StatelessSection {
 
         CardView cardView = (CardView) stageHolder.itemView;
 
-        //adds the application stage information to the cardView holder
+        //adds the stage information to the cardView holder
         stageHolder.editedText.setText(context.getString(R.string.editedModified) + " " + stage.getModifiedShortDateTime());
         stageHolder.stageNameText.setText(stage.getStageName());
         stageHolder.currentStatusText.setText(stage.getStatus().toString());
 
-        ApplicationStage.Status currentStatus = stage.getStatus();
+        Stage.Status currentStatus = stage.getStatus();
         String ic_status = context.getString(R.string.status_icon_file_prefix);
 
         stageHolder.stageInfoStatusIcon.setImageResource(

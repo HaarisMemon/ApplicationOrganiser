@@ -14,25 +14,25 @@ import android.view.View;
 
 import com.memonade.apptracker.adapter.ApplicationRowRecyclerViewSection;
 import com.memonade.apptracker.adapter.StageHeaderRecyclerViewSection;
-import com.memonade.apptracker.database.ApplicationStageTable;
+import com.memonade.apptracker.database.StageTable;
 import com.memonade.apptracker.database.ApplicationTable;
 import com.memonade.apptracker.database.DataSource;
 import com.memonade.apptracker.model.Application;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 /**
- * This class represents the activity which displays the information of an Application Stage
+ * This class represents the activity which displays the information of an Stage
  * @author HaarisMemon
  */
 public class StageInformationActivity extends AppCompatActivity {
 
     private DataSource mDataSource;
     private Application parentApplication;
-    private ApplicationStage stage;
+    private Stage stage;
 
     SectionedRecyclerViewAdapter sectionAdapter;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -54,8 +54,8 @@ public class StageInformationActivity extends AppCompatActivity {
         mDataSource = new DataSource(this);
         Intent intent = getIntent();
 
-        //application stage that has the same id that was sent in the intent
-        stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1));
+        //stage that has the same id that was sent in the intent
+        stage = mDataSource.getStage(intent.getLongExtra(StageTable.COLUMN_ID, -1));
         //application that has the same id that was sent in the intent
         parentApplication = mDataSource.getApplication(intent.getLongExtra(ApplicationTable.APPLICATION_ID, -1));
 
@@ -112,7 +112,7 @@ public class StageInformationActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mDataSource.deleteApplicationStage(stage.getStageID());
+                                mDataSource.deleteStage(stage.getStageID());
 
                                 //go back to the application information activity
                                 Intent intent = new Intent(getApplicationContext(), ApplicationInformationActivity.class);
@@ -130,7 +130,7 @@ public class StageInformationActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
 
-            //when the edit application stage action button is pressed
+            //when the edit stage action button is pressed
             case R.id.action_edit_stage:
                 editStage(null);
                 return true;
@@ -141,15 +141,15 @@ public class StageInformationActivity extends AppCompatActivity {
     }
 
     /**
-     * On click method to edit an existing Application Stage
+     * On click method to edit an existing Stage
      * @param view edit button that was clicked
      */
     public void editStage(View view) {
         Intent intent = new Intent(getApplicationContext(), StageEditActivity.class);
-        //send a boolean that an application stage is being edited, in the intent
+        //send a boolean that an stage is being edited, in the intent
         intent.putExtra(StageEditActivity.STAGE_EDIT_MODE, true);
-        //send the id of the application stage to be edited, in the intent
-        intent.putExtra(ApplicationStageTable.COLUMN_ID, stage.getStageID());
+        //send the id of the stage to be edited, in the intent
+        intent.putExtra(StageTable.COLUMN_ID, stage.getStageID());
         intent.putExtra(ApplicationTable.APPLICATION_ID, parentApplication.getApplicationID());
         startActivity(intent);
     }

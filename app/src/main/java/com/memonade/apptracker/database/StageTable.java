@@ -1,13 +1,13 @@
 package com.memonade.apptracker.database;
 
 /**
- * This class contains all the static string constants for Application Stage to help
- * create the Application Stage Table in the database
+ * This class contains all the static string constants for Stage to help
+ * create the Stage Table in the database
  * @author HaarisMemon
  */
-public class ApplicationStageTable {
+public class StageTable {
 
-    //static String constants for all the columns in the Application Stage Table
+    //static String constants for all the columns in the Stage Table
     public static final String TABLE_APPLICATION_STAGE = "application_stage";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_STAGE_NAME = "stage_name";
@@ -24,7 +24,7 @@ public class ApplicationStageTable {
     public static final String COLUMN_APPLICATION_ID = "application_id";
 
     /**
-     * List of all columns in the Application Stage Table as String constants
+     * List of all columns in the Stage Table as String constants
      */
     public static final String[] ALL_COLUMNS = {
             COLUMN_ID, COLUMN_STAGE_NAME, COLUMN_IS_COMPLETED,
@@ -34,7 +34,7 @@ public class ApplicationStageTable {
     };
 
     /**
-     * SQL Create statement to create the Application Stage table will all the columns, if not exists already
+     * SQL Create statement to create the Stage table will all the columns, if not exists already
      */
     public static final String SQL_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_APPLICATION_STAGE +
@@ -57,7 +57,7 @@ public class ApplicationStageTable {
                     ")";
 
     /**
-     * SQL Create statement to drop the Application Stage Table
+     * SQL Create statement to drop the Stage Table
      */
     public static final String SQL_DELETE =
             "DROP TABLE " + TABLE_APPLICATION_STAGE;

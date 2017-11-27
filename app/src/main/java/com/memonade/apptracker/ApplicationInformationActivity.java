@@ -18,7 +18,7 @@ import com.memonade.apptracker.adapter.StageListRecyclerViewSection;
 import com.memonade.apptracker.database.ApplicationTable;
 import com.memonade.apptracker.database.DataSource;
 import com.memonade.apptracker.model.Application;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class ApplicationInformationActivity extends AppCompatActivity {
     private DataSource mDataSource;
     private Application application = null;
     private boolean isSourceMainActivity;
-    private List<ApplicationStage> stages;
+    private List<Stage> stages;
 
     /**
      * StageList adapter of RecylerView for stages in the activity
@@ -70,10 +70,10 @@ public class ApplicationInformationActivity extends AppCompatActivity {
         //application that has the same id that was sent in the intent
         application = mDataSource.getApplication(intent.getLongExtra(ApplicationTable.COLUMN_ID, -1));
 
-        //arraylist of all application stages linked to the application in the database
+        //arraylist of all stages linked to the application in the database
         stages = new ArrayList<>();
-        //add dummy application stage object to be replaced by the application header card view
-        stages.addAll(mDataSource.getAllApplicationStages(application.getApplicationID()));
+        //add dummy stage object to be replaced by the application header card view
+        stages.addAll(mDataSource.getAllStages(application.getApplicationID()));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         stageRecyclerView.setLayoutManager(layoutManager);

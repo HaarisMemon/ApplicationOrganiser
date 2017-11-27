@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.memonade.apptracker.R;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +36,13 @@ public class StatusFilterArrayAdapter extends ArrayAdapter<String> {
         texts = statusStrings;
         icons = new ArrayList<>();
 
-        for(ApplicationStage.Status status : ApplicationStage.Status.values()) {
+        for(Stage.Status status : Stage.Status.values()) {
             Drawable icon;
-            if(status.equals(ApplicationStage.Status.SUCCESSFUL)) {
+            if(status.equals(Stage.Status.SUCCESSFUL)) {
                 icon = context.getResources().getDrawable(R.drawable.ic_status_successful);
-            } else if(status.equals(ApplicationStage.Status.WAITING)) {
+            } else if(status.equals(Stage.Status.WAITING)) {
                 icon = context.getResources().getDrawable(R.drawable.ic_status_in_progress);
-            } else if(status.equals(ApplicationStage.Status.UNSUCCESSFUL)) {
+            } else if(status.equals(Stage.Status.UNSUCCESSFUL)) {
                 icon = context.getResources().getDrawable(R.drawable.ic_status_unsuccessful);
             } else {
                 icon = context.getResources().getDrawable(R.drawable.ic_status_incomplete);

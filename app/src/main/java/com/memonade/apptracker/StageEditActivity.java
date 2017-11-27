@@ -25,26 +25,26 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.memonade.apptracker.database.ApplicationStageTable;
+import com.memonade.apptracker.database.StageTable;
 import com.memonade.apptracker.database.ApplicationTable;
 import com.memonade.apptracker.database.DataSource;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 
 import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.memonade.apptracker.model.ApplicationStage.defaultApplicationStageNames;
+import static com.memonade.apptracker.model.Stage.defaultStageNames;
 
 /**
- * This class represents the activity to edit an Application Stage
+ * This class represents the activity to edit an Stage
  * @author HaarisMemon
  */
 public class StageEditActivity extends AppCompatActivity implements TextWatcher {
 
     /**
-     * string constant used as a key when passing the isEditMode for an application stage boolean in the intent
+     * string constant used as a key when passing the isEditMode for an stage boolean in the intent
      */
     public static final String STAGE_EDIT_MODE = "STAGE_EDIT_MODE";
     /**
@@ -55,7 +55,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     public static final String DATE_PICKED = "DATE_PICKED";
 
     private DataSource mDataSource;
-    private ApplicationStage stage;
+    private Stage stage;
     private boolean isEditMode;
     private long parentApplicationID;
     private boolean isChangeMade;
@@ -101,8 +101,8 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
         //checks intent to see if it is edit or creation mode
         isEditMode = intent.getBooleanExtra(STAGE_EDIT_MODE, false);
 
-        //application stage that has the same id that was sent in the intent
-        stage = mDataSource.getApplicationStage(intent.getLongExtra(ApplicationStageTable.COLUMN_ID, -1L));
+        //stage that has the same id that was sent in the intent
+        stage = mDataSource.getStage(intent.getLongExtra(StageTable.COLUMN_ID, -1L));
         //store the application id that the stage belongs to
         parentApplicationID = intent.getLongExtra(ApplicationTable.APPLICATION_ID, -1L);
 
@@ -250,7 +250,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     }
 
     private void editModeSetup() {
-        //if editing application stage then display all existing application stage information
+        //if editing stage then display all existing stage information
         if(isEditMode) {
             setTitle(getString(R.string.edit_stage_activity_title));
 
@@ -353,7 +353,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mDataSource.deleteApplicationStage(stage.getStageID());
+                                mDataSource.deleteStage(stage.getStageID());
 
                                 //go back to the application information activity
                                 Intent intent = new Intent(getApplicationContext(), ApplicationInformationActivity.class);
@@ -388,7 +388,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     }
 
     /**
-     * On click method to save an Application Stage
+     * On click method to save an Stage
      * @param view save button that was clicked
      */
     public void saveButton(View view) {
@@ -396,19 +396,19 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     }
 
     /**
-     * Saves the current application stage, and returns true if the validation and save was successful
+     * Saves the current stage, and returns true if the validation and save was successful
      * @return true if the validation and save was successful
      */
     private boolean saveStage() {
-        //if the form is validated then save the application stage, otherwise do not
+        //if the form is validated then save the stage, otherwise do not
         if(validate()) {
-            ApplicationStage newStage = null;
+            Stage newStage = null;
 
-            //if editing application stage then use existing stage with existing ID, otherwise create new one
+            //if editing stage then use existing stage with existing ID, otherwise create new one
             if (isEditMode) {
                 newStage = stage;
             } else {
-                newStage = new ApplicationStage();
+                newStage = new Stage();
             }
 
             newStage.setStageName(stageNameEditText.getText().toString().replaceFirst("^ *", ""));
@@ -442,14 +442,14 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
 
             //if editing application then update it, else create a new one in database
             if (isEditMode) {
-                mDataSource.updateApplicationStage(newStage);
+                mDataSource.updateStage(newStage);
             } else {
-                mDataSource.createApplicationStage(newStage, parentApplicationID);
+                mDataSource.createStage(newStage, parentApplicationID);
             }
 
             Intent intent = new Intent(getApplicationContext(), StageInformationActivity.class);
             //send the stage ID, in the intent
-            intent.putExtra(ApplicationStageTable.COLUMN_ID, newStage.getStageID());
+            intent.putExtra(StageTable.COLUMN_ID, newStage.getStageID());
             intent.putExtra(ApplicationTable.APPLICATION_ID, parentApplicationID);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -547,7 +547,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     }
 
     public void suggestStageName(View view) {
-        final String[] stageNames = defaultApplicationStageNames;
+        final String[] stageNames = defaultStageNames;
 
         new AlertDialog.Builder(StageEditActivity.this)
                 .setTitle(R.string.stage_name_suggestions)

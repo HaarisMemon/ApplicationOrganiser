@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Delete Application Stage"
+        android:title="@string/delete_stage"
         android:icon="@drawable/ic_delete_white_24dp"
         android:id="@+id/action_delete_stage"
         app:showAsAction="always"/>
 
     <item
-        android:title="Edit Application Stage"
+        android:title="@string/edit_stage"
         android:icon="@drawable/ic_mode_edit_white_24dp"
         android:id="@+id/action_edit_stage"
         app:showAsAction="ifRoom"/>

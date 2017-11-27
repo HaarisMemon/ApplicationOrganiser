@@ -12,7 +12,7 @@
     <string name="search_hint">Search for an Application</string>
 
     <string name="addFirstApplication">Click the + button to add your first Application.</string>
-    <string name="addFirstStage">Click the + button to add your first Application Stage.</string>
+    <string name="addFirstStage">Click the + button to add your first Stage.</string>
     <string name="noResultsWithFilter">"No results match your filter."</string>
     <string name="noMatchFromSearch">"No match from search."</string>
 
@@ -20,7 +20,7 @@
     <string name="deprioritise_applications">Deprioritise Applications</string>
     <string name="prioritise_applications">Prioritise Applications</string>
     <string name="delete_applications">Delete Applications</string>
-    <string name="create_new_application_stage">Create new Application Stage</string>
+    <string name="create_new_stage">Create new Stage</string>
     <string name="delete_application">Delete Application</string>
     <string name="edit_application">Edit Application</string>
 
@@ -108,5 +108,7 @@
     <string name="library_name">Library name</string>
     <string name="developer_name">Developed by Memonade</string>
     <string name="feedback">Feedback</string>
+    <string name="delete_stage">Delete Stage</string>
+    <string name="edit_stage">Edit Stage</string>
 
 </resources>

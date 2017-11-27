@@ -4,7 +4,7 @@ import android.support.v7.widget.SearchView;
 
 import com.memonade.apptracker.adapter.ApplicationListRecyclerAdapter;
 import com.memonade.apptracker.model.Application;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class MyOnQueryTextListener implements SearchView.OnQueryTextListener {
                 isAlreadyAdded = true;
             }
 
-            for (ApplicationStage stage : application.getApplicationStages()) {
+            for (Stage stage : application.getStages()) {
                 /*if the current stage's name contains the search query, and parent application not already added
                 /then add the parent application to filtered list */
                 if (!isAlreadyAdded && stage.getStageName().toLowerCase().contains(searchQuery)) {

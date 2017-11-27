@@ -11,7 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * This class represents the View Holder which is used to hold an Application Stage CardView's data to display
+ * This class represents the View Holder which is used to hold an Stage CardView's data to display
  */
 public class StageHeaderViewHolder extends RecyclerView.ViewHolder {
 

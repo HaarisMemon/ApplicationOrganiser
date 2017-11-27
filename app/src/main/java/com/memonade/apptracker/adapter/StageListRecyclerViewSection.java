@@ -9,10 +9,10 @@ import com.memonade.apptracker.ApplicationInformationActivity;
 import com.memonade.apptracker.MainActivity;
 import com.memonade.apptracker.R;
 import com.memonade.apptracker.StageInformationActivity;
-import com.memonade.apptracker.database.ApplicationStageTable;
+import com.memonade.apptracker.database.StageTable;
 import com.memonade.apptracker.database.ApplicationTable;
 import com.memonade.apptracker.model.Application;
-import com.memonade.apptracker.model.ApplicationStage;
+import com.memonade.apptracker.model.Stage;
 import com.memonade.apptracker.view_holder.StageListViewHolder;
 import com.memonade.apptracker.view_holder.TitleSectionViewHolder;
 
@@ -31,13 +31,13 @@ public class StageListRecyclerViewSection extends StatelessSection {
     private Application application;
 
     private String title;
-    private List<ApplicationStage> stagesList;
+    private List<Stage> stagesList;
     private boolean isSourceMainActivity;
 
     public StageListRecyclerViewSection(String title,
                                         ApplicationInformationActivity applicationInformationActivity,
                                         Application application,
-                                        List<ApplicationStage> stagesList,
+                                        List<Stage> stagesList,
                                         boolean isSourceMainActivity) {
         super(R.layout.section_title_layout, R.layout.stage_list_row_layout);
 
@@ -62,14 +62,14 @@ public class StageListRecyclerViewSection extends StatelessSection {
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         StageListViewHolder stageHolder = (StageListViewHolder) holder;
-        final ApplicationStage stage = stagesList.get(position);
+        final Stage stage = stagesList.get(position);
 
         //adds the company name, role and last updated date to the cardView holder
         stageHolder.stageName.setText(stage.getStageName());
         stageHolder.status.setText(stage.getStatus().toString());
         stageHolder.updatedDate.setText(stage.getModifiedShortDate());
 
-        ApplicationStage.Status currentStatus = stage.getStatus();
+        Stage.Status currentStatus = stage.getStatus();
         String ic_status = context.getString(R.string.status_icon_file_prefix);
 
         stageHolder.stageStatusIcon.setImageResource(
@@ -80,11 +80,11 @@ public class StageListRecyclerViewSection extends StatelessSection {
         stageHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //go to new activity to see the stage information of application stage clicked
+                //go to new activity to see the stage information of stage clicked
                 Intent intent = new Intent(context, StageInformationActivity.class);
                 //send the stage id of the stage clicked and the parent application, in the intent
                 intent.putExtra(ApplicationTable.APPLICATION_ID, application.getApplicationID());
-                intent.putExtra(ApplicationStageTable.COLUMN_ID, stage.getStageID());
+                intent.putExtra(StageTable.COLUMN_ID, stage.getStageID());
 
                 if(isSourceMainActivity) {
                     intent.putExtra(MainActivity.SOURCE, true);
