@@ -110,5 +110,8 @@
     <string name="feedback">Feedback</string>
     <string name="delete_stage">Delete Stage</string>
     <string name="edit_stage">Edit Stage</string>
+    <string name="send_email_intent_message">Send email...</string>
+    <string name="feedback_email_body">It\'s a great app, but it really needs...</string>
+    <string name="rate_app">Rate this app on the Play Store</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.memonade.apptracker;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -45,8 +46,33 @@ public class AboutActivity extends AppCompatActivity {
                     .setDescription(getString(R.string.app_description))
                     .addItem(new Element().setTitle("Version " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName))
                     .addItem(new Element().setTitle(getString(R.string.developer_name)))
-                    .addEmail(getString(R.string.email_address), getString(R.string.feedback))
-                    .addPlayStore(getPackageName(), "Rate this app on the Play Store")
+                    .addItem(new Element()
+                            .setTitle(getString(R.string.feedback))
+                            .setIconDrawable(R.drawable.about_icon_email)
+                            .setIconTint(R.color.about_item_icon_color)
+                            .setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                    emailIntent.setType("message/rfc822");
+                                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.email_address)});
+                                    try {
+                                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, String.format("%s v%s %s",
+                                                getString(R.string.app_name),
+                                                getPackageManager().getPackageInfo(getPackageName(), 0).versionName,
+                                                getString(R.string.feedback)));
+                                    } catch (PackageManager.NameNotFoundException e) {
+                                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, String.format("%s %s",
+                                                getString(R.string.app_name),
+                                                getString(R.string.feedback)));
+                                    }
+                                    emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_email_body));
+                                    startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email_intent_message)));
+                                }
+                            })
+                    )
+//                    .addEmail(getString(R.string.email_address), getString(R.string.feedback))
+                    .addPlayStore(getPackageName(), getString(R.string.rate_app))
                     .addItem(new Element()
                             .setTitle(getString(R.string.licences_title))
                             .setOnClickListener(new View.OnClickListener() {
