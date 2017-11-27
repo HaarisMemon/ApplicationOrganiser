@@ -35,8 +35,8 @@ import com.memonade.apptracker.database.DataSource;
 import com.memonade.apptracker.listener.FilterDialogOnClickListener;
 import com.memonade.apptracker.listener.MyOnQueryTextListener;
 import com.memonade.apptracker.model.Application;
-import com.memonade.apptracker.model.Stage;
 import com.memonade.apptracker.model.FilterType;
+import com.memonade.apptracker.model.Stage;
 
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;

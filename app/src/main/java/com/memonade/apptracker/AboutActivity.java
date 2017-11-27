@@ -44,6 +44,7 @@ public class AboutActivity extends AppCompatActivity {
                     .isRTL(false)
                     .setImage(R.mipmap.apptracker_icon_round)
                     .setDescription(getString(R.string.app_description))
+                    .addItem(new Element().setTitle(getString(R.string.app_name)))
                     .addItem(new Element().setTitle("Version " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName))
                     .addItem(new Element().setTitle(getString(R.string.developer_name)))
                     .addItem(new Element()

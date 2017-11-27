@@ -14,9 +14,9 @@ import android.view.View;
 
 import com.memonade.apptracker.adapter.ApplicationRowRecyclerViewSection;
 import com.memonade.apptracker.adapter.StageHeaderRecyclerViewSection;
-import com.memonade.apptracker.database.StageTable;
 import com.memonade.apptracker.database.ApplicationTable;
 import com.memonade.apptracker.database.DataSource;
+import com.memonade.apptracker.database.StageTable;
 import com.memonade.apptracker.model.Application;
 import com.memonade.apptracker.model.Stage;
 

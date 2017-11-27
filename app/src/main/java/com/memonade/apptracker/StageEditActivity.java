@@ -25,9 +25,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.memonade.apptracker.database.StageTable;
 import com.memonade.apptracker.database.ApplicationTable;
 import com.memonade.apptracker.database.DataSource;
+import com.memonade.apptracker.database.StageTable;
 import com.memonade.apptracker.model.Stage;
 
 import java.util.Calendar;

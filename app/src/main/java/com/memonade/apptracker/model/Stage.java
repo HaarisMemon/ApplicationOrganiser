@@ -2,8 +2,8 @@ package com.memonade.apptracker.model;
 
 import android.content.ContentValues;
 
-import com.memonade.apptracker.database.StageTable;
 import com.memonade.apptracker.database.ApplicationTable;
+import com.memonade.apptracker.database.StageTable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
