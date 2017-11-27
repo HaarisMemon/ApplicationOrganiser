@@ -8,6 +8,11 @@
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
+    <item android:title="@string/filter_applications"
+        android:id="@+id/action_filter_applications"
+        android:icon="@drawable/ic_filter_list_white_24dp"
+        app:showAsAction="always"/>
+
     <item android:title="@string/sort_applications"
         android:id="@+id/action_sort_applications"
         android:icon="@drawable/ic_sort_white_24dp"
@@ -46,11 +51,6 @@
         </menu>
 
     </item>
-
-    <item android:title="@string/filter_applications"
-        android:id="@+id/action_filter_applications"
-        android:icon="@drawable/ic_filter_list_white_24dp"
-        app:showAsAction="always"/>
 
     <item android:title="@string/about"
         android:id="@+id/action_about"

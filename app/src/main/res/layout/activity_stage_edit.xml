@@ -10,259 +10,267 @@
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="10dp"
+        style="@style/scrollBarStyle"
         android:layout_below="@id/toolbar">
-
-        <View
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_width="0px"
-            android:layout_height="0px" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_below="@id/toolbar">
+
+            <View
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/stageAutoCompleteLayout"
+                    android:layout_weight="1">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/stage"
+                        android:id="@+id/stageNameEditText"
+                        android:maxLines="1"
+                        android:inputType="textCapSentences"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_lightbulb"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:onClick="suggestStageName"/>
+
+            </LinearLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/stageEditGridLayout"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/completed"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/completedText"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:id="@+id/completedRadioGroup"
+                    android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginTop="@dimen/stageEditorInputMarginTop">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/yes"
+                        android:id="@+id/yesCompletedRadio"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no"
+                        android:id="@+id/noCompletedRadio"/>
+
+                </RadioGroup>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/waiting_for_response"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/waitingText"
+                    android:visibility="gone"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:id="@+id/waitingRadioGroup"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginTop="@dimen/stageEditorInputMarginTop">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/yes"
+                        android:id="@+id/yesWaitingRadio"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no"
+                        android:id="@+id/noWaitingRadio"/>
+
+                </RadioGroup>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/successful"
+                    android:layout_row="2"
+                    android:layout_column="0"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/successfulText"
+                    android:visibility="gone"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_row="2"
+                    android:layout_column="1"
+                    android:id="@+id/successfulRadioGroup"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginTop="@dimen/stageEditorInputMarginTop">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/yes"
+                        android:id="@+id/yesSuccessfulRadio"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no"
+                        android:id="@+id/noSuccessfulRadio"/>
+
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_of_deadline"
+                    android:layout_row="3"
+                    android:layout_column="0"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/deadlineDateText"/>
+
+                <EditText
+                    style="@style/stageEditDate"
+                    android:hint="@string/pick_deadline_date"
+                    android:id="@+id/deadlineDateEditText"
+                    android:onClick="pickDate"
+                    android:layout_row="3"
+                    android:layout_column="1"
+                    android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_of_start"
+                    android:layout_row="4"
+                    android:layout_column="0"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/startDateText"/>
+
+                <EditText
+                    style="@style/stageEditDate"
+                    android:hint="@string/pick_start_date"
+                    android:id="@+id/startDateEditText"
+                    android:onClick="pickDate"
+                    android:layout_row="4"
+                    android:layout_column="1"
+                    android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_of_completion"
+                    android:layout_row="5"
+                    android:layout_column="0"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone"
+                    android:id="@+id/completionDateText"/>
+
+                <EditText
+                    style="@style/stageEditDate"
+                    android:hint="@string/pick_completion_date"
+                    android:id="@+id/completionDateEditText"
+                    android:onClick="pickDate"
+                    android:layout_row="5"
+                    android:layout_column="1"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_of_reply"
+                    android:layout_row="6"
+                    android:layout_column="0"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone"
+                    android:id="@+id/replyDateText"/>
+
+                <EditText
+                    style="@style/stageEditDate"
+                    android:hint="@string/pick_reply_date"
+                    android:id="@+id/replyDateEditText"
+                    android:onClick="pickDate"
+                    android:layout_row="6"
+                    android:layout_column="1"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
+
+            </GridLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/stageAutoCompleteLayout"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/stage"
-                    android:id="@+id/stageNameEditText"
-                    android:maxLines="1"
-                    android:inputType="textCapSentences"/>
+                    android:hint="@string/notes"
+                    android:id="@+id/notesStageEditText"
+                    android:height="200dp"
+                    android:gravity="top"/>
 
             </android.support.design.widget.TextInputLayout>
 
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_lightbulb"
-                style="?android:attr/buttonBarButtonStyle"
-                android:onClick="suggestStageName"/>
-
         </LinearLayout>
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/stageEditGridLayout"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/completed"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/completedText"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_row="0"
-                android:layout_column="1"
-                android:id="@+id/completedRadioGroup"
-                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
-                android:layout_marginTop="@dimen/stageEditorInputMarginTop">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/yes"
-                    android:id="@+id/yesCompletedRadio"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no"
-                    android:id="@+id/noCompletedRadio"/>
-
-            </RadioGroup>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/waiting_for_response"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/waitingText"
-                android:visibility="gone"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_row="1"
-                android:layout_column="1"
-                android:id="@+id/waitingRadioGroup"
-                android:visibility="gone"
-                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
-                android:layout_marginTop="@dimen/stageEditorInputMarginTop">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/yes"
-                    android:id="@+id/yesWaitingRadio"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no"
-                    android:id="@+id/noWaitingRadio"/>
-
-            </RadioGroup>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/successful"
-                android:layout_row="2"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/successfulText"
-                android:visibility="gone"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_row="2"
-                android:layout_column="1"
-                android:id="@+id/successfulRadioGroup"
-                android:visibility="gone"
-                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
-                android:layout_marginTop="@dimen/stageEditorInputMarginTop">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/yes"
-                    android:id="@+id/yesSuccessfulRadio"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no"
-                    android:id="@+id/noSuccessfulRadio"/>
-
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date_of_deadline"
-                android:layout_row="3"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/deadlineDateText"/>
-
-            <EditText
-                style="@style/stageEditDate"
-                android:hint="@string/pick_deadline_date"
-                android:id="@+id/deadlineDateEditText"
-                android:onClick="pickDate"
-                android:layout_row="3"
-                android:layout_column="1"
-                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
-                android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date_of_start"
-                android:layout_row="4"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/startDateText"/>
-
-            <EditText
-                style="@style/stageEditDate"
-                android:hint="@string/pick_start_date"
-                android:id="@+id/startDateEditText"
-                android:onClick="pickDate"
-                android:layout_row="4"
-                android:layout_column="1"
-                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
-                android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date_of_completion"
-                android:layout_row="5"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:visibility="gone"
-                android:id="@+id/completionDateText"/>
-
-            <EditText
-                style="@style/stageEditDate"
-                android:hint="@string/pick_completion_date"
-                android:id="@+id/completionDateEditText"
-                android:onClick="pickDate"
-                android:layout_row="5"
-                android:layout_column="1"
-                android:visibility="gone"
-                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
-                android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date_of_reply"
-                android:layout_row="6"
-                android:layout_column="0"
-                android:layout_gravity="center_vertical"
-                android:visibility="gone"
-                android:id="@+id/replyDateText"/>
-
-            <EditText
-                style="@style/stageEditDate"
-                android:hint="@string/pick_reply_date"
-                android:id="@+id/replyDateEditText"
-                android:onClick="pickDate"
-                android:layout_row="6"
-                android:layout_column="1"
-                android:visibility="gone"
-                android:layout_marginStart="@dimen/stageEditorInputMarginStart"
-                android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
-
-        </GridLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/notes"
-                android:id="@+id/notesStageEditText"
-                android:height="200dp"
-                android:gravity="top"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/stageSaveFAB"
