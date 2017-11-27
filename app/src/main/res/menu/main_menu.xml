@@ -50,7 +50,7 @@
     <item android:title="@string/filter_applications"
         android:id="@+id/action_filter_applications"
         android:icon="@drawable/ic_filter_list_white_24dp"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item android:title="@string/about"
         android:id="@+id/action_about"
