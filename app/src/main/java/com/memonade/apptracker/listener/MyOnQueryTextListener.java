@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class represents a custom OnQueryTextListener that filters and updates the Application List as the text changes.
+ * This class represents a custom OnQueryTextListener that filters and updates the Application List
+ * as the text in the searchview changes.
  */
 
 public class MyOnQueryTextListener implements SearchView.OnQueryTextListener {
@@ -40,7 +41,8 @@ public class MyOnQueryTextListener implements SearchView.OnQueryTextListener {
             boolean isAlreadyAdded = false;
 
             //if the current application's company name contains the search query, then add to filtered list
-            if (application.getCompanyName().toLowerCase().contains(searchQuery)) {
+            if (application.getCompanyName().toLowerCase().contains(searchQuery)
+                    || application.getRole().toLowerCase().contains(searchQuery)) {
                 filteredApplications.add(application);
                 isAlreadyAdded = true;
             }
