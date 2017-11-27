@@ -55,6 +55,74 @@ public class DataSource {
     }
 
     /**
+     * Seeds the database with dummy data if the database is empty
+     */
+    public void seedDatabase() {
+        //gets the number of applications in the database
+        long numApplications = DatabaseUtils.queryNumEntries(mDatabase, ApplicationTable.TABLE_APPLICATION);
+        //gets the number of stages in the database
+        long numStageCount = DatabaseUtils.queryNumEntries(mDatabase, StageTable.TABLE_APPLICATION_STAGE);
+
+        //if there are no applications and stages then populate
+        if(mContext.getSharedPreferences(preference, MODE_PRIVATE).getBoolean(is_first_run, true) &&
+                numApplications == 0 && numStageCount == 0) {
+
+            Application application1 = Application.of("Example Company 1", "Software Engineering Internship",
+                    "12 Months", "London", false, null, 0, null, false);
+            Stage stage1 = Stage.of("Online Application", true, false, true,
+                    "01/12/2016", "16/11/2016", "16/11/2016", "22/11/2016", null);
+            Stage stage2 = Stage.of("Assessment Centre", true, false, true,
+                    "12/01/2017", "12/01/2017", "12/01/2017", "02/02/2017", null);
+            application1.addStage(stage1);
+            application1.addStage(stage2);
+
+            Application application2 = Application.of("Example Company 2", "Technology Summer Internship",
+                    "9 weeks", "London", false, null, 5000, null, false);
+            Stage stage3 = Stage.of("Online Application", true, true, true,
+                    "01/12/2016", "16/11/2016", "16/11/2016", "22/11/2016", null);
+            Stage stage4 = Stage.of("Assessment Centre", true, true, false,
+                    "12/01/2017", "12/01/2017", "12/01/2017", null, null);
+            application2.addStage(stage3);
+            application2.addStage(stage4);
+
+            Application application3 = Application.of("Example Company 3", "Software Developer",
+                    "Full Time", "London", false, null, 30000, null, false);
+            Stage stage5 = Stage.of("Online Application", true, false, true,
+                    "01/12/2016", "16/11/2016", "16/11/2016", "22/11/2016", null);
+            Stage stage6 = Stage.of("Interview", false, false, false,
+                    "18/01/2017", null, null, null, null);
+            application3.addStage(stage5);
+            application3.addStage(stage6);
+
+            Application application4 = Application.of("Example Company 4", "Software Engineer",
+                    "Full Time", "London", false, null, 40000, null, false);
+            Stage stage7 = Stage.of("Online Application", true, false, true,
+                    "01/12/2016", "16/11/2016", "16/11/2016", "22/11/2016", null);
+            Stage stage8 = Stage.of("Interview", true, false, false,
+                    "12/01/2017", "12/01/2017", "12/01/2017", "02/02/2017", null);
+            application4.addStage(stage7);
+            application4.addStage(stage8);
+
+            createApplication(application1);
+            createStage(stage1, application1.getApplicationID());
+            createStage(stage2, application1.getApplicationID());
+            createApplication(application2);
+            createStage(stage3, application2.getApplicationID());
+            createStage(stage4, application2.getApplicationID());
+            createApplication(application3);
+            createStage(stage5, application3.getApplicationID());
+            createStage(stage6, application3.getApplicationID());
+            createApplication(application4);
+            createStage(stage7, application4.getApplicationID());
+            createStage(stage8, application4.getApplicationID());
+
+            // record the fact that the app has been started at least once
+            mContext.getSharedPreferences(preference, MODE_PRIVATE).edit().putBoolean(is_first_run, false).apply();
+
+        }
+    }
+
+    /**
      * Inserts a row in the database for a new Application
      * @param application is passed with all the fields set
      * @return application object with the new Application ID field set
@@ -124,43 +192,6 @@ public class DataSource {
         values.put(StageTable.COLUMN_ID, stage.getStageID());
 
         mDatabase.insert(StageTable.TABLE_APPLICATION_STAGE, null, values);
-    }
-
-    /**
-     * Seeds the database with dummy data if the database is empty
-     */
-    public void seedDatabase() {
-        //gets the number of applications in the database
-        long numApplications = DatabaseUtils.queryNumEntries(mDatabase, ApplicationTable.TABLE_APPLICATION);
-        //gets the number of stages in the database
-        long numStageCount = DatabaseUtils.queryNumEntries(mDatabase, StageTable.TABLE_APPLICATION_STAGE);
-
-        //if there are no applications and stages then populate
-        if(mContext.getSharedPreferences(preference, MODE_PRIVATE).getBoolean(is_first_run, true) &&
-                numApplications == 0 && numStageCount == 0) {
-
-            Application application = Application.of("Example Company", "Software Engineering Placement Year",
-                    "12 Months", "London", false, "www.examplecompany.com", 15000,
-                    "I have signed the contract with Example Company, and will be starting next June.",
-                    false);
-
-            Stage stage1 = Stage.of("Online Application", true, false, true,
-                    "01/12/2016", "16/11/2016", "16/11/2016", "22/11/2016", "Online application required CV and Cover Letter.");
-
-            Stage stage2 = Stage.of("Assessment Centre", true, false, true,
-                    "12/01/2017", "12/01/2017", "12/01/2017", "02/02/2017", "Assessment Centre involved 2 Interviews, and a Group Task.");
-
-            application.addStage(stage1);
-            application.addStage(stage2);
-
-            createApplication(application);
-            createStage(stage1, application.getApplicationID());
-            createStage(stage2, application.getApplicationID());
-
-            // record the fact that the app has been started at least once
-            mContext.getSharedPreferences(preference, MODE_PRIVATE).edit().putBoolean(is_first_run, false).apply();
-
-        }
     }
 
     /**
