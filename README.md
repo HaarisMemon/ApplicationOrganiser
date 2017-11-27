@@ -1,5 +1,5 @@
 # AppTracker
-AppTracker allows you to keep track and organise all your job applications in one central place. Keeping track of which companies you've applied to and which stage you are at for which one, is difficult without the right tool. That's where AppTracker comes in!
+AppTracker allows you to keep track of and organise all your job applications in one central place. Keeping track of which companies you've applied to and which stage you are at for which one, is difficult without the right tool. That's where AppTracker comes in!
 
 Open Source Libraries:
 - This code uses Butter Knife which is licensed under the Apache 2.0 License, and can be obtained https://github.com/JakeWharton/butterknife.
