@@ -175,6 +175,7 @@
             android:id="@+id/stageInfoStatusIcon"
             android:paddingBottom="11dp"
             android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
             style="@style/statusIcon" />
 
     </RelativeLayout>

@@ -113,5 +113,6 @@
     <string name="send_email_intent_message">Send email...</string>
     <string name="feedback_email_body">It\'s a great app, but it really needs...</string>
     <string name="rate_app">Rate this app on the Play Store</string>
+    <string name="licence_name">Licence Name</string>
 
 </resources>

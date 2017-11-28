@@ -65,7 +65,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/stageEditGridLayout"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp">
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,6 +86,7 @@
                     android:layout_column="1"
                     android:id="@+id/completedRadioGroup"
                     android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginLeft="@dimen/stageEditorInputMarginStart"
                     android:layout_marginTop="@dimen/stageEditorInputMarginTop">
 
                     <RadioButton
@@ -120,6 +123,7 @@
                     android:id="@+id/waitingRadioGroup"
                     android:visibility="gone"
                     android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginLeft="@dimen/stageEditorInputMarginStart"
                     android:layout_marginTop="@dimen/stageEditorInputMarginTop">
 
                     <RadioButton
@@ -156,6 +160,7 @@
                     android:id="@+id/successfulRadioGroup"
                     android:visibility="gone"
                     android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginLeft="@dimen/stageEditorInputMarginStart"
                     android:layout_marginTop="@dimen/stageEditorInputMarginTop">
 
                     <RadioButton
@@ -189,6 +194,7 @@
                     android:layout_row="3"
                     android:layout_column="1"
                     android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginLeft="@dimen/stageEditorInputMarginStart"
                     android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
 
                 <TextView
@@ -208,6 +214,7 @@
                     android:layout_row="4"
                     android:layout_column="1"
                     android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginLeft="@dimen/stageEditorInputMarginStart"
                     android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
 
                 <TextView
@@ -229,6 +236,7 @@
                     android:layout_column="1"
                     android:visibility="gone"
                     android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginLeft="@dimen/stageEditorInputMarginStart"
                     android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
 
                 <TextView
@@ -250,6 +258,7 @@
                     android:layout_column="1"
                     android:visibility="gone"
                     android:layout_marginStart="@dimen/stageEditorInputMarginStart"
+                    android:layout_marginLeft="@dimen/stageEditorInputMarginStart"
                     android:layout_marginTop="@dimen/stageEditorInputMarginTop"/>
 
             </GridLayout>

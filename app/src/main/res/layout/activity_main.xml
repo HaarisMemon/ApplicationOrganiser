@@ -56,6 +56,7 @@
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:gravity="bottom|end"
             android:id="@+id/filterButtons">
 
@@ -96,6 +97,7 @@
                     android:textSize="18sp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:id="@+id/filterTitleText"/>
 
                 <TextView
@@ -196,6 +198,7 @@
                             android:textSize="12sp"
                             android:id="@+id/minText"
                             android:layout_alignStart="@id/salarySelect"
+                            android:layout_alignLeft="@id/salarySelect"
                             android:layout_below="@id/salarySelect"
                             android:text="min"/>
 
@@ -205,6 +208,7 @@
                             android:textSize="12sp"
                             android:id="@+id/maxText"
                             android:layout_alignEnd="@id/salarySelect"
+                            android:layout_alignRight="@id/salarySelect"
                             android:layout_below="@id/salarySelect"
                             android:text="max"/>
                     </RelativeLayout>
@@ -261,7 +265,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/prioritySwitch"
-                            android:layout_marginStart="20dp"/>
+                            android:layout_marginStart="20dp"
+                            android:layout_marginLeft="20dp"/>
 
                     </LinearLayout>
 

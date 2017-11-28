@@ -41,6 +41,7 @@
         <item name="android:layout_margin">20dp</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_alignParentRight">true</item>
         <item name="android:text">Edited:</item>
     </style>
 
@@ -83,7 +84,9 @@
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:layout_marginStart">@dimen/cardViewMarginSides</item>
+        <item name="android:layout_marginLeft">@dimen/cardViewMarginSides</item>
         <item name="android:layout_marginEnd">@dimen/cardViewMarginSides</item>
+        <item name="android:layout_marginRight">@dimen/cardViewMarginSides</item>
         <item name="cardElevation">3dp</item>
         <item name="cardCornerRadius">5dp</item>
         <item name="cardBackgroundColor">@color/applicationCardBackgroundDefault</item>
@@ -93,7 +96,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">30dp</item>
+        <item name="android:layout_marginLeft">30dp</item>
         <item name="android:layout_marginEnd">30dp</item>
+        <item name="android:layout_marginRight">30dp</item>
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_marginBottom">20dp</item>
         <item name="android:orientation">vertical</item>
@@ -103,7 +108,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginLeft">24dp</item>
         <item name="android:layout_marginEnd">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
         <item name="android:layout_marginTop">13dp</item>
         <item name="android:layout_marginBottom">13dp</item>
     </style>
@@ -118,6 +125,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">3dp</item>
         <item name="android:layout_marginEnd">50dp</item>
+        <item name="android:layout_marginRight">50dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:textSize">18sp</item>
     </style>
@@ -126,6 +134,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">45dp</item>
+        <item name="android:layout_marginRight">45dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:textSize">14sp</item>
     </style>
@@ -135,6 +144,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@drawable/ic_priority</item>
         <item name="android:layout_marginStart">2dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginTop">-7dp</item>
         <item name="android:tint">#e00000</item>
         <item name="android:visibility">visible</item>
@@ -146,6 +156,7 @@
         <item name="android:src">@drawable/ic_status</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_alignParentRight">true</item>
     </style>
 
     <style name="filterTitleStyle">
