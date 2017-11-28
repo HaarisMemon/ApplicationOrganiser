@@ -90,8 +90,8 @@
     <string name="application_validate_company_name">Please enter the company name</string>
     <string name="application_validate_role">Please enter the role</string>
     <string name="application_validate_salary">Please enter a valid salary with only number digits</string>
-    <string name="multi_select_applications_selected"> applications selected</string>
-    <string name="multi_select_single_application_selected"> application selected</string>
+    <string name="multi_select_applications_selected">applications selected</string>
+    <string name="multi_select_single_application_selected">application selected</string>
     <string name="filter_none_selected">None selected</string>
     <string name="selections_will_be_cleared">All selections will be cleared</string>
     <string name="ascending_order">Ascending Order</string>
@@ -110,8 +110,8 @@
     <string name="feedback">Feedback</string>
     <string name="delete_stage">Delete Stage</string>
     <string name="edit_stage">Edit Stage</string>
-    <string name="send_email_intent_message">Send email...</string>
-    <string name="feedback_email_body">It\'s a great app, but it really needs...</string>
+    <string name="send_email_intent_message">Send email…</string>
+    <string name="feedback_email_body">It\'s a great app, but it really needs…</string>
     <string name="rate_app">Rate this app on the Play Store</string>
     <string name="licence_name">Licence Name</string>
 

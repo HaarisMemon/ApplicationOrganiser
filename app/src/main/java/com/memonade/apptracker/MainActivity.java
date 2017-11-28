@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         actionModeCallback = new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                actionMode.setTitle(selectedApplications.size() +
+                actionMode.setTitle(selectedApplications.size() + " " +
                         getString(R.string.multi_select_applications_selected));
 
                 MenuInflater inflater = actionMode.getMenuInflater();
@@ -821,9 +821,9 @@ public class MainActivity extends AppCompatActivity {
     //this method updates the title in the action bar in action mode, and is called every time application selected
     public void updateActionModeCounter(int counter) {
         if(counter == 1) {
-            actionMode.setTitle(counter + getString(R.string.multi_select_single_application_selected));
+            actionMode.setTitle(counter + " " + getString(R.string.multi_select_single_application_selected));
         } else {
-            actionMode.setTitle(counter + getString(R.string.multi_select_applications_selected));
+            actionMode.setTitle(counter + " " + getString(R.string.multi_select_applications_selected));
         }
     }
 
