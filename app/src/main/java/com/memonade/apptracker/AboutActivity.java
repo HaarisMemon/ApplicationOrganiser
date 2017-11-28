@@ -72,7 +72,6 @@ public class AboutActivity extends AppCompatActivity {
                                 }
                             })
                     )
-//                    .addEmail(getString(R.string.email_address), getString(R.string.feedback))
                     .addPlayStore(getPackageName(), getString(R.string.rate_app))
                     .addItem(new Element()
                             .setTitle(getString(R.string.licences_title))
