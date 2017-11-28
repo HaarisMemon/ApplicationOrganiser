@@ -47,7 +47,8 @@ public class StatusFilterDialogFragment extends DialogFragment {
 
         View rootView = inflater.inflate(R.layout.status_dialog_layout, container, false);
         ListView statusDialogListView = rootView.findViewById(R.id.statusDialogListView);
-        statusDialogListView.setAdapter(new StatusFilterArrayAdapter(getActivity(), statusStrings, mSelectedItems));
+        statusDialogListView.setAdapter(new StatusFilterArrayAdapter(getActivity(), statusStrings,
+                Stage.Status.values(), mSelectedItems));
 
         statusDialogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

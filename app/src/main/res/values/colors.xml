@@ -14,9 +14,9 @@
     <color name="applicationCardBackgroundDefault">#FFFFFF</color>
     <color name="applicationCardBackgroundSelected">#b1e2f9</color>
 
-    <color name="statusSuccessful">#80D12E</color>
-    <color name="statusIncomplete">#55BDE5</color>
-    <color name="statusUnsuccessful">#F34B44</color>
-    <color name="statusInProgress">#FAC850</color>
+    <color name="status_successful">#80D12E</color>
+    <color name="status_incomplete">#55BDE5</color>
+    <color name="status_unsuccessful">#F34B44</color>
+    <color name="status_in_progress">#FAC850</color>
 
 </resources>

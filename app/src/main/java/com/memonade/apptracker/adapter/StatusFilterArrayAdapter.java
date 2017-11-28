@@ -18,6 +18,8 @@ import com.memonade.apptracker.model.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.memonade.apptracker.R.string.status;
+
 /**
  * This class represents the array adapter for the status filter spinner for the filter panel.
  */
@@ -25,32 +27,20 @@ public class StatusFilterArrayAdapter extends ArrayAdapter<String> {
 
     private Context context;
     private List<String> texts;
-    private List<Drawable> icons;
+    private Stage.Status[] statusValues;
     private List<Integer> mSelectedItems;
+    private final String statusPrefix;
 
-    public StatusFilterArrayAdapter(Context context, List<String> statusStrings, List<Integer> selectedItemsIndexes) {
+    public StatusFilterArrayAdapter(Context context, List<String> statusStrings, Stage.Status[] statusValues,
+                                    List<Integer> selectedItemsIndexes) {
         super(context, R.layout.status_dialog_item_layout, statusStrings);
         this.context = context;
+        this.statusValues = statusValues;
         mSelectedItems = selectedItemsIndexes;
 
         texts = statusStrings;
-        icons = new ArrayList<>();
 
-        for(Stage.Status status : Stage.Status.values()) {
-            Drawable icon;
-            if(status.equals(Stage.Status.SUCCESSFUL)) {
-                icon = context.getResources().getDrawable(R.drawable.ic_status_successful);
-            } else if(status.equals(Stage.Status.WAITING)) {
-                icon = context.getResources().getDrawable(R.drawable.ic_status_in_progress);
-            } else if(status.equals(Stage.Status.UNSUCCESSFUL)) {
-                icon = context.getResources().getDrawable(R.drawable.ic_status_unsuccessful);
-            } else {
-                icon = context.getResources().getDrawable(R.drawable.ic_status_incomplete);
-            }
-
-            icons.add(icon);
-
-        }
+        statusPrefix = context.getString(R.string.status_icon_file_prefix);
 
     }
 
@@ -67,7 +57,10 @@ public class StatusFilterArrayAdapter extends ArrayAdapter<String> {
         CheckBox checkBox = convertView.findViewById(R.id.checkbox);
 
         textView.setText(texts.get(position));
-        imageView.setImageDrawable(icons.get(position));
+        imageView.setColorFilter(
+                context.getResources().getColor(
+                        context.getResources().getIdentifier(statusPrefix + statusValues[position].getIconNameText(),
+                                "color", context.getPackageName())), android.graphics.PorterDuff.Mode.SRC_IN);
 
         if(mSelectedItems.contains(position)) checkBox.setChecked(true);
         else checkBox.setChecked(false);

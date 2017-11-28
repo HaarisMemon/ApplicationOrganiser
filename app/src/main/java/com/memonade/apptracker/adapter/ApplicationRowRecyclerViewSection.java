@@ -64,14 +64,15 @@ public class ApplicationRowRecyclerViewSection extends StatelessSection {
         if(stage != null) {
 
             Stage.Status currentStatus = stage.getStatus();
-            String ic_status = context.getString(R.string.status_icon_file_prefix);
+            String status = context.getString(R.string.status_icon_file_prefix);
 
-            applicationHolder.applicationStatusIcon.setImageResource(
-                    context.getResources().getIdentifier(ic_status + currentStatus.getIconNameText(),
-                            "drawable", context.getPackageName()));
+            applicationHolder.applicationStatusIcon.setColorFilter(
+                    context.getResources().getColor(
+                            context.getResources().getIdentifier(status + currentStatus.getIconNameText(),
+                                    "color", context.getPackageName())), android.graphics.PorterDuff.Mode.SRC_IN);
 
         } else
-            applicationHolder.applicationStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
+            applicationHolder.applicationStatusIcon.setColorFilter(context.getResources().getColor(R.color.status_incomplete));
     }
 
     @Override

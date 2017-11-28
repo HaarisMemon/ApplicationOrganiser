@@ -13,7 +13,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_status_successful"
+            android:src="@drawable/ic_status"
             android:id="@+id/statusIcon"
             android:layout_centerVertical="true"/>
 

@@ -84,7 +84,7 @@
     <string name="pound_sign">£</string>
     <string name="database_date_format">yyyy-MM-dd HH:mm:ss</string>
     <string name="nice_date_format">dd MMM HH:mm</string>
-    <string name="status_icon_file_prefix">ic_status_</string>
+    <string name="status_icon_file_prefix">status_</string>
     <string name="edit_application_activity_title">Edit Application</string>
     <string name="new_application_activity_title">New Application</string>
     <string name="application_validate_company_name">Please enter the company name</string>

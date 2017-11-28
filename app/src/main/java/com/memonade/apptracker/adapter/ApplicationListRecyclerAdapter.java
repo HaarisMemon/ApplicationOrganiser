@@ -80,13 +80,14 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         if(stage != null) {
 
             Stage.Status currentStatus = stage.getStatus();
-            String ic_status = context.getString(R.string.status_icon_file_prefix);
+            String status = context.getString(R.string.status_icon_file_prefix);
 
-            holder.applicationStatusIcon.setImageResource(
-                    context.getResources().getIdentifier(ic_status + currentStatus.getIconNameText(),
-                            "drawable", context.getPackageName()));
+            holder.applicationStatusIcon.setColorFilter(
+                    context.getResources().getColor(
+                            context.getResources().getIdentifier(status + currentStatus.getIconNameText(),
+                                    "color", context.getPackageName())), android.graphics.PorterDuff.Mode.SRC_IN);
 
-        } else holder.applicationStatusIcon.setImageResource(R.drawable.ic_status_incomplete);
+        } else holder.applicationStatusIcon.setColorFilter(context.getResources().getColor(R.color.status_incomplete));
 
         //go to Application Information when item in Applications List is clicked
         holder.itemView.setOnClickListener(new View.OnClickListener() {
