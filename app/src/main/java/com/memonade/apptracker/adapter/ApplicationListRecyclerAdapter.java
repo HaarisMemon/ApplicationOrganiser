@@ -25,6 +25,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import static com.memonade.apptracker.R.string.application;
+
 /**
  * This class represents the Recycler Adapter for the Application List.
  * It constructs the list and puts the application's information onto each card view in the list.
@@ -77,17 +79,7 @@ public class ApplicationListRecyclerAdapter extends RecyclerView.Adapter<Applica
         //update the status icon for the cardView holder
         Stage stage = application.getCurrentStage();
 
-        if(stage != null) {
-
-            Stage.Status currentStatus = stage.getStatus();
-            String status = context.getString(R.string.status_icon_file_prefix);
-
-            holder.applicationStatusIcon.setColorFilter(
-                    context.getResources().getColor(
-                            context.getResources().getIdentifier(status + currentStatus.getIconNameText(),
-                                    "color", context.getPackageName())), android.graphics.PorterDuff.Mode.SRC_IN);
-
-        } else holder.applicationStatusIcon.setColorFilter(context.getResources().getColor(R.color.status_incomplete));
+        StatusIconTint.setTint(context, holder.applicationStatusIcon, stage);
 
         //go to Application Information when item in Applications List is clicked
         holder.itemView.setOnClickListener(new View.OnClickListener() {

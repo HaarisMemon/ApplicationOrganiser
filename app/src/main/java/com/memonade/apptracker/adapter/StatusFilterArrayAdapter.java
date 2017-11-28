@@ -29,7 +29,6 @@ public class StatusFilterArrayAdapter extends ArrayAdapter<String> {
     private List<String> texts;
     private Stage.Status[] statusValues;
     private List<Integer> mSelectedItems;
-    private final String statusPrefix;
 
     public StatusFilterArrayAdapter(Context context, List<String> statusStrings, Stage.Status[] statusValues,
                                     List<Integer> selectedItemsIndexes) {
@@ -39,8 +38,6 @@ public class StatusFilterArrayAdapter extends ArrayAdapter<String> {
         mSelectedItems = selectedItemsIndexes;
 
         texts = statusStrings;
-
-        statusPrefix = context.getString(R.string.status_icon_file_prefix);
 
     }
 
@@ -57,10 +54,7 @@ public class StatusFilterArrayAdapter extends ArrayAdapter<String> {
         CheckBox checkBox = convertView.findViewById(R.id.checkbox);
 
         textView.setText(texts.get(position));
-        imageView.setColorFilter(
-                context.getResources().getColor(
-                        context.getResources().getIdentifier(statusPrefix + statusValues[position].getIconNameText(),
-                                "color", context.getPackageName())), android.graphics.PorterDuff.Mode.SRC_IN);
+        StatusIconTint.setTint(context, imageView, statusValues[position]);
 
         if(mSelectedItems.contains(position)) checkBox.setChecked(true);
         else checkBox.setChecked(false);

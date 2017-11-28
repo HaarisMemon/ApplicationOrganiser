@@ -58,21 +58,7 @@ public class ApplicationRowRecyclerViewSection extends StatelessSection {
             applicationHolder.priorityImage.setVisibility(View.INVISIBLE);
         }
 
-        //update the status icon for the cardView holder
-        Stage stage = application.getCurrentStage();
-
-        if(stage != null) {
-
-            Stage.Status currentStatus = stage.getStatus();
-            String status = context.getString(R.string.status_icon_file_prefix);
-
-            applicationHolder.applicationStatusIcon.setColorFilter(
-                    context.getResources().getColor(
-                            context.getResources().getIdentifier(status + currentStatus.getIconNameText(),
-                                    "color", context.getPackageName())), android.graphics.PorterDuff.Mode.SRC_IN);
-
-        } else
-            applicationHolder.applicationStatusIcon.setColorFilter(context.getResources().getColor(R.color.status_incomplete));
+        StatusIconTint.setTint(context, applicationHolder.applicationStatusIcon, application.getCurrentStage());
     }
 
     @Override

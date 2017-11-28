@@ -69,13 +69,7 @@ public class StageListRecyclerViewSection extends StatelessSection {
         stageHolder.status.setText(stage.getStatus().toString());
         stageHolder.updatedDate.setText(stage.getModifiedShortDate());
 
-        Stage.Status currentStatus = stage.getStatus();
-        String status = context.getString(R.string.status_icon_file_prefix);
-
-        stageHolder.stageStatusIcon.setColorFilter(
-                context.getResources().getColor(
-                        context.getResources().getIdentifier(status + currentStatus.getIconNameText(),
-                                "color", context.getPackageName())), android.graphics.PorterDuff.Mode.SRC_IN);
+        StatusIconTint.setTint(context, stageHolder.stageStatusIcon, stage);
 
         //go to Application Information when item in Applications List is clicked
         stageHolder.itemView.setOnClickListener(new View.OnClickListener() {

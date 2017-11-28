@@ -54,13 +54,7 @@ public class StageHeaderRecyclerViewSection extends StatelessSection {
         stageHolder.stageNameText.setText(stage.getStageName());
         stageHolder.currentStatusText.setText(stage.getStatus().toString());
 
-        Stage.Status currentStatus = stage.getStatus();
-        String status = context.getString(R.string.status_icon_file_prefix);
-
-        stageHolder.stageInfoStatusIcon.setColorFilter(
-                context.getResources().getColor(
-                        context.getResources().getIdentifier(status + currentStatus.getIconNameText(),
-                                "color", context.getPackageName())), android.graphics.PorterDuff.Mode.SRC_IN);
+        StatusIconTint.setTint(context, stageHolder.stageInfoStatusIcon, stage);
 
         if (stage.getDateOfDeadline() != null)
             stageHolder.dateOfDeadlineText.setText(stage.getDateOfDeadline());
