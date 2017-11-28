@@ -16,7 +16,7 @@ public class TitleSectionViewHolder extends RecyclerView.ViewHolder{
 
     public TitleSectionViewHolder(View itemView) {
         super(itemView);
-        headerTitle = (TextView)itemView.findViewById(R.id.stage_title_id);
+        headerTitle = itemView.findViewById(R.id.stage_title_id);
     }
 
 }

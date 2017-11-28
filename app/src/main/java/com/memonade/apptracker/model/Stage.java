@@ -17,7 +17,6 @@ import java.util.List;
 public class Stage {
 
     private String databaseDatePattern = "yyyy-MM-dd HH:mm:ss";
-    private String shortDatePattern = "dd MMM";
     private String longDatePattern = "MMM dd HH:mm";
 
     public enum Status {
@@ -98,7 +97,7 @@ public class Stage {
     /**
      * Sets the name of the stage in the application process
      * e.g. Online Application, Online Interview, or Assessment Centre
-     * @param stageName
+     * @param stageName the name of the stage in the application process
      */
     public void setStageName(String stageName) {
         this.stageName = stageName;
@@ -282,6 +281,7 @@ public class Stage {
     public String getModifiedShortDate() {
         if(modifiedDate != null) {
             SimpleDateFormat toDate = new SimpleDateFormat(databaseDatePattern);
+            String shortDatePattern = "dd MMM";
             SimpleDateFormat toString = new SimpleDateFormat(shortDatePattern);
 
             try {
@@ -347,12 +347,12 @@ public class Stage {
      */
     @Override
     public boolean equals(Object obj) {
-        return stageName.equals(((Stage) obj).getStageName());
+        return obj instanceof Stage && stageName.equals(((Stage) obj).getStageName());
     }
 
     /**
      * Generates a ContentValues object with all fields of Stage stored, to use for database
-     * @return
+     * @return ContentValue object with all values of the stage
      */
     public ContentValues toValues() {
         ContentValues values = new ContentValues();

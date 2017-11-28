@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Application> deletedApplicationsForUndo;
     private List<Application> applicationsBeforeDeletionForUndo;
     private Map<FilterType, List<Integer>> filterSelectedItemsIndexes;
-    Set<FilterType> filtersCurrentlyApplied;
+    private Set<FilterType> filtersCurrentlyApplied;
 
     private Boolean isFilterPriority;
     private boolean isFilterChangeMade = false;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * RecyclerAdapter of RecyclerView for applications in the activity
      */
-    ApplicationListRecyclerAdapter applicationListRecyclerAdapter;
+    private ApplicationListRecyclerAdapter applicationListRecyclerAdapter;
 
     public static final String SOURCE = "SOURCE";
     public static final String FILTER_LIST = "FILTER_LIST";
@@ -87,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
     //used to check if currently in selection mode (whether any applications has been selected)
     public boolean isSelectionMode = false;
     private boolean isAllSelected = false;
-
-    private boolean[] applicationsSelected;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
@@ -107,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.prioritySwitch) Switch prioritySwitch;
     @BindView(R.id.filterResultsText) TextView filterResultsText;
     @BindView(R.id.filterApplyButton) Button filterApplyButton;
-    MenuItem orderItem;
+    private MenuItem orderItem;
 
     private class MinMaxSalary {
         Integer originalMin;
@@ -212,6 +210,10 @@ public class MainActivity extends AppCompatActivity {
 
                         setupSalarySeekbarRange(true);
 
+                        displayMessageIfNoApplications(false);
+
+                        updateFilterPanel();
+
                         Snackbar.make(findViewById(R.id.drawerLayout),
                                 R.string.deleted_snackbar_string, Snackbar.LENGTH_LONG)
                                 .setAction(R.string.undo_snackbar_string, new View.OnClickListener() {
@@ -228,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
                                         applicationListRecyclerAdapter.notifyDataSetChanged();
 
                                         displayMessageIfNoApplications(false);
+
+                                        updateFilterPanel();
 
                                         deletedApplicationsForUndo.clear();
 
@@ -285,7 +289,8 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i = 0; i < applications.size(); i++) {
                 Application application = applications.get(i);
-                boolean isSelected = applicationsSelected[i];
+                boolean isSelected = false;
+                if(applicationsSelected != null) isSelected = applicationsSelected[i];
                 application.setSelected(isSelected);
 
                 if(isSelected) {
@@ -384,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        applicationsSelected = new boolean[applications.size()];
+        boolean[] applicationsSelected = new boolean[applications.size()];
 
         for (int i = 0; i < applications.size(); i++) {
             applicationsSelected[i] = applications.get(i).isSelected();
@@ -589,7 +594,10 @@ public class MainActivity extends AppCompatActivity {
             statusSelect.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
 
-        filterResultsText.setText("Showing " + applicationListRecyclerAdapter.applicationsList.size() + " Applications");
+        int listSize = applicationListRecyclerAdapter.applicationsList.size();
+        String numberOfApplicationsString = "Showing " + listSize + " Application";
+        if(listSize != 1) numberOfApplicationsString += "s";
+        filterResultsText.setText(numberOfApplicationsString);
 
         if(isFilterChangeMade) filterApplyButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         else filterApplyButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
@@ -598,7 +606,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateFilterSelectText(FilterType filterType, TextView selectText) {
         List<Integer> selectedItems = filterSelectedItemsIndexes.get(filterType);
         if(selectedItems != null && selectedItems.size() > 0) {
-            selectText.setText(String.format("%d selected", selectedItems.size()));
+            selectText.setText(String.format("%s selected", selectedItems.size()));
         } else if(!filtersCurrentlyApplied.isEmpty() || minMaxSalary.isRangeUpdated ||
                 isFilterPriority != null){
             selectText.setText(R.string.filter_none_selected);
@@ -771,7 +779,7 @@ public class MainActivity extends AppCompatActivity {
 //        searchView.onActionViewExpanded();
 
         //change the color of the caret in the search view from the default accent color to white
-        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        AutoCompleteTextView searchTextView = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         try {
             Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
             mCursorDrawableRes.setAccessible(true);
@@ -877,8 +885,6 @@ public class MainActivity extends AppCompatActivity {
 
         //empty the map holding the selected applications
         selectedApplications.clear();
-
-        displayMessageIfNoApplications(false);
     }
 
     //prioritises all selected applications

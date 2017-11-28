@@ -29,8 +29,6 @@ public class Application {
     private boolean isSelected;
 
     private final String databaseDatePattern = "yyyy-MM-dd HH:mm:ss";
-    private final String loneDatePattern = "dd MMM HH:mm";
-    private final String shortDatePattern = "dd MMM";
 
     //An application application will contain a number of stages the user has reached in their application
     private List<Stage> stages;
@@ -55,9 +53,13 @@ public class Application {
      */
     @Override
     public boolean equals(Object obj) {
-        boolean isSameCompanyName = companyName.equals(((Application) obj).companyName);
-        boolean isSameRole = role.equals(((Application) obj).role);
-        return isSameCompanyName && isSameRole;
+        if(obj instanceof  Application) {
+            Application application = (Application) obj;
+            boolean isSameCompanyName = companyName.equals(application.companyName);
+            boolean isSameRole = role.equals(application.role);
+            return isSameCompanyName && isSameRole;
+        } else
+            return false;
     }
 
     /**
@@ -66,13 +68,12 @@ public class Application {
      */
     @Override
     public String toString() {
-        String applicationString = companyName + " - " + role;
-        return applicationString;
+        return companyName + " - " + role;
     }
 
     /**
      * Generates a ContentValues object with all fields of Application stored, to use for database
-     * @return
+     * @return ContentValue object with all values of the application
      */
     public ContentValues toValues() {
         ContentValues values = new ContentValues();
@@ -256,6 +257,7 @@ public class Application {
      */
     public String getModifiedShortDateTime() {
         SimpleDateFormat toDate = new SimpleDateFormat(databaseDatePattern);
+        String loneDatePattern = "dd MMM HH:mm";
         SimpleDateFormat toString = new SimpleDateFormat(loneDatePattern);
 
         try {
@@ -274,6 +276,7 @@ public class Application {
      */
     public String getModifiedShortDate() {
         SimpleDateFormat toDate = new SimpleDateFormat(databaseDatePattern);
+        String shortDatePattern = "dd MMM";
         SimpleDateFormat toString = new SimpleDateFormat(shortDatePattern);
 
         try {

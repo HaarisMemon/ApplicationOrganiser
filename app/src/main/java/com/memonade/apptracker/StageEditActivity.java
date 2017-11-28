@@ -52,7 +52,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
      * If picked then when button clicked again, the date shown in the date picker dialog is the date they earlier picked.
      * Otherwise, the date in the date picker dialog is today's date.
      */
-    public static final String DATE_PICKED = "DATE_PICKED";
+    private static final String DATE_PICKED = "DATE_PICKED";
 
     private DataSource mDataSource;
     private Stage stage;
@@ -60,8 +60,8 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     private long parentApplicationID;
     private boolean isChangeMade;
 
-    DatePickerDialog.OnDateSetListener mDataSetListener;
-    EditText clickedDateEditText = null;
+    private DatePickerDialog.OnDateSetListener mDataSetListener;
+    private EditText clickedDateEditText = null;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.stageNameEditText) AutoCompleteTextView stageNameEditText;
     @BindView(R.id.notesStageEditText) TextInputEditText notesStageEditText;
@@ -106,7 +106,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
         //store the application id that the stage belongs to
         parentApplicationID = intent.getLongExtra(ApplicationTable.APPLICATION_ID, -1L);
 
-        ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<String>(getApplicationContext(),
+        ArrayAdapter<String> stageNameAdapter = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, mDataSource.getAllStageNames());
 
         stageNameEditText.setAdapter(stageNameAdapter);
@@ -136,11 +136,11 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
 
                 //if month is one digit, add 0 to the front
                 String monthOfYear = Integer.toString(month);
-                monthOfYear = (monthOfYear.length() == 1) ? monthOfYear = "0" + monthOfYear : monthOfYear;
+                monthOfYear = (monthOfYear.length() == 1) ? "0" + monthOfYear : monthOfYear;
 
                 //if day is one digit, add 0 to the front
                 String dayOfMonth = Integer.toString(day);
-                dayOfMonth = (dayOfMonth.length() == 1) ? dayOfMonth = "0" + dayOfMonth : dayOfMonth;
+                dayOfMonth = (dayOfMonth.length() == 1) ? "0" + dayOfMonth : dayOfMonth;
 
                 String date = dayOfMonth + "/" + monthOfYear + "/" + year;
                 clickedDateEditText.setText(date);
@@ -402,7 +402,7 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     private boolean saveStage() {
         //if the form is validated then save the stage, otherwise do not
         if(validate()) {
-            Stage newStage = null;
+            Stage newStage;
 
             //if editing stage then use existing stage with existing ID, otherwise create new one
             if (isEditMode) {
@@ -469,13 +469,13 @@ public class StageEditActivity extends AppCompatActivity implements TextWatcher 
     public void pickDate(View view) {
         //set the date button to which button that was clicked
         if(view.getId() == R.id.deadlineDateEditText) {
-            clickedDateEditText = (EditText) findViewById(R.id.deadlineDateEditText);
+            clickedDateEditText = findViewById(R.id.deadlineDateEditText);
         } else if(view.getId() == R.id.startDateEditText) {
-            clickedDateEditText = (EditText) findViewById(R.id.startDateEditText);
+            clickedDateEditText = findViewById(R.id.startDateEditText);
         } else if(view.getId() == R.id.completionDateEditText) {
-            clickedDateEditText = (EditText) findViewById(R.id.completionDateEditText);
+            clickedDateEditText = findViewById(R.id.completionDateEditText);
         } else if(view.getId() == R.id.replyDateEditText) {
-            clickedDateEditText = (EditText) findViewById(R.id.replyDateEditText);
+            clickedDateEditText = findViewById(R.id.replyDateEditText);
         } else {
             clickedDateEditText = null;
         }

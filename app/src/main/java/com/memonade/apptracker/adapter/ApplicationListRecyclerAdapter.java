@@ -25,8 +25,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import static com.memonade.apptracker.R.string.application;
-
 /**
  * This class represents the Recycler Adapter for the Application List.
  * It constructs the list and puts the application's information onto each card view in the list.

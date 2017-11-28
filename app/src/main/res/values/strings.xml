@@ -50,7 +50,6 @@
 
     <string name="current_status">Current Status</string>
     <string name="date_of_deadline">Deadline Date</string>
-    <string name="no_date_of_deadline">No Deadline Date</string>
     <string name="date_of_start">Start Date</string>
     <string name="no_date_of_start">No Start Date</string>
     <string name="date_of_completion">Completion Date</string>
@@ -83,7 +82,6 @@
     <string name="none">None</string>
     <string name="pound_sign">£</string>
     <string name="database_date_format">yyyy-MM-dd HH:mm:ss</string>
-    <string name="nice_date_format">dd MMM HH:mm</string>
     <string name="status_icon_file_prefix">status_</string>
     <string name="edit_application_activity_title">Edit Application</string>
     <string name="new_application_activity_title">New Application</string>
@@ -104,8 +102,6 @@
 
     <string name="app_description">Organise and track all your job applications in one central place.</string>
     <string name="email_address">memonadestudios+feedback@gmail.com</string>
-    <string name="play_store_package">com.memonade.apptracker</string>
-    <string name="library_name">Library name</string>
     <string name="developer_name">Developed by Memonade</string>
     <string name="feedback">Feedback</string>
     <string name="delete_stage">Delete Stage</string>
@@ -113,6 +109,15 @@
     <string name="send_email_intent_message">Send email…</string>
     <string name="feedback_email_body">It\'s a great app, but it really needs…</string>
     <string name="rate_app">Rate this app on the Play Store</string>
-    <string name="licence_name">Licence Name</string>
+    <string name="empty_list_message">Empty List Message</string>
+    <string name="results">Results</string>
+    <string name="min">min</string>
+    <string name="max">max</string>
+    <string name="modified_date">Modified Date</string>
+    <string name="created_date">Created Date</string>
+    <string name="company_name">Company Name</string>
+    <string name="clear">Clear</string>
+    <string name="cancel">Cancel</string>
+    <string name="stage_name_suggestion_icon">Stage name suggestion icon</string>
 
 </resources>

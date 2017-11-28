@@ -33,16 +33,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="editedModifiedText">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">20dp</item>
-        <item name="android:layout_alignParentTop">true</item>
-        <item name="android:layout_alignParentEnd">true</item>
+    <style name="editedModifiedText" parent="BaseEditedModifiedText">
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:text">Edited:</item>
     </style>
 
     <style name="scrollBarStyle">
@@ -78,41 +70,19 @@
         <item name="android:inputType">date</item>
     </style>
 
-    <style name="customCardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:layout_marginStart">@dimen/cardViewMarginSides</item>
+    <style name="customCardView" parent="BaseCustomCardView">
         <item name="android:layout_marginLeft">@dimen/cardViewMarginSides</item>
-        <item name="android:layout_marginEnd">@dimen/cardViewMarginSides</item>
         <item name="android:layout_marginRight">@dimen/cardViewMarginSides</item>
-        <item name="cardElevation">3dp</item>
-        <item name="cardCornerRadius">5dp</item>
-        <item name="cardBackgroundColor">@color/applicationCardBackgroundDefault</item>
     </style>
 
-    <style name="headerCardViewLinearLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">30dp</item>
+    <style name="headerCardViewLinearLayout" parent="BaseHeaderCardViewLinearLayout">
         <item name="android:layout_marginLeft">30dp</item>
-        <item name="android:layout_marginEnd">30dp</item>
         <item name="android:layout_marginRight">30dp</item>
-        <item name="android:layout_marginTop">20dp</item>
-        <item name="android:layout_marginBottom">20dp</item>
-        <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="rowCardViewRelativeLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">24dp</item>
+    <style name="rowCardViewRelativeLayout" parent="BaseRowCardViewRelativeLayout">
         <item name="android:layout_marginLeft">24dp</item>
-        <item name="android:layout_marginEnd">12dp</item>
         <item name="android:layout_marginRight">12dp</item>
-        <item name="android:layout_marginTop">13dp</item>
-        <item name="android:layout_marginBottom">13dp</item>
     </style>
 
     <style name="cardViewTitles">
@@ -120,42 +90,19 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="rowCardViewTitle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">3dp</item>
-        <item name="android:layout_marginEnd">50dp</item>
+    <style name="rowCardViewTitle" parent="BaseRowCardViewTitle">
         <item name="android:layout_marginRight">50dp</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="rowCardViewSmallTitle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">45dp</item>
+    <style name="rowCardViewSmallTitle" parent="BaseRowCardViewSmallTitle">
         <item name="android:layout_marginRight">45dp</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="priorityBookmark">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:src">@drawable/ic_priority</item>
-        <item name="android:layout_marginStart">2dp</item>
+    <style name="priorityBookmark" parent="BasePriorityBookmark">
         <item name="android:layout_marginLeft">2dp</item>
-        <item name="android:layout_marginTop">-7dp</item>
-        <item name="android:tint">#e00000</item>
-        <item name="android:visibility">visible</item>
     </style>
 
-    <style name="statusIcon">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:src">@drawable/ic_status</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:layout_alignParentEnd">true</item>
+    <style name="statusIcon" parent="BaseStatusIcon">
         <item name="android:layout_alignParentRight">true</item>
     </style>
 

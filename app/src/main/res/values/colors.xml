@@ -8,9 +8,6 @@
 
     <color name="appBackgroundColor">#EEEEEE</color>
 
-    <color name="homeButtonsBackgroundColor">@android:color/holo_blue_dark</color>
-    <color name="homeButtonsTextColor">#ffffff</color>
-
     <color name="applicationCardBackgroundDefault">#FFFFFF</color>
     <color name="applicationCardBackgroundSelected">#b1e2f9</color>
 

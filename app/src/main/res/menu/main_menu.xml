@@ -21,31 +21,31 @@
         <menu>
 
             <item android:id="@+id/action_sort_order"
-                android:title="Descending Order"
+                android:title="@string/descending_order"
                 android:icon="@drawable/ic_arrow_downward_black_24dp"/>
 
             <group
                 android:checkableBehavior="single">
 
                 <item android:id="@+id/action_sort_modified_date"
-                    android:title="Modified Date"
+                    android:title="@string/modified_date"
                     android:checked="true"
                     android:icon="@drawable/ic_edit_black_24dp"/>
 
                 <item android:id="@+id/action_sort_created_date"
-                    android:title="Created Date"
+                    android:title="@string/created_date"
                     android:icon="@drawable/ic_access_time_black_24dp"/>
 
                 <item android:id="@+id/action_sort_company_name"
-                    android:title="Company Name"
+                    android:title="@string/company_name"
                     android:icon="@drawable/ic_business_black_24dp"/>
 
                 <item android:id="@+id/action_sort_role"
-                    android:title="Role"
+                    android:title="@string/role"
                     android:icon="@drawable/ic_business_center_black_24dp"/>
 
                 <item android:id="@+id/action_sort_salary"
-                    android:title="Salary"
+                    android:title="@string/salary"
                     android:icon="@drawable/ic_attach_money_black_24dp"/>
             </group>
         </menu>

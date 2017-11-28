@@ -31,7 +31,7 @@
         android:layout_marginLeft="16dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:text="Clear"
+        android:text="@string/clear"
         android:id="@+id/clearButton"
         style="?android:attr/buttonBarButtonStyle"/>
 
@@ -43,7 +43,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@id/separator"
-        android:text="Apply"
+        android:text="@string/apply"
         android:id="@+id/applyButton"
         style="?android:attr/buttonBarButtonStyle" />
 
@@ -53,7 +53,7 @@
         android:layout_below="@id/separator"
         android:layout_toStartOf="@id/applyButton"
         android:layout_toLeftOf="@id/applyButton"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:id="@+id/cancelButton"
         style="?android:attr/buttonBarButtonStyle"/>
 

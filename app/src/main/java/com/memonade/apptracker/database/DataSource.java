@@ -27,12 +27,12 @@ public class DataSource {
     private SQLiteDatabase mDatabase;
     private DBHelper mDbHelper;
 
-    public static final String preference = "my_preference_file";
-    public static final String is_first_run = "is_first_run";
+    private static final String preference = "my_preference_file";
+    private static final String is_first_run = "is_first_run";
 
     /**
      * Constructs the DataSource class which includes getting a writable database
-     * @param Context
+     * @param Context context of the activity using the data source
      */
     public DataSource(Context Context) {
         this.mContext = Context;
@@ -141,7 +141,6 @@ public class DataSource {
     /**
      * Reinsert an application row in the database for an exisitng Application that was deleted
      * @param application is passed with all the fields set
-     * @return application object with the same Application ID field set
      */
     public void recreateApplication(Application application) {
         //makes a ContentValues object using all the fields in the application object

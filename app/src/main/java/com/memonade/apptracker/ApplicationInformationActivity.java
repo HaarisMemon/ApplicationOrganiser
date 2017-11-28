@@ -41,7 +41,7 @@ public class ApplicationInformationActivity extends AppCompatActivity {
     /**
      * StageList adapter of RecylerView for stages in the activity
      */
-    SectionedRecyclerViewAdapter sectionAdapter;
+    private SectionedRecyclerViewAdapter sectionAdapter;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.stageRecyclerView) RecyclerView stageRecyclerView;
@@ -239,7 +239,7 @@ public class ApplicationInformationActivity extends AppCompatActivity {
 
     //displays message to inform user to add their first stage if stage list is empty
     private void displayMessageIfNoStages() {
-        TextView messageWhenEmpty = (TextView) findViewById(R.id.addStageMessage);
+        TextView messageWhenEmpty = findViewById(R.id.addStageMessage);
         if(stages.isEmpty()) {
             messageWhenEmpty.setVisibility(View.VISIBLE);
         } else {

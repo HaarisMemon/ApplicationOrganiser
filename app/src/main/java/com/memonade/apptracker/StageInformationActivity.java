@@ -34,7 +34,6 @@ public class StageInformationActivity extends AppCompatActivity {
     private Application parentApplication;
     private Stage stage;
 
-    SectionedRecyclerViewAdapter sectionAdapter;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.stageInformationRecyclerView) RecyclerView stageInformationRecyclerView;
 
@@ -63,7 +62,7 @@ public class StageInformationActivity extends AppCompatActivity {
         stageInformationRecyclerView.setLayoutManager(layoutManager);
         stageInformationRecyclerView.setHasFixedSize(true);
 
-        sectionAdapter = new SectionedRecyclerViewAdapter();
+        SectionedRecyclerViewAdapter sectionAdapter = new SectionedRecyclerViewAdapter();
 
         ApplicationRowRecyclerViewSection applicationSection =  new ApplicationRowRecyclerViewSection(
                 getApplication().getString(R.string.application_overview_title),

@@ -86,17 +86,17 @@ public class ApplicationEditActivity extends AppCompatActivity implements TextWa
             setTitle(getString(R.string.new_application_activity_title));
         }
 
-        ArrayAdapter<String> roleNameAdapter = new ArrayAdapter<String>(getApplicationContext(),
+        ArrayAdapter<String> roleNameAdapter = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, mDataSource.getAllRoles());
         roleEditText.setAdapter(roleNameAdapter);
         roleEditText.setThreshold(0);
 
-        ArrayAdapter<String> lengthAdapter = new ArrayAdapter<String>(getApplicationContext(),
+        ArrayAdapter<String> lengthAdapter = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, mDataSource.getAllLengths());
         lengthEditText.setAdapter(lengthAdapter);
         lengthEditText.setThreshold(0);
 
-        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(getApplicationContext(),
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, mDataSource.getAllLocations());
         locationEditText.setAdapter(locationAdapter);
         locationEditText.setThreshold(0);
@@ -214,7 +214,7 @@ public class ApplicationEditActivity extends AppCompatActivity implements TextWa
     private boolean saveApplication() {
         //if the form is validated then save the application, otherwise do not
         if(validate()) {
-            Application newApplication = null;
+            Application newApplication;
 
             //if editing application then use existing application with existing ID, otherwise create new one
             if (isEditMode) {
@@ -223,7 +223,7 @@ public class ApplicationEditActivity extends AppCompatActivity implements TextWa
                 newApplication = new Application();
             }
 
-            newApplication.setCompanyName(companyNameEditText.getText().toString().toString().replaceFirst("^ *", ""));
+            newApplication.setCompanyName(companyNameEditText.getText().toString().replaceFirst("^ *", ""));
             newApplication.setRole(roleEditText.getText().toString().replaceFirst("^ *", ""));
             newApplication.setLength(lengthEditText.getText().toString().replaceFirst("^ *", ""));
             newApplication.setLocation(locationEditText.getText().toString().replaceFirst("^ *", ""));

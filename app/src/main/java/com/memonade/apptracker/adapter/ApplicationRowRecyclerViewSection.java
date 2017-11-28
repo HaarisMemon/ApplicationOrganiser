@@ -7,7 +7,6 @@ import android.view.View;
 import com.memonade.apptracker.R;
 import com.memonade.apptracker.StageInformationActivity;
 import com.memonade.apptracker.model.Application;
-import com.memonade.apptracker.model.Stage;
 import com.memonade.apptracker.view_holder.ApplicationRowViewHolder;
 import com.memonade.apptracker.view_holder.TitleSectionViewHolder;
 

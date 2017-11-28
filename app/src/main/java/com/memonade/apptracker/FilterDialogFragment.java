@@ -26,7 +26,7 @@ public class FilterDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mSelectedItems = new ArrayList();
+        mSelectedItems = new ArrayList<>();
 
         //get the list of all items for the filter type
         String[] allItems = getArguments().getStringArray(FILTER_LIST);
@@ -35,7 +35,9 @@ public class FilterDialogFragment extends DialogFragment {
         //get all the previously checked items (null at start)
         boolean[] checkedItems = getArguments().getBooleanArray(CHECKED_ITEMS);
 
-        if(checkedItems == null) checkedItems = new boolean[allItems.length];
+        if(checkedItems == null) {
+            if (allItems != null) checkedItems = new boolean[allItems.length];
+        }
         else {
             //add previously selected items to the selected items list
             for (int i = 0; i < checkedItems.length; i++) {

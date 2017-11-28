@@ -20,8 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_margin="10dp"
-            android:layout_below="@id/toolbar">
+            android:layout_margin="10dp">
 
             <View
                 android:focusable="true"
@@ -35,7 +34,7 @@
                 android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/stageAutoCompleteLayout"
                     android:layout_weight="1">
@@ -51,12 +50,13 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <ImageButton
-                    android:layout_width="30dp"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_lightbulb"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:onClick="suggestStageName"/>
+                    android:onClick="suggestStageName"
+                    android:contentDescription="@string/stage_name_suggestion_icon"/>
 
             </LinearLayout>
 
@@ -273,7 +273,8 @@
                     android:hint="@string/notes"
                     android:id="@+id/notesStageEditText"
                     android:height="200dp"
-                    android:gravity="top"/>
+                    android:gravity="top"
+                    android:inputType="textMultiLine"/>
 
             </android.support.design.widget.TextInputLayout>
 

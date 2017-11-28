@@ -6,9 +6,6 @@ import android.widget.ImageView;
 import com.memonade.apptracker.R;
 import com.memonade.apptracker.model.Stage;
 
-import static com.memonade.apptracker.R.string.stage;
-import static com.memonade.apptracker.R.string.status;
-
 /**
  * This class contains a method to be used by all adapters to set the tint of the status icon according to the status value.
  */

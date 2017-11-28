@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseEditedModifiedText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">21dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:text">Edited:</item>
+    </style>
+
+    <style name="BaseCustomCardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="cardElevation">3dp</item>
+        <item name="cardCornerRadius">5dp</item>
+        <item name="cardBackgroundColor">@color/applicationCardBackgroundDefault</item>
+    </style>
+
+    <style name="BaseHeaderCardViewLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="BaseRowCardViewRelativeLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">13dp</item>
+        <item name="android:layout_marginBottom">13dp</item>
+    </style>
+
+    <style name="BaseRowCardViewTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="BaseRowCardViewSmallTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="BasePriorityBookmark">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_priority</item>
+        <item name="android:layout_marginTop">-7dp</item>
+        <item name="android:tint">#e00000</item>
+        <item name="android:visibility">visible</item>
+    </style>
+
+    <style name="BaseStatusIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_status</item>
+        <item name="android:layout_alignParentBottom">true</item>
+    </style>
+
+</resources>
