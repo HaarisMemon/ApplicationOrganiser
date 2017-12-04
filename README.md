@@ -20,6 +20,7 @@ Set a job application as high priority, allowing you to know which job applicati
 
 You will no longer need to worry about tracking all your job applications on your own; AppTracker is all you need.
 
+Google Play Store link: https://play.google.com/store/apps/details?id=com.memonade.apptracker
 
 
 ### Open Source Libraries:
